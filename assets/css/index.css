@@ -1,0 +1,10 @@
+#ProjectView {
+	width: 100%;
+
+}
+
+.row {
+	margin:4px;
+	padding: 8px;
+	min-height:40px;
+}
