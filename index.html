@@ -11,30 +11,60 @@
 
 <body>
 
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div id="NameView" class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">File <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </li>
+    </ul>
 
-<div id="ProjectView" class="container">
+    <div class="nav navbar-nav navbar-left">
+      <div class="navbar-brand">
+        my_chair
+      </div>
+    </div>
 
-	<div id="NameView" class="row">
-		my_chair
-	</div>
+    <div class="nav navbar-nav navbar-right">
+      <a class="navbar-brand" href="#">
+        tacit
+      </a>
+    </div>
+  </div>
+</nav>
 
-	<div id="HistoryView" class="row">
-		history
-	</div>
 
-	<div id="EaselView" class="row">
-		<div id="ToolbarView" class="col-md-4">
-			tools
-		</div>
+<div id="ProjectView" class="container-fluid">
 
-		<div id="PadView" class="col-md-4">
-			pad
-		</div>
-	</div>
+    <div id="HistoryView" class="row">
+        <div id="HistorySketchesView" class="col-md-11" >
+            
+        </div> 
+        <div  class="col-md-1">
+            <button id="save-btn" type="button" class="btn btn-default btn-lg">Save</button>
+        </div>
+    </div>
 
-	<div id="SuggestionsView" class="row">
-		suggestions
-	</div>
+    <div id="EaselView" class="row">
+            <div id="ToolbarView" class="col-md-1">
+                tools
+            </div>
+
+            <div id="PadView" class="col-md-11">
+                pad
+            </div>
+    </div>
+
+    <div id="SuggestionsView" class="row">
+        suggestions
+    </div>
 
 
 
