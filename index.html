@@ -3,45 +3,89 @@
 <head>
     <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/sketch.css" rel="stylesheet" type="text/css"/>
 
     <script src="assets/js/lib/jquery-1.11.2.min.js"></script>
     <script src="assets/js/lib/bootstrap.min.js"></script>
-    <script src="assets/js/index.js"></script>    
+    <script src="assets/js/lib/glpk.min.js"></script>
+    <script src="assets/js/lib/d3.v2.min.js"></script>
+    <script src="assets/js/lib/coffeescript.min.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/sketch.coffee" type="text/coffeescript"></script>
+    <script src="assets/js/structure.coffee" type="text/coffeescript"></script>
 </head>
 
 <body>
 
-
 <div id="ProjectView" class="container">
 
 	<div id="NameView" class="row">
-		my_chair
+		<h1 class="logo"> tacit </h1>
 	</div>
 
 	<div id="HistoryView" class="row">
-		history
+		<h1> history </h1>
 	</div>
 
 	<div id="EaselView" class="row">
 		<div id="ToolbarView" class="col-md-4">
-			tools
+            <h1> tools </h1>
+
+        <div id="controls">
+            <strong> show (f)orces</strong>
+                <input type="checkbox" id="force" checked onclick="sketch.reposition();"><br>
+                <strong> show (g)radients</strong>
+                    <input type="checkbox" id="grad" checked onclick="sketch.reposition();"><br>
+            <strong> show unused (b)eams</strong>
+                <input type="checkbox" id="showzero" checked onclick="sketch.reposition();"><br>
+            Scroll / pinch to zoom <br>
+            Drag the background to pan
+        </div>
+
 		</div>
 
 		<div id="PadView" class="col-md-4">
-			pad
+			<h1> pad </h1>
 		</div>
 	</div>
 
 	<div id="SuggestionsView" class="row">
-		suggestions
+		<h1> suggestions </h1>
 	</div>
-
-
-
-
 
 </div>
 
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+  <marker id="brtriangle" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#3d3130">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+  </marker>
+  <marker id="ptriangle" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#807ec7">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+  </marker>
+</svg>
+
+    <script type="text/coffeescript">
+s = new @tacit.Structure
+new s.Beam({x: 1, y: 1}, {x: 0, y: 0})
+new s.Beam({x: 1, y: 1}, {x: 2, y: 0})
+s.nodeList[0].force.y = -1
+s.nodeList[i].fixed[dim] = true for i in [1,2] for dim in ["x", "y"]
+
+@sketch = new @tacit.Sketch("#PadView", s, 400)
+
+sketch.update()
+setTimeout((->
+    s.nodeList[0].move({y: -2})
+    sketch.redraw()), 800)
+setTimeout((->
+    s.nodeList[0].move({y: 2})
+    sketch.redraw()), 1500)
+
+@showgrad = document.getElementById("grad")
+@showforce = document.getElementById("force")
+@move = document.getElementById("move")
+@showzero = document.getElementById("showzero")
+    </script>
 
 </body>
 
