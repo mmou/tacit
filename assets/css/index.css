@@ -42,3 +42,9 @@ margin: auto;
 	min-height: 100px;
 	background-color: rgba(125, 212, 250, 1);	
 }
+
+.toolbar-btn {
+	height: 80px;
+	width: 100%;
+	margin-top: 10px;
+}
