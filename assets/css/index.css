@@ -1,10 +1,44 @@
-#ProjectView {
-	width: 100%;
-
+body { 
+	height:100%;
+	background-color: rgba(125, 212, 250, 1);	
 }
 
 .row {
-	margin:4px;
-	padding: 8px;
 	min-height:40px;
+}
+
+#HistoryView {
+	margin-top: 50px; /* because of the header */ 
+	height:10%;
+	min-height: 60px;
+	padding:4px;
+	background-color: rgba(125, 212, 250, 1);
+}
+
+#HistorySketchesView {
+	overflow-x:scroll; 
+	overflow-y: hidden; 
+	height:100%;
+}
+
+#save-btn {
+margin: auto;
+}
+
+#EaselView {
+	min-height: 500px;
+	height:100%;
+	background-color:white;
+}
+
+#ToolbarView {
+    box-shadow: 2px 0px 5px -2px #888888;
+	height:100%;
+	min-height:500px;
+}
+
+#SuggestionsView {
+	height:14%;
+	min-height: 100px;
+	background-color: rgba(125, 212, 250, 1);	
 }
