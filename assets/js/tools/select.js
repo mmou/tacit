@@ -3,7 +3,7 @@ function Select(toolbar) {
 	this.toolbar = toolbar;
 
     this.name = "Select Tool";
-    this.cursor;
+    this.cursor = = "assets/resources/cursor-images/grab.png";
 
     this.undo = function() {
         return null;

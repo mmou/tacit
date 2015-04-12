@@ -3,7 +3,7 @@ function Erase(toolbar) {
 	this.toolbar = toolbar;
 
     this.name = "Erase Tool";
-    this.cursor;
+    this.cursor = "assets/resources/cursor-images/eraser.png";
 
     this.undo = function() {
         return null;
