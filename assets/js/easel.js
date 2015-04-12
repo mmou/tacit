@@ -1,6 +1,6 @@
 function Easel() {
 
-    this.pad = new Pad();
+    this.pad = new Pad(this);
     this.toolbar = new Toolbar(this);
     this.currentTool;
     this.toolUseHistory = {};
