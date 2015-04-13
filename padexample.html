@@ -12,23 +12,18 @@
     <script src="assets/js/lib/d3.v2.min.js"></script>
     <script src="assets/js/lib/coffeescript.min.js"></script>
     <script src="assets/js/index.js"></script>
-    <script src="assets/js/sketch.coffee" type="text/coffeescript"></script>
-    <script src="assets/js/structure.coffee" type="text/coffeescript"></script>
-    <script src="assets/js/easel.coffee" type="text/coffeescript"></script>
-    <script src="assets/js/pad.coffee" type="text/coffeescript"></script>
+    <script src="assets/js/sketch.js"></script>
+    <script src="assets/js/structure.js"></script>
+    <script src="assets/js/easel.js"></script>
+    <script src="assets/js/pad.js"></script>
 
     <script type="text/coffeescript">
     print = (o) -> console.log(o)
     print @tacit
 
-    s = new @tacit.Structure
-    new s.Beam({x: 1, y: 1}, {x: 0, y: 0})
-    new s.Beam({x: 1, y: 1}, {x: 2, y: 0})
-    s.nodeList[0].force.y = -1
-    s.nodeList[i].fixed[dim] = true for i in [1,2] for dim in ["x", "y"]
-
-    @easel = new @tacit.Easel(null, "#ToolbarView", "#PadView", 400, 400, structure=s)
+    @easel = new @tacit.Easel(null, "#ToolbarView", "#PadView", 400, 400)
     @sketch = @easel.pad.sketch
+    s = @sketch.structure
 
     sketch.redraw()
     setTimeout((->

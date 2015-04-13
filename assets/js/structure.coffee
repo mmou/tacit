@@ -181,7 +181,7 @@ class Structure
                     #grad = bs/((1/lambda) - as)
                     grad = 0.5*sum(1/((b.f/b.F) * b.l[dim]/sqr(b.L)) for b in node.sourced)
                     # print ["n#{node.id}#{dim}", lambda, "grad", grad, "obj", @lp.obj]
-                    node.grad[dim] = grad
+                    node.grad[dim] = if isNaN(grad) then 0 else grad
 
 
 

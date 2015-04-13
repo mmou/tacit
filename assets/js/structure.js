@@ -50,14 +50,18 @@
     return Object.keys(o).length === 0;
   };
 
+  if ((_ref = this.tacit) == null) {
+    this.tacit = {};
+  }
+
   gen_classes = function(nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) {
     var Beam, LPresult, LPstring, Node, getNodeIDX, solveLP, strsign;
     Node = (function() {
 
       function Node(pos) {
-        var _base, _name, _name1, _ref, _ref1, _ref2;
+        var _base, _name, _name1, _ref1, _ref2, _ref3;
         this.id = nodes++;
-        _ref = [pos.x, pos.y, pos.z != null ? pos.z : 0], this.x = _ref[0], this.y = _ref[1], this.z = _ref[2];
+        _ref1 = [pos.x, pos.y, pos.z != null ? pos.z : 0], this.x = _ref1[0], this.y = _ref1[1], this.z = _ref1[2];
         this.force = {
           x: 0,
           y: 0,
@@ -75,10 +79,10 @@
         };
         this.sourced = [];
         this.targeted = [];
-        if ((_ref1 = nodeLookup[_name = this.z]) == null) {
+        if ((_ref2 = nodeLookup[_name = this.z]) == null) {
           nodeLookup[_name] = {};
         }
-        if ((_ref2 = (_base = nodeLookup[this.z])[_name1 = this.y]) == null) {
+        if ((_ref3 = (_base = nodeLookup[this.z])[_name1 = this.y]) == null) {
           _base[_name1] = {};
         }
         if (nodeLookup[this.z][this.y][this.x] != null) {
@@ -91,11 +95,11 @@
       }
 
       Node.prototype.moveto = function(pos) {
-        var d, delta, _i, _len, _ref;
+        var d, delta, _i, _len, _ref1;
         delta = {};
-        _ref = "xyz";
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          d = _ref[_i];
+        _ref1 = "xyz";
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          d = _ref1[_i];
           if (pos[d] != null) {
             delta[d] = pos[d] - this[d];
           }
@@ -104,7 +108,7 @@
       };
 
       Node.prototype.move = function(delta) {
-        var beam, d, _base, _i, _j, _len, _len1, _name, _name1, _ref, _ref1, _ref2, _ref3;
+        var beam, d, _base, _i, _j, _len, _len1, _name, _name1, _ref1, _ref2, _ref3, _ref4;
         delete nodeLookup[this.z][this.y][this.x];
         if (isempty(nodeLookup[this.z][this.y])) {
           delete nodeLookup[this.z][this.y];
@@ -112,68 +116,68 @@
         if (isempty(nodeLookup[this.z])) {
           delete nodeLookup[this.z];
         }
-        _ref = "xyz";
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          d = _ref[_i];
+        _ref1 = "xyz";
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          d = _ref1[_i];
           if (delta[d] != null) {
             this[d] += delta[d];
           }
         }
-        _ref1 = this.sourced.concat(this.targeted);
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          beam = _ref1[_j];
+        _ref2 = this.sourced.concat(this.targeted);
+        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+          beam = _ref2[_j];
           beam.update();
         }
-        if ((_ref2 = nodeLookup[_name = this.z]) == null) {
+        if ((_ref3 = nodeLookup[_name = this.z]) == null) {
           nodeLookup[_name] = {};
         }
-        if ((_ref3 = (_base = nodeLookup[this.z])[_name1 = this.y]) == null) {
+        if ((_ref4 = (_base = nodeLookup[this.z])[_name1 = this.y]) == null) {
           _base[_name1] = {};
         }
         return nodeLookup[this.z][this.y][this.x] = this.id;
       };
 
       Node.prototype.constraints = function() {
-        var b, constraints, d, fix, _ref;
+        var b, constraints, d, fix, _ref1;
         constraints = {};
-        _ref = this.fixed;
-        for (d in _ref) {
-          fix = _ref[d];
+        _ref1 = this.fixed;
+        for (d in _ref1) {
+          fix = _ref1[d];
           constraints[d] = {
             A: ((function() {
-              var _i, _len, _ref1, _results;
-              _ref1 = this.sourced;
+              var _i, _len, _ref2, _results;
+              _ref2 = this.sourced;
               _results = [];
-              for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-                b = _ref1[_i];
+              for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+                b = _ref2[_i];
                 _results.push(b.l[d] / b.L);
               }
               return _results;
             }).call(this)).concat((function() {
-              var _i, _len, _ref1, _results;
-              _ref1 = this.targeted;
+              var _i, _len, _ref2, _results;
+              _ref2 = this.targeted;
               _results = [];
-              for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-                b = _ref1[_i];
+              for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+                b = _ref2[_i];
                 _results.push(-b.l[d] / b.L);
               }
               return _results;
             }).call(this)),
             i: ((function() {
-              var _i, _len, _ref1, _results;
-              _ref1 = this.sourced;
+              var _i, _len, _ref2, _results;
+              _ref2 = this.sourced;
               _results = [];
-              for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-                b = _ref1[_i];
+              for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+                b = _ref2[_i];
                 _results.push(b.id);
               }
               return _results;
             }).call(this)).concat((function() {
-              var _i, _len, _ref1, _results;
-              _ref1 = this.targeted;
+              var _i, _len, _ref2, _results;
+              _ref2 = this.targeted;
               _results = [];
-              for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-                b = _ref1[_i];
+              for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+                b = _ref2[_i];
                 _results.push(b.id);
               }
               return _results;
@@ -185,10 +189,10 @@
       };
 
       Node.prototype["delete"] = function() {
-        var beam, _i, _len, _ref;
-        _ref = this.sourced.concat(this.targeted);
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          beam = _ref[_i];
+        var beam, _i, _len, _ref1;
+        _ref1 = this.sourced.concat(this.targeted);
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          beam = _ref1[_i];
           beam["delete"]();
         }
         nodeList.splice(nodeList.indexOf(this), 1);
@@ -226,9 +230,9 @@
     Beam = (function() {
 
       function Beam() {
-        var pt, pts, _ref, _ref1;
+        var pt, pts, _ref1, _ref2;
         pts = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        _ref = (function() {
+        _ref1 = (function() {
           var _i, _len, _results;
           _results = [];
           for (_i = 0, _len = pts.length; _i < _len; _i++) {
@@ -236,8 +240,8 @@
             _results.push(nodeIDLookup[getNodeIDX(pt)]);
           }
           return _results;
-        })(), this.source = _ref[0], this.target = _ref[1];
-        _ref1 = [0, 0], this.f = _ref1[0], this.F = _ref1[1];
+        })(), this.source = _ref1[0], this.target = _ref1[1];
+        _ref2 = [0, 0], this.f = _ref2[0], this.F = _ref2[1];
         this.l = {};
         this.update();
         this.grad = {
@@ -252,18 +256,18 @@
       }
 
       Beam.prototype.update = function() {
-        var d, l, _i, _len, _ref;
-        _ref = "xyz";
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          d = _ref[_i];
+        var d, l, _i, _len, _ref1;
+        _ref1 = "xyz";
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          d = _ref1[_i];
           this.l[d] = this.target[d] - this.source[d];
         }
         return this.L = dist((function() {
-          var _ref1, _results;
-          _ref1 = this.l;
+          var _ref2, _results;
+          _ref2 = this.l;
           _results = [];
-          for (d in _ref1) {
-            l = _ref1[d];
+          for (d in _ref2) {
+            l = _ref2[d];
             _results.push(l);
           }
           return _results;
@@ -271,10 +275,10 @@
       };
 
       Beam.prototype["delete"] = function() {
-        var list, _i, _len, _ref;
-        _ref = [this.source.sourced, this.target.targeted, beamList];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          list = _ref[_i];
+        var list, _i, _len, _ref1;
+        _ref1 = [this.source.sourced, this.target.targeted, beamList];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          list = _ref1[_i];
           list.splice(list.indexOf(this), 1);
         }
         return delete this;
@@ -286,22 +290,22 @@
     LPresult = (function() {
 
       function LPresult(lp) {
-        var dim, dual, i, id, name, prim, _i, _j, _ref, _ref1, _ref2, _ref3, _ref4;
+        var dim, dual, i, id, name, prim, _i, _j, _ref1, _ref2, _ref3, _ref4, _ref5;
         this.lp = lp;
         this.obj = glp_get_obj_val(this.lp);
         if (!this.obj) {
           this.obj = 1e6;
         }
-        for (i = _i = 1, _ref = glp_get_num_cols(lp); 1 <= _ref ? _i <= _ref : _i >= _ref; i = 1 <= _ref ? ++_i : --_i) {
-          _ref1 = [glp_get_col_name(lp, i), glp_get_col_prim(lp, i)], name = _ref1[0], prim = _ref1[1];
+        for (i = _i = 1, _ref1 = glp_get_num_cols(lp); 1 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 1 <= _ref1 ? ++_i : --_i) {
+          _ref2 = [glp_get_col_name(lp, i), glp_get_col_prim(lp, i)], name = _ref2[0], prim = _ref2[1];
           this[name] = prim;
           if (name[0] === "q") {
-            _ref2 = [name.slice(1, -1), name.slice(-1)], id = _ref2[0], dim = _ref2[1];
+            _ref3 = [name.slice(1, -1), name.slice(-1)], id = _ref3[0], dim = _ref3[1];
             nodeIDLookup[id].force[dim] = prim;
           }
         }
-        for (i = _j = 1, _ref3 = glp_get_num_rows(lp); 1 <= _ref3 ? _j <= _ref3 : _j >= _ref3; i = 1 <= _ref3 ? ++_j : --_j) {
-          _ref4 = [glp_get_row_name(lp, i), glp_get_row_dual(lp, i)], name = _ref4[0], dual = _ref4[1];
+        for (i = _j = 1, _ref4 = glp_get_num_rows(lp); 1 <= _ref4 ? _j <= _ref4 : _j >= _ref4; i = 1 <= _ref4 ? ++_j : --_j) {
+          _ref5 = [glp_get_row_name(lp, i), glp_get_row_dual(lp, i)], name = _ref5[0], dual = _ref5[1];
           if (name.slice(0, 3) !== "abs") {
             this[name] = dual;
           }
@@ -319,7 +323,7 @@
       }
     };
     LPstring = function() {
-      var a, b, beam, c, con, dim, j, lp, node, q, reactionforces, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1;
+      var a, b, beam, c, con, dim, j, lp, node, q, reactionforces, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2;
       reactionforces = [];
       lp = "Minimize               \n  obj:" + sum((function() {
         var _i, _len, _results;
@@ -333,13 +337,13 @@
       lp += "\n               \nSubject To";
       for (_i = 0, _len = nodeList.length; _i < _len; _i++) {
         node = nodeList[_i];
-        _ref = node.constraints();
-        for (dim in _ref) {
-          c = _ref[dim];
+        _ref1 = node.constraints();
+        for (dim in _ref1) {
+          c = _ref1[dim];
           con = "";
-          _ref1 = c.A;
-          for (j = _j = 0, _len1 = _ref1.length; _j < _len1; j = ++_j) {
-            a = _ref1[j];
+          _ref2 = c.A;
+          for (j = _j = 0, _len1 = _ref2.length; _j < _len1; j = ++_j) {
+            a = _ref2[j];
             if (a !== 0) {
               con += " " + (strsign(a)) + " " + (abs(a)) + " f" + c.i[j] + "                                ";
             }
@@ -388,50 +392,50 @@
   Structure = (function() {
 
     function Structure(tacfile) {
-      var _ref, _ref1, _ref2, _ref3;
+      var _ref1, _ref2, _ref3, _ref4;
       if (tacfile != null) {
         this["import"](tacfile);
       }
-      _ref = [{}, {}], this.nodeLookup = _ref[0], this.nodeIDLookup = _ref[1];
-      _ref1 = [[], []], this.nodeList = _ref1[0], this.beamList = _ref1[1];
-      _ref2 = [0, 0], this.nodes = _ref2[0], this.beams = _ref2[1];
-      _ref3 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref3[0], this.Beam = _ref3[1], this.solveLP = _ref3[2];
+      _ref1 = [{}, {}], this.nodeLookup = _ref1[0], this.nodeIDLookup = _ref1[1];
+      _ref2 = [[], []], this.nodeList = _ref2[0], this.beamList = _ref2[1];
+      _ref3 = [0, 0], this.nodes = _ref3[0], this.beams = _ref3[1];
+      _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2];
     }
 
     Structure.prototype.solve = function() {
-      var b, beam, dim, grad, lambda, node, _i, _j, _len, _len1, _ref, _ref1, _results;
+      var b, beam, dim, grad, lambda, node, _i, _j, _len, _len1, _ref1, _ref2, _results;
       this.lp = this.solveLP();
-      _ref = this.beamList;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        beam = _ref[_i];
+      _ref1 = this.beamList;
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        beam = _ref1[_i];
         beam.f = this.lp["f" + beam.id];
         beam.F = abs(beam.f);
       }
-      _ref1 = this.nodeList;
+      _ref2 = this.nodeList;
       _results = [];
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        node = _ref1[_j];
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        node = _ref2[_j];
         node.lambda = {};
         _results.push((function() {
-          var _k, _len2, _ref2, _results1;
-          _ref2 = "xyz";
+          var _k, _len2, _ref3, _results1;
+          _ref3 = "xyz";
           _results1 = [];
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            dim = _ref2[_k];
+          for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
+            dim = _ref3[_k];
             lambda = this.lp["n" + node.id + dim];
             node.lambda[dim] = lambda;
             if (lambda) {
               grad = 0.5 * sum((function() {
-                var _l, _len3, _ref3, _results2;
-                _ref3 = node.sourced;
+                var _l, _len3, _ref4, _results2;
+                _ref4 = node.sourced;
                 _results2 = [];
-                for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
-                  b = _ref3[_l];
+                for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+                  b = _ref4[_l];
                   _results2.push(1 / ((b.f / b.F) * b.l[dim] / sqr(b.L)));
                 }
                 return _results2;
               })());
-              _results1.push(node.grad[dim] = grad);
+              _results1.push(node.grad[dim] = isNaN(grad) ? 0 : grad);
             } else {
               _results1.push(void 0);
             }
@@ -454,9 +458,9 @@
 
   s = new Structure;
 
-  _ref = [s.nodeList, s.nodeLookup, s.beamList], nodeList = _ref[0], nodeLookup = _ref[1], beamList = _ref[2];
+  _ref1 = [s.nodeList, s.nodeLookup, s.beamList], nodeList = _ref1[0], nodeLookup = _ref1[1], beamList = _ref1[2];
 
-  _ref1 = [s.Node, s.Beam, s.solveLP], Node = _ref1[0], Beam = _ref1[1], solveLP = _ref1[2];
+  _ref2 = [s.Node, s.Beam, s.solveLP], Node = _ref2[0], Beam = _ref2[1], solveLP = _ref2[2];
 
   n = new Node({
     x: 0,
@@ -529,12 +533,12 @@
     print("Failed Test 4.5");
   }
 
-  _ref2 = ["x", "y"];
-  for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-    dim = _ref2[_i];
-    _ref3 = [0, 2];
-    for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
-      i = _ref3[_j];
+  _ref3 = ["x", "y"];
+  for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+    dim = _ref3[_i];
+    _ref4 = [0, 2];
+    for (_j = 0, _len1 = _ref4.length; _j < _len1; _j++) {
+      i = _ref4[_j];
       nodeList[i].fixed[dim] = true;
     }
   }
@@ -593,9 +597,9 @@
     y: -1
   });
 
-  _ref4 = ["x", "y"];
-  for (_k = 0, _len2 = _ref4.length; _k < _len2; _k++) {
-    dim = _ref4[_k];
+  _ref5 = ["x", "y"];
+  for (_k = 0, _len2 = _ref5.length; _k < _len2; _k++) {
+    dim = _ref5[_k];
     for (i = _l = 1; _l <= 4; i = ++_l) {
       s2.nodeList[i].fixed[dim] = true;
     }
@@ -616,10 +620,6 @@
   }
 
   print("                       ...testing complete.");
-
-  if ((_ref5 = this.tacit) == null) {
-    this.tacit = {};
-  }
 
   this.tacit.Structure = Structure;
 
