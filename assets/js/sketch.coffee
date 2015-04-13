@@ -14,15 +14,11 @@ print = (o) -> console.log(o)
 @move = {checked: false}
 
 class Sketch
-    constructor: (htmlLoc="body", structure, height, width) ->
+    constructor: (@pad, htmlLoc="body", structure, height, width) ->
         htmlObj = d3.select(htmlLoc)
 
         if structure? then @structure = structure
         else @structure = new tacit.Structure
-
-        htmlRect = htmlObj.node().getBoundingClientRect()
-        width ?= htmlRect.width
-        height ?= htmlRect.height
 
         @svg = htmlObj
                  .append("svg:svg")
@@ -35,30 +31,32 @@ class Sketch
         mousedn = => @pad.call(d3.behavior.zoom().on("zoom"), => @rescale())
 
         @selected_node = @selected_link = null
-        @pad = @svg.append("svg:g")
-                    .attr("transform", "translate(0,#{height}) scale(1,-1)")
-                    .append("svg:g")
+        @blank = @svg.append("svg:g")
+                     .attr("transform", "translate(0,#{height}) scale(1,-1)")
+                     .append("svg:g")
                         .call(zoomer)
                         .on("dblclick.zoom", null)
                         .append("svg:g")
                             .on("mousedown", mousedn)
 
-        @pad.append("svg:rect")
-                .attr("x", -width/2)
-                .attr("y", -height/2)
-                .attr("width", width)
-                .attr("height", height)
-                .attr("fill", "transparent")
+        @blank.append("svg:rect")
+                 .attr("x", -width/2)
+                 .attr("y", -height/2)
+                 .attr("width", width)
+                 .attr("height", height)
+                 .attr("fill", "transparent")
+                 .on("mousedown", (d) =>
+                     @pad.easel.currentTool.mousedown(@pad.easel, "background", d3.mouse(@blank), d))
 
         # init nodes,  links, and the line displayed when dragging new nodes
-        @nodes = @pad.selectAll(".node")
-        @links = @pad.selectAll(".link")
-        @forces = @pad.selectAll(".force")
-        @grads = @pad.selectAll(".grad")
-        @dragline = @pad.append("line")
-                            .attr("class", "dragline")
-                            .attr("x1", 0).attr("x2", 0)
-                            .attr("y1", 0).attr("y2", 0)
+        @nodes = @blank.selectAll(".node")
+        @links = @blank.selectAll(".link")
+        @forces = @blank.selectAll(".force")
+        @grads = @blank.selectAll(".grad")
+        @dragline = @blank.append("line")
+                          .attr("class", "dragline")
+                          .attr("x1", 0).attr("x2", 0)
+                          .attr("y1", 0).attr("y2", 0)
 
         # set inital window
         if structure?
@@ -78,13 +76,18 @@ class Sketch
         translate ?= d3.event.translate
         scale ?= d3.event.scale
         @scale = scale
-        @pad.attr("transform", "translate(#{translate}) scale(#{scale})")
+        @blank.attr("transform", "translate(#{translate}) scale(#{scale})")
         if draw then @resize()
 
-    update: ->
+    redraw: ->
       @links = @links.data(@structure.beamList)
-      @links.enter().insert("line", ".node").attr("class", "link")
-      @links.exit().remove()
+      @links.enter().insert("line", ".node")
+            .attr("class", "link")
+            .on("mousedown", (d) =>
+                @pad.easel.currentTool.mousedown(@pad.easel, "beam", d3.mouse(@blank), d))
+      @links.exit().transition()
+          .attr("r", 0)
+        .remove()
       @links.classed("selected", (d) => d is @selected_link)
 
       @forces = @forces.data(@structure.nodeList)
@@ -105,6 +108,8 @@ class Sketch
       @nodes.enter().insert("circle")
           .attr("class", "node")
           .attr("r", 5/@scale)
+          .on("mousedown", (d) =>
+              @pad.easel.currentTool.mousedown(@pad.easel, "node", d3.mouse(@blank), d))
         .transition()
           .duration(750)
           .ease("elastic")
@@ -114,9 +119,9 @@ class Sketch
         .remove()
       @nodes.classed("node_selected", (d) => d is @selected_node)
 
-      @redraw()
+      @reposition_transition()
 
-    redraw: ->
+    reposition_transition: ->
         @structure.solve()
         w = @structure.nodeList.length/@structure.lp.obj
 
