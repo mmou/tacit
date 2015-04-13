@@ -13,6 +13,8 @@ print = (o) -> console.log(o)
 @showzero = {checked: true}
 @move = {checked: false}
 
+@tacit ?= {}
+
 class Sketch
     constructor: (@pad, htmlLoc="body", structure, height, width) ->
         htmlObj = d3.select(htmlLoc)
@@ -28,7 +30,7 @@ class Sketch
 
         @scale = 1
         zoomer = d3.behavior.zoom().on("zoom", => @rescale())
-        mousedn = => @pad.call(d3.behavior.zoom().on("zoom"), => @rescale())
+        mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale())
 
         @selected_node = @selected_link = null
         @blank = @svg.append("svg:g")
@@ -39,14 +41,19 @@ class Sketch
                         .append("svg:g")
                             .on("mousedown", mousedn)
 
+        tool = @pad.easel
         @blank.append("svg:rect")
                  .attr("x", -width/2)
                  .attr("y", -height/2)
                  .attr("width", width)
                  .attr("height", height)
                  .attr("fill", "transparent")
-                 .on("mousedown", (d) =>
-                     @pad.easel.currentTool.mousedown(@pad.easel, "background", d3.mouse(@blank), d))
+                 .on("mousedown", (d) ->
+                     easel.currentTool.mouseDown(easel, "background", d3.mouse(this), d))
+                 #.on("mousemove", (d) =>
+                #     easel.currentTool.mouseMove(easel, "background", d3.mouse(this), d))
+                 .on("mouseup", (d) ->
+                     easel.currentTool.mouseUp(easel, "background", d3.mouse(this), d))
 
         # init nodes,  links, and the line displayed when dragging new nodes
         @nodes = @blank.selectAll(".node")
@@ -80,11 +87,16 @@ class Sketch
         if draw then @resize()
 
     redraw: ->
+      tool = @pad.easel
       @links = @links.data(@structure.beamList)
       @links.enter().insert("line", ".node")
             .attr("class", "link")
-            .on("mousedown", (d) =>
-                @pad.easel.currentTool.mousedown(@pad.easel, "beam", d3.mouse(@blank), d))
+            .on("mousedown", (d) ->
+                easel.currentTool.mouseDown(easel, "beam", d3.mouse(this), d))
+            #.on("mousemove", (d) =>
+            #    easel.currentTool.mouseMove(easel, "beam", d3.mouse(this), d))
+            .on("mouseup", (d) ->
+                easel.currentTool.mouseUp(easel, "beam", d3.mouse(this), d))
       @links.exit().transition()
           .attr("r", 0)
         .remove()
@@ -108,8 +120,12 @@ class Sketch
       @nodes.enter().insert("circle")
           .attr("class", "node")
           .attr("r", 5/@scale)
-          .on("mousedown", (d) =>
-              @pad.easel.currentTool.mousedown(@pad.easel, "node", d3.mouse(@blank), d))
+          .on("mousedown", (d) ->
+              easel.currentTool.mouseDown(easel, "node", d3.mouse(this), d))
+          #.on("mousemove", (d) =>
+        #      easel.currentTool.mouseMove(easel, "node", d3.mouse(this), d))
+          .on("mouseup", (d) ->
+              easel.currentTool.mouseUp(easel, "node", d3.mouse(this), d))
         .transition()
           .duration(750)
           .ease("elastic")
@@ -197,5 +213,4 @@ class Sketch
                                               10/@scale*showgrad.checked
                                            else 0)
 
-@tacit ?= {}
 @tacit.Sketch = Sketch
