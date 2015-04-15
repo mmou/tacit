@@ -1,7 +1,7 @@
 window.tacit ?= {}
 
 class Easel
-    constructor: (@project, toolbarLoc, padLoc, padHeight, padWidth, structure=null) ->
+    constructor: (@project, toolbarLoc, padLoc, padHeight, padWidth, structure) ->
         #@toolbar = new tacit.Toolbar(this, toolbarLoc)
 
         padHtmlRect = d3.select(padLoc).node().getBoundingClientRect()

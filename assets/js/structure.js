@@ -50,8 +50,8 @@
     return Object.keys(o).length === 0;
   };
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
   gen_classes = function(nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) {
@@ -631,6 +631,6 @@
 
   print("                       ...testing complete.");
 
-  this.tacit.Structure = Structure;
+  window.tacit.Structure = Structure;
 
 }).call(this);

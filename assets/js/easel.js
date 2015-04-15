@@ -2,8 +2,8 @@
 (function() {
   var Easel, _ref;
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
   Easel = (function() {
@@ -11,9 +11,6 @@
     function Easel(project, toolbarLoc, padLoc, padHeight, padWidth, structure) {
       var padHtmlRect;
       this.project = project;
-      if (structure == null) {
-        structure = null;
-      }
       padHtmlRect = d3.select(padLoc).node().getBoundingClientRect();
       if (padWidth == null) {
         padWidth = htmlRect.width;
@@ -46,7 +43,6 @@
       if (this.currentTool != null) {
         if (this.currentTool.mouseMove != null) {
           this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
-          return false;
         }
       }
       return false;
@@ -90,6 +86,6 @@
 
   })();
 
-  this.tacit.Easel = Easel;
+  window.tacit.Easel = Easel;
 
 }).call(this);
