@@ -40,8 +40,6 @@ class Sketch
                 #        .on("dblclick.zoom", null)
                 #        .append("svg:g")
                 #            .on("mousedown", mousedn)
-
-        tool = @pad.easel
         @blank.append("svg:rect")
                  .attr("x", -width/2)
                  .attr("y", -height/2)
@@ -57,6 +55,9 @@ class Sketch
                  .on("mouseup", (d) ->
                      easel.mouseUp(easel, "background", d3.mouse(this), d)
                      return false)
+
+        d3.select(window).on("keydown", ->
+                             easel.keyDown(easel, "window", d3.event.keyCode))
 
         # init nodes,  links, and the line displayed when dragging new nodes
         @nodes = @blank.selectAll(".node")
@@ -90,7 +91,6 @@ class Sketch
         if draw then @resize()
 
     redraw: ->
-      tool = @pad.easel
       @links = @links.data(@structure.beamList)
       @links.enter().insert("line", ".node")
             .attr("class", "link")

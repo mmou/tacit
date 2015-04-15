@@ -13,9 +13,9 @@ selectTool =
             if idx is -1
                 selection.push(object)
             else
-                before = selection.slice(0,idx)
-                after = selection[idx+1]
-                selection = before.concat(after)
+                selection.splice(idx, 1)
+
+            console.log selection
 
             if eventType is "node"
                 easel.pad.sketch.selectedNodes = selection

@@ -27,41 +27,56 @@
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
       if (this.currentTool != null) {
         if (this.currentTool.mouseDown != null) {
-          return this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
+          this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
         }
-      } else {
-        return false;
       }
+      return false;
     };
 
     Easel.prototype.mouseUp = function(easel, eventType, mouseLoc, object) {
       if (this.currentTool != null) {
         if (this.currentTool.mouseUp != null) {
-          return this.currentTool.mouseUp(easel, eventType, mouseLoc, object);
+          this.currentTool.mouseUp(easel, eventType, mouseLoc, object);
         }
-      } else {
-        return false;
       }
+      return false;
     };
 
     Easel.prototype.mouseMove = function(easel, eventType, mouseLoc, object) {
       if (this.currentTool != null) {
         if (this.currentTool.mouseMove != null) {
-          return this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
+          this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
+          return false;
         }
-      } else {
-        return false;
       }
+      return false;
     };
 
-    Easel.prototype.keyDown = function(easel, eventType, mouseLoc, object) {
+    Easel.prototype.keyDown = function(easel, eventType, keyCode) {
+      var link, node, _i, _j, _len, _len1, _ref1, _ref2;
       if (this.currentTool != null) {
         if (this.currentTool.keyDown != null) {
-          return this.currentTool.keyDown(easel, eventType, mouseLoc, object);
+          this.currentTool.keyDown(easel, eventType, keyCode);
+          return false;
         }
-      } else {
-        return print("kD");
       }
+      console.log(["kD", easel, eventType, keyCode]);
+      if (keyCode === 8 || keyCode === 46) {
+        _ref1 = this.pad.sketch.selectedNodes;
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          node = _ref1[_i];
+          console.log(node);
+          node["delete"]();
+        }
+        _ref2 = this.pad.sketch.selectedLinks;
+        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+          link = _ref2[_j];
+          link["delete"]();
+        }
+        this.pad.sketch.selectedLinks = this.pad.sketch.selectedNodes = [];
+        this.pad.sketch.redraw();
+      }
+      return false;
     };
 
     return Easel;

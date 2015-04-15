@@ -81,7 +81,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width) {
-      var d, draw, htmlObj, list, maxs, means, mins, n, tool, translate, _i, _len, _ref1, _ref2;
+      var d, draw, htmlObj, list, maxs, means, mins, n, translate, _i, _len, _ref1, _ref2;
       this.pad = pad;
       if (htmlLoc == null) {
         htmlLoc = "body";
@@ -96,7 +96,6 @@
       this.scale = 1;
       this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g");
-      tool = this.pad.easel;
       this.blank.append("svg:rect").attr("x", -width / 2).attr("y", -height / 2).attr("width", width).attr("height", height).attr("fill", "transparent").on("mousedown", function(d) {
         easel.mouseDown(easel, "background", d3.mouse(this), d);
         return false;
@@ -106,6 +105,9 @@
       }).on("mouseup", function(d) {
         easel.mouseUp(easel, "background", d3.mouse(this), d);
         return false;
+      });
+      d3.select(window).on("keydown", function() {
+        return easel.keyDown(easel, "window", d3.event.keyCode);
       });
       this.nodes = this.blank.selectAll(".node");
       this.links = this.blank.selectAll(".link");
@@ -155,8 +157,6 @@
     };
 
     Sketch.prototype.redraw = function() {
-      var tool;
-      tool = this.pad.easel;
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
         easel.mouseDown(easel, "beam", d3.mouse(this), d);

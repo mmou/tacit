@@ -28,6 +28,8 @@
     @sketch = @easel.pad.sketch
     s = @sketch.structure
 
+    print s
+
     sketch.redraw()
     setTimeout((->
         s.nodeList[0].move({y: -200})
@@ -35,6 +37,8 @@
     setTimeout((->
         s.nodeList[0].move({y: 200})
         sketch.reposition_transition()), 1500)
+
+    print @sketch.structure
 
     </script>
 

@@ -12,7 +12,7 @@
 
   selectTool = {
     mouseDown: function(easel, eventType, mouseLoc, object) {
-      var after, before, idx, selection;
+      var idx, selection;
       if (eventType !== "background") {
         if (eventType === "node") {
           selection = easel.pad.sketch.selectedNodes;
@@ -23,10 +23,9 @@
         if (idx === -1) {
           selection.push(object);
         } else {
-          before = selection.slice(0, idx);
-          after = selection[idx + 1];
-          selection = before.concat(after);
+          selection.splice(idx, 1);
         }
+        console.log(selection);
         if (eventType === "node") {
           easel.pad.sketch.selectedNodes = selection;
         } else {

@@ -13,26 +13,32 @@ class Easel
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)
-        else
-            false
+        return false
     mouseUp: (easel, eventType, mouseLoc, object) ->
         if @currentTool?
             if @currentTool.mouseUp?
                 @currentTool.mouseUp(easel, eventType, mouseLoc, object)
-        else
-            false
+        return false
     mouseMove: (easel, eventType, mouseLoc, object) ->
         if @currentTool?
             if @currentTool.mouseMove?
                 @currentTool.mouseMove(easel, eventType, mouseLoc, object)
-        else
-            false
+                return false
+        return false
 
-    keyDown: (easel, eventType, mouseLoc, object) ->
+    keyDown: (easel, eventType, keyCode) ->
         if @currentTool?
             if @currentTool.keyDown?
-                @currentTool.keyDown(easel, eventType, mouseLoc, object)
-        else
-            print "kD"
+                @currentTool.keyDown(easel, eventType, keyCode)
+                return false
+        console.log ["kD", easel, eventType, keyCode]
+        if keyCode is 8 or keyCode is 46  # backspace, delete
+            for node in @pad.sketch.selectedNodes
+                console.log node
+                node.delete()
+            link.delete() for link in @pad.sketch.selectedLinks
+            @pad.sketch.selectedLinks = @pad.sketch.selectedNodes = []
+            @pad.sketch.redraw()
+        return false
 
 @tacit.Easel = Easel
