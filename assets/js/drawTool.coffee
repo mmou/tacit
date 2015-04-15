@@ -1,39 +1,5 @@
-print = (o) -> console.log(o)
-dist = (a, b) -> sqrt(sum(sqr(ai-(if b then b[i] else 0)) for ai, i in a))
-
 @tacit ?= {}
-
-selectTool =
-    mouseDown: (easel, eventType, mouseLoc, object) -> null
-
-    mouseUp: (easel, eventType, mouseLoc, object) ->
-        if eventType isnt "background"
-            if eventType is "node"
-                selection = easel.pad.sketch.selectedNodes
-            else
-                selection = easel.pad.sketch.selectedLinks
-
-            idx = selection.indexOf(object)
-            if idx is -1
-                selection.push(object)
-            else
-                print object
-                print selection
-                before = selection.slice(0,idx)
-                print before
-                after = selection[idx+1]
-                print after
-                selection = before.concat(after)
-                print selection
-
-            if eventType is "node"
-                easel.pad.sketch.selectedNodes = selection
-            else
-                easel.pad.sketch.selectedLinks = selection
-
-            easel.pad.sketch.reposition_transition()
-
-    mouseMove: (easel, eventType, mouseLoc, object) -> null
+@tacit.tools ?= {}
 
 drawTool =
     drawStart: null
@@ -77,6 +43,4 @@ drawTool =
             if easel.pad.sketch.reposition?
                 easel.pad.sketch.reposition()
 
-@tacit.tools =
-    draw: drawTool
-    select: selectTool
+@tacit.tools.draw = drawTool
