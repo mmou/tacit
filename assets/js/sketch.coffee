@@ -49,13 +49,13 @@ class Sketch
                  .attr("height", height)
                  .attr("fill", "transparent")
                  .on("mousedown", (d) ->
-                     easel.currentTool.mouseDown(easel, "background", d3.mouse(this), d)
+                     easel.mouseDown(easel, "background", d3.mouse(this), d)
                      return false)
                  .on("mousemove", (d) ->
-                     easel.currentTool.mouseMove(easel, "background", d3.mouse(this), d)
+                     easel.mouseMove(easel, "background", d3.mouse(this), d)
                      return false)
                  .on("mouseup", (d) ->
-                     easel.currentTool.mouseUp(easel, "background", d3.mouse(this), d)
+                     easel.mouseUp(easel, "background", d3.mouse(this), d)
                      return false)
 
         # init nodes,  links, and the line displayed when dragging new nodes
@@ -95,13 +95,13 @@ class Sketch
       @links.enter().insert("line", ".node")
             .attr("class", "link")
             .on("mousedown", (d) ->
-                easel.currentTool.mouseDown(easel, "beam", d3.mouse(this), d)
+                easel.mouseDown(easel, "beam", d3.mouse(this), d)
                 return false)
             .on("mousemove", (d) ->
-                easel.currentTool.mouseMove(easel, "beam", d3.mouse(this), d)
+                easel.mouseMove(easel, "beam", d3.mouse(this), d)
                 return false)
             .on("mouseup", (d) ->
-                easel.currentTool.mouseUp(easel, "beam", d3.mouse(this), d)
+                easel.mouseUp(easel, "beam", d3.mouse(this), d)
                 return false)
       @links.exit().transition()
           .attr("r", 0)
@@ -126,13 +126,13 @@ class Sketch
           .attr("class", "node")
           .attr("r", 5/@scale)
           .on("mousedown", (d) ->
-              easel.currentTool.mouseDown(easel, "node", d3.mouse(this), d)
+              easel.mouseDown(easel, "node", d3.mouse(this), d)
               return false)
           .on("mousemove", (d) ->
-              easel.currentTool.mouseMove(easel, "node", d3.mouse(this), d)
+              easel.mouseMove(easel, "node", d3.mouse(this), d)
               return false)
           .on("mouseup", (d) ->
-              easel.currentTool.mouseUp(easel, "node", d3.mouse(this), d)
+              easel.mouseUp(easel, "node", d3.mouse(this), d)
               return false)
         .transition()
           .duration(750)

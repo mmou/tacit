@@ -24,7 +24,4 @@ selectTool =
 
             easel.pad.sketch.reposition_transition()
 
-    mouseUp: (easel, eventType, mouseLoc, object) -> false
-    mouseMove: (easel, eventType, mouseLoc, object) -> false
-
 @tacit.tools.select = selectTool

@@ -34,12 +34,6 @@
         }
         return easel.pad.sketch.reposition_transition();
       }
-    },
-    mouseUp: function(easel, eventType, mouseLoc, object) {
-      return false;
-    },
-    mouseMove: function(easel, eventType, mouseLoc, object) {
-      return false;
     }
   };
 

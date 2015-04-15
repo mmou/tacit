@@ -98,13 +98,13 @@
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g");
       tool = this.pad.easel;
       this.blank.append("svg:rect").attr("x", -width / 2).attr("y", -height / 2).attr("width", width).attr("height", height).attr("fill", "transparent").on("mousedown", function(d) {
-        easel.currentTool.mouseDown(easel, "background", d3.mouse(this), d);
+        easel.mouseDown(easel, "background", d3.mouse(this), d);
         return false;
       }).on("mousemove", function(d) {
-        easel.currentTool.mouseMove(easel, "background", d3.mouse(this), d);
+        easel.mouseMove(easel, "background", d3.mouse(this), d);
         return false;
       }).on("mouseup", function(d) {
-        easel.currentTool.mouseUp(easel, "background", d3.mouse(this), d);
+        easel.mouseUp(easel, "background", d3.mouse(this), d);
         return false;
       });
       this.nodes = this.blank.selectAll(".node");
@@ -159,13 +159,13 @@
       tool = this.pad.easel;
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
-        easel.currentTool.mouseDown(easel, "beam", d3.mouse(this), d);
+        easel.mouseDown(easel, "beam", d3.mouse(this), d);
         return false;
       }).on("mousemove", function(d) {
-        easel.currentTool.mouseMove(easel, "beam", d3.mouse(this), d);
+        easel.mouseMove(easel, "beam", d3.mouse(this), d);
         return false;
       }).on("mouseup", function(d) {
-        easel.currentTool.mouseUp(easel, "beam", d3.mouse(this), d);
+        easel.mouseUp(easel, "beam", d3.mouse(this), d);
         return false;
       });
       this.links.exit().transition().attr("r", 0).remove();
@@ -177,13 +177,13 @@
       this.grads.exit().remove();
       this.nodes = this.nodes.data(this.structure.nodeList);
       this.nodes.enter().insert("circle").attr("class", "node").attr("r", 5 / this.scale).on("mousedown", function(d) {
-        easel.currentTool.mouseDown(easel, "node", d3.mouse(this), d);
+        easel.mouseDown(easel, "node", d3.mouse(this), d);
         return false;
       }).on("mousemove", function(d) {
-        easel.currentTool.mouseMove(easel, "node", d3.mouse(this), d);
+        easel.mouseMove(easel, "node", d3.mouse(this), d);
         return false;
       }).on("mouseup", function(d) {
-        easel.currentTool.mouseUp(easel, "node", d3.mouse(this), d);
+        easel.mouseUp(easel, "node", d3.mouse(this), d);
         return false;
       }).transition().duration(750).ease("elastic").attr("r", 9 / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();

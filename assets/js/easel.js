@@ -24,15 +24,43 @@
       this.pad = new tacit.Pad(this, padLoc, padHeight, padWidth, structure);
     }
 
-    Easel.prototype.currentTool = {
-      mouseDown: function(easel, eventType, mouseLoc, object) {
+    Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
+      if (this.currentTool != null) {
+        if (this.currentTool.mouseDown != null) {
+          return this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
+        }
+      } else {
         return false;
-      },
-      mouseUp: function(easel, eventType, mouseLoc, object) {
+      }
+    };
+
+    Easel.prototype.mouseUp = function(easel, eventType, mouseLoc, object) {
+      if (this.currentTool != null) {
+        if (this.currentTool.mouseUp != null) {
+          return this.currentTool.mouseUp(easel, eventType, mouseLoc, object);
+        }
+      } else {
         return false;
-      },
-      mouseMove: function(easel, eventType, mouseLoc, object) {
+      }
+    };
+
+    Easel.prototype.mouseMove = function(easel, eventType, mouseLoc, object) {
+      if (this.currentTool != null) {
+        if (this.currentTool.mouseMove != null) {
+          return this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
+        }
+      } else {
         return false;
+      }
+    };
+
+    Easel.prototype.keyDown = function(easel, eventType, mouseLoc, object) {
+      if (this.currentTool != null) {
+        if (this.currentTool.keyDown != null) {
+          return this.currentTool.keyDown(easel, eventType, mouseLoc, object);
+        }
+      } else {
+        return print("kD");
       }
     };
 
