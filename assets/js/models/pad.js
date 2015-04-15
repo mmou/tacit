@@ -9,7 +9,7 @@
   Pad = (function() {
 
     function Pad(easel, htmlLoc, height, width, structure) {
-      var dim, i, _i, _j, _len, _len1, _ref1, _ref2;
+      var dim, i, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref2, _ref3, _ref4;
       this.easel = easel;
       this.htmlLoc = htmlLoc;
       this.height = height;
@@ -20,27 +20,63 @@
       if (!(structure != null)) {
         structure = new tacit.Structure;
         new structure.Beam({
-          x: 100,
-          y: 100
+          x: 10,
+          y: 0
         }, {
-          x: 0,
+          x: 30,
+          y: 40
+        });
+        new structure.Beam({
+          x: 30,
+          y: 40
+        }, {
+          x: 70,
           y: 0
         });
         new structure.Beam({
-          x: 100,
-          y: 100
+          x: 10,
+          y: 0
         }, {
-          x: 200,
+          x: -15,
+          y: 110
+        });
+        new structure.Beam({
+          x: -15,
+          y: 110
+        }, {
+          x: 30,
+          y: 40
+        });
+        new structure.Beam({
+          x: 30,
+          y: 40
+        }, {
+          x: 100,
+          y: 40
+        });
+        new structure.Beam({
+          x: 100,
+          y: 40
+        }, {
+          x: 70,
           y: 0
         });
-        structure.nodeList[0].force.y = -100;
         _ref1 = ["x", "y"];
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           dim = _ref1[_i];
-          _ref2 = [1, 2];
+          _ref2 = [0, 2];
           for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
             i = _ref2[_j];
             structure.nodeList[i].fixed[dim] = true;
+          }
+        }
+        _ref3 = ["y"];
+        for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
+          dim = _ref3[_k];
+          _ref4 = [1, 3, 4];
+          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+            i = _ref4[_l];
+            structure.nodeList[i].force[dim] = -200;
           }
         }
       }
