@@ -30,18 +30,18 @@
           x: 30,
           y: 40
         }, {
-          x: 70,
+          x: 80,
           y: 0
         });
         new structure.Beam({
           x: 10,
           y: 0
         }, {
-          x: -15,
+          x: -5,
           y: 110
         });
         new structure.Beam({
-          x: -15,
+          x: -5,
           y: 110
         }, {
           x: 30,
@@ -58,17 +58,25 @@
           x: 100,
           y: 40
         }, {
-          x: 70,
+          x: 80,
           y: 0
         });
-        _ref1 = ["x", "y"];
+        new structure.Beam({
+          x: 10,
+          y: 0
+        }, {
+          x: 100,
+          y: 40
+        });
+        _ref1 = [0, 2];
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          dim = _ref1[_i];
-          _ref2 = [0, 2];
-          for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-            i = _ref2[_j];
-            structure.nodeList[i].fixed[dim] = true;
-          }
+          i = _ref1[_i];
+          structure.nodeList[i].fixed.y = true;
+        }
+        _ref2 = [0];
+        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+          i = _ref2[_j];
+          structure.nodeList[i].fixed.x = true;
         }
         _ref3 = ["y"];
         for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
@@ -76,7 +84,7 @@
           _ref4 = [1, 3, 4];
           for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
             i = _ref4[_l];
-            structure.nodeList[i].force[dim] = -200;
+            structure.nodeList[i].force[dim] = -100;
           }
         }
       }

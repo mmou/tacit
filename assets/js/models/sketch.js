@@ -97,14 +97,11 @@
       this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g");
       this.blank.append("svg:rect").attr("x", -width / 2).attr("y", -height / 2).attr("width", width).attr("height", height).attr("fill", "transparent").on("mousedown", function(d) {
-        easel.mouseDown(easel, "background", d3.mouse(this), d);
-        return false;
+        return easel.mouseDown(easel, "background", d3.mouse(this), d);
       }).on("mousemove", function(d) {
-        easel.mouseMove(easel, "background", d3.mouse(this), d);
-        return false;
+        return easel.mouseMove(easel, "background", d3.mouse(this), d);
       }).on("mouseup", function(d) {
-        easel.mouseUp(easel, "background", d3.mouse(this), d);
-        return false;
+        return easel.mouseUp(easel, "background", d3.mouse(this), d);
       });
       d3.select(window).on("keydown", function() {
         return easel.keyDown(easel, "window", d3.event.keyCode);
@@ -159,32 +156,38 @@
     Sketch.prototype.updateDrawing = function() {
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
-        easel.mouseDown(easel, "beam", d3.mouse(this), d);
-        return false;
+        return easel.mouseDown(easel, "beam", d3.mouse(this), d);
       }).on("mousemove", function(d) {
-        easel.mouseMove(easel, "beam", d3.mouse(this), d);
-        return false;
+        return easel.mouseMove(easel, "beam", d3.mouse(this), d);
       }).on("mouseup", function(d) {
-        easel.mouseUp(easel, "beam", d3.mouse(this), d);
-        return false;
+        return easel.mouseUp(easel, "beam", d3.mouse(this), d);
       });
       this.links.exit().transition().attr("r", 0).remove();
       this.forces = this.forces.data(this.structure.nodeList);
-      this.forces.enter().insert("line").attr("class", "force").attr("stroke-width", 0).attr("marker-end", "url(#brtriangle)");
+      this.forces.enter().insert("line").attr("class", "force").attr("stroke-width", 0).attr("marker-end", "url(#brtriangle)").on("mousedown", function(d) {
+        return easel.mouseDown(easel, "force", d3.mouse(this), d);
+      }).on("mousemove", function(d) {
+        return easel.mouseMove(easel, "force", d3.mouse(this), d);
+      }).on("mouseup", function(d) {
+        return easel.mouseUp(easel, "force", d3.mouse(this), d);
+      });
       this.forces.exit().remove();
       this.grads = this.grads.data(this.structure.nodeList);
-      this.grads.enter().insert("line").attr("class", "grad").attr("stroke-width", 0).attr("marker-end", "url(#ptriangle)");
+      this.grads.enter().insert("line").attr("class", "grad").attr("stroke-width", 0).attr("marker-end", "url(#ptriangle)").on("mousedown", function(d) {
+        return easel.mouseDown(easel, "grad", d3.mouse(this), d);
+      }).on("mousemove", function(d) {
+        return easel.mouseMove(easel, "grad", d3.mouse(this), d);
+      }).on("mouseup", function(d) {
+        return easel.mouseUp(easel, "grad", d3.mouse(this), d);
+      });
       this.grads.exit().remove();
       this.nodes = this.nodes.data(this.structure.nodeList);
       this.nodes.enter().insert("circle").attr("class", "node").attr("r", 5 / this.scale).on("mousedown", function(d) {
-        easel.mouseDown(easel, "node", d3.mouse(this), d);
-        return false;
+        return easel.mouseDown(easel, "node", d3.mouse(this), d);
       }).on("mousemove", function(d) {
-        easel.mouseMove(easel, "node", d3.mouse(this), d);
-        return false;
+        return easel.mouseMove(easel, "node", d3.mouse(this), d);
       }).on("mouseup", function(d) {
-        easel.mouseUp(easel, "node", d3.mouse(this), d);
-        return false;
+        return easel.mouseUp(easel, "node", d3.mouse(this), d);
       }).transition().duration(750).ease("elastic").attr("r", 9 / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();
       return this.slowDraw();
@@ -217,7 +220,7 @@
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("stroke-width", function(d) {
-        return 0.035 * d.F || 5 / _this.scale * showzero.checked;
+        return 0.35 * sqrt(d.F) || 5 / _this.scale * showzero.checked;
       });
       this.nodes.attr("cx", function(d) {
         return d.x;
@@ -238,7 +241,7 @@
         return d.y + d.force.y / 4;
       }).attr("stroke-width", function(d) {
         var f;
-        if (dist((function() {
+        if (!d.fixed.y && dist((function() {
           var _ref1, _results;
           _ref1 = d.force;
           _results = [];
@@ -336,7 +339,7 @@
           return 10 / _this.scale + "," + 10 / _this.scale;
         }
       }).attr("stroke-width", function(d) {
-        return 0.035 * d.F || 5 / _this.scale * showzero.checked;
+        return 0.35 * sqrt(d.F) || 5 / _this.scale * showzero.checked;
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
       });
@@ -347,7 +350,7 @@
       });
       this.forces.attr("stroke-width", function(d) {
         var f;
-        if (dist((function() {
+        if (!d.fixed.y && dist((function() {
           var _ref1, _results;
           _ref1 = d.force;
           _results = [];
