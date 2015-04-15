@@ -1,6 +1,6 @@
 body { 
 	height:100%;
-	background-color: rgba(125, 212, 250, 1);	
+	background-color: #d4d4d4;	
 }
 
 .row {
@@ -8,11 +8,10 @@ body {
 }
 
 #HistoryView {
-	margin-top: 50px; /* because of the header */ 
 	height:10%;
 	min-height: 60px;
 	padding:4px;
-	background-color: rgba(125, 212, 250, 1);
+	background-color: #d4d4d4;
 }
 
 #HistorySketchesView {
@@ -21,11 +20,8 @@ body {
 	height:100%;
 }
 
-#save-btn {
-margin: auto;
-}
-
 #EaselView {
+	margin-top: 50px; /* because of the header */ 
 	min-height: 500px;
 	height:100%;
 	background-color:white;
@@ -40,7 +36,7 @@ margin: auto;
 #SuggestionsView {
 	height:14%;
 	min-height: 100px;
-	background-color: rgba(125, 212, 250, 1);	
+	background-color: #d4d4d4;	
 }
 
 .toolbar-btn {
