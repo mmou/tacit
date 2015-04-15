@@ -1,4 +1,4 @@
-@tacit ?= {}
+window.tacit ?= {}
 
 class Easel
     constructor: (@project, toolbarLoc, padLoc, padHeight, padWidth, structure=null) ->
@@ -45,4 +45,4 @@ class Easel
                 easel.currentTool = tacit.tools.select
         return false
 
-@tacit.Easel = Easel
+window.tacit.Easel = Easel

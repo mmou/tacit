@@ -13,7 +13,7 @@ print = (o) -> console.log(o)
 @showzero = {checked: true}
 @move = {checked: false}
 
-@tacit ?= {}
+window.tacit ?= {}
 
 class Sketch
     constructor: (@pad, htmlLoc="body", structure, height, width) ->
@@ -228,4 +228,4 @@ class Sketch
                     else
                         0)
 
-@tacit.Sketch = Sketch
+window.tacit.Sketch = Sketch

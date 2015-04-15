@@ -1,5 +1,5 @@
-@tacit ?= {}
-@tacit.tools ?= {}
+window.tacit ?= {}
+window.tacit.tools ?= {}
 
 selectTool =
     mouseDown: (easel, eventType, mouseLoc, object) ->
@@ -47,4 +47,4 @@ selectTool =
                 easel.pad.sketch.quickDraw()
 
 
-@tacit.tools.select = selectTool
+window.tacit.tools.select = selectTool

@@ -21,10 +21,10 @@
 
     <script type="text/coffeescript">
     print = (o) -> console.log(o)
-    print @tacit
+    print window.tacit
 
-    @easel = new @tacit.Easel(null, "#ToolbarView", "#PadView", 400, 400)
-    @easel.currentTool = @tacit.tools.select
+    @easel = new window.tacit.Easel(null, "#ToolbarView", "#PadView", 400, 400)
+    @easel.currentTool = window.tacit.tools.select
     @sketch = @easel.pad.sketch
     s = @sketch.structure
 

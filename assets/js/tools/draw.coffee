@@ -1,5 +1,5 @@
-@tacit ?= {}
-@tacit.tools ?= {}
+window.tacit ?= {}
+window.tacit.tools ?= {}
 
 drawTool =
     drawStart: null
@@ -41,4 +41,4 @@ drawTool =
                             .attr("y2", mouseLoc[1])
             easel.pad.sketch.quickDraw()
 
-@tacit.tools.draw = drawTool
+window.tacit.tools.draw = drawTool
