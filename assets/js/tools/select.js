@@ -12,7 +12,8 @@
 
   selectTool = {
     mouseDown: function(easel, eventType, mouseLoc, object) {
-      var after, before, idx, selection;
+      var idx, selection;
+      this.dragging = true;
       if (eventType !== "background") {
         if (eventType === "node") {
           selection = easel.pad.sketch.selectedNodes;
@@ -23,16 +24,39 @@
         if (idx === -1) {
           selection.push(object);
         } else {
-          before = selection.slice(0, idx);
-          after = selection[idx + 1];
-          selection = before.concat(after);
+          selection.splice(idx, 1);
         }
         if (eventType === "node") {
           easel.pad.sketch.selectedNodes = selection;
         } else {
           easel.pad.sketch.selectedLinks = selection;
         }
-        return easel.pad.sketch.reposition_transition();
+        return easel.pad.sketch.slowDraw();
+      }
+    },
+    mouseUp: function(easel, eventType, mouseLoc, object) {
+      return this.dragging = false;
+    },
+    mouseMove: function(easel, eventType, mouseLoc, object) {
+      var idx, selection;
+      if (this.dragging) {
+        if (eventType !== "background") {
+          if (eventType === "node") {
+            selection = easel.pad.sketch.selectedNodes;
+          } else {
+            selection = easel.pad.sketch.selectedLinks;
+          }
+          idx = selection.indexOf(object);
+          if (idx === -1) {
+            selection.push(object);
+          }
+          if (eventType === "node") {
+            easel.pad.sketch.selectedNodes = selection;
+          } else {
+            easel.pad.sketch.selectedLinks = selection;
+          }
+          return easel.pad.sketch.quickDraw();
+        }
       }
     }
   };

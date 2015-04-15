@@ -21,20 +21,20 @@
 
     <script type="text/coffeescript">
     print = (o) -> console.log(o)
-    print @tacit
+    print window.tacit
 
-    @easel = new @tacit.Easel(null, "#ToolbarView", "#PadView", 400, 400)
-    @easel.currentTool = @tacit.tools.select
+    @easel = new window.tacit.Easel(null, "#ToolbarView", "#PadView", 400, 400)
+    @easel.currentTool = window.tacit.tools.select
     @sketch = @easel.pad.sketch
     s = @sketch.structure
 
-    sketch.redraw()
+    sketch.updateDrawing()
     setTimeout((->
         s.nodeList[0].move({y: -200})
-        sketch.reposition_transition()), 800)
+        sketch.slowDraw()), 800)
     setTimeout((->
         s.nodeList[0].move({y: 200})
-        sketch.reposition_transition()), 1500)
+        sketch.slowDraw()), 1500)
 
     </script>
 
