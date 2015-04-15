@@ -1,7 +1,7 @@
 window.tacit ?= {}
 
 class Easel
-    constructor: (@project, toolbarLoc, padLoc, padHeight, padWidth, structure=null) ->
+    constructor: (@project, toolbarLoc, padLoc, padHeight, padWidth, structure) ->
         #@toolbar = new tacit.Toolbar(this, toolbarLoc)
 
         padHtmlRect = d3.select(padLoc).node().getBoundingClientRect()
@@ -26,11 +26,10 @@ class Easel
         return false
 
     keyDown: (easel, eventType, keyCode) ->
-        console.log keyCode
         if @currentTool?
             if @currentTool.keyDown?
-                @currentTool.keyDown(easel, eventType, keyCode)
-                return false
+                if @currentTool.keyDown(easel, eventType, keyCode)
+                    return false
         switch d3.event.keyCode
             when 8, 46  # backspace, delete
                 for node in @pad.sketch.selectedNodes
@@ -40,8 +39,12 @@ class Easel
                 @pad.sketch.updateDrawing()
             when 68 # d
                 easel.currentTool = tacit.tools.draw
+                `$('.active').removeClass("active");
+            	 $("#draw-btn").addClass("active");`
             when 83 # s
                 easel.currentTool = tacit.tools.select
+                `$('.active').removeClass("active");
+            	 $("#select-btn").addClass("active");`
         return false
 
 window.tacit.Easel = Easel

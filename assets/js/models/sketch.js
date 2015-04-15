@@ -74,8 +74,8 @@
     checked: false
   };
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
   Sketch = (function() {
@@ -385,6 +385,6 @@
 
   })();
 
-  this.tacit.Sketch = Sketch;
+  window.tacit.Sketch = Sketch;
 
 }).call(this);

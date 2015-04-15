@@ -2,8 +2,8 @@
 (function() {
   var Easel, _ref;
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
   Easel = (function() {
@@ -11,9 +11,6 @@
     function Easel(project, toolbarLoc, padLoc, padHeight, padWidth, structure) {
       var padHtmlRect;
       this.project = project;
-      if (structure == null) {
-        structure = null;
-      }
       padHtmlRect = d3.select(padLoc).node().getBoundingClientRect();
       if (padWidth == null) {
         padWidth = htmlRect.width;
@@ -46,7 +43,6 @@
       if (this.currentTool != null) {
         if (this.currentTool.mouseMove != null) {
           this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
-          return false;
         }
       }
       return false;
@@ -54,11 +50,11 @@
 
     Easel.prototype.keyDown = function(easel, eventType, keyCode) {
       var link, node, _i, _j, _len, _len1, _ref1, _ref2;
-      console.log(keyCode);
       if (this.currentTool != null) {
         if (this.currentTool.keyDown != null) {
-          this.currentTool.keyDown(easel, eventType, keyCode);
-          return false;
+          if (this.currentTool.keyDown(easel, eventType, keyCode)) {
+            return false;
+          }
         }
       }
       switch (d3.event.keyCode) {
@@ -79,9 +75,15 @@
           break;
         case 68:
           easel.currentTool = tacit.tools.draw;
+          $('.active').removeClass("active");
+            	 $("#draw-btn").addClass("active");;
+
           break;
         case 83:
           easel.currentTool = tacit.tools.select;
+          $('.active').removeClass("active");
+            	 $("#select-btn").addClass("active");;
+
       }
       return false;
     };
@@ -90,6 +92,6 @@
 
   })();
 
-  this.tacit.Easel = Easel;
+  window.tacit.Easel = Easel;
 
 }).call(this);
