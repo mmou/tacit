@@ -2,11 +2,11 @@
 (function() {
   var drawTool, _base, _ref, _ref1;
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
-  if ((_ref1 = (_base = this.tacit).tools) == null) {
+  if ((_ref1 = (_base = window.tacit).tools) == null) {
     _base.tools = {};
   }
 
@@ -65,6 +65,6 @@
     }
   };
 
-  this.tacit.tools.draw = drawTool;
+  window.tacit.tools.draw = drawTool;
 
 }).call(this);
