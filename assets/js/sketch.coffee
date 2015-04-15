@@ -32,7 +32,7 @@ class Sketch
 #        zoomer = d3.behavior.zoom().on("zoom", => @rescale())
 #        mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale())
 
-        @selected_node = @selected_link = null
+        @selectedNodes = @selectedLinks = []
         @blank = @svg.append("svg:g")
                      .attr("transform", "translate(0,#{height}) scale(1,-1)")
                      .append("svg:g")
@@ -106,7 +106,6 @@ class Sketch
       @links.exit().transition()
           .attr("r", 0)
         .remove()
-      @links.classed("selected", (d) => d is @selected_link)
 
       @forces = @forces.data(@structure.nodeList)
       @forces.enter().insert("line")
@@ -142,7 +141,6 @@ class Sketch
       @nodes.exit().transition()
           .attr("r", 0)
         .remove()
-      @nodes.classed("node_selected", (d) => d is @selected_node)
 
       @reposition_transition()
 
@@ -158,6 +156,7 @@ class Sketch
               .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
               .classed("compression", (d) => d.f < 0)
               .classed("tension", (d) => d.f > 0)
+              .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
               .transition()
                 .duration(750)
                 .ease("elastic")
@@ -165,10 +164,11 @@ class Sketch
 
         @nodes.attr("cx", (d) => d.x)
               .attr("cy", (d) => d.y)
+              .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
               .transition()
                 .duration(750)
                 .ease("elastic")
-                    .attr("r", (d) => 18/@scale * if d is @selected_node then 2 else 1)
+                    .attr("r", (d) => 18/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
 
         @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/4)
                .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/4)
@@ -211,8 +211,10 @@ class Sketch
 
         @links.attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
               .attr("stroke-width",  (d) => 0.035*d.F or 5/@scale*showzero.checked)
+              .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
-        @nodes.attr("r", (d) => 18/@scale * if d is @selected_node then 2 else 1)
+        @nodes.attr("r", (d) => 18/@scale * if d is @selectedNodes.indexOf(d)+1 then 2 else 1)
+              .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
 
         @forces.attr("stroke-width", (d) => if dist(f for d, f of d.force) > 0
                                                10/@scale*showforce.checked

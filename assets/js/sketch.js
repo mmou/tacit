@@ -94,7 +94,7 @@
       }
       this.svg = htmlObj.append("svg:svg").attr("width", width).attr("height", height).attr("pointer-events", "all");
       this.scale = 1;
-      this.selected_node = this.selected_link = null;
+      this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g");
       tool = this.pad.easel;
       this.blank.append("svg:rect").attr("x", -width / 2).attr("y", -height / 2).attr("width", width).attr("height", height).attr("fill", "transparent").on("mousedown", function(d) {
@@ -155,8 +155,7 @@
     };
 
     Sketch.prototype.redraw = function() {
-      var tool,
-        _this = this;
+      var tool;
       tool = this.pad.easel;
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
@@ -170,9 +169,6 @@
         return false;
       });
       this.links.exit().transition().attr("r", 0).remove();
-      this.links.classed("selected", function(d) {
-        return d === _this.selected_link;
-      });
       this.forces = this.forces.data(this.structure.nodeList);
       this.forces.enter().insert("line").attr("class", "force").attr("stroke-width", 0).attr("marker-end", "url(#brtriangle)");
       this.forces.exit().remove();
@@ -191,9 +187,6 @@
         return false;
       }).transition().duration(750).ease("elastic").attr("r", 9 / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();
-      this.nodes.classed("node_selected", function(d) {
-        return d === _this.selected_node;
-      });
       return this.reposition_transition();
     };
 
@@ -221,6 +214,8 @@
         return d.f < 0;
       }).classed("tension", function(d) {
         return d.f > 0;
+      }).classed("selected", function(d) {
+        return _this.selectedLinks.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("stroke-width", function(d) {
         return 0.035 * d.F || 5 / _this.scale * showzero.checked;
       });
@@ -228,8 +223,10 @@
         return d.x;
       }).attr("cy", function(d) {
         return d.y;
+      }).classed("selected", function(d) {
+        return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("r", function(d) {
-        return 18 / _this.scale * (d === _this.selected_node ? 2 : 1);
+        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
       });
       this.forces.attr("x1", function(d) {
         return d.x;
@@ -344,9 +341,13 @@
         }
       }).attr("stroke-width", function(d) {
         return 0.035 * d.F || 5 / _this.scale * showzero.checked;
+      }).classed("selected", function(d) {
+        return _this.selectedLinks.indexOf(d) + 1;
       });
       this.nodes.attr("r", function(d) {
-        return 18 / _this.scale * (d === _this.selected_node ? 2 : 1);
+        return 18 / _this.scale * (d === _this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
+      }).classed("selected", function(d) {
+        return _this.selectedNodes.indexOf(d) + 1;
       });
       this.forces.attr("stroke-width", function(d) {
         var f;

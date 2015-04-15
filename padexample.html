@@ -14,6 +14,7 @@
     <script src="assets/js/index.js"></script>
     <script src="assets/js/sketch.js"></script>
     <script src="assets/js/structure.js"></script>
+    <script src="assets/js/tools.js"></script>
     <script src="assets/js/easel.js"></script>
     <script src="assets/js/pad.js"></script>
 
@@ -22,6 +23,7 @@
     print @tacit
 
     @easel = new @tacit.Easel(null, "#ToolbarView", "#PadView", 400, 400)
+    @easel.currentTool = @tacit.tools.select
     @sketch = @easel.pad.sketch
     s = @sketch.structure
 
