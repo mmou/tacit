@@ -23,7 +23,6 @@ class Easel
         if @currentTool?
             if @currentTool.mouseMove?
                 @currentTool.mouseMove(easel, eventType, mouseLoc, object)
-                return false
         return false
 
     keyDown: (easel, eventType, keyCode) ->
