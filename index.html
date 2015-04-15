@@ -22,6 +22,30 @@
 
     <script src="assets/js/controllers/toolbar.js"></script>
     <script src="assets/js/index.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){	
+		$(document).click(function(evt){
+			if($(evt.target).is("#tutorial-btn") && $("#instructions").length == 0){
+				//Add div containing temporary tutorials
+				$("#Tutorial").append(
+					"<div id='instructions'>" + 
+						"<p> <span style='color:#ff4444'> Red </span> indicates the presence compression forces. </p>" +
+						"<p> <span style='color:#00c7ff'> Blue </span> indicates the presence tension forces. <p/>" +
+						"Available tools include: <br/>" +
+						"Select, Move, Draw, Erase, Measure, Test Loading" +
+					"</div>"
+					);
+			} else {
+				$("#instructions").remove();
+				$("#tutorial-btn").removeClass("active");
+				//How do I get it to look unclicked?
+				evt.stopImmediatePropagation();
+
+			}
+		});
+	});
+	</script>
 
 
 </head>
@@ -46,11 +70,12 @@
     <div class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
 
-        <!-- Makes a lot more sense to me next to the file.  Opinions?, but would have to match fonts -->
+        <!-- Makes a lot more sense to me next to the file.  Opinions?, but would have to match fonts EH -->
       	<div class="navbar-brand">
         	my_chair
       	</div>
 
+      	<!-- Can we adjust dropdown so that it comes directly down and not to the side? EH --> 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">File <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -88,7 +113,12 @@
             </div>
 
             <div id="PadView" class="col-md-11">
+                <div id="Tutorial">
+             		<button type="button" class="btn btn-default" id="tutorial-btn" style="font-size:17px; font-family: sans-serif; color: #5C5C5C"> Tutorial </button> 
+            	</div>
             </div>
+
+
     </div>
 
     <div id="SuggestionsView" class="row">

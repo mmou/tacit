@@ -1,11 +1,14 @@
 body { 
 	height:100%;
 	background-color: #d4d4d4;	
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 18px;
 }
 
 .row {
 	min-height:40px;
 }
+
 
 #HistoryView {
 	height:10%;
@@ -39,8 +42,28 @@ body {
 	background-color: #d4d4d4;	
 }
 
+#Tutorial{
+	position: relative;
+	top: 10px;
+	float: right;
+	width: 150px;
+}
+
+#instructions{
+	color:#5C5C5C;
+	position: absolute;
+	margin-top: 20px;
+	font-size: 12px;
+}
+
+#tutorial-btn {
+	width: 150px;
+	height: 35px;
+}
+
 .toolbar-btn {
 	height: 80px;
 	width: 100%;
 	margin-top: 10px;
 }
+
