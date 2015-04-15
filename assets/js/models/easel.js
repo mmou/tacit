@@ -50,11 +50,11 @@
 
     Easel.prototype.keyDown = function(easel, eventType, keyCode) {
       var link, node, _i, _j, _len, _len1, _ref1, _ref2;
-      console.log(keyCode);
       if (this.currentTool != null) {
         if (this.currentTool.keyDown != null) {
-          this.currentTool.keyDown(easel, eventType, keyCode);
-          return false;
+          if (this.currentTool.keyDown(easel, eventType, keyCode)) {
+            return false;
+          }
         }
       }
       switch (d3.event.keyCode) {
@@ -75,9 +75,15 @@
           break;
         case 68:
           easel.currentTool = tacit.tools.draw;
+          $('.active').removeClass("active");
+            	 $("#draw-btn").addClass("active");;
+
           break;
         case 83:
           easel.currentTool = tacit.tools.select;
+          $('.active').removeClass("active");
+            	 $("#select-btn").addClass("active");;
+
       }
       return false;
     };

@@ -19,31 +19,10 @@
     <script src="assets/js/models/easel.js"></script>
     <script src="assets/js/models/pad.js"></script>
 
-    <!-- todo: move this coffeescript to index.js. i don't know coffeescript well enough to get this to work right now. -->
-    <script type="text/coffeescript">
-    print = (o) -> console.log(o)
-    print @tacit
-
-    @easel = new @tacit.Easel(null, "#ToolbarView", "#PadView", 450, 900)
-
-    @sketch = @easel.pad.sketch
-    s = @sketch.structure
-
-    sketch.redraw()
-    setTimeout((->
-        s.nodeList[0].move({y: -200})
-        sketch.reposition_transition()), 800)
-    setTimeout((->
-        s.nodeList[0].move({y: 200})
-        sketch.reposition_transition()), 1500)
-
-    </script>
-
-
     <script src="assets/js/controllers/toolbar.js"></script>
     <script src="assets/js/index.js"></script>
 
-    
+
 </head>
 
 <body>
@@ -81,8 +60,8 @@
 <!--
     <div id="HistoryView" class="row">
         <div id="HistorySketchesView" class="col-md-11" >
-            
-        </div> 
+
+        </div>
         <div  class="col-md-1">
             <button id="save-btn" type="button" class="btn btn-default btn-lg">Save</button>
         </div>
