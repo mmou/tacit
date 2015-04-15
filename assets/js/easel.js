@@ -54,27 +54,34 @@
 
     Easel.prototype.keyDown = function(easel, eventType, keyCode) {
       var link, node, _i, _j, _len, _len1, _ref1, _ref2;
+      console.log(keyCode);
       if (this.currentTool != null) {
         if (this.currentTool.keyDown != null) {
           this.currentTool.keyDown(easel, eventType, keyCode);
           return false;
         }
       }
-      console.log(["kD", easel, eventType, keyCode]);
-      if (keyCode === 8 || keyCode === 46) {
-        _ref1 = this.pad.sketch.selectedNodes;
-        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          node = _ref1[_i];
-          console.log(node);
-          node["delete"]();
-        }
-        _ref2 = this.pad.sketch.selectedLinks;
-        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-          link = _ref2[_j];
-          link["delete"]();
-        }
-        this.pad.sketch.selectedLinks = this.pad.sketch.selectedNodes = [];
-        this.pad.sketch.redraw();
+      switch (d3.event.keyCode) {
+        case 8:
+        case 46:
+          _ref1 = this.pad.sketch.selectedNodes;
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            node = _ref1[_i];
+            node["delete"]();
+          }
+          _ref2 = this.pad.sketch.selectedLinks;
+          for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+            link = _ref2[_j];
+            link["delete"]();
+          }
+          this.pad.sketch.selectedLinks = this.pad.sketch.selectedNodes = [];
+          this.pad.sketch.updateDrawing();
+          break;
+        case 68:
+          easel.currentTool = tacit.tools.draw;
+          break;
+        case 83:
+          easel.currentTool = tacit.tools.select;
       }
       return false;
     };

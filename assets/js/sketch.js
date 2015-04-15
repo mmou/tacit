@@ -156,7 +156,7 @@
       }
     };
 
-    Sketch.prototype.redraw = function() {
+    Sketch.prototype.updateDrawing = function() {
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
         easel.mouseDown(easel, "beam", d3.mouse(this), d);
@@ -187,10 +187,10 @@
         return false;
       }).transition().duration(750).ease("elastic").attr("r", 9 / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();
-      return this.reposition_transition();
+      return this.slowDraw();
     };
 
-    Sketch.prototype.reposition_transition = function() {
+    Sketch.prototype.slowDraw = function() {
       var w,
         _this = this;
       this.structure.solve();
@@ -226,7 +226,7 @@
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("r", function(d) {
-        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
+        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
       });
       this.forces.attr("x1", function(d) {
         return d.x;
@@ -280,12 +280,7 @@
       });
     };
 
-    return Sketch;
-
-  })();
-
-  ({
-    reposition: function() {
+    Sketch.prototype.quickDraw = function() {
       var w,
         _this = this;
       this.structure.solve();
@@ -328,8 +323,9 @@
       }).attr("y2", function(d) {
         return d.y - 50 / _this.scale * d.grad.y * w;
       });
-    },
-    resize: function() {
+    };
+
+    Sketch.prototype.resize = function() {
       var w,
         _this = this;
       w = this.structure.nodeList.length / this.structure.lp.obj;
@@ -345,7 +341,7 @@
         return _this.selectedLinks.indexOf(d) + 1;
       });
       this.nodes.attr("r", function(d) {
-        return 18 / _this.scale * (d === _this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
+        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       });
@@ -383,8 +379,11 @@
           return 0;
         }
       });
-    }
-  });
+    };
+
+    return Sketch;
+
+  })();
 
   this.tacit.Sketch = Sketch;
 

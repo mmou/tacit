@@ -27,18 +27,22 @@ class Easel
         return false
 
     keyDown: (easel, eventType, keyCode) ->
+        console.log keyCode
         if @currentTool?
             if @currentTool.keyDown?
                 @currentTool.keyDown(easel, eventType, keyCode)
                 return false
-        console.log ["kD", easel, eventType, keyCode]
-        if keyCode is 8 or keyCode is 46  # backspace, delete
-            for node in @pad.sketch.selectedNodes
-                console.log node
-                node.delete()
-            link.delete() for link in @pad.sketch.selectedLinks
-            @pad.sketch.selectedLinks = @pad.sketch.selectedNodes = []
-            @pad.sketch.redraw()
+        switch d3.event.keyCode
+            when 8, 46  # backspace, delete
+                for node in @pad.sketch.selectedNodes
+                    node.delete()
+                link.delete() for link in @pad.sketch.selectedLinks
+                @pad.sketch.selectedLinks = @pad.sketch.selectedNodes = []
+                @pad.sketch.updateDrawing()
+            when 68 # d
+                easel.currentTool = tacit.tools.draw
+            when 83 # s
+                easel.currentTool = tacit.tools.select
         return false
 
 @tacit.Easel = Easel

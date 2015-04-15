@@ -90,61 +90,61 @@ class Sketch
         @blank.attr("transform", "translate(#{translate}) scale(#{scale})")
         if draw then @resize()
 
-    redraw: ->
-      @links = @links.data(@structure.beamList)
-      @links.enter().insert("line", ".node")
-            .attr("class", "link")
+    updateDrawing: ->
+        @links = @links.data(@structure.beamList)
+        @links.enter().insert("line", ".node")
+              .attr("class", "link")
+              .on("mousedown", (d) ->
+                  easel.mouseDown(easel, "beam", d3.mouse(this), d)
+                  return false)
+              .on("mousemove", (d) ->
+                  easel.mouseMove(easel, "beam", d3.mouse(this), d)
+                  return false)
+              .on("mouseup", (d) ->
+                  easel.mouseUp(easel, "beam", d3.mouse(this), d)
+                  return false)
+        @links.exit().transition()
+            .attr("r", 0)
+          .remove()
+
+        @forces = @forces.data(@structure.nodeList)
+        @forces.enter().insert("line")
+            .attr("class", "force")
+            .attr("stroke-width", 0)
+            .attr("marker-end", "url(#brtriangle)")
+        @forces.exit().remove()
+
+        @grads = @grads.data(@structure.nodeList)
+        @grads.enter().insert("line")
+            .attr("class","grad")
+            .attr("stroke-width", 0)
+            .attr("marker-end", "url(#ptriangle)")
+        @grads.exit().remove()
+
+        @nodes = @nodes.data(@structure.nodeList)
+        @nodes.enter().insert("circle")
+            .attr("class", "node")
+            .attr("r", 5/@scale)
             .on("mousedown", (d) ->
-                easel.mouseDown(easel, "beam", d3.mouse(this), d)
+                easel.mouseDown(easel, "node", d3.mouse(this), d)
                 return false)
             .on("mousemove", (d) ->
-                easel.mouseMove(easel, "beam", d3.mouse(this), d)
+                easel.mouseMove(easel, "node", d3.mouse(this), d)
                 return false)
             .on("mouseup", (d) ->
-                easel.mouseUp(easel, "beam", d3.mouse(this), d)
+                easel.mouseUp(easel, "node", d3.mouse(this), d)
                 return false)
-      @links.exit().transition()
-          .attr("r", 0)
-        .remove()
+          .transition()
+            .duration(750)
+            .ease("elastic")
+            .attr("r", 9/@scale)
+        @nodes.exit().transition()
+            .attr("r", 0)
+          .remove()
 
-      @forces = @forces.data(@structure.nodeList)
-      @forces.enter().insert("line")
-          .attr("class", "force")
-          .attr("stroke-width", 0)
-          .attr("marker-end", "url(#brtriangle)")
-      @forces.exit().remove()
+        @slowDraw()
 
-      @grads = @grads.data(@structure.nodeList)
-      @grads.enter().insert("line")
-          .attr("class","grad")
-          .attr("stroke-width", 0)
-          .attr("marker-end", "url(#ptriangle)")
-      @grads.exit().remove()
-
-      @nodes = @nodes.data(@structure.nodeList)
-      @nodes.enter().insert("circle")
-          .attr("class", "node")
-          .attr("r", 5/@scale)
-          .on("mousedown", (d) ->
-              easel.mouseDown(easel, "node", d3.mouse(this), d)
-              return false)
-          .on("mousemove", (d) ->
-              easel.mouseMove(easel, "node", d3.mouse(this), d)
-              return false)
-          .on("mouseup", (d) ->
-              easel.mouseUp(easel, "node", d3.mouse(this), d)
-              return false)
-        .transition()
-          .duration(750)
-          .ease("elastic")
-          .attr("r", 9/@scale)
-      @nodes.exit().transition()
-          .attr("r", 0)
-        .remove()
-
-      @reposition_transition()
-
-    reposition_transition: ->
+    slowDraw: ->
         @structure.solve()
         w = @structure.nodeList.length/@structure.lp.obj
 
@@ -168,7 +168,7 @@ class Sketch
               .transition()
                 .duration(750)
                 .ease("elastic")
-                    .attr("r", (d) => 18/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
+                    .attr("r", (d) => 18/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
 
         @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/4)
                .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/4)
@@ -178,11 +178,13 @@ class Sketch
 
         @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x - 50/@scale*d.grad.x*w)
               .attr("y1", (d) => d.y).attr("y2", (d) => d.y - 50/@scale*d.grad.y*w)
-              .attr("stroke-width", (d) => if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
-                                              10/@scale*showgrad.checked
-                                           else 0)
+              .attr("stroke-width", (d) =>
+                    if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
+                        10/@scale*showgrad.checked
+                    else
+                        0)
 
-    reposition: ->
+    quickDraw: ->
         @structure.solve()
         @resize()
 
@@ -213,15 +215,17 @@ class Sketch
               .attr("stroke-width",  (d) => 0.035*d.F or 5/@scale*showzero.checked)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
-        @nodes.attr("r", (d) => 18/@scale * if d is @selectedNodes.indexOf(d)+1 then 2 else 1)
+        @nodes.attr("r", (d) => 18/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
 
         @forces.attr("stroke-width", (d) => if dist(f for d, f of d.force) > 0
                                                10/@scale*showforce.checked
                                             else 0)
 
-        @grads.attr("stroke-width", (d) => if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
-                                              10/@scale*showgrad.checked
-                                           else 0)
+        @grads.attr("stroke-width", (d) =>
+                    if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
+                        10/@scale*showgrad.checked
+                    else
+                        0)
 
 @tacit.Sketch = Sketch

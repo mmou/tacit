@@ -190,16 +190,6 @@
 
       Node.prototype["delete"] = function() {
         var beam, pos, _i, _len, _ref1;
-        print(nodeLookup);
-        print([this.z, this.y, this.x]);
-        delete nodeIDLookup[this.id];
-        delete nodeLookup[this.z][this.y][this.x];
-        if (isempty(nodeLookup[this.z][this.y])) {
-          delete nodeLookup[this.z][this.y];
-        }
-        if (isempty(nodeLookup[this.z])) {
-          delete nodeLookup[this.z];
-        }
         _ref1 = this.sourced.concat(this.targeted);
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           beam = _ref1[_i];
@@ -207,7 +197,16 @@
         }
         pos = nodeList.indexOf(this);
         if (pos + 1) {
-          return nodeList.splice(pos, 1);
+          nodeList.splice(pos, 1);
+          delete nodeIDLookup[this.id];
+          delete nodeLookup[this.z][this.y][this.x];
+          if (isempty(nodeLookup[this.z][this.y])) {
+            delete nodeLookup[this.z][this.y];
+          }
+          if (isempty(nodeLookup[this.z])) {
+            delete nodeLookup[this.z];
+          }
+          return delete this;
         }
       };
 
@@ -279,14 +278,16 @@
       };
 
       Beam.prototype["delete"] = function() {
-        var list, _i, _len, _ref1, _results;
+        var list, pos, _i, _len, _ref1;
         _ref1 = [this.source.sourced, this.target.targeted, beamList];
-        _results = [];
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           list = _ref1[_i];
-          _results.push(list.splice(list.indexOf(this), 1));
+          pos = list.indexOf(this);
+          if (pos + 1) {
+            list.splice(pos, 1);
+          }
         }
-        return _results;
+        return delete this;
       };
 
       return Beam;

@@ -56,17 +56,15 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
                     b: -@force[d]
             return constraints
         delete: ->
-            print nodeLookup
-            print [@z, @y, @x]
-            delete nodeIDLookup[@id]
-            delete nodeLookup[@z][@y][@x]
-            delete nodeLookup[@z][@y] if isempty nodeLookup[@z][@y]
-            delete nodeLookup[@z] if isempty nodeLookup[@z]
             beam.delete() for beam in @sourced.concat(@targeted)
-
             pos = nodeList.indexOf(this)
-            nodeList.splice(pos, 1) if pos + 1
-            #delete this
+            if pos + 1
+                nodeList.splice(pos, 1)
+                delete nodeIDLookup[@id]
+                delete nodeLookup[@z][@y][@x]
+                delete nodeLookup[@z][@y] if isempty nodeLookup[@z][@y]
+                delete nodeLookup[@z] if isempty nodeLookup[@z]
+                delete this
 
 
     getNodeIDX = (pt) ->
@@ -97,8 +95,9 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             @L = dist(l for d, l of @l)
         delete: ->
             for list in [@source.sourced, @target.targeted, beamList]
-                list.splice(list.indexOf(this), 1)
-            #delete this
+                pos = list.indexOf(this)
+                if pos + 1 then list.splice(pos, 1)
+            delete this
 
 
     class LPresult
