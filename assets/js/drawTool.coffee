@@ -19,7 +19,6 @@ drawTool =
                             .attr("y1", pos.y).attr("y2", pos.y)
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
-        print ["mU", object]
         if @drawStart
             if eventType isnt "node"
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}

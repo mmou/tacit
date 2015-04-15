@@ -2,9 +2,7 @@
 @tacit.tools ?= {}
 
 selectTool =
-    mouseDown: (easel, eventType, mouseLoc, object) -> null
-
-    mouseUp: (easel, eventType, mouseLoc, object) ->
+    mouseDown: (easel, eventType, mouseLoc, object) ->
         if eventType isnt "background"
             if eventType is "node"
                 selection = easel.pad.sketch.selectedNodes
@@ -26,6 +24,7 @@ selectTool =
 
             easel.pad.sketch.reposition_transition()
 
-    mouseMove: (easel, eventType, mouseLoc, object) -> null
+    mouseUp: (easel, eventType, mouseLoc, object) -> false
+    mouseMove: (easel, eventType, mouseLoc, object) -> false
 
 @tacit.tools.select = selectTool

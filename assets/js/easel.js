@@ -26,13 +26,13 @@
 
     Easel.prototype.currentTool = {
       mouseDown: function(easel, eventType, mouseLoc, object) {
-        return null;
+        return false;
       },
       mouseUp: function(easel, eventType, mouseLoc, object) {
-        return null;
+        return false;
       },
       mouseMove: function(easel, eventType, mouseLoc, object) {
-        return null;
+        return false;
       }
     };
 

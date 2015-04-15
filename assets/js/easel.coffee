@@ -10,8 +10,8 @@ class Easel
         @pad = new tacit.Pad(this, padLoc, padHeight, padWidth, structure)
 
     currentTool:
-            mouseDown: (easel, eventType, mouseLoc, object) -> null
-            mouseUp: (easel, eventType, mouseLoc, object) -> null
-            mouseMove: (easel, eventType, mouseLoc, object) -> null
+            mouseDown: (easel, eventType, mouseLoc, object) -> false
+            mouseUp: (easel, eventType, mouseLoc, object) -> false
+            mouseMove: (easel, eventType, mouseLoc, object) -> false
 
 @tacit.Easel = Easel

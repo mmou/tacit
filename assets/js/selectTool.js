@@ -12,9 +12,6 @@
 
   selectTool = {
     mouseDown: function(easel, eventType, mouseLoc, object) {
-      return null;
-    },
-    mouseUp: function(easel, eventType, mouseLoc, object) {
       var after, before, idx, selection;
       if (eventType !== "background") {
         if (eventType === "node") {
@@ -38,8 +35,11 @@
         return easel.pad.sketch.reposition_transition();
       }
     },
+    mouseUp: function(easel, eventType, mouseLoc, object) {
+      return false;
+    },
     mouseMove: function(easel, eventType, mouseLoc, object) {
-      return null;
+      return false;
     }
   };
 

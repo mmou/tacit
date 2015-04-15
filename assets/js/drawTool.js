@@ -35,7 +35,6 @@
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var node, pos;
-      print(["mU", object]);
       if (this.drawStart) {
         if (eventType !== "node") {
           pos = {
