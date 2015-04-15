@@ -7,7 +7,7 @@ dist = (a, b) -> sqrt(sum(sqr(ai-(if b then b[i] else 0)) for ai, i in a))
 print = (o) -> console.log(o)
 isempty = (o) -> Object.keys(o).length is 0
 
-@tacit ?= {}
+window.tacit ?= {}
 
 gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
     class Node
@@ -57,12 +57,14 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             return constraints
         delete: ->
             beam.delete() for beam in @sourced.concat(@targeted)
-            nodeList.splice(nodeList.indexOf(this), 1)
-            delete nodeIDLookup[@id]
-            delete nodeLookup[@z][@y][@x]
-            delete nodeLookup[@z][@y] if isempty nodeLookup[@z][@y]
-            delete nodeLookup[@z] if isempty nodeLookup[@z]
-            delete this
+            pos = nodeList.indexOf(this)
+            if pos + 1
+                nodeList.splice(pos, 1)
+                delete nodeIDLookup[@id]
+                delete nodeLookup[@z][@y][@x]
+                delete nodeLookup[@z][@y] if isempty nodeLookup[@z][@y]
+                delete nodeLookup[@z] if isempty nodeLookup[@z]
+                delete this
 
 
     getNodeIDX = (pt) ->
@@ -93,7 +95,8 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             @L = dist(l for d, l of @l)
         delete: ->
             for list in [@source.sourced, @target.targeted, beamList]
-                list.splice(list.indexOf(this), 1)
+                pos = list.indexOf(this)
+                if pos + 1 then list.splice(pos, 1)
             delete this
 
 
@@ -241,4 +244,4 @@ print "Failed Test 6" if not approx(s2.solveLP().obj, 4)
 ## TEST 9 # test 3D gradient descent
 print "                       ...testing complete."
 
-@tacit.Structure = Structure
+window.tacit.Structure = Structure

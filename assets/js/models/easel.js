@@ -2,8 +2,8 @@
 (function() {
   var Easel, _ref;
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
   Easel = (function() {
@@ -11,9 +11,6 @@
     function Easel(project, toolbarLoc, padLoc, padHeight, padWidth, structure) {
       var padHtmlRect;
       this.project = project;
-      if (structure == null) {
-        structure = null;
-      }
       padHtmlRect = d3.select(padLoc).node().getBoundingClientRect();
       if (padWidth == null) {
         padWidth = htmlRect.width;
@@ -27,47 +24,68 @@
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
       if (this.currentTool != null) {
         if (this.currentTool.mouseDown != null) {
-          return this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
+          this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
         }
-      } else {
-        return false;
       }
+      return false;
     };
 
     Easel.prototype.mouseUp = function(easel, eventType, mouseLoc, object) {
       if (this.currentTool != null) {
         if (this.currentTool.mouseUp != null) {
-          return this.currentTool.mouseUp(easel, eventType, mouseLoc, object);
+          this.currentTool.mouseUp(easel, eventType, mouseLoc, object);
         }
-      } else {
-        return false;
       }
+      return false;
     };
 
     Easel.prototype.mouseMove = function(easel, eventType, mouseLoc, object) {
       if (this.currentTool != null) {
         if (this.currentTool.mouseMove != null) {
-          return this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
+          this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
         }
-      } else {
-        return false;
       }
+      return false;
     };
 
-    Easel.prototype.keyDown = function(easel, eventType, mouseLoc, object) {
+    Easel.prototype.keyDown = function(easel, eventType, keyCode) {
+      var link, node, _i, _j, _len, _len1, _ref1, _ref2;
+      console.log(keyCode);
       if (this.currentTool != null) {
         if (this.currentTool.keyDown != null) {
-          return this.currentTool.keyDown(easel, eventType, mouseLoc, object);
+          this.currentTool.keyDown(easel, eventType, keyCode);
+          return false;
         }
-      } else {
-        return print("kD");
       }
+      switch (d3.event.keyCode) {
+        case 8:
+        case 46:
+          _ref1 = this.pad.sketch.selectedNodes;
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            node = _ref1[_i];
+            node["delete"]();
+          }
+          _ref2 = this.pad.sketch.selectedLinks;
+          for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+            link = _ref2[_j];
+            link["delete"]();
+          }
+          this.pad.sketch.selectedLinks = this.pad.sketch.selectedNodes = [];
+          this.pad.sketch.updateDrawing();
+          break;
+        case 68:
+          easel.currentTool = tacit.tools.draw;
+          break;
+        case 83:
+          easel.currentTool = tacit.tools.select;
+      }
+      return false;
     };
 
     return Easel;
 
   })();
 
-  this.tacit.Easel = Easel;
+  window.tacit.Easel = Easel;
 
 }).call(this);

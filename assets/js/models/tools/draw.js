@@ -2,11 +2,11 @@
 (function() {
   var drawTool, _base, _ref, _ref1;
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
-  if ((_ref1 = (_base = this.tacit).tools) == null) {
+  if ((_ref1 = (_base = window.tacit).tools) == null) {
     _base.tools = {};
   }
 
@@ -22,7 +22,7 @@
           };
           node = new easel.pad.sketch.structure.Node(pos);
           node.force.y = -100;
-          easel.pad.sketch.redraw();
+          easel.pad.sketch.updateDrawing();
         } else {
           pos = {
             x: object.x,
@@ -52,7 +52,7 @@
         if (pos.x !== this.drawStart.x && pos.y !== this.drawStart.y) {
           new easel.pad.sketch.structure.Beam(this.drawStart, pos);
           easel.pad.sketch.dragline.attr("x1", pos.x).attr("x2", pos.x).attr("y1", pos.y).attr("y2", pos.y);
-          easel.pad.sketch.redraw();
+          easel.pad.sketch.updateDrawing();
           return this.drawStart = null;
         }
       }
@@ -60,13 +60,11 @@
     mouseMove: function(easel, eventType, mouseLoc, object) {
       if (this.drawStart) {
         easel.pad.sketch.dragline.attr("x2", mouseLoc[0]).attr("y2", mouseLoc[1]);
-        if (easel.pad.sketch.reposition != null) {
-          return easel.pad.sketch.reposition();
-        }
+        return easel.pad.sketch.quickDraw();
       }
     }
   };
 
-  this.tacit.tools.draw = drawTool;
+  window.tacit.tools.draw = drawTool;
 
 }).call(this);

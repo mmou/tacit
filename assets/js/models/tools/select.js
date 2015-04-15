@@ -2,17 +2,18 @@
 (function() {
   var selectTool, _base, _ref, _ref1;
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
-  if ((_ref1 = (_base = this.tacit).tools) == null) {
+  if ((_ref1 = (_base = window.tacit).tools) == null) {
     _base.tools = {};
   }
 
   selectTool = {
     mouseDown: function(easel, eventType, mouseLoc, object) {
-      var after, before, idx, selection;
+      var idx, selection;
+      this.dragging = true;
       if (eventType !== "background") {
         if (eventType === "node") {
           selection = easel.pad.sketch.selectedNodes;
@@ -23,20 +24,43 @@
         if (idx === -1) {
           selection.push(object);
         } else {
-          before = selection.slice(0, idx);
-          after = selection[idx + 1];
-          selection = before.concat(after);
+          selection.splice(idx, 1);
         }
         if (eventType === "node") {
           easel.pad.sketch.selectedNodes = selection;
         } else {
           easel.pad.sketch.selectedLinks = selection;
         }
-        return easel.pad.sketch.reposition_transition();
+        return easel.pad.sketch.slowDraw();
+      }
+    },
+    mouseUp: function(easel, eventType, mouseLoc, object) {
+      return this.dragging = false;
+    },
+    mouseMove: function(easel, eventType, mouseLoc, object) {
+      var idx, selection;
+      if (this.dragging) {
+        if (eventType !== "background") {
+          if (eventType === "node") {
+            selection = easel.pad.sketch.selectedNodes;
+          } else {
+            selection = easel.pad.sketch.selectedLinks;
+          }
+          idx = selection.indexOf(object);
+          if (idx === -1) {
+            selection.push(object);
+          }
+          if (eventType === "node") {
+            easel.pad.sketch.selectedNodes = selection;
+          } else {
+            easel.pad.sketch.selectedLinks = selection;
+          }
+          return easel.pad.sketch.quickDraw();
+        }
       }
     }
   };
 
-  this.tacit.tools.select = selectTool;
+  window.tacit.tools.select = selectTool;
 
 }).call(this);

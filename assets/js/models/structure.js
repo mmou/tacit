@@ -50,8 +50,8 @@
     return Object.keys(o).length === 0;
   };
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
   gen_classes = function(nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) {
@@ -189,22 +189,25 @@
       };
 
       Node.prototype["delete"] = function() {
-        var beam, _i, _len, _ref1;
+        var beam, pos, _i, _len, _ref1;
         _ref1 = this.sourced.concat(this.targeted);
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           beam = _ref1[_i];
           beam["delete"]();
         }
-        nodeList.splice(nodeList.indexOf(this), 1);
-        delete nodeIDLookup[this.id];
-        delete nodeLookup[this.z][this.y][this.x];
-        if (isempty(nodeLookup[this.z][this.y])) {
-          delete nodeLookup[this.z][this.y];
+        pos = nodeList.indexOf(this);
+        if (pos + 1) {
+          nodeList.splice(pos, 1);
+          delete nodeIDLookup[this.id];
+          delete nodeLookup[this.z][this.y][this.x];
+          if (isempty(nodeLookup[this.z][this.y])) {
+            delete nodeLookup[this.z][this.y];
+          }
+          if (isempty(nodeLookup[this.z])) {
+            delete nodeLookup[this.z];
+          }
+          return delete this;
         }
-        if (isempty(nodeLookup[this.z])) {
-          delete nodeLookup[this.z];
-        }
-        return delete this;
       };
 
       return Node;
@@ -275,11 +278,14 @@
       };
 
       Beam.prototype["delete"] = function() {
-        var list, _i, _len, _ref1;
+        var list, pos, _i, _len, _ref1;
         _ref1 = [this.source.sourced, this.target.targeted, beamList];
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           list = _ref1[_i];
-          list.splice(list.indexOf(this), 1);
+          pos = list.indexOf(this);
+          if (pos + 1) {
+            list.splice(pos, 1);
+          }
         }
         return delete this;
       };
@@ -625,6 +631,6 @@
 
   print("                       ...testing complete.");
 
-  this.tacit.Structure = Structure;
+  window.tacit.Structure = Structure;
 
 }).call(this);

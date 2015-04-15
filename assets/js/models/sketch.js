@@ -74,14 +74,14 @@
     checked: false
   };
 
-  if ((_ref = this.tacit) == null) {
-    this.tacit = {};
+  if ((_ref = window.tacit) == null) {
+    window.tacit = {};
   }
 
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width) {
-      var d, draw, htmlObj, list, maxs, means, mins, n, tool, translate, _i, _len, _ref1, _ref2;
+      var d, draw, htmlObj, list, maxs, means, mins, n, translate, _i, _len, _ref1, _ref2;
       this.pad = pad;
       if (htmlLoc == null) {
         htmlLoc = "body";
@@ -96,7 +96,6 @@
       this.scale = 1;
       this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g");
-      tool = this.pad.easel;
       this.blank.append("svg:rect").attr("x", -width / 2).attr("y", -height / 2).attr("width", width).attr("height", height).attr("fill", "transparent").on("mousedown", function(d) {
         easel.mouseDown(easel, "background", d3.mouse(this), d);
         return false;
@@ -106,6 +105,9 @@
       }).on("mouseup", function(d) {
         easel.mouseUp(easel, "background", d3.mouse(this), d);
         return false;
+      });
+      d3.select(window).on("keydown", function() {
+        return easel.keyDown(easel, "window", d3.event.keyCode);
       });
       this.nodes = this.blank.selectAll(".node");
       this.links = this.blank.selectAll(".link");
@@ -154,9 +156,7 @@
       }
     };
 
-    Sketch.prototype.redraw = function() {
-      var tool;
-      tool = this.pad.easel;
+    Sketch.prototype.updateDrawing = function() {
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
         easel.mouseDown(easel, "beam", d3.mouse(this), d);
@@ -187,10 +187,10 @@
         return false;
       }).transition().duration(750).ease("elastic").attr("r", 9 / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();
-      return this.reposition_transition();
+      return this.slowDraw();
     };
 
-    Sketch.prototype.reposition_transition = function() {
+    Sketch.prototype.slowDraw = function() {
       var w,
         _this = this;
       this.structure.solve();
@@ -226,7 +226,7 @@
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("r", function(d) {
-        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
+        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
       });
       this.forces.attr("x1", function(d) {
         return d.x;
@@ -280,12 +280,7 @@
       });
     };
 
-    return Sketch;
-
-  })();
-
-  ({
-    reposition: function() {
+    Sketch.prototype.quickDraw = function() {
       var w,
         _this = this;
       this.structure.solve();
@@ -328,8 +323,9 @@
       }).attr("y2", function(d) {
         return d.y - 50 / _this.scale * d.grad.y * w;
       });
-    },
-    resize: function() {
+    };
+
+    Sketch.prototype.resize = function() {
       var w,
         _this = this;
       w = this.structure.nodeList.length / this.structure.lp.obj;
@@ -345,7 +341,7 @@
         return _this.selectedLinks.indexOf(d) + 1;
       });
       this.nodes.attr("r", function(d) {
-        return 18 / _this.scale * (d === _this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
+        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       });
@@ -383,9 +379,12 @@
           return 0;
         }
       });
-    }
-  });
+    };
 
-  this.tacit.Sketch = Sketch;
+    return Sketch;
+
+  })();
+
+  window.tacit.Sketch = Sketch;
 
 }).call(this);
