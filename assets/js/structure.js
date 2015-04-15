@@ -404,46 +404,50 @@
 
     Structure.prototype.solve = function() {
       var b, beam, dim, grad, lambda, node, _i, _j, _len, _len1, _ref1, _ref2, _results;
-      this.lp = this.solveLP();
-      _ref1 = this.beamList;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        beam = _ref1[_i];
-        beam.f = this.lp["f" + beam.id];
-        beam.F = abs(beam.f);
-      }
-      _ref2 = this.nodeList;
-      _results = [];
-      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-        node = _ref2[_j];
-        node.lambda = {};
-        _results.push((function() {
-          var _k, _len2, _ref3, _results1;
-          _ref3 = "xyz";
-          _results1 = [];
-          for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
-            dim = _ref3[_k];
-            lambda = this.lp["n" + node.id + dim];
-            node.lambda[dim] = lambda;
-            if (lambda) {
-              grad = 0.5 * sum((function() {
-                var _l, _len3, _ref4, _results2;
-                _ref4 = node.sourced;
-                _results2 = [];
-                for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-                  b = _ref4[_l];
-                  _results2.push(1 / ((b.f / b.F) * b.l[dim] / sqr(b.L)));
-                }
-                return _results2;
-              })());
-              _results1.push(node.grad[dim] = isNaN(grad) ? 0 : grad);
-            } else {
-              _results1.push(void 0);
+      try {
+        this.lp = this.solveLP();
+        _ref1 = this.beamList;
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          beam = _ref1[_i];
+          beam.f = this.lp["f" + beam.id];
+          beam.F = abs(beam.f);
+        }
+        _ref2 = this.nodeList;
+        _results = [];
+        for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+          node = _ref2[_j];
+          node.lambda = {};
+          _results.push((function() {
+            var _k, _len2, _ref3, _results1;
+            _ref3 = "xyz";
+            _results1 = [];
+            for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
+              dim = _ref3[_k];
+              lambda = this.lp["n" + node.id + dim];
+              node.lambda[dim] = lambda;
+              if (lambda) {
+                grad = 0.5 * sum((function() {
+                  var _l, _len3, _ref4, _results2;
+                  _ref4 = node.sourced;
+                  _results2 = [];
+                  for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+                    b = _ref4[_l];
+                    _results2.push(1 / ((b.f / b.F) * b.l[dim] / sqr(b.L)));
+                  }
+                  return _results2;
+                })());
+                _results1.push(node.grad[dim] = isNaN(grad) ? 0 : grad);
+              } else {
+                _results1.push(void 0);
+              }
             }
-          }
-          return _results1;
-        }).call(this));
+            return _results1;
+          }).call(this));
+        }
+        return _results;
+      } catch (error) {
+
       }
-      return _results;
     };
 
     return Structure;

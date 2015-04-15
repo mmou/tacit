@@ -42,49 +42,55 @@
     }
 
     Easel.prototype.currentTool = {
+      drawStart: null,
       mouseDown: function(easel, eventType, mouseLoc, object) {
         var node, pos;
-        if (eventType !== "node") {
-          pos = {
-            x: mouseLoc[0],
-            y: mouseLoc[1]
-          };
-          node = new easel.pad.sketch.structure.Node(pos);
-          node.force.y = -1;
-          easel.pad.sketch.redraw();
-        } else {
-          pos = {
-            x: object.x,
-            y: object.y
-          };
+        if (!this.drawStart) {
+          if (eventType !== "node") {
+            pos = {
+              x: mouseLoc[0],
+              y: mouseLoc[1]
+            };
+            node = new easel.pad.sketch.structure.Node(pos);
+            node.force.y = -100;
+            easel.pad.sketch.redraw();
+          } else {
+            pos = {
+              x: object.x,
+              y: object.y
+            };
+          }
+          this.drawStart = pos;
+          return easel.pad.sketch.dragline.attr("x1", pos.x).attr("x2", pos.x).attr("y1", pos.y).attr("y2", pos.y);
         }
-        easel.pad.sketch.dragline.attr("x1", pos.x).attr("x2", pos.x).attr("y1", pos.y).attr("y2", pos.y);
-        return easel.currentTool.dragStart = pos;
       },
       mouseUp: function(easel, eventType, mouseLoc, object) {
         var node, pos;
-        if (eventType !== "node") {
-          pos = {
-            x: mouseLoc[0],
-            y: mouseLoc[1]
-          };
-          node = new easel.pad.sketch.structure.Node(pos);
-          node.force.y = -1;
-        } else {
-          pos = {
-            x: object.x,
-            y: object.y
-          };
+        print(["mU", object]);
+        if (this.drawStart) {
+          if (eventType !== "node") {
+            pos = {
+              x: mouseLoc[0],
+              y: mouseLoc[1]
+            };
+            node = new easel.pad.sketch.structure.Node(pos);
+            node.force.y = -100;
+          } else {
+            pos = {
+              x: object.x,
+              y: object.y
+            };
+          }
+          if (pos.x !== this.drawStart.x && pos.y !== this.drawStart.y) {
+            new easel.pad.sketch.structure.Beam(this.drawStart, pos);
+            easel.pad.sketch.dragline.attr("x1", pos.x).attr("x2", pos.x).attr("y1", pos.y).attr("y2", pos.y);
+            easel.pad.sketch.redraw();
+            return this.drawStart = null;
+          }
         }
-        if (pos !== easel.currentTool.dragStart) {
-          new easel.pad.sketch.structure.Beam(easel.currentTool.dragStart, pos);
-          easel.pad.sketch.dragline.attr("x1", pos.x).attr("x2", pos.x).attr("y1", pos.y).attr("y2", pos.y);
-          easel.pad.sketch.redraw();
-        }
-        return easel.currentTool.dragStart = null;
       },
       mouseMove: function(easel, eventType, mouseLoc, object) {
-        if (easel.currentTool.dragStart) {
+        if (this.drawStart) {
           easel.pad.sketch.dragline.attr("x2", mouseLoc[0]).attr("y2", mouseLoc[1]);
           if (easel.pad.sketch.reposition != null) {
             return easel.pad.sketch.reposition();

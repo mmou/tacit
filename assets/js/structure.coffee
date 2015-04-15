@@ -164,24 +164,26 @@ class Structure
                                                @nodeList,   @beamList,
                                                @nodes,      @beams)
     solve: ->
-        @lp = @solveLP()
-        for beam in @beamList
-            beam.f = @lp["f#{beam.id}"]
-            beam.F = abs(beam.f)
-        for node in @nodeList
-            node.lambda = {}
-            for dim in "xyz"
-                lambda = @lp["n#{node.id}#{dim}"]
-                node.lambda[dim] = lambda
-                if lambda
-                    #print node.sourced
-                    #as = sum((b.F/b.f)*b.l[dim]/sqr(b.L) for b in node.sourced)
-                    #as = 0
-                    #bs = sum(b.f/b.L*(1-2*sqr(b.l[dim]/b.L)) for b in node.sourced)
-                    #grad = bs/((1/lambda) - as)
-                    grad = 0.5*sum(1/((b.f/b.F) * b.l[dim]/sqr(b.L)) for b in node.sourced)
-                    # print ["n#{node.id}#{dim}", lambda, "grad", grad, "obj", @lp.obj]
-                    node.grad[dim] = if isNaN(grad) then 0 else grad
+        try
+            @lp = @solveLP()
+            for beam in @beamList
+                beam.f = @lp["f#{beam.id}"]
+                beam.F = abs(beam.f)
+            for node in @nodeList
+                node.lambda = {}
+                for dim in "xyz"
+                    lambda = @lp["n#{node.id}#{dim}"]
+                    node.lambda[dim] = lambda
+                    if lambda
+                        #print node.sourced
+                        #as = sum((b.F/b.f)*b.l[dim]/sqr(b.L) for b in node.sourced)
+                        #as = 0
+                        #bs = sum(b.f/b.L*(1-2*sqr(b.l[dim]/b.L)) for b in node.sourced)
+                        #grad = bs/((1/lambda) - as)
+                        grad = 0.5*sum(1/((b.f/b.F) * b.l[dim]/sqr(b.L)) for b in node.sourced)
+                        # print ["n#{node.id}#{dim}", lambda, "grad", grad, "obj", @lp.obj]
+                        node.grad[dim] = if isNaN(grad) then 0 else grad
+        catch error
 
 
 

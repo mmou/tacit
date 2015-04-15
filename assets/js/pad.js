@@ -20,20 +20,20 @@
       if (!(structure != null)) {
         structure = new tacit.Structure;
         new structure.Beam({
-          x: 1,
-          y: 1
+          x: 100,
+          y: 100
         }, {
           x: 0,
           y: 0
         });
         new structure.Beam({
-          x: 1,
-          y: 1
+          x: 100,
+          y: 100
         }, {
-          x: 2,
+          x: 200,
           y: 0
         });
-        structure.nodeList[0].force.y = -1;
+        structure.nodeList[0].force.y = -100;
         _ref1 = ["x", "y"];
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           dim = _ref1[_i];
