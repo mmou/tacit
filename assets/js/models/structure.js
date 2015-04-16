@@ -406,17 +406,21 @@
       _ref3 = [0, 0], this.nodes = _ref3[0], this.beams = _ref3[1];
       _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2];
       if (structure != null) {
-        _ref5 = structure.beamList;
-        for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
-          beam = _ref5[_i];
-          new this.Beam(beam.source, beam.target);
-        }
-        _ref6 = structure.nodeList;
-        for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {
-          node = _ref6[_j];
-          localnode = this.nodeIDLookup[this.nodeLookup[node.z][node.y][node.x]];
-          localnode.fixed = node.fixed;
-          localnode.force = node.force;
+        try {
+          _ref5 = structure.beamList;
+          for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
+            beam = _ref5[_i];
+            new this.Beam(beam.source, beam.target);
+          }
+          _ref6 = structure.nodeList;
+          for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {
+            node = _ref6[_j];
+            localnode = this.nodeIDLookup[this.nodeLookup[node.z][node.y][node.x]];
+            localnode.fixed = node.fixed;
+            localnode.force = node.force;
+          }
+        } catch (error) {
+
         }
       }
     }

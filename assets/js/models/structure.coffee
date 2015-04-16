@@ -167,12 +167,14 @@ class Structure
                                                @nodeList,   @beamList,
                                                @nodes,      @beams)
         if structure?
-            for beam in structure.beamList
-                new @Beam(beam.source, beam.target)
-            for node in structure.nodeList
-                localnode = @nodeIDLookup[@nodeLookup[node.z][node.y][node.x]]
-                localnode.fixed = node.fixed
-                localnode.force = node.force
+            try
+                for beam in structure.beamList
+                    new @Beam(beam.source, beam.target)
+                for node in structure.nodeList
+                    localnode = @nodeIDLookup[@nodeLookup[node.z][node.y][node.x]]
+                    localnode.fixed = node.fixed
+                    localnode.force = node.force
+            catch error
 
     solve: ->
         try

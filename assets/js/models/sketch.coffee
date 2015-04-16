@@ -11,7 +11,7 @@ print = (o) -> console.log(o)
 window.tacit ?= {}
 
 class Sketch
-    constructor: (@pad, htmlLoc="body", structure, height, width) ->
+    constructor: (@pad, htmlLoc="body", structure, @height, @width) ->
         @showgrad = false
         @showforce = true
         @showzero = true
@@ -23,8 +23,8 @@ class Sketch
 
         @svg = htmlObj
                  .append("svg:svg")
-                    .attr("width", width)
-                    .attr("height", height)
+                    .attr("width", @width)
+                    .attr("height", @height)
                     .attr("pointer-events", "all")
 
         @scale = 1
@@ -40,18 +40,19 @@ class Sketch
                 #        .on("dblclick.zoom", null)
                 #        .append("svg:g")
                 #            .on("mousedown", mousedn)
-        @blank.append("svg:rect")
-                 .attr("x", -width/2)
-                 .attr("y", -height/2)
-                 .attr("width", width)
-                 .attr("height", height)
-                 .attr("fill", "transparent")
-                 .on("mousedown", (d) ->
-                     easel.mouseDown(easel, "background", d3.mouse(this), d))
-                 .on("mousemove", (d) ->
-                     easel.mouseMove(easel, "background", d3.mouse(this), d))
-                 .on("mouseup", (d) ->
-                     easel.mouseUp(easel, "background", d3.mouse(this), d))
+        easel = @pad.easel
+        @rect = @blank.append("svg:rect")
+                        .attr("x", -@width/2)
+                        .attr("y", -@height/2)
+                        .attr("width", @width)
+                        .attr("height", @height)
+                        .attr("fill", "transparent")
+                        .on("mousedown", (d) ->
+                            easel.mouseDown(easel, "background", d3.mouse(this), d))
+                        .on("mousemove", (d) ->
+                            easel.mouseMove(easel, "background", d3.mouse(this), d))
+                        .on("mouseup", (d) ->
+                            easel.mouseUp(easel, "background", d3.mouse(this), d))
 
         d3.select(window).on("keydown", ->
                              easel.keyDown(easel, "window", d3.event.keyCode))
@@ -74,8 +75,8 @@ class Sketch
                 mins[d] = min(list...)
                 maxs[d] = max(list...)
                 means[d] = sum(list)/structure.nodeList.length
-            @scale = 0.5*min(width/(maxs.x-mins.x), height/(maxs.y-mins.y))
-            translate = [@scale*means.x, height/2 - @scale*means.y]
+            @scale = 0.5*min(width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+            translate = [@scale*means.x, @height/2 - @scale*means.y]
             #zoomer.scale(@scale)
             #zoomer.translate(translate)
             @rescale(translate, @scale, draw=false)
@@ -83,11 +84,17 @@ class Sketch
     rescale: (translate, scale, draw=true) ->
         translate ?= d3.event.translate
         scale ?= d3.event.scale
+        @rect.attr("x", -translate[0]/2)
+             .attr("y", -@height/@scale/2  + translate[1]/4)
+             .attr("width", @width/@scale)
+             .attr("height", @height/@scale)
         @scale = scale
         @blank.attr("transform", "translate(#{translate}) scale(#{scale})")
         if draw then @resize()
 
     updateDrawing: ->
+        easel = @pad.easel
+
         @links = @links.data(@structure.beamList)
         @links.enter().insert("line", ".node")
               .attr("class", "link")

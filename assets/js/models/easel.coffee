@@ -10,6 +10,7 @@ class Easel
         @pad = new tacit.Pad(this, padLoc, padHeight, padWidth, structure)
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
+        console.log [easel, eventType, mouseLoc, object]
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)

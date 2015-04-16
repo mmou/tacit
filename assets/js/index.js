@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
 	// initialize easel and stuff
-	window.easel = new tacit.Easel(null, "#ToolbarView", "#PadView", 450, 900);
-	window.sketch = easel.pad.sketch;
+	easel = new tacit.Easel(null, "#ToolbarView", "#PadView", 450, 900);
+	sketch = easel.pad.sketch;
 	s = sketch.structure;
 	console.log(s);
 
@@ -26,8 +26,8 @@ $(document).ready(function() {
 	$("#draw-btn").addClass("active")
 	easel.currentTool = tacit.tools.draw
 
-	project = {"easel": easel};
+	window.project = {"easel": easel};
 
-	window.suggestions = new tacit.Suggestions(project, "#SuggestionsView")
+	suggestions = new tacit.Suggestions(project, "#SuggestionsView")
 
 })
