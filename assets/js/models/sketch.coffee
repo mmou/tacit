@@ -29,18 +29,20 @@ class Sketch
 
         @scale = 1
         @nodeSize = 9
-#        zoomer = d3.behavior.zoom().on("zoom", => @rescale())
-#        mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale())
+        easel = @pad.easel
+
+        zoomer = d3.behavior.zoom().on("zoom", => @rescale() if easel.allowPan())
+        mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale() if easel.allowPan())
 
         @selectedNodes = @selectedLinks = []
         @blank = @svg.append("svg:g")
                      .attr("transform", "translate(0,#{height}) scale(1,-1)")
                      .append("svg:g")
-                #        .call(zoomer)
-                #        .on("dblclick.zoom", null)
-                #        .append("svg:g")
-                #            .on("mousedown", mousedn)
-        easel = @pad.easel
+                        .call(zoomer)
+                        .on("dblclick.zoom", null)
+                        .append("svg:g")
+                            .on("mousedown", mousedn)
+
         @rect = @blank.append("svg:rect")
                         .attr("x", -@width/2)
                         .attr("y", -@height/2)
@@ -54,8 +56,10 @@ class Sketch
                         .on("mouseup", (d) ->
                             easel.mouseUp(easel, "background", d3.mouse(this), d))
 
-        d3.select(window).on("keydown", ->
-                             easel.keyDown(easel, "window", d3.event.keyCode))
+        if not window.keysCaptured
+            d3.select(window).on("keydown", ->
+                                 easel.keyDown(easel, "window", d3.event.keyCode))
+            window.keysCaptured = true
 
         # init nodes,  links, and the line displayed when dragging new nodes
         @nodes = @blank.selectAll(".node")
@@ -74,22 +78,23 @@ class Sketch
                 list = (n[d] for n in structure.nodeList)
                 mins[d] = min(list...)
                 maxs[d] = max(list...)
-                means[d] = sum(list)/structure.nodeList.length
-            @scale = 0.5*min(width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
-            translate = [@scale*means.x, @height/2 - @scale*means.y]
-            #zoomer.scale(@scale)
-            #zoomer.translate(translate)
+            @scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+            translate = [@scale*(mins.x-maxs.x)/2 + @width/2
+                         @scale*(mins.y-maxs.y)/2 + @height/2]
+            zoomer.scale(@scale)
+            zoomer.translate(translate)
             @rescale(translate, @scale, draw=false)
 
     rescale: (translate, scale, draw=true) ->
         translate ?= d3.event.translate
         scale ?= d3.event.scale
-        @rect.attr("x", -translate[0]/2)
-             .attr("y", -@height/@scale/2  + translate[1]/4)
+        @rect.attr("x", -translate[0]/@scale)
+             .attr("y", -translate[1]/@scale)
              .attr("width", @width/@scale)
              .attr("height", @height/@scale)
+        translate = [translate[0]/@scale, translate[1]/@scale]
         @scale = scale
-        @blank.attr("transform", "translate(#{translate}) scale(#{scale})")
+        @blank.attr("transform", "scale(#{scale}) translate(#{translate})")
         if draw then @resize()
 
     updateDrawing: ->
@@ -220,6 +225,8 @@ class Sketch
               .attr("y1", (d) => d.y)
               .attr("y2", (d) => d.y - 50/@scale*d.grad.y*w)
 
+        @onChange() if @onChange?
+
     resize: ->
         w = @structure.nodeList.length/@structure.lp.obj
 
@@ -239,7 +246,5 @@ class Sketch
                         10/@scale*@showgrad
                     else
                         0)
-
-        @onChange() if @onChange?
 
 window.tacit.Sketch = Sketch

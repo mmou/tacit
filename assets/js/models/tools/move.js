@@ -11,16 +11,39 @@
   }
 
   moveTool = {
+    allowPan: true,
     mouseDown: function(easel, eventType, mouseLoc, object) {
-      console.log("down");
+      var idx;
+      this.dragging = true;
+      if (eventType === "node") {
+        this.selection = object;
+        this.allowPan = false;
+        idx = easel.pad.sketch.selectedNodes.indexOf(object);
+        if (idx === -1) {
+          easel.pad.sketch.selectedNodes.push(object);
+        }
+        return easel.pad.sketch.quickDraw();
+      }
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
-      console.log("up");
-
+      var idx;
+      this.dragging = false;
+      if (this.selection) {
+        idx = easel.pad.sketch.selectedNodes.indexOf(this.selection);
+        easel.pad.sketch.selectedNodes.splice(idx, 1);
+        easel.pad.sketch.quickDraw();
+        this.selection = null;
+        return this.allowPan = true;
+      }
     },
     mouseMove: function(easel, eventType, mouseLoc, object) {
-      console.log("move");
-
+      if (this.dragging && this.selection) {
+        this.selection.moveto({
+          x: mouseLoc[0],
+          y: mouseLoc[1]
+        });
+        return easel.pad.sketch.quickDraw();
+      }
     }
   };
 

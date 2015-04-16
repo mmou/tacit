@@ -9,12 +9,12 @@ $(document).ready(function() {
 	sketch.updateDrawing();
 
 	setTimeout(function() {
-	    s.nodeList[0].move({ y: -200 });
+	    s.nodeList[0].move({ x: -50 });
 	    sketch.slowDraw();
 	  }, 800);
 
   	setTimeout(function() {
-      s.nodeList[0].move({ y: 200 });
+      s.nodeList[0].move({ x: 50 });
   	    return sketch.slowDraw();
   	  }, 1500);
 

@@ -10,32 +10,36 @@
     return 2 * Math.random() - 1;
   };
 
-  dummyEasel = {
-    mouseDown: function(easel, eventType, mouseLoc, object) {
-      if (this.currentTool != null) {
-        if (this.currentTool.mouseDown != null) {
-          this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
-        }
-      }
-      return false;
-    },
-    mouseUp: function(easel, eventType, mouseLoc, object) {
-      if (this.currentTool != null) {
-        if (this.currentTool.mouseUp != null) {
-          this.currentTool.mouseUp(easel, eventType, mouseLoc, object);
-        }
-      }
-      return false;
-    },
-    mouseMove: function(easel, eventType, mouseLoc, object) {
-      if (this.currentTool != null) {
-        if (this.currentTool.mouseMove != null) {
-          this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
-        }
-      }
-      return false;
+  dummyEasel = (function() {
+
+    function dummyEasel(suggestions, i) {
+      this.suggestions = suggestions;
+      this.i = i;
+      null;
     }
-  };
+
+    dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
+      var _this = this;
+      console.log(this.i);
+      this.suggestions.project.easel.pad.load(this.suggestions.pads[this.i].sketch.structure);
+      this.suggestions.project.easel.pad.sketch.onChange = function() {
+        return _this.suggestions.update(_this.suggestions.project.easel.pad.sketch.structure);
+      };
+      this.suggestions.project.easel.pad.sketch.updateDrawing();
+      return false;
+    };
+
+    dummyEasel.prototype.mouseUp = function(easel, eventType, mouseLoc, object) {
+      return false;
+    };
+
+    dummyEasel.prototype.mouseMove = function(easel, eventType, mouseLoc, object) {
+      return false;
+    };
+
+    return dummyEasel;
+
+  })();
 
   Suggestions = (function() {
 
@@ -49,8 +53,8 @@
       };
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       this.pads = [];
-      for (i = _i = 1; _i <= 4; i = ++_i) {
-        this.pads.push(new tacit.Pad(dummyEasel, this.htmlLoc, 200, 225, structure));
+      for (i = _i = 0; _i <= 3; i = ++_i) {
+        this.pads.push(new tacit.Pad(new dummyEasel(this, i), this.htmlLoc, 200, 225, structure));
       }
       this.update(structure);
     }
@@ -73,27 +77,18 @@
     };
 
     Suggestions.prototype.update = function(structure) {
-      var i, pad, _i, _len, _ref1, _results,
-        _this = this;
+      var pad, _i, _len, _ref1, _results;
       _ref1 = this.pads;
       _results = [];
-      for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
-        pad = _ref1[i];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        pad = _ref1[_i];
         structure = new tacit.Structure(structure);
         structure.solve();
         this.mutate(structure);
         pad.load(structure);
         pad.sketch.nodeSize = 0;
         pad.sketch.showforce = false;
-        pad.sketch.updateDrawing();
-        _results.push(pad.sketch.svg.on("mousedown", function(d) {
-          console.log(structure.lp.obj);
-          _this.project.easel.pad.load(structure);
-          _this.project.easel.pad.sketch.onChange = function() {
-            return _this.update(_this.project.easel.pad.sketch.structure);
-          };
-          return _this.project.easel.pad.sketch.updateDrawing();
-        }));
+        _results.push(pad.sketch.updateDrawing());
       }
       return _results;
     };

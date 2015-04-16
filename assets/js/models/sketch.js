@@ -65,7 +65,8 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width) {
-      var d, draw, easel, htmlObj, list, maxs, means, mins, n, translate, _i, _len, _ref1, _ref2;
+      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, translate, zoomer, _i, _len, _ref1, _ref2,
+        _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
         htmlLoc = "body";
@@ -84,9 +85,21 @@
       this.svg = htmlObj.append("svg:svg").attr("width", this.width).attr("height", this.height).attr("pointer-events", "all");
       this.scale = 1;
       this.nodeSize = 9;
-      this.selectedNodes = this.selectedLinks = [];
-      this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g");
       easel = this.pad.easel;
+      zoomer = d3.behavior.zoom().on("zoom", function() {
+        if (easel.allowPan()) {
+          return _this.rescale();
+        }
+      });
+      mousedn = function() {
+        return _this.blank.call(d3.behavior.zoom().on("zoom"), function() {
+          if (easel.allowPan()) {
+            return _this.rescale();
+          }
+        });
+      };
+      this.selectedNodes = this.selectedLinks = [];
+      this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g").call(zoomer).on("dblclick.zoom", null).append("svg:g").on("mousedown", mousedn);
       this.rect = this.blank.append("svg:rect").attr("x", -this.width / 2).attr("y", -this.height / 2).attr("width", this.width).attr("height", this.height).attr("fill", "transparent").on("mousedown", function(d) {
         return easel.mouseDown(easel, "background", d3.mouse(this), d);
       }).on("mousemove", function(d) {
@@ -94,9 +107,12 @@
       }).on("mouseup", function(d) {
         return easel.mouseUp(easel, "background", d3.mouse(this), d);
       });
-      d3.select(window).on("keydown", function() {
-        return easel.keyDown(easel, "window", d3.event.keyCode);
-      });
+      if (!window.keysCaptured) {
+        d3.select(window).on("keydown", function() {
+          return easel.keyDown(easel, "window", d3.event.keyCode);
+        });
+        window.keysCaptured = true;
+      }
       this.nodes = this.blank.selectAll(".node");
       this.links = this.blank.selectAll(".link");
       this.forces = this.blank.selectAll(".force");
@@ -119,10 +135,11 @@
           })();
           mins[d] = min.apply(null, list);
           maxs[d] = max.apply(null, list);
-          means[d] = sum(list) / structure.nodeList.length;
         }
-        this.scale = 0.5 * min(width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
-        translate = [this.scale * means.x, this.height / 2 - this.scale * means.y];
+        this.scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
+        translate = [this.scale * (mins.x - maxs.x) / 2 + this.width / 2, this.scale * (mins.y - maxs.y) / 2 + this.height / 2];
+        zoomer.scale(this.scale);
+        zoomer.translate(translate);
         this.rescale(translate, this.scale, draw = false);
       }
     }
@@ -137,9 +154,10 @@
       if (scale == null) {
         scale = d3.event.scale;
       }
-      this.rect.attr("x", -translate[0] / 2).attr("y", -this.height / this.scale / 2 + translate[1] / 4).attr("width", this.width / this.scale).attr("height", this.height / this.scale);
+      this.rect.attr("x", -translate[0] / this.scale).attr("y", -translate[1] / this.scale).attr("width", this.width / this.scale).attr("height", this.height / this.scale);
+      translate = [translate[0] / this.scale, translate[1] / this.scale];
       this.scale = scale;
-      this.blank.attr("transform", "translate(" + translate + ") scale(" + scale + ")");
+      this.blank.attr("transform", "scale(" + scale + ") translate(" + translate + ")");
       if (draw) {
         return this.resize();
       }
@@ -314,7 +332,7 @@
       }).attr("y2", function(d) {
         return d.y + d.force.y / 6;
       });
-      return this.grads.attr("x1", function(d) {
+      this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
         return d.x - 50 / _this.scale * d.grad.x * w;
@@ -323,6 +341,9 @@
       }).attr("y2", function(d) {
         return d.y - 50 / _this.scale * d.grad.y * w;
       });
+      if (this.onChange != null) {
+        return this.onChange();
+      }
     };
 
     Sketch.prototype.resize = function() {
@@ -362,7 +383,7 @@
           return 0;
         }
       });
-      this.grads.attr("stroke-width", function(d) {
+      return this.grads.attr("stroke-width", function(d) {
         var l;
         if (50 / _this.scale * dist((function() {
           var _ref1, _results;
@@ -379,9 +400,6 @@
           return 0;
         }
       });
-      if (this.onChange != null) {
-        return this.onChange();
-      }
     };
 
     return Sketch;

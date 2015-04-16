@@ -9,8 +9,9 @@ class Easel
         padHeight ?= htmlRect.height
         @pad = new tacit.Pad(this, padLoc, padHeight, padWidth, structure)
 
+    allowPan: -> if @currentTool.allowPan? then @currentTool.allowPan else false
+
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        console.log [easel, eventType, mouseLoc, object]
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)

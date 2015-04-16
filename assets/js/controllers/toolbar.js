@@ -2,8 +2,7 @@ $(document).ready(function() {
 
 $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 	// make tool current tool
-	var tool = $(e.target).parent()
-	var toolName = tool.prop('id')
+	var toolName = e.target.id;
 	if (toolName === "select-btn") {
 		easel.currentTool = tacit.tools.select
 	} else if (toolName === "move-btn") {
@@ -24,9 +23,9 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 	$('.active').removeClass("active")
 	$("#"+toolName).addClass("active")
 
-	/* 
-	
-	todo: css+js to make custom cursor images. 
+	/*
+
+	todo: css+js to make custom cursor images.
 	it'll be like the moving checkers thing.
 
 	*/

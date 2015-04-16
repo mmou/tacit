@@ -2,22 +2,19 @@ window.tacit ?= {}
 
 r = -> 2*Math.random() - 1
 
-dummyEasel =
+class dummyEasel
+    constructor: (@suggestions, @i) -> null
+
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        if @currentTool?
-            if @currentTool.mouseDown?
-                @currentTool.mouseDown(easel, eventType, mouseLoc, object)
+        console.log @i
+        @suggestions.project.easel.pad.load(@suggestions.pads[@i].sketch.structure)
+        @suggestions.project.easel.pad.sketch.onChange = =>
+            @suggestions.update(@suggestions.project.easel.pad.sketch.structure)
+        @suggestions.project.easel.pad.sketch.updateDrawing()
         return false
-    mouseUp: (easel, eventType, mouseLoc, object) ->
-        if @currentTool?
-            if @currentTool.mouseUp?
-                @currentTool.mouseUp(easel, eventType, mouseLoc, object)
-        return false
-    mouseMove: (easel, eventType, mouseLoc, object) ->
-        if @currentTool?
-            if @currentTool.mouseMove?
-                @currentTool.mouseMove(easel, eventType, mouseLoc, object)
-        return false
+
+    mouseUp: (easel, eventType, mouseLoc, object) -> false
+    mouseMove: (easel, eventType, mouseLoc, object) -> false
 
 class Suggestions
     constructor: (@project, @htmlLoc) ->
@@ -26,8 +23,8 @@ class Suggestions
 
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         @pads = []
-        for i in [1..4]
-            @pads.push(new tacit.Pad(dummyEasel, @htmlLoc, 200, 225, structure))
+        for i in [0..3]
+            @pads.push(new tacit.Pad(new dummyEasel(this, i), @htmlLoc, 200, 225, structure))
         @update(structure)
 
 
@@ -41,7 +38,7 @@ class Suggestions
             node.move(delta)
 
     update: (structure) ->
-        for pad, i in @pads
+        for pad in @pads
             structure = new tacit.Structure(structure)
             structure.solve()
             @mutate(structure)
@@ -49,12 +46,6 @@ class Suggestions
             pad.sketch.nodeSize = 0
             pad.sketch.showforce = false
             pad.sketch.updateDrawing()
-            pad.sketch.svg.on("mousedown", (d) =>
-                console.log structure.lp.obj
-                @project.easel.pad.load(structure)
-                @project.easel.pad.sketch.onChange = =>
-                    @update(@project.easel.pad.sketch.structure)
-                @project.easel.pad.sketch.updateDrawing())
 
 
 window.tacit.Suggestions = Suggestions

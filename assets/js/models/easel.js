@@ -21,8 +21,15 @@
       this.pad = new tacit.Pad(this, padLoc, padHeight, padWidth, structure);
     }
 
+    Easel.prototype.allowPan = function() {
+      if (this.currentTool.allowPan != null) {
+        return this.currentTool.allowPan;
+      } else {
+        return false;
+      }
+    };
+
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      console.log([easel, eventType, mouseLoc, object]);
       if (this.currentTool != null) {
         if (this.currentTool.mouseDown != null) {
           this.currentTool.mouseDown(easel, eventType, mouseLoc, object);

@@ -1,4 +1,18 @@
-/* 
-todo: css+js to make custom cursor images. 
+/*
+todo: css+js to make custom cursor images.
 it'll be like the moving checkers thing.
 */
+
+.toolbar-btn {
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-size: contain;
+    background-position: center;
+}
+
+#select-btn { background-image: url(../resources/button-images/select.png); }
+#move-btn { background-image: url(../resources/button-images/move.png); }
+#draw-btn { background-image: url(../resources/button-images/draw.png); }
+#erase-btn { background-image: url(../resources/button-images/erase.png); }
+#measure-btn { background-image: url(../resources/button-images/measure.png); }
+#load-btn { background-image: url(../resources/button-images/load.png); }
