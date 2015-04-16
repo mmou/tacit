@@ -47,14 +47,11 @@ class Sketch
                  .attr("height", height)
                  .attr("fill", "transparent")
                  .on("mousedown", (d) ->
-                     easel.mouseDown(easel, "background", d3.mouse(this), d)
-                     return false)
+                     easel.mouseDown(easel, "background", d3.mouse(this), d))
                  .on("mousemove", (d) ->
-                     easel.mouseMove(easel, "background", d3.mouse(this), d)
-                     return false)
+                     easel.mouseMove(easel, "background", d3.mouse(this), d))
                  .on("mouseup", (d) ->
-                     easel.mouseUp(easel, "background", d3.mouse(this), d)
-                     return false)
+                     easel.mouseUp(easel, "background", d3.mouse(this), d))
 
         d3.select(window).on("keydown", ->
                              easel.keyDown(easel, "window", d3.event.keyCode))
@@ -95,14 +92,11 @@ class Sketch
         @links.enter().insert("line", ".node")
               .attr("class", "link")
               .on("mousedown", (d) ->
-                  easel.mouseDown(easel, "beam", d3.mouse(this), d)
-                  return false)
+                  easel.mouseDown(easel, "beam", d3.mouse(this), d))
               .on("mousemove", (d) ->
-                  easel.mouseMove(easel, "beam", d3.mouse(this), d)
-                  return false)
+                  easel.mouseMove(easel, "beam", d3.mouse(this), d))
               .on("mouseup", (d) ->
-                  easel.mouseUp(easel, "beam", d3.mouse(this), d)
-                  return false)
+                  easel.mouseUp(easel, "beam", d3.mouse(this), d))
         @links.exit().transition()
             .attr("r", 0)
           .remove()
@@ -112,6 +106,12 @@ class Sketch
             .attr("class", "force")
             .attr("stroke-width", 0)
             .attr("marker-end", "url(#brtriangle)")
+            .on("mousedown", (d) ->
+                easel.mouseDown(easel, "force", d3.mouse(this), d))
+            .on("mousemove", (d) ->
+                easel.mouseMove(easel, "force", d3.mouse(this), d))
+            .on("mouseup", (d) ->
+                easel.mouseUp(easel, "force", d3.mouse(this), d))
         @forces.exit().remove()
 
         @grads = @grads.data(@structure.nodeList)
@@ -119,6 +119,12 @@ class Sketch
             .attr("class","grad")
             .attr("stroke-width", 0)
             .attr("marker-end", "url(#ptriangle)")
+            .on("mousedown", (d) ->
+                easel.mouseDown(easel, "grad", d3.mouse(this), d))
+            .on("mousemove", (d) ->
+                easel.mouseMove(easel, "grad", d3.mouse(this), d))
+            .on("mouseup", (d) ->
+                easel.mouseUp(easel, "grad", d3.mouse(this), d))
         @grads.exit().remove()
 
         @nodes = @nodes.data(@structure.nodeList)
@@ -126,14 +132,11 @@ class Sketch
             .attr("class", "node")
             .attr("r", 5/@scale)
             .on("mousedown", (d) ->
-                easel.mouseDown(easel, "node", d3.mouse(this), d)
-                return false)
+                easel.mouseDown(easel, "node", d3.mouse(this), d))
             .on("mousemove", (d) ->
-                easel.mouseMove(easel, "node", d3.mouse(this), d)
-                return false)
+                easel.mouseMove(easel, "node", d3.mouse(this), d))
             .on("mouseup", (d) ->
-                easel.mouseUp(easel, "node", d3.mouse(this), d)
-                return false)
+                easel.mouseUp(easel, "node", d3.mouse(this), d))
           .transition()
             .duration(750)
             .ease("elastic")
@@ -160,7 +163,7 @@ class Sketch
               .transition()
                 .duration(750)
                 .ease("elastic")
-                    .attr("stroke-width",  (d) => 0.035*d.F or 5/@scale*showzero.checked)
+                    .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*showzero.checked)
 
         @nodes.attr("cx", (d) => d.x)
               .attr("cy", (d) => d.y)
@@ -172,7 +175,7 @@ class Sketch
 
         @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/4)
                .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/4)
-               .attr("stroke-width", (d) => if dist(f for d, f of d.force) > 0
+               .attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
                                                10/@scale*showforce.checked
                                             else 0)
 
@@ -212,13 +215,13 @@ class Sketch
         w = @structure.nodeList.length/@structure.lp.obj
 
         @links.attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
-              .attr("stroke-width",  (d) => 0.035*d.F or 5/@scale*showzero.checked)
+              .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*showzero.checked)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.attr("r", (d) => 18/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
 
-        @forces.attr("stroke-width", (d) => if dist(f for d, f of d.force) > 0
+        @forces.attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
                                                10/@scale*showforce.checked
                                             else 0)
 
