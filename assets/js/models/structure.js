@@ -190,23 +190,25 @@
 
       Node.prototype["delete"] = function() {
         var beam, pos, _i, _len, _ref1;
-        _ref1 = this.sourced.concat(this.targeted);
-        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          beam = _ref1[_i];
-          beam["delete"]();
-        }
-        pos = nodeList.indexOf(this);
-        if (pos + 1) {
-          nodeList.splice(pos, 1);
-          delete nodeIDLookup[this.id];
-          delete nodeLookup[this.z][this.y][this.x];
-          if (isempty(nodeLookup[this.z][this.y])) {
-            delete nodeLookup[this.z][this.y];
+        if (!(this.fixed.x || this.fixed.y)) {
+          _ref1 = this.sourced.concat(this.targeted);
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            beam = _ref1[_i];
+            beam["delete"]();
           }
-          if (isempty(nodeLookup[this.z])) {
-            delete nodeLookup[this.z];
+          pos = nodeList.indexOf(this);
+          if (pos + 1) {
+            nodeList.splice(pos, 1);
+            delete nodeIDLookup[this.id];
+            delete nodeLookup[this.z][this.y][this.x];
+            if (isempty(nodeLookup[this.z][this.y])) {
+              delete nodeLookup[this.z][this.y];
+            }
+            if (isempty(nodeLookup[this.z])) {
+              delete nodeLookup[this.z];
+            }
+            return delete this;
           }
-          return delete this;
         }
       };
 
