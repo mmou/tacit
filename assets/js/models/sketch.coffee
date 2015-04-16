@@ -8,15 +8,14 @@ sum = (o) -> if o.length then o.reduce((a,b) -> a+b) else ""
 dist = (a, b) -> sqrt(sum(sqr(ai - (if b then b[i] else 0)) for ai, i in a))
 print = (o) -> console.log(o)
 
-@showgrad = {checked: false}
-@showforce = {checked: true}
-@showzero = {checked: true}
-@move = {checked: false}
-
 window.tacit ?= {}
 
 class Sketch
-    constructor: (@pad, htmlLoc="body", structure, height, width) ->
+    constructor: (@pad, htmlLoc="body", structure, @height, @width) ->
+        @showgrad = false
+        @showforce = true
+        @showzero = true
+
         htmlObj = d3.select(htmlLoc)
 
         if structure? then @structure = structure
@@ -24,11 +23,12 @@ class Sketch
 
         @svg = htmlObj
                  .append("svg:svg")
-                    .attr("width", width)
-                    .attr("height", height)
+                    .attr("width", @width)
+                    .attr("height", @height)
                     .attr("pointer-events", "all")
 
         @scale = 1
+        @nodeSize = 9
 #        zoomer = d3.behavior.zoom().on("zoom", => @rescale())
 #        mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale())
 
@@ -40,18 +40,19 @@ class Sketch
                 #        .on("dblclick.zoom", null)
                 #        .append("svg:g")
                 #            .on("mousedown", mousedn)
-        @blank.append("svg:rect")
-                 .attr("x", -width/2)
-                 .attr("y", -height/2)
-                 .attr("width", width)
-                 .attr("height", height)
-                 .attr("fill", "transparent")
-                 .on("mousedown", (d) ->
-                     easel.mouseDown(easel, "background", d3.mouse(this), d))
-                 .on("mousemove", (d) ->
-                     easel.mouseMove(easel, "background", d3.mouse(this), d))
-                 .on("mouseup", (d) ->
-                     easel.mouseUp(easel, "background", d3.mouse(this), d))
+        easel = @pad.easel
+        @rect = @blank.append("svg:rect")
+                        .attr("x", -@width/2)
+                        .attr("y", -@height/2)
+                        .attr("width", @width)
+                        .attr("height", @height)
+                        .attr("fill", "transparent")
+                        .on("mousedown", (d) ->
+                            easel.mouseDown(easel, "background", d3.mouse(this), d))
+                        .on("mousemove", (d) ->
+                            easel.mouseMove(easel, "background", d3.mouse(this), d))
+                        .on("mouseup", (d) ->
+                            easel.mouseUp(easel, "background", d3.mouse(this), d))
 
         d3.select(window).on("keydown", ->
                              easel.keyDown(easel, "window", d3.event.keyCode))
@@ -74,8 +75,8 @@ class Sketch
                 mins[d] = min(list...)
                 maxs[d] = max(list...)
                 means[d] = sum(list)/structure.nodeList.length
-            @scale = 0.5*min(width/(maxs.x-mins.x), height/(maxs.y-mins.y))
-            translate = [@scale*means.x, height/2 - @scale*means.y]
+            @scale = 0.5*min(width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+            translate = [@scale*means.x, @height/2 - @scale*means.y]
             #zoomer.scale(@scale)
             #zoomer.translate(translate)
             @rescale(translate, @scale, draw=false)
@@ -83,11 +84,17 @@ class Sketch
     rescale: (translate, scale, draw=true) ->
         translate ?= d3.event.translate
         scale ?= d3.event.scale
+        @rect.attr("x", -translate[0]/2)
+             .attr("y", -@height/@scale/2  + translate[1]/4)
+             .attr("width", @width/@scale)
+             .attr("height", @height/@scale)
         @scale = scale
         @blank.attr("transform", "translate(#{translate}) scale(#{scale})")
         if draw then @resize()
 
     updateDrawing: ->
+        easel = @pad.easel
+
         @links = @links.data(@structure.beamList)
         @links.enter().insert("line", ".node")
               .attr("class", "link")
@@ -130,7 +137,7 @@ class Sketch
         @nodes = @nodes.data(@structure.nodeList)
         @nodes.enter().insert("circle")
             .attr("class", "node")
-            .attr("r", 5/@scale)
+            .attr("r", @nodeSize/@scale/2)
             .on("mousedown", (d) ->
                 easel.mouseDown(easel, "node", d3.mouse(this), d))
             .on("mousemove", (d) ->
@@ -140,7 +147,7 @@ class Sketch
           .transition()
             .duration(750)
             .ease("elastic")
-            .attr("r", 9/@scale)
+            .attr("r", @nodeSize/@scale)
         @nodes.exit().transition()
             .attr("r", 0)
           .remove()
@@ -163,7 +170,7 @@ class Sketch
               .transition()
                 .duration(750)
                 .ease("elastic")
-                    .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*showzero.checked)
+                    .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*@showzero)
 
         @nodes.attr("cx", (d) => d.x)
               .attr("cy", (d) => d.y)
@@ -171,21 +178,23 @@ class Sketch
               .transition()
                 .duration(750)
                 .ease("elastic")
-                    .attr("r", (d) => 18/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
+                    .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
 
-        @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/4)
-               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/4)
+        @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/6)
+               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/6)
                .attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
-                                               10/@scale*showforce.checked
+                                               8/@scale*@showforce
                                             else 0)
 
         @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x - 50/@scale*d.grad.x*w)
               .attr("y1", (d) => d.y).attr("y2", (d) => d.y - 50/@scale*d.grad.y*w)
               .attr("stroke-width", (d) =>
                     if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
-                        10/@scale*showgrad.checked
+                        10/@scale*@showgrad
                     else
                         0)
+
+        @onChange() if @onChange?
 
     quickDraw: ->
         @structure.solve()
@@ -203,8 +212,8 @@ class Sketch
 
         @nodes.attr("cx", (d) => d.x).attr("cy", (d) => d.y)
 
-        @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/4)
-               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/4)
+        @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/6)
+               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/6)
 
         @grads.attr("x1", (d) => d.x)
               .attr("x2", (d) => d.x - 50/@scale*d.grad.x*w)
@@ -215,20 +224,22 @@ class Sketch
         w = @structure.nodeList.length/@structure.lp.obj
 
         @links.attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
-              .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*showzero.checked)
+              .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*@showzero)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
-        @nodes.attr("r", (d) => 18/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
+        @nodes.attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
 
         @forces.attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
-                                               10/@scale*showforce.checked
+                                               8/@scale*@showforce
                                             else 0)
 
         @grads.attr("stroke-width", (d) =>
                     if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
-                        10/@scale*showgrad.checked
+                        10/@scale*@showgrad
                     else
                         0)
+
+        @onChange() if @onChange?
 
 window.tacit.Sketch = Sketch

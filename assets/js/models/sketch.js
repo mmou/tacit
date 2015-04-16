@@ -58,22 +58,6 @@
     return console.log(o);
   };
 
-  this.showgrad = {
-    checked: false
-  };
-
-  this.showforce = {
-    checked: true
-  };
-
-  this.showzero = {
-    checked: true
-  };
-
-  this.move = {
-    checked: false
-  };
-
   if ((_ref = window.tacit) == null) {
     window.tacit = {};
   }
@@ -81,22 +65,29 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width) {
-      var d, draw, htmlObj, list, maxs, means, mins, n, translate, _i, _len, _ref1, _ref2;
+      var d, draw, easel, htmlObj, list, maxs, means, mins, n, translate, _i, _len, _ref1, _ref2;
       this.pad = pad;
       if (htmlLoc == null) {
         htmlLoc = "body";
       }
+      this.height = height;
+      this.width = width;
+      this.showgrad = false;
+      this.showforce = true;
+      this.showzero = true;
       htmlObj = d3.select(htmlLoc);
       if (structure != null) {
         this.structure = structure;
       } else {
         this.structure = new tacit.Structure;
       }
-      this.svg = htmlObj.append("svg:svg").attr("width", width).attr("height", height).attr("pointer-events", "all");
+      this.svg = htmlObj.append("svg:svg").attr("width", this.width).attr("height", this.height).attr("pointer-events", "all");
       this.scale = 1;
+      this.nodeSize = 9;
       this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g");
-      this.blank.append("svg:rect").attr("x", -width / 2).attr("y", -height / 2).attr("width", width).attr("height", height).attr("fill", "transparent").on("mousedown", function(d) {
+      easel = this.pad.easel;
+      this.rect = this.blank.append("svg:rect").attr("x", -this.width / 2).attr("y", -this.height / 2).attr("width", this.width).attr("height", this.height).attr("fill", "transparent").on("mousedown", function(d) {
         return easel.mouseDown(easel, "background", d3.mouse(this), d);
       }).on("mousemove", function(d) {
         return easel.mouseMove(easel, "background", d3.mouse(this), d);
@@ -130,8 +121,8 @@
           maxs[d] = max.apply(null, list);
           means[d] = sum(list) / structure.nodeList.length;
         }
-        this.scale = 0.5 * min(width / (maxs.x - mins.x), height / (maxs.y - mins.y));
-        translate = [this.scale * means.x, height / 2 - this.scale * means.y];
+        this.scale = 0.5 * min(width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
+        translate = [this.scale * means.x, this.height / 2 - this.scale * means.y];
         this.rescale(translate, this.scale, draw = false);
       }
     }
@@ -146,6 +137,7 @@
       if (scale == null) {
         scale = d3.event.scale;
       }
+      this.rect.attr("x", -translate[0] / 2).attr("y", -this.height / this.scale / 2 + translate[1] / 4).attr("width", this.width / this.scale).attr("height", this.height / this.scale);
       this.scale = scale;
       this.blank.attr("transform", "translate(" + translate + ") scale(" + scale + ")");
       if (draw) {
@@ -154,6 +146,8 @@
     };
 
     Sketch.prototype.updateDrawing = function() {
+      var easel;
+      easel = this.pad.easel;
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
         return easel.mouseDown(easel, "beam", d3.mouse(this), d);
@@ -182,13 +176,13 @@
       });
       this.grads.exit().remove();
       this.nodes = this.nodes.data(this.structure.nodeList);
-      this.nodes.enter().insert("circle").attr("class", "node").attr("r", 5 / this.scale).on("mousedown", function(d) {
+      this.nodes.enter().insert("circle").attr("class", "node").attr("r", this.nodeSize / this.scale / 2).on("mousedown", function(d) {
         return easel.mouseDown(easel, "node", d3.mouse(this), d);
       }).on("mousemove", function(d) {
         return easel.mouseMove(easel, "node", d3.mouse(this), d);
       }).on("mouseup", function(d) {
         return easel.mouseUp(easel, "node", d3.mouse(this), d);
-      }).transition().duration(750).ease("elastic").attr("r", 9 / this.scale);
+      }).transition().duration(750).ease("elastic").attr("r", this.nodeSize / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();
       return this.slowDraw();
     };
@@ -220,7 +214,7 @@
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("stroke-width", function(d) {
-        return 0.35 * sqrt(d.F) || 5 / _this.scale * showzero.checked;
+        return 0.35 * sqrt(d.F) || 5 / _this.scale * _this.showzero;
       });
       this.nodes.attr("cx", function(d) {
         return d.x;
@@ -229,16 +223,16 @@
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("r", function(d) {
-        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
+        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
       });
       this.forces.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
-        return d.x + d.force.x / 4;
+        return d.x + d.force.x / 6;
       }).attr("y1", function(d) {
         return d.y;
       }).attr("y2", function(d) {
-        return d.y + d.force.y / 4;
+        return d.y + d.force.y / 6;
       }).attr("stroke-width", function(d) {
         var f;
         if (!d.fixed.y && dist((function() {
@@ -251,12 +245,12 @@
           }
           return _results;
         })()) > 0) {
-          return 10 / _this.scale * showforce.checked;
+          return 8 / _this.scale * _this.showforce;
         } else {
           return 0;
         }
       });
-      return this.grads.attr("x1", function(d) {
+      this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
         return d.x - 50 / _this.scale * d.grad.x * w;
@@ -276,11 +270,14 @@
           }
           return _results;
         })()) * w > 0.05) {
-          return 10 / _this.scale * showgrad.checked;
+          return 10 / _this.scale * _this.showgrad;
         } else {
           return 0;
         }
       });
+      if (this.onChange != null) {
+        return this.onChange();
+      }
     };
 
     Sketch.prototype.quickDraw = function() {
@@ -311,11 +308,11 @@
       this.forces.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
-        return d.x + d.force.x / 4;
+        return d.x + d.force.x / 6;
       }).attr("y1", function(d) {
         return d.y;
       }).attr("y2", function(d) {
-        return d.y + d.force.y / 4;
+        return d.y + d.force.y / 6;
       });
       return this.grads.attr("x1", function(d) {
         return d.x;
@@ -339,12 +336,12 @@
           return 10 / _this.scale + "," + 10 / _this.scale;
         }
       }).attr("stroke-width", function(d) {
-        return 0.35 * sqrt(d.F) || 5 / _this.scale * showzero.checked;
+        return 0.35 * sqrt(d.F) || 5 / _this.scale * _this.showzero;
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
       });
       this.nodes.attr("r", function(d) {
-        return 18 / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
+        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       });
@@ -360,12 +357,12 @@
           }
           return _results;
         })()) > 0) {
-          return 10 / _this.scale * showforce.checked;
+          return 8 / _this.scale * _this.showforce;
         } else {
           return 0;
         }
       });
-      return this.grads.attr("stroke-width", function(d) {
+      this.grads.attr("stroke-width", function(d) {
         var l;
         if (50 / _this.scale * dist((function() {
           var _ref1, _results;
@@ -377,11 +374,14 @@
           }
           return _results;
         })()) * w > 0.05) {
-          return 10 / _this.scale * showgrad.checked;
+          return 10 / _this.scale * _this.showgrad;
         } else {
           return 0;
         }
       });
+      if (this.onChange != null) {
+        return this.onChange();
+      }
     };
 
     return Sketch;

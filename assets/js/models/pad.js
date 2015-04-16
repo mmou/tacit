@@ -14,9 +14,6 @@
       this.htmlLoc = htmlLoc;
       this.height = height;
       this.width = width;
-      if (structure == null) {
-        structure = null;
-      }
       if (!(structure != null)) {
         structure = new tacit.Structure;
         new structure.Beam({
@@ -92,6 +89,7 @@
     }
 
     Pad.prototype.load = function(structure) {
+      this.sketch.svg.remove();
       return this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);
     };
 
