@@ -26,7 +26,8 @@ $(document).ready(function() {
 	$("#draw-btn").addClass("active")
 	easel.currentTool = tacit.tools.draw
 
-	window.suggestions = new tacit.Suggestions("#SuggestionsView")
-	window.suggestions.loadSuggestions(window.suggestions.getSuggestions(4))
+	project = {"easel": easel};
+
+	window.suggestions = new tacit.Suggestions(project, "#SuggestionsView")
 
 })

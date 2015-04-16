@@ -159,34 +159,40 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
 
 class Structure
     # TODO: import / export list of coordinates etc. + list of connections
-    constructor: (tacfile) ->
-        if tacfile? then @import(tacfile)
+    constructor: (structure) ->
         [@nodeLookup, @nodeIDLookup] = [{}, {}]
         [@nodeList, @beamList] = [[], []]
         [@nodes, @beams] = [0, 0]
         [@Node, @Beam, @solveLP] = gen_classes(@nodeLookup, @nodeIDLookup,
                                                @nodeList,   @beamList,
                                                @nodes,      @beams)
+        if structure?
+            for beam in structure.beamList
+                new @Beam(beam.source, beam.target)
+            for node in structure.nodeList
+                localnode = @nodeIDLookup[@nodeLookup[node.z][node.y][node.x]]
+                localnode.fixed = node.fixed
+                localnode.force = node.force
+
     solve: ->
         try
             @lp = @solveLP()
             for beam in @beamList
                 beam.f = @lp["f#{beam.id}"]
                 beam.F = abs(beam.f)
-            for node in @nodeList
-                node.lambda = {}
+            for beam in @beamList
+                beam.f = @lp["f#{beam.id}"]
+                beam.F = abs(beam.f)
                 for dim in "xyz"
-                    lambda = @lp["n#{node.id}#{dim}"]
-                    node.lambda[dim] = lambda
-                    if lambda
-                        #print node.sourced
-                        #as = sum((b.F/b.f)*b.l[dim]/sqr(b.L) for b in node.sourced)
-                        #as = 0
-                        #bs = sum(b.f/b.L*(1-2*sqr(b.l[dim]/b.L)) for b in node.sourced)
-                        #grad = bs/((1/lambda) - as)
-                        grad = 0.5*sum(1/((b.f/b.F) * b.l[dim]/sqr(b.L)) for b in node.sourced)
-                        # print ["n#{node.id}#{dim}", lambda, "grad", grad, "obj", @lp.obj]
-                        node.grad[dim] = if isNaN(grad) then 0 else grad
+                    rho = beam.f/beam.L
+                    geo = 1 - 2*Math.pow(beam.l[dim]/beam.L, 2)
+                    sdual = @lp["n#{beam.source.id}#{dim}"] or 0
+                    tdual = @lp["n#{beam.target.id}#{dim}"] or 0
+                    beam.grad[dim] = rho*geo*(sdual - tdual)
+            for node in @nodeList
+                for dim in "xyz"
+                    node.grad[dim]  = sum(beam.grad[dim] for beam in node.sourced)
+                    node.grad[dim] -= sum(beam.grad[dim] for beam in node.targeted)
         catch error
 
 

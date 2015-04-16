@@ -399,19 +399,30 @@
 
   Structure = (function() {
 
-    function Structure(tacfile) {
-      var _ref1, _ref2, _ref3, _ref4;
-      if (tacfile != null) {
-        this["import"](tacfile);
-      }
+    function Structure(structure) {
+      var beam, localnode, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
       _ref1 = [{}, {}], this.nodeLookup = _ref1[0], this.nodeIDLookup = _ref1[1];
       _ref2 = [[], []], this.nodeList = _ref2[0], this.beamList = _ref2[1];
       _ref3 = [0, 0], this.nodes = _ref3[0], this.beams = _ref3[1];
       _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2];
+      if (structure != null) {
+        _ref5 = structure.beamList;
+        for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
+          beam = _ref5[_i];
+          new this.Beam(beam.source, beam.target);
+        }
+        _ref6 = structure.nodeList;
+        for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {
+          node = _ref6[_j];
+          localnode = this.nodeIDLookup[this.nodeLookup[node.z][node.y][node.x]];
+          localnode.fixed = node.fixed;
+          localnode.force = node.force;
+        }
+      }
     }
 
     Structure.prototype.solve = function() {
-      var b, beam, dim, grad, lambda, node, _i, _j, _len, _len1, _ref1, _ref2, _results;
+      var beam, dim, geo, node, rho, sdual, tdual, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref2, _ref3, _ref4, _results;
       try {
         this.lp = this.solveLP();
         _ref1 = this.beamList;
@@ -420,37 +431,54 @@
           beam.f = this.lp["f" + beam.id];
           beam.F = abs(beam.f);
         }
-        _ref2 = this.nodeList;
-        _results = [];
+        _ref2 = this.beamList;
         for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-          node = _ref2[_j];
-          node.lambda = {};
+          beam = _ref2[_j];
+          beam.f = this.lp["f" + beam.id];
+          beam.F = abs(beam.f);
+          _ref3 = "xyz";
+          for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
+            dim = _ref3[_k];
+            rho = beam.f / beam.L;
+            geo = 1 - 2 * Math.pow(beam.l[dim] / beam.L, 2);
+            sdual = this.lp["n" + beam.source.id + dim] || 0;
+            tdual = this.lp["n" + beam.target.id + dim] || 0;
+            beam.grad[dim] = rho * geo * (sdual - tdual);
+          }
+        }
+        _ref4 = this.nodeList;
+        _results = [];
+        for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+          node = _ref4[_l];
           _results.push((function() {
-            var _k, _len2, _ref3, _results1;
-            _ref3 = "xyz";
+            var _len4, _m, _ref5, _results1;
+            _ref5 = "xyz";
             _results1 = [];
-            for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
-              dim = _ref3[_k];
-              lambda = this.lp["n" + node.id + dim];
-              node.lambda[dim] = lambda;
-              if (lambda) {
-                grad = 0.5 * sum((function() {
-                  var _l, _len3, _ref4, _results2;
-                  _ref4 = node.sourced;
-                  _results2 = [];
-                  for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-                    b = _ref4[_l];
-                    _results2.push(1 / ((b.f / b.F) * b.l[dim] / sqr(b.L)));
-                  }
-                  return _results2;
-                })());
-                _results1.push(node.grad[dim] = isNaN(grad) ? 0 : grad);
-              } else {
-                _results1.push(void 0);
-              }
+            for (_m = 0, _len4 = _ref5.length; _m < _len4; _m++) {
+              dim = _ref5[_m];
+              node.grad[dim] = sum((function() {
+                var _len5, _n, _ref6, _results2;
+                _ref6 = node.sourced;
+                _results2 = [];
+                for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
+                  beam = _ref6[_n];
+                  _results2.push(beam.grad[dim]);
+                }
+                return _results2;
+              })());
+              _results1.push(node.grad[dim] -= sum((function() {
+                var _len5, _n, _ref6, _results2;
+                _ref6 = node.targeted;
+                _results2 = [];
+                for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
+                  beam = _ref6[_n];
+                  _results2.push(beam.grad[dim]);
+                }
+                return _results2;
+              })()));
             }
             return _results1;
-          }).call(this));
+          })());
         }
         return _results;
       } catch (error) {

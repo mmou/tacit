@@ -1,7 +1,7 @@
 @tacit ?= {}
 
 class Pad
-    constructor: (@easel, @htmlLoc, @height, @width, structure=null) ->
+    constructor: (@easel, @htmlLoc, @height, @width, structure) ->
         if not structure?
             structure = new tacit.Structure
             new structure.Beam({x: 10, y: 0}, {x: 30, y: 40})
@@ -17,6 +17,7 @@ class Pad
         @sketch = new tacit.Sketch(this, @htmlLoc, structure, @height, @width)
 
     load: (structure) ->
+        @sketch.svg.remove()
         @sketch = new tacit.Sketch(this, @htmlLoc, structure, @height, @width)
 
 @tacit.Pad = Pad
