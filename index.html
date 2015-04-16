@@ -15,6 +15,7 @@
     <script src="assets/js/models/sketch.js"></script>
     <script src="assets/js/models/structure.js"></script>
     <script src="assets/js/models/tools/select.js"></script>
+    <script src="assets/js/models/tools/move.js"></script>
     <script src="assets/js/models/tools/draw.js"></script>
      <script src="assets/js/models/tools/erase.js"></script>
     <script src="assets/js/models/easel.js"></script>
@@ -35,14 +36,23 @@
         <img src="assets/resources/logo.png" height="26">
       </a>
 
+      <!--
       <div class="navbar-brand">
         my_chair
       </div>
+		-->
 
     </div>
 
     <div class="nav navbar-nav navbar-right">
         <ul class="nav navbar-nav">
+
+        <!-- Makes a lot more sense to me next to the file.  Opinions?, but would have to match fonts EH -->
+      	<div class="navbar-brand">
+        	my_chair
+      	</div>
+
+      	<!-- Can we adjust dropdown so that it comes directly down and not to the side? EH -->
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">File <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -71,15 +81,21 @@
 
     <div id="EaselView" class="row">
             <div id="ToolbarView" class="col-md-1">
-				<button type="button" class="btn btn-default toolbar-btn" id="select-btn"><img height="60px" src="assets/resources/button-images/grab.png"></button>
+            	<button type="button" class="btn btn-default toolbar-btn" id="select-btn"><img height="60px" src="assets/resources/button-images/pointer.png"></button>
+				<button type="button" class="btn btn-default toolbar-btn" id="move-btn"><img height="60px" src="assets/resources/button-images/grab.png"></button>
 				<button type="button" class="btn btn-default toolbar-btn" id="draw-btn"><img height="60px" src="assets/resources/button-images/pencil.png"></button>
 				<button type="button" class="btn btn-default toolbar-btn" id="erase-btn"><img height="60px" src="assets/resources/button-images/eraser.png"></button>
-<!--				<button type="button" class="btn btn-default toolbar-btn" id="measure-btn"><img height="60px" src="assets/resources/button-images/ruler.png"></button> -->
+				<button type="button" class="btn btn-default toolbar-btn" id="measure-btn"><img height="60px" src="assets/resources/button-images/ruler.png"></button>
 				<button type="button" class="btn btn-default toolbar-btn" id="test-btn"><img height="60px" src="assets/resources/button-images/weight.png"></button>
             </div>
 
             <div id="PadView" class="col-md-11">
+                <div id="Tutorial">
+             		<button type="button" class="btn btn-default" id="tutorial-btn" style="font-size:17px; font-family: sans-serif; color: #5C5C5C"> Tutorial </button>
+            	</div>
             </div>
+
+
     </div>
 
     <div id="SuggestionsView" class="row">

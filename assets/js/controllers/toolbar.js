@@ -6,15 +6,18 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 	var toolName = tool.prop('id')
 	if (toolName === "select-btn") {
 		easel.currentTool = tacit.tools.select
+	} else if (toolName === "move-btn") {
+		easel.currentTool = tacit.tools.move
 	} else if (toolName === "draw-btn") {
 		easel.currentTool = tacit.tools.draw
 	} else if (toolName === "erase-btn") {
 		easel.currentTool = tacit.tools.erase
-/*	} else if (toolName === "measure-btn") {
+	} else if (toolName === "measure-btn") {
 		easel.currentTool = tacit.tools.measure
-*/	} else if (toolName === "test-btn") {
+	} else if (toolName === "test-btn") {
 		easel.currentTool = tacit.tools.test
 	} else {
+		//Currently an issue with not pressing on image itself
 		console.log("invalid tool")
 	}
 
