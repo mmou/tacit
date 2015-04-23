@@ -26,7 +26,7 @@ $(document).ready(function() {
 	$("#draw-btn").addClass("active")
 	easel.currentTool = tacit.tools.draw
 
-	// Create tutorial button
+	$("#PadView").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 22, auto'})
 
 	$(document).click(function(evt){
 		if($(evt.target).is("#tutorial-btn") && $("#instructions").length == 0){
