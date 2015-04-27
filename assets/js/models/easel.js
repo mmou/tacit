@@ -6,6 +6,23 @@
     window.tacit = {};
   }
 
+  
+// from http://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
+function download(filename, text) {
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  pom.setAttribute('download', filename);
+
+  pom.style.display = 'none';
+  document.body.appendChild(pom);
+
+  pom.click();
+
+  document.body.removeChild(pom);
+}
+;
+
+
   Easel = (function() {
 
     function Easel(project, toolbarLoc, padLoc, padHeight, padWidth, structure) {
@@ -21,8 +38,14 @@
       this.pad = new tacit.Pad(this, padLoc, padHeight, padWidth, structure);
     }
 
+    Easel.prototype["export"] = function() {
+      var filename;
+      filename = this.project.name != null ? this.project.name : "tacit";
+      filename += ".svg";
+      return download(filename, d3.select(easel.pad.htmlLoc).html());
+    };
+
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      console.log([easel, eventType, mouseLoc, object]);
       if (this.currentTool != null) {
         if (this.currentTool.mouseDown != null) {
           this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
