@@ -31,7 +31,7 @@ $(document).ready(function() {
 	easel.currentTool = tacit.tools.draw
 
 
-	$("#PadView").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
+	$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
 
 	$(document).click(function(evt){
 		if($(evt.target).is("#tutorial-btn") && $("#instructions").length == 0){
