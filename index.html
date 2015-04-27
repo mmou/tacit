@@ -54,6 +54,7 @@
       	</div>
 
       	<!-- Can we adjust dropdown so that it comes directly down and not to the side? EH -->
+
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">File <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
@@ -81,26 +82,26 @@
   -->
 
     <div id="EaselView" class="row">
-            <div id="ToolbarView" class="col-md-1">
-            	<button type="button" class="btn btn-default toolbar-btn" id="select-btn"><img height="60px" src="assets/resources/button-images/pointer.png"></button>
-				<button type="button" class="btn btn-default toolbar-btn" id="move-btn"><img height="60px" src="assets/resources/button-images/grab.png"></button>
-				<button type="button" class="btn btn-default toolbar-btn" id="draw-btn"><img height="60px" src="assets/resources/button-images/pencil.png"></button>
-				<button type="button" class="btn btn-default toolbar-btn" id="erase-btn"><img height="60px" src="assets/resources/button-images/eraser.png"></button>
-				<button type="button" class="btn btn-default toolbar-btn" id="measure-btn"><img height="60px" src="assets/resources/button-images/ruler.png"></button>
-				<button type="button" class="btn btn-default toolbar-btn" id="test-btn"><img height="60px" src="assets/resources/button-images/weight.png"></button>
-            </div>
+      <div id="ToolbarView" class="col-md-1">
+        <button type="button" class="btn btn-default toolbar-btn" id="select-btn" data-toggle="tooltip" data-placement="right" title="Select" style="display:none"><img height="40px" width="40px" src="assets/resources/button-images/pointer.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="move-btn" data-toggle="tooltip" data-placement="right" title="Move"><img height="40px" src="assets/resources/button-images/grab.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="draw-btn" data-toggle="tooltip" data-placement="right" title="Draw"><img height="40px" src="assets/resources/button-images/pencil.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="erase-btn" data-toggle="tooltip" data-placement="right" title="Delete"><img height="40px" src="assets/resources/button-images/eraser.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="Measure"><img height="40px" src="assets/resources/button-images/ruler.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="test-btn" data-toggle="tooltip" data-placement="right" title="Load Test"><img height="40px" src="assets/resources/button-images/weight.png"></button>
+      </div>
 
-            <div id="PadView" class="col-md-11">
-                <div id="Tutorial">
-             		<button type="button" class="btn btn-default" id="tutorial-btn" style="font-size:17px; font-family: sans-serif; color: #5C5C5C"> Tutorial </button>
-            	</div>
-            </div>
+      <div id="PadView" class="col-md-9">
+      </div>
+
+      <div id="SuggestionsView" class="col-md-2">
+          <div id="suggestions-label">
+            suggestions
+          </div>
+      </div>
 
 
-    </div>
 
-    <div id="SuggestionsView" class="row">
-        suggestions
     </div>
 
 
