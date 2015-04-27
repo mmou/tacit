@@ -60,9 +60,18 @@ body {
 	height: 35px;
 }
 
+#PadView {
+   box-sizing:border-box;
+   -moz-box-sizing:border-box;
+   -webkit-box-sizing:border-box;
+   /*TODO: Change to make not hardcoded*/
+   border: 5px solid black;
+   margin-top: 12px;
+}
+
 .toolbar-btn {
 	height: 70px;
-	width: 70px;
+	width: 100%;
 	margin-top: 10px;
 }
 
