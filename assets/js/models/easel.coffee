@@ -1,5 +1,20 @@
 window.tacit ?= {}
 
+`
+function download(filename, text) {
+  var pom = document.createElement('a');
+  pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  pom.setAttribute('download', filename);
+
+  pom.style.display = 'none';
+  document.body.appendChild(pom);
+
+  pom.click();
+
+  document.body.removeChild(pom);
+}
+`
+
 class Easel
     constructor: (@project, toolbarLoc, padLoc, padHeight, padWidth, structure) ->
         #@toolbar = new tacit.Toolbar(this, toolbarLoc)
@@ -9,8 +24,12 @@ class Easel
         padHeight ?= htmlRect.height
         @pad = new tacit.Pad(this, padLoc, padHeight, padWidth, structure)
 
+    export: ->
+        filename = if @project.name? then @project.name else "tacit"
+        filename += ".svg"
+        download(filename, d3.select(easel.pad.htmlLoc).html())
+
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        console.log [easel, eventType, mouseLoc, object]
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)
