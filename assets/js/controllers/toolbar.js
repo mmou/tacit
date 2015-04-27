@@ -16,11 +16,11 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 
 	} else if (toolName === "erase-btn") {
 		easel.currentTool = tacit.tools.erase
-		$("#PadView").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 0 17, auto'})
+		$("#PadView").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'})
 
 	} else if (toolName === "measure-btn") {
 		easel.currentTool = tacit.tools.measure
-		$("#PadView").css({'cursor': 'url(assets/resources/cursor-images/ruler.png) 0 20, auto'})
+		$("#PadView").css({'cursor': 'url(assets/resources/cursor-images/ruler.png) 6 20, auto'})
 
 
 	} else if (toolName === "test-btn") {
