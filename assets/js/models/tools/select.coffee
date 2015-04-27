@@ -22,7 +22,7 @@ selectTool =
             else
                 easel.pad.sketch.selectedLinks = selection
 
-            easel.pad.sketch.slowDraw()
+            easel.pad.sketch.resize()
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
         @dragging = false
@@ -44,7 +44,7 @@ selectTool =
                 else
                     easel.pad.sketch.selectedLinks = selection
 
-                easel.pad.sketch.quickDraw()
+                easel.pad.sketch.resize()
 
 
 window.tacit.tools.select = selectTool
