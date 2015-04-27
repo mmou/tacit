@@ -65,7 +65,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width) {
-      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, translate, zoomer, _i, _len, _ref1, _ref2,
+      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, scale, translate, zoomer, _i, _len, _ref1, _ref2,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -84,6 +84,7 @@
       }
       this.svg = htmlObj.append("svg:svg").attr("width", this.width).attr("height", this.height).attr("pointer-events", "all");
       this.scale = 1;
+      this.translate = [0, 0];
       this.nodeSize = 9;
       easel = this.pad.easel;
       zoomer = d3.behavior.zoom().on("zoom", function() {
@@ -136,15 +137,16 @@
           mins[d] = min.apply(null, list);
           maxs[d] = max.apply(null, list);
         }
-        this.scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
-        translate = [this.scale * (mins.x - maxs.x) / 2 + this.width / 2, this.scale * (mins.y - maxs.y) / 2 + this.height / 2];
-        zoomer.scale(this.scale);
+        scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
+        translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
+        zoomer.scale(scale);
         zoomer.translate(translate);
-        this.rescale(translate, this.scale, draw = false);
+        this.rescale(translate, scale, draw = false);
       }
     }
 
     Sketch.prototype.rescale = function(translate, scale, draw) {
+      var d, list, maxs, means, mins, n, translatet, _i, _len, _ref1, _ref2;
       if (draw == null) {
         draw = true;
       }
@@ -154,9 +156,31 @@
       if (scale == null) {
         scale = d3.event.scale;
       }
-      this.rect.attr("x", -translate[0] / this.scale).attr("y", -translate[1] / this.scale).attr("width", this.width / this.scale).attr("height", this.height / this.scale);
-      translate = [translate[0] / this.scale, translate[1] / this.scale];
+      translate = [translate[0] / scale, translate[1] / scale];
+      _ref1 = [{}, {}, {}], mins = _ref1[0], maxs = _ref1[1], means = _ref1[2];
+      _ref2 = ["x", "y", "z"];
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        d = _ref2[_i];
+        list = (function() {
+          var _j, _len1, _ref3, _results;
+          _ref3 = this.structure.nodeList;
+          _results = [];
+          for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
+            n = _ref3[_j];
+            _results.push(n[d]);
+          }
+          return _results;
+        }).call(this);
+        mins[d] = min.apply(null, list);
+        maxs[d] = max.apply(null, list);
+      }
+      translatet = [];
+      translatet[0] = max(mins.x * scale - this.translate[0], translate[0]);
+      translatet[1] = max(mins.y * scale - this.translate[0], translate[1]);
+      print([translate[0], translatet[0]]);
+      this.rect.attr("x", -translate[0]).attr("y", -translate[1]).attr("width", this.width / scale).attr("height", this.height / scale);
       this.scale = scale;
+      this.translate = translate;
       this.blank.attr("transform", "scale(" + scale + ") translate(" + translate + ")");
       if (draw) {
         return this.resize();

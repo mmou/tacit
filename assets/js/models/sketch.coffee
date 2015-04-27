@@ -28,6 +28,7 @@ class Sketch
                     .attr("pointer-events", "all")
 
         @scale = 1
+        @translate = [0, 0]
         @nodeSize = 9
         easel = @pad.easel
 
@@ -78,22 +79,36 @@ class Sketch
                 list = (n[d] for n in structure.nodeList)
                 mins[d] = min(list...)
                 maxs[d] = max(list...)
-            @scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
-            translate = [@scale*(mins.x-maxs.x)/2 + @width/2
-                         @scale*(mins.y-maxs.y)/2 + @height/2]
-            zoomer.scale(@scale)
+            scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+            translate = [scale*(mins.x-maxs.x)/2 + @width/2
+                         scale*(mins.y-maxs.y)/2 + @height/2]
+            zoomer.scale(scale)
             zoomer.translate(translate)
-            @rescale(translate, @scale, draw=false)
+            @rescale(translate, scale, draw=false)
 
     rescale: (translate, scale, draw=true) ->
         translate ?= d3.event.translate
         scale ?= d3.event.scale
-        @rect.attr("x", -translate[0]/@scale)
-             .attr("y", -translate[1]/@scale)
-             .attr("width", @width/@scale)
-             .attr("height", @height/@scale)
-        translate = [translate[0]/@scale, translate[1]/@scale]
+        translate = [translate[0]/scale, translate[1]/scale]
+
+        [mins, maxs, means] = [{}, {}, {}]
+        for d in ["x", "y", "z"]
+            list = (n[d] for n in @structure.nodeList)
+            mins[d] = min(list...)
+            maxs[d] = max(list...)
+
+        translatet = []
+        translatet[0] = max(mins.x*scale - @translate[0], translate[0])
+        translatet[1] = max(mins.y*scale - @translate[0], translate[1])
+        print [translate[0], translatet[0]]
+
+        @rect.attr("x", -translate[0])
+             .attr("y", -translate[1])
+             .attr("width", @width/scale)
+             .attr("height", @height/scale)
+
         @scale = scale
+        @translate = translate
         @blank.attr("transform", "scale(#{scale}) translate(#{translate})")
         if draw then @resize()
 
