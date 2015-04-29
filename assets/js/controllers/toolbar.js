@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 	// make tool current tool
-	var toolName = e.target.id;
+	var toolName = e.target.id || e.target.parentElement.id;
 	if (toolName === "select-btn") {
 		easel.currentTool = tacit.tools.select
 		$("#PadView svg").css({'cursor': 'default'})
@@ -33,12 +33,5 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 
 	$('.active').removeClass("active")
 	$("#"+toolName).addClass("active")
-
-	/*
-
-	todo: css+js to make custom cursor images.
-	it'll be like the moving checkers thing.
-
-	*/
 })
 })

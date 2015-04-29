@@ -32,14 +32,14 @@ class Sketch
         @nodeSize = 9
         easel = @pad.easel
 
-        zoomer = d3.behavior.zoom().on("zoom", => @rescale() if easel.allowPan())
+        @zoomer = d3.behavior.zoom().on("zoom", => @rescale() if easel.allowPan())
         mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale() if easel.allowPan())
 
         @selectedNodes = @selectedLinks = []
         @blank = @svg.append("svg:g")
                      .attr("transform", "translate(0,#{height}) scale(1,-1)")
                      .append("svg:g")
-                        .call(zoomer)
+                        .call(@zoomer)
                         .on("dblclick.zoom", null)
                         .append("svg:g")
                             .on("mousedown", mousedn)
@@ -82,8 +82,8 @@ class Sketch
             scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
             translate = [scale*(mins.x-maxs.x)/2 + @width/2
                          scale*(mins.y-maxs.y)/2 + @height/2]
-            zoomer.scale(scale)
-            zoomer.translate(translate)
+            @zoomer.scale(scale)
+            @zoomer.translate(translate)
             @rescale(translate, scale, draw=false)
 
     rescale: (translate, scale, draw=true) ->
@@ -97,20 +97,24 @@ class Sketch
             mins[d] = min(list...)
             maxs[d] = max(list...)
 
-        translatet = []
-        translatet[0] = max(mins.x*scale - @translate[0], translate[0])
-        translatet[1] = max(mins.y*scale - @translate[0], translate[1])
-        print [translate[0], translatet[0]]
+        outLeft = mins.x + translate[0] < -@translate[0]
+        outBottom = mins.y + translate[1] < -@translate[1]
+        outRight = maxs.x + translate[0] > 6/@scale*(@width/@scale - @translate[0]) #/
+        outTop = maxs.y + translate[1] > 6/@scale*(@height/@scale - @translate[1]) #/
 
-        @rect.attr("x", -translate[0])
-             .attr("y", -translate[1])
-             .attr("width", @width/scale)
-             .attr("height", @height/scale)
+        if not (outLeft or outRight or outBottom or outTop)
+            @rect.attr("x", -translate[0])
+                 .attr("y", -translate[1])
+                 .attr("width", @width/scale)
+                 .attr("height", @height/scale)
 
-        @scale = scale
-        @translate = translate
-        @blank.attr("transform", "scale(#{scale}) translate(#{translate})")
-        if draw then @resize()
+            @scale = scale
+            @translate = translate
+            @blank.attr("transform", "scale(#{scale}) translate(#{translate})")
+            if draw then @resize()
+        else
+            @zoomer.translate(@translate)
+            @zoomer.scale(@scale)
 
     updateDrawing: ->
         easel = @pad.easel

@@ -65,7 +65,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width) {
-      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, scale, translate, zoomer, _i, _len, _ref1, _ref2,
+      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, scale, translate, _i, _len, _ref1, _ref2,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -87,7 +87,7 @@
       this.translate = [0, 0];
       this.nodeSize = 9;
       easel = this.pad.easel;
-      zoomer = d3.behavior.zoom().on("zoom", function() {
+      this.zoomer = d3.behavior.zoom().on("zoom", function() {
         if (easel.allowPan()) {
           return _this.rescale();
         }
@@ -100,7 +100,7 @@
         });
       };
       this.selectedNodes = this.selectedLinks = [];
-      this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g").call(zoomer).on("dblclick.zoom", null).append("svg:g").on("mousedown", mousedn);
+      this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g").call(this.zoomer).on("dblclick.zoom", null).append("svg:g").on("mousedown", mousedn);
       this.rect = this.blank.append("svg:rect").attr("x", -this.width / 2).attr("y", -this.height / 2).attr("width", this.width).attr("height", this.height).attr("fill", "transparent").on("mousedown", function(d) {
         return easel.mouseDown(easel, "background", d3.mouse(this), d);
       }).on("mousemove", function(d) {
@@ -139,14 +139,14 @@
         }
         scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
         translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
-        zoomer.scale(scale);
-        zoomer.translate(translate);
+        this.zoomer.scale(scale);
+        this.zoomer.translate(translate);
         this.rescale(translate, scale, draw = false);
       }
     }
 
     Sketch.prototype.rescale = function(translate, scale, draw) {
-      var d, list, maxs, means, mins, n, translatet, _i, _len, _ref1, _ref2;
+      var d, list, maxs, means, mins, n, outBottom, outLeft, outRight, outTop, _i, _len, _ref1, _ref2;
       if (draw == null) {
         draw = true;
       }
@@ -174,16 +174,21 @@
         mins[d] = min.apply(null, list);
         maxs[d] = max.apply(null, list);
       }
-      translatet = [];
-      translatet[0] = max(mins.x * scale - this.translate[0], translate[0]);
-      translatet[1] = max(mins.y * scale - this.translate[0], translate[1]);
-      print([translate[0], translatet[0]]);
-      this.rect.attr("x", -translate[0]).attr("y", -translate[1]).attr("width", this.width / scale).attr("height", this.height / scale);
-      this.scale = scale;
-      this.translate = translate;
-      this.blank.attr("transform", "scale(" + scale + ") translate(" + translate + ")");
-      if (draw) {
-        return this.resize();
+      outLeft = mins.x + translate[0] < -this.translate[0];
+      outBottom = mins.y + translate[1] < -this.translate[1];
+      outRight = maxs.x + translate[0] > 6 / this.scale * (this.width / this.scale - this.translate[0]);
+      outTop = maxs.y + translate[1] > 6 / this.scale * (this.height / this.scale - this.translate[1]);
+      if (!(outLeft || outRight || outBottom || outTop)) {
+        this.rect.attr("x", -translate[0]).attr("y", -translate[1]).attr("width", this.width / scale).attr("height", this.height / scale);
+        this.scale = scale;
+        this.translate = translate;
+        this.blank.attr("transform", "scale(" + scale + ") translate(" + translate + ")");
+        if (draw) {
+          return this.resize();
+        }
+      } else {
+        this.zoomer.translate(this.translate);
+        return this.zoomer.scale(this.scale);
       }
     };
 
