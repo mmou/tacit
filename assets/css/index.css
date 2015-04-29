@@ -2,11 +2,8 @@ body {
 	height:100%;
 	background-color: #d4d4d4;	
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-weight:200;
 	font-size: 18px;
-}
-
-.row {
-	min-height:40px;
 }
 
 
@@ -23,30 +20,32 @@ body {
 	height:100%;
 }
 
+#ProjectView {
+	position: absolute;
+	top: 50px; /* because of the header */ 
+	min-height:100%;
+}
+
 #EaselView {
-	margin-top: 50px; /* because of the header */ 
-	min-height: 500px;
-	height:100%;
+	position: relative;
+	min-height:100%;
 	background-color:white;
 }
 
+#PadView svg {
+	margin: 14px;
+	border: 1px solid #d4d4d4;
+}
+
 #ToolbarView {
-    box-shadow: 2px 0px 5px -2px #888888;
-	height:100%;
-	min-height:500px;
+/*    box-shadow: 2px 0px 5px -2px #888888; */
+	min-height:100%;
 }
 
-#SuggestionsView {
-	height:14%;
-	min-height: 100px;
-	background-color: #d4d4d4;	
-}
-
-#Tutorial{
+#tutorial{
 	position: relative;
 	top: 10px;
 	float: right;
-	width: 150px;
 }
 
 #instructions{
@@ -61,9 +60,39 @@ body {
 	height: 35px;
 }
 
+#PadView {
+   box-sizing:border-box;
+   -moz-box-sizing:border-box;
+   -webkit-box-sizing:border-box;
+   /*TODO: Change to make not hardcoded*/
+   margin-top: 12px;
+}
+
 .toolbar-btn {
-	height: 80px;
+	height: 70px;
 	width: 100%;
 	margin-top: 10px;
 }
+
+#SuggestionsView {
+	height:100%;
+	padding:14px;
+	color: #888888;
+}
+
+#SuggestionsView svg {
+	background-color:white;
+	border: 1px solid #d4d4d4;
+	border-radius: 4px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+#SuggestionsView svg:hover {
+	cursor: pointer;
+	border-color: #807ec7;
+	box-shadow: 0px 0px 1px 1px #807ec7;
+
+}
+
 

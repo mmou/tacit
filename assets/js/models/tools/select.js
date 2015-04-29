@@ -31,7 +31,7 @@
         } else {
           easel.pad.sketch.selectedLinks = selection;
         }
-        return easel.pad.sketch.slowDraw();
+        return easel.pad.sketch.resize();
       }
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
@@ -55,7 +55,7 @@
           } else {
             easel.pad.sketch.selectedLinks = selection;
           }
-          return easel.pad.sketch.quickDraw();
+          return easel.pad.sketch.resize();
         }
       }
     }

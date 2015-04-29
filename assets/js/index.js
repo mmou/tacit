@@ -1,7 +1,11 @@
 $(document).ready(function() {
 
 	// initialize easel and stuff
-	easel = new tacit.Easel(null, "#ToolbarView", "#PadView", 450, 900);
+	var height = parseInt($(window).height()*0.9);
+	var width = parseInt($(window).width()*0.7);
+	var easelHeight = (height < 450 || height > 1000) ? 450 : height;
+	var easelWidth =  (width < 1000 || width > 1500 ) ? 1000 : width;	
+	easel = new tacit.Easel(null, "#ToolbarView", "#PadView", easelHeight, easelWidth);
 	sketch = easel.pad.sketch;
 	s = sketch.structure;
 	console.log(s);
@@ -18,15 +22,16 @@ $(document).ready(function() {
   	    return sketch.slowDraw();
   	  }, 1500);
 
+  	// activate tooltips
+	$('[data-toggle="tooltip"]').tooltip()
 
-	// this code won't work now, but once easel/pad
-	// have been initialized, we should make "draw" the initial tool
-
+  	// make draw the default active tool 
 	$('.active').removeClass("active")
 	$("#draw-btn").addClass("active")
 	easel.currentTool = tacit.tools.draw
 
-	// Create tutorial button
+
+	$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
 
 	$(document).click(function(evt){
 		if($(evt.target).is("#tutorial-btn") && $("#instructions").length == 0){

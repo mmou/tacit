@@ -53,7 +53,7 @@
       };
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       this.pads = [];
-      for (i = _i = 0; _i <= 3; i = ++_i) {
+      for (i = _i = 1; _i <= 3; i = ++_i) {
         this.pads.push(new tacit.Pad(new dummyEasel(this, i), this.htmlLoc, 200, 225, structure));
       }
       this.update(structure);
