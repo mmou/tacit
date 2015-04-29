@@ -1,6 +1,6 @@
-body { 
+body {
 	height:100%;
-	background-color: #d4d4d4;	
+	background-color: #d4d4d4;
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight:200;
 	font-size: 18px;
@@ -15,14 +15,14 @@ body {
 }
 
 #HistorySketchesView {
-	overflow-x:scroll; 
-	overflow-y: hidden; 
+	overflow-x:scroll;
+	overflow-y: hidden;
 	height:100%;
 }
 
 #ProjectView {
 	position: absolute;
-	top: 50px; /* because of the header */ 
+	top: 50px; /* because of the header */
 	min-height:100%;
 }
 
@@ -65,6 +65,7 @@ body {
    -moz-box-sizing:border-box;
    -webkit-box-sizing:border-box;
    /*TODO: Change to make not hardcoded*/
+   width: auto;
    margin-top: 12px;
 }
 
@@ -94,5 +95,3 @@ body {
 	box-shadow: 0px 0px 1px 1px #807ec7;
 
 }
-
-
