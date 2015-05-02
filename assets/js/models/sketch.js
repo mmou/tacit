@@ -101,13 +101,25 @@
       };
       this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g").call(this.zoomer).on("dblclick.zoom", null).append("svg:g").on("mousedown", mousedn);
-      this.rect = this.blank.append("svg:rect").attr("x", -this.width / 2).attr("y", -this.height / 2).attr("width", this.width).attr("height", this.height).attr("fill", "transparent").on("mousedown", function(d) {
-        return easel.mouseDown(easel, "background", d3.mouse(this), d);
-      }).on("mousemove", function(d) {
-        return easel.mouseMove(easel, "background", d3.mouse(this), d);
-      }).on("mouseup", function(d) {
-        return easel.mouseUp(easel, "background", d3.mouse(this), d);
-      });
+      this.background = this.blank.append("svg:g")
+                                .on("mousedown", function(d) {
+                                    return easel.mouseDown(easel, "background", d3.mouse(this), d);
+                              }).on("mousemove", function(d) {
+                                    return easel.mouseMove(easel, "background", d3.mouse(this), d);
+                              }).on("mouseup", function(d) {
+                                return easel.mouseUp(easel, "background", d3.mouse(this), d);
+                              })
+      this.rect = this.background.append("svg:rect")
+                                .attr("x", -this.width / 2)
+                                .attr("y", -this.height / 2)
+                                .attr("width", this.width)
+                                .attr("height", this.height)
+                                .attr("fill", "url(#grid)")
+      this.baseLine = this.background.append("svg:line")
+                  .attr("x1", -200).attr("y1", 0)
+                  .attr("x2", 300).attr("y2", 0)
+                  .attr("stroke", "black")
+                  .attr("stroke-width", 2)
       if (!window.keysCaptured) {
         d3.select(window).on("keydown", function() {
           return easel.keyDown(easel, "window", d3.event.keyCode);

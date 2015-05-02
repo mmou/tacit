@@ -33,7 +33,7 @@ $(document).ready(function() {
 
 	$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
 
-	$(document).click(function(evt){
+/*	$(document).click(function(evt){
 		if($(evt.target).is("#tutorial-btn") && $("#instructions").length == 0){
 			//Add div containing temporary tutorials
 			$("#Tutorial").append(
@@ -52,6 +52,28 @@ $(document).ready(function() {
 
 		}
 	});
+*/
+
+	var gridBox = $('input[name=grid]');
+	gridBox.click(function(){
+		if(gridBox.is(":checked")){
+			sketch.rect.attr("fill", "url(#grid)");
+		} else {
+			sketch.rect.attr("fill", "transparent");
+
+		}
+	});
+
+	var baseLineBox = $('input[name=baseLine]');
+	baseLineBox.click(function(){
+		if(baseLineBox.is(":checked")){
+			sketch.baseLine.attr("stroke", "black");
+		} else {
+			sketch.baseLine.attr("stroke", "transparent");
+
+		}
+	});
+
 
 	window.project = {"easel": easel};
 
