@@ -19,16 +19,19 @@ input[type="checkbox"] {
 
 #HistoryView {
 	height:10%;
-	min-height: 60px;
+	min-height: 100px;
 	padding:4px;
 	background-color: #d4d4d4;
 }
 
+
+/*
 #HistorySketchesView {
 	overflow-x:scroll;
 	overflow-y: hidden;
 	height:100%;
 }
+*/
 
 #ProjectView {
 	position: absolute;
@@ -39,11 +42,12 @@ input[type="checkbox"] {
 #EaselView {
 	position: relative;
 	min-height:100%;
+	padding-top: 14px;
+	padding-bottom: 14px;	
 	background-color:white;
 }
 
 #PadView svg {
-	margin: 14px;
 	border: 1px solid #d4d4d4;
 }
 
@@ -81,27 +85,25 @@ input[type="checkbox"] {
 
 .toolbar-btn {
 	height: 70px;
-	width: 100%;
-	margin-top: 10px;
+	width: 90%;
+	margin-bottom: 10px;
 }
 
 #SuggestionsView {
 	height:100%;
-	padding:14px;
 	color: #888888;
+	margin: auto;
 }
 
-#SuggestionsView svg {
+#SuggestionsView svg, #HistorySketchesView svg {
 	background-color:white;
 	border: 1px solid #d4d4d4;
 	border-radius: 4px;
-	margin-top: 4px;
-	margin-bottom: 4px;
+	margin: 4px;
 }
 
-#SuggestionsView svg:hover {
+#SuggestionsView svg:hover, #HistorySketchesView svg:hover {
 	cursor: pointer;
 	border-color: #807ec7;
 	box-shadow: 0px 0px 1px 1px #807ec7;
-
 }
