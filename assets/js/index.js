@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 	// initialize easel and stuff
-	var height = parseInt($(window).height()*0.7);
+	var height = parseInt($(window).height()*0.8);
 	var width = parseInt($(window).width()*0.7);
 	var easelHeight = (height < 450 || height > 1000) ? 450 : height;
 	var easelWidth =  (width < 1000 || width > 1500 ) ? 640 : width;
@@ -55,6 +55,7 @@ $(document).ready(function() {
 
 	window.project = {"easel": easel};
 
-	suggestions = new tacit.Suggestions(project, "#SuggestionsView")
+	suggestions = new tacit.Suggestions(project, "#SuggestionsView");
+	versions = new tacit.Versions(project, "#HistorySketchesView");
 
 })
