@@ -19,13 +19,16 @@ class Versions
         @history = []
 
     save: ->
-        structure = new tacit.Structure(@project.easel.pad.sketch.structure)
-        structure.solve()
-        pad = new tacit.Pad(new dummyEasel(this, @history.length), @htmlLoc, 100, 100, structure)         
-        @history.push(pad)
-        pad.load(structure)
-        pad.sketch.nodeSize = 0
-        pad.sketch.showforce = false
-        pad.sketch.updateDrawing()
+        if @project.actionQueue.length > 0?
+            structure = new tacit.Structure(@project.easel.pad.sketch.structure)
+            structure.solve()
+            pad = new tacit.Pad(new dummyEasel(this, @history.length), @htmlLoc, 100, 100, structure)         
+            @history.push(pad)
+            pad.load(structure)
+            pad.sketch.nodeSize = 0
+            pad.sketch.showforce = false
+            pad.sketch.updateDrawing()
+
+        @project.actionQueue = []
 
 window.tacit.Versions = Versions

@@ -15,13 +15,11 @@ body {
 }
 
 
-/*
 #HistorySketchesView {
 	overflow-x:scroll;
 	overflow-y: hidden;
-	height:100%;
+	height:140px;
 }
-*/
 
 #ProjectView {
 	position: absolute;

@@ -11,6 +11,7 @@
   }
 
   eraseTool = {
+    name: "erase",
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var idx, selection;
       this.dragging = true;

@@ -45,14 +45,17 @@
 
     Versions.prototype.save = function() {
       var pad, structure;
-      structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
-      structure.solve();
-      pad = new tacit.Pad(new dummyEasel(this, this.history.length), this.htmlLoc, 100, 100, structure);
-      this.history.push(pad);
-      pad.load(structure);
-      pad.sketch.nodeSize = 0;
-      pad.sketch.showforce = false;
-      return pad.sketch.updateDrawing();
+      if (this.project.actionQueue.length > (0 != null)) {
+        structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
+        structure.solve();
+        pad = new tacit.Pad(new dummyEasel(this, this.history.length), this.htmlLoc, 100, 100, structure);
+        this.history.push(pad);
+        pad.load(structure);
+        pad.sketch.nodeSize = 0;
+        pad.sketch.showforce = false;
+        pad.sketch.updateDrawing();
+      }
+      return this.project.actionQueue = [];
     };
 
     return Versions;

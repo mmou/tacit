@@ -12,6 +12,7 @@
 
   drawTool = {
     drawStart: null,
+    name: "draw",
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var node, pos;
       if (!this.drawStart) {

@@ -53,9 +53,13 @@ $(document).ready(function() {
 		}
 	});
 
-	window.project = {"easel": easel};
+	window.project = {
+		"easel": easel, 
+		"actionQueue": []
+	};
 
 	suggestions = new tacit.Suggestions(project, "#SuggestionsView");
 	versions = new tacit.Versions(project, "#HistorySketchesView");
+	undoredo = new tacit.UndoRedo(project)
 
 })
