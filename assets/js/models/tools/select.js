@@ -11,6 +11,7 @@
   }
 
   selectTool = {
+    name: "select",
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var idx, selection;
       this.dragging = true;

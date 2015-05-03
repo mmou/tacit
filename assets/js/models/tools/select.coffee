@@ -2,6 +2,8 @@ window.tacit ?= {}
 window.tacit.tools ?= {}
 
 selectTool =
+    name: "select"
+
     mouseDown: (easel, eventType, mouseLoc, object) ->
         @dragging = true
 

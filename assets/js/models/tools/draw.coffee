@@ -3,6 +3,7 @@ window.tacit.tools ?= {}
 
 drawTool =
     drawStart: null
+    name: "draw"
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         if not @drawStart

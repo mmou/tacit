@@ -12,6 +12,7 @@
 
   moveTool = {
     allowPan: true,
+    name: "move",
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var idx;
       this.dragging = true;

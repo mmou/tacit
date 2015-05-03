@@ -7,7 +7,8 @@ $(document).ready(function() {
 	var easelWidth =  (width < 1000 || width > 1500 ) ? 640 : width;
 	window.project = {"name":"my_chair"};
 	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", easelHeight, easelWidth);
-	window.project.easel = easel
+	window.project.easel = easel;
+	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;
 	s = sketch.structure;
 	console.log(s);
@@ -92,5 +93,6 @@ $(document).ready(function() {
 
 	suggestions = new tacit.Suggestions(project, "#SuggestionsView");
 	versions = new tacit.Versions(project, "#HistorySketchesView");
+	undoredo = new tacit.UndoRedo(project)
 
 })
