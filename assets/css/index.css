@@ -12,6 +12,10 @@ body {
 	background-color: #f8f8f8;
 }
 
+input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+}
 
 #HistoryView {
 	height:10%;
