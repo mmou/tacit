@@ -63,6 +63,7 @@ class Sketch
             window.keysCaptured = true
 
         # init nodes,  links, and the line displayed when dragging new nodes
+        @fixed = @blank.selectAll(".fixed")
         @nodes = @blank.selectAll(".node")
         @links = @blank.selectAll(".link")
         @forces = @blank.selectAll(".force")
@@ -164,7 +165,7 @@ class Sketch
 
         @nodes = @nodes.data(@structure.nodeList)
         @nodes.enter().insert("circle")
-            .attr("class", "node")
+            .attr("class", (d) -> "node" + if d.fixed.x or d.fixed.y then " fixed" else "")
             .attr("r", @nodeSize/@scale/2)
             .on("mousedown", (d) ->
                 easel.mouseDown(easel, "node", d3.mouse(this), d))
@@ -179,6 +180,17 @@ class Sketch
         @nodes.exit().transition()
             .attr("r", 0)
           .remove()
+
+        @fixed = @fixed.data(n for n in @structure.nodeList when n.fixed.x or n.fixed.y)
+        @fixed.enter().insert("path")
+                .attr("d", (d) -> "M #{-5+d.x},#{-3+d.y} l 5,8.6 l 5,-8.6 Z")
+                .attr("class", "fixed")
+                .on("mousedown", (d) ->
+                    easel.mouseDown(easel, "node", d3.mouse(this), d))
+                .on("mousemove", (d) ->
+                    easel.mouseMove(easel, "node", d3.mouse(this), d))
+                .on("mouseup", (d) ->
+                    easel.mouseUp(easel, "node", d3.mouse(this), d))
 
         @slowDraw()
 
@@ -206,7 +218,13 @@ class Sketch
               .transition()
                 .duration(750)
                 .ease("elastic")
-                    .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
+                    .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
+
+        @fixed.attr("d", (d) =>
+            isc = @nodeSize*3.1/9/@scale
+            """M #{-5*isc+d.x},#{-3*isc+d.y}
+               l #{5*isc},#{8.6*isc}
+               l #{5*isc},#{-8.6*isc} Z""")
 
         @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/6)
                .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/6)
@@ -257,8 +275,14 @@ class Sketch
               .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*@showzero)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
-        @nodes.attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 1.5 else 1)
+        @nodes.attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
+
+        @fixed.attr("d", (d) =>
+            isc = @nodeSize*3.1/9/@scale
+            """M #{-5*isc+d.x},#{-3*isc+d.y}
+               l #{5*isc},#{8.6*isc}
+               l #{5*isc},#{-8.6*isc} Z""")
 
         @forces.attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
                                                8/@scale*@showforce

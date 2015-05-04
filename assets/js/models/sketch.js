@@ -128,6 +128,7 @@
         });
         window.keysCaptured = true;
       }
+      this.fixed = this.blank.selectAll(".fixed");
       this.nodes = this.blank.selectAll(".node");
       this.links = this.blank.selectAll(".link");
       this.forces = this.blank.selectAll(".force");
@@ -212,7 +213,7 @@
     };
 
     Sketch.prototype.updateDrawing = function() {
-      var easel;
+      var easel, n;
       easel = this.pad.easel;
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
@@ -242,7 +243,9 @@
       });
       this.grads.exit().remove();
       this.nodes = this.nodes.data(this.structure.nodeList);
-      this.nodes.enter().insert("circle").attr("class", "node").attr("r", this.nodeSize / this.scale / 2).on("mousedown", function(d) {
+      this.nodes.enter().insert("circle").attr("class", function(d) {
+        return "node" + (d.fixed.x || d.fixed.y ? " fixed" : "");
+      }).attr("r", this.nodeSize / this.scale / 2).on("mousedown", function(d) {
         return easel.mouseDown(easel, "node", d3.mouse(this), d);
       }).on("mousemove", function(d) {
         return easel.mouseMove(easel, "node", d3.mouse(this), d);
@@ -250,6 +253,27 @@
         return easel.mouseUp(easel, "node", d3.mouse(this), d);
       }).transition().duration(750).ease("elastic").attr("r", this.nodeSize / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();
+      this.fixed = this.fixed.data((function() {
+        var _i, _len, _ref1, _results;
+        _ref1 = this.structure.nodeList;
+        _results = [];
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          n = _ref1[_i];
+          if (n.fixed.x || n.fixed.y) {
+            _results.push(n);
+          }
+        }
+        return _results;
+      }).call(this));
+      this.fixed.enter().insert("path").attr("d", function(d) {
+        return "M " + (-5 + d.x) + "," + (-3 + d.y) + " l 5,8.6 l 5,-8.6 Z";
+      }).attr("class", "fixed").on("mousedown", function(d) {
+        return easel.mouseDown(easel, "node", d3.mouse(this), d);
+      }).on("mousemove", function(d) {
+        return easel.mouseMove(easel, "node", d3.mouse(this), d);
+      }).on("mouseup", function(d) {
+        return easel.mouseUp(easel, "node", d3.mouse(this), d);
+      });
       return this.slowDraw();
     };
 
@@ -289,7 +313,12 @@
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(750).ease("elastic").attr("r", function(d) {
-        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
+        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
+      });
+      this.fixed.attr("d", function(d) {
+        var isc;
+        isc = _this.nodeSize * 3.1 / 9 / _this.scale;
+        return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
       });
       this.forces.attr("x1", function(d) {
         return d.x;
@@ -410,9 +439,14 @@
         return _this.selectedLinks.indexOf(d) + 1;
       });
       this.nodes.attr("r", function(d) {
-        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 1.5 : 1);
+        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
+      });
+      this.fixed.attr("d", function(d) {
+        var isc;
+        isc = _this.nodeSize * 3.1 / 9 / _this.scale;
+        return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
       });
       this.forces.attr("stroke-width", function(d) {
         var f;
