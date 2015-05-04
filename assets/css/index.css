@@ -6,6 +6,10 @@ body {
 	font-size: 18px;
 }
 
+input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+}
 
 #HistoryView {
 	height:10%;

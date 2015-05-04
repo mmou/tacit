@@ -87,6 +87,7 @@
         this.mutate(structure);
         pad.load(structure);
         pad.sketch.nodeSize = 0;
+        pad.sketch.rect.attr("fill", "transparent");
         pad.sketch.showforce = false;
         results.push(pad.sketch.updateDrawing());
       }

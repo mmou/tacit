@@ -92,7 +92,15 @@
         <button type="button" class="btn btn-default toolbar-btn" id="erase-btn" data-toggle="tooltip" data-placement="right" title="Delete"><img height="40px" src="assets/resources/button-images/erase.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="Measure"><img height="40px" src="assets/resources/button-images/measure.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="test-btn" data-toggle="tooltip" data-placement="right" title="Load Test"><img height="40px" src="assets/resources/button-images/load.png"></button>
+      
+        <div id="Options" style="margin-top: 15px;">
+          <input type="checkbox" name="grid" value="hasGrid" checked="true"> Grid View <br>
+          <input type="checkbox" name="baseLine" value="hasBaseLine" checked="true"> Base Line <br>
+        </div>
+
       </div>
+
+
 
       <div id="PadView" class="col-md-9">
       </div>
@@ -108,6 +116,17 @@
 
 
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+
+ <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#smallGrid)"/>
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="gray" stroke-width="1"/>
+    </pattern>    
+  </defs>
+
   <marker id="brtriangle" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#3d3130">
       <path d="M 0 0 L 10 5 L 0 10 z"/>
   </marker>
