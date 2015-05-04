@@ -57,6 +57,26 @@ $(document).ready(function() {
 	});
 */
 
+	$("#PadView").on('mouseover', function() {
+	console.log("on Pad");
+		if (easel.currentTool.name == "select"){
+			$("#PadView svg").css({'cursor': 'default'})
+		} else if (easel.currentTool.name == "move"){
+			$("#PadView svg").css({'cursor': 'pointer'})
+		} else if (easel.currentTool.name == "draw"){
+			$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
+		} else if (easel.currentTool.name == "erase") {
+			$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'})
+		} else if (easel.currentTool.name == "measure") {
+			$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/ruler.png) 6 20, auto'})
+		} else if (easel.currentTool.name == "load") {
+			$("#PadView svg").css({'cursor': 'default'})
+		} else {
+				console.log("no tool selected");
+
+	}
+});
+
 	var gridBox = $('input[name=grid]');
 	gridBox.click(function(){
 		if(gridBox.is(":checked")){
