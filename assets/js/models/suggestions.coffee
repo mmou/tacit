@@ -53,12 +53,10 @@ class Suggestions
             @mutate(structure)
             pad.load(structure)
             pad.sketch.nodeSize = 0
-            pad.sketch.rect.attr("fill", "transparent")
+            pad.sketch.rect.attr("fill", "url(#grid)")
             pad.sketch.showforce = false
             scale = Math.min(pad.height/drawpad.height,
                              pad.width/drawpad.width)
-            console.log scale
-            console.log pad.sketch.scale
             pad.sketch.rescale([drawpad.sketch.translate[0], drawpad.sketch.translate[1]],
                                scale*drawpad.sketch.scale, draw=false)
             pad.sketch.updateDrawing()
