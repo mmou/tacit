@@ -26,6 +26,7 @@
         };
       })(this);
       this.suggestions.project.easel.pad.sketch.updateDrawing();
+      undoredo.log();
       return false;
     };
 
@@ -54,7 +55,7 @@
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       this.pads = [];
       for (i = j = 1; j <= 3; i = ++j) {
-        this.pads.push(new tacit.Pad(new dummyEasel(this, i), this.htmlLoc, 200, 200, structure));
+        this.pads.push(new tacit.Pad(new dummyEasel(this, i), this.htmlLoc, 180, 180, structure));
       }
       this.update(structure);
     }
@@ -87,7 +88,6 @@
         this.mutate(structure);
         pad.load(structure);
         pad.sketch.nodeSize = 0;
-        pad.sketch.rect.attr("fill", "transparent");
         pad.sketch.showforce = false;
         results.push(pad.sketch.updateDrawing());
       }

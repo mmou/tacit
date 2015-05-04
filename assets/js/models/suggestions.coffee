@@ -11,6 +11,7 @@ class dummyEasel
         @suggestions.project.easel.pad.sketch.onChange = =>
             @suggestions.update(@suggestions.project.easel.pad.sketch.structure)
         @suggestions.project.easel.pad.sketch.updateDrawing()
+        undoredo.log()
         return false
 
     mouseUp: (easel, eventType, mouseLoc, object) -> false
@@ -24,7 +25,7 @@ class Suggestions
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         @pads = []
         for i in [1..3]
-            @pads.push(new tacit.Pad(new dummyEasel(this, i), @htmlLoc, 200, 200, structure))
+            @pads.push(new tacit.Pad(new dummyEasel(this, i), @htmlLoc, 180, 180, structure))
         @update(structure)
 
 
