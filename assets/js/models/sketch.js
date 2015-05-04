@@ -148,13 +148,17 @@
     }
 
     Sketch.prototype.defaultZoom = function() {
-      return this.rescale(this.initial_translate, this.initial_scale);
+      var force;
+      return this.rescale(this.initial_translate, this.initial_scale, force = true);
     };
 
-    Sketch.prototype.rescale = function(translate, scale, draw) {
+    Sketch.prototype.rescale = function(translate, scale, draw, force) {
       var d, list, maxs, means, mins, n, outBottom, outLeft, outRight, outTop, _i, _len, _ref1, _ref2;
       if (draw == null) {
         draw = true;
+      }
+      if (force == null) {
+        force = false;
       }
       if (translate == null) {
         translate = d3.event.translate;
@@ -184,7 +188,7 @@
       outBottom = mins.y + translate[1] < -this.translate[1];
       outRight = maxs.x + translate[0] > 6 / this.scale * (this.width / this.scale - this.translate[0]);
       outTop = maxs.y + translate[1] > 6 / this.scale * (this.height / this.scale - this.translate[1]);
-      if (!(outLeft || outRight || outBottom || outTop)) {
+      if (!force && !(outLeft || outRight || outBottom || outTop)) {
         this.rect.attr("x", -translate[0]).attr("y", -translate[1]).attr("width", this.width / scale).attr("height", this.height / scale);
         this.scale = scale;
         this.translate = translate;
