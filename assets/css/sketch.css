@@ -2,6 +2,8 @@
 .grad { stroke: #807ec7; }
 
 .node { fill: #3d3130; }
+.fixed { fill: #3d3130; }
+.fixed.selected { fill: #807ec7; }
 .node.selected { fill: #807ec7; }
 
 .link { stroke: #9c7b70; }
