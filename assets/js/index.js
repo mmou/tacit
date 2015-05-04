@@ -5,7 +5,10 @@ $(document).ready(function() {
 	var width = parseInt($(window).width()*0.7);
 	var easelHeight = (height < 450 || height > 1000) ? 450 : height;
 	var easelWidth =  (width < 1000 || width > 1500 ) ? 640 : width;
-	easel = new tacit.Easel(null, "#ToolbarView", "#PadView", easelHeight, easelWidth);
+	window.project = {"name":"my_chair"};
+	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", easelHeight, easelWidth);
+	window.project.easel = easel;
+	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;
 	s = sketch.structure;
 	console.log(s);
@@ -75,10 +78,18 @@ $(document).ready(function() {
 	});
 
 
-	window.project = {
-		"easel": easel, 
-		"actionQueue": []
-	};
+	// update project name on input change
+	$("#ProjectName").on("input", function(e){ 
+		window.project.name = $("#ProjectName").val();
+	})
+
+	// unfocus the name input on enter
+	$("#ProjectName").keypress(function (e) {
+  		if (e.which == 13) {
+   			$("#ProjectName").trigger('blur');
+    		return false;
+  		}
+	});
 
 	suggestions = new tacit.Suggestions(project, "#SuggestionsView");
 	versions = new tacit.Versions(project, "#HistorySketchesView");
