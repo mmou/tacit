@@ -23,7 +23,7 @@ class Versions
             console.log("save")        
             structure = new tacit.Structure(@project.easel.pad.sketch.structure)
             structure.solve()
-            pad = new tacit.Pad(new dummyEasel(this, @history.length), @htmlLoc, 100, 100, structure)         
+            pad = new tacit.Pad(new dummyEasel(this, @history.length), @htmlLoc, 60, 60, structure)         
             @history.push(pad)
             pad.load(structure)
             pad.sketch.nodeSize = 0

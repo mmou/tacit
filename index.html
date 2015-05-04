@@ -39,39 +39,47 @@
   <div id="NameView" class="container-fluid">
 
     <div class="navbar-header">
-      <a id="logo" class="navbar-brand" href="">
-          tacit
-      </a>
+      <span id="logo" class="navbar-brand" href="">
+          &nbsp;tacit
+      </span>
     </div>
 
-    <form class="navbar-form navbar-left">
-      <div class="form-group">
-        <input class="form-control" id="ProjectName" value="Untitled"></input>
-      </div>
-    </form>
-
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-left">
       <li>
         <a  data-toggle="tooltip" data-placement="bottom" title="Undo/Redo">
           <div class="btn-group" role="group" aria-label="...">
-            <button id="undo-btn" type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            <button id="undo-btn" type="button" class="btn btn-default btn-lg">
+              UNDO</span>
             </button>
-            <button id="redo-btn" type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            <button id="redo-btn" type="button" class="btn btn-default btn-lg">
+              REDO</span>
             </button>
           </div>
-
         </a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <div id="HistoryView">
+          <div id="HistorySketchesView"></div>
+        </div>
       </li>
       <li>
         <a data-toggle="tooltip" data-placement="bottom" title="Save version">
-          <button id="save-btn" type="button" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+          <button id="save-btn" type="button" type="button" class="btn btn-default btn-lg">SAVE</button>
         </a>
       </li>
       <li>
+        <form class="navbar-form">
+          <div class="form-group">
+            <input class="form-control" id="ProjectName" value="untitled"></input>
+          </div>
+        </form>
+      </li>
+      <li>
         <a data-toggle="tooltip" data-placement="bottom" title="Export">
-          <button id="export-btn" type="button" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span></button>
+          <button id="export-btn" type="button" class="btn btn-default btn-lg">EXPORT</button>
         </a>
       </li>
     </ul>
@@ -105,18 +113,11 @@
 
       <div id="SuggestionsView" class="col-md-2">
           <div id="suggestions-label">
-            suggestions
+            SUGGESTIONS
           </div>
       </div>
 
 
-    </div>
-
-
-
-    <div id="HistoryView" class="row">
-      <div class="col-md-12">versions</div>
-      <div id="HistorySketchesView" class="col-md-12"></div>
     </div>
 
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
