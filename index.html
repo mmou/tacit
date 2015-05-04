@@ -35,54 +35,50 @@
 
 <nav class="navbar navbar-default navbar-fixed-top">
   <div id="NameView" class="container-fluid">
-    <div class="nav navbar-nav navbar-left">
-      <div class="navbar-brand" href="">
-        <img src="assets/resources/logo.png" height="26">
-      </div>
 
-      <!--
-      <div class="navbar-brand">
-        my_chair
-      </div>
-		-->
-
+    <div class="navbar-header">
+      <a class="navbar-brand" href="">
+        <img src="assets/resources/logo.png" height="36">
+      </a>
     </div>
 
-    <div class="nav navbar-nav navbar-right">
-        <ul class="nav navbar-nav">
+    <form class="navbar-form navbar-left">
+      <div class="form-group">
+        <input class="form-control" id="ProjectName" value="my_chair"></input>
+      </div>
+    </form>
 
-        <!-- Makes a lot more sense to me next to the file.  Opinions?, but would have to match fonts EH -->
-      	<input class="navbar-brand" id="ProjectName" value="my_chair">
-      	</input>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a  data-toggle="tooltip" data-placement="bottom" title="Undo/Redo">
+          <div class="btn-group" role="group" aria-label="...">
+            <button id="undo-btn" type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            </button>
+            <button id="redo-btn" type="button" class="btn btn-default">
+              <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </button>
+          </div>
 
-      	<!-- Can we adjust dropdown so that it comes directly down and not to the side? EH -->
+        </a>
+      </li>
+      <li>
+        <a data-toggle="tooltip" data-placement="bottom" title="Save version">
+          <button id="save-btn" type="button" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+        </a>
+      </li>
+      <li>
+        <a data-toggle="tooltip" data-placement="bottom" title="Export">
+          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-export" aria-hidden="true"></span></button>
+        </a>
+      </li>
+    </ul>
 
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">File <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Export</a></li>
-            </ul>
-          </li>
-        </ul>
-
-    </div>
   </div>
 </nav>
 
 
 <div id="ProjectView" class="container-fluid">
-
-    <div id="HistoryView" class="row">
-        <div id="HistorySketchesView" class="col-md-11" >
-
-        </div>
-        <div  class="col-md-1">
-            <button id="save-btn" type="button" class="btn btn-default btn-lg">Save</button>
-            <button id="undo-btn" type="button" class="btn btn-default btn-lg">undo</button>
-            <button id="redo-btn" type="button" class="btn btn-default btn-lg">redo</button>
-
-        </div>
-    </div>
 
     <div id="EaselView" class="row">
       <div id="ToolbarView" class="col-md-1">
@@ -90,7 +86,7 @@
         <button type="button" class="btn btn-default toolbar-btn" id="move-btn" data-toggle="tooltip" data-placement="right" title="Move"><img height="40px" src="assets/resources/button-images/move.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="draw-btn" data-toggle="tooltip" data-placement="right" title="Draw"><img height="40px" src="assets/resources/button-images/draw.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="erase-btn" data-toggle="tooltip" data-placement="right" title="Delete"><img height="40px" src="assets/resources/button-images/erase.png"></button>
-        <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="Measure"><img height="40px" src="assets/resources/button-images/measure.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="Measure" style="display:none"><img height="40px" src="assets/resources/button-images/measure.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="test-btn" data-toggle="tooltip" data-placement="right" title="Load Test"><img height="40px" src="assets/resources/button-images/load.png"></button>
 
         <div id="Options" style="margin-top: 15px;">
@@ -114,6 +110,12 @@
 
     </div>
 
+
+
+    <div id="HistoryView" class="row">
+      <div class="col-md-12">versions</div>
+      <div id="HistorySketchesView" class="col-md-12"></div>
+    </div>
 
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
 

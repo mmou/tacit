@@ -30,6 +30,7 @@
         return _this.suggestions.update(_this.suggestions.project.easel.pad.sketch.structure);
       };
       this.suggestions.project.easel.pad.sketch.updateDrawing();
+      undoredo.log();
       return false;
     };
 
@@ -58,7 +59,7 @@
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       this.pads = [];
       for (i = _i = 0; _i <= 2; i = ++_i) {
-        this.pads.push(new tacit.Pad(new dummyEasel(this, i), this.htmlLoc, 200, 225, structure));
+        this.pads.push(new tacit.Pad(new dummyEasel(this, i), this.htmlLoc, 180, 180, structure));
       }
       this.update(structure);
     }

@@ -1,13 +1,13 @@
 window.tacit ?= {}
 
-r = -> 2*Math.random() - 1
-
 class dummyEasel
     constructor: (@versions, @i) -> null
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         console.log @i
         @versions.project.easel.pad.load(@versions.history[@i].sketch.structure)
+        @versions.project.easel.pad.sketch.onChange = =>
+            suggestions.update(suggestions.project.easel.pad.sketch.structure)
         @versions.project.easel.pad.sketch.updateDrawing()
         return false
 
@@ -19,7 +19,8 @@ class Versions
         @history = []
 
     save: ->
-        if @project.actionQueue.length > 0?
+        if @project.actionQueue.length > 1
+            console.log("save")        
             structure = new tacit.Structure(@project.easel.pad.sketch.structure)
             structure.solve()
             pad = new tacit.Pad(new dummyEasel(this, @history.length), @htmlLoc, 100, 100, structure)         
@@ -29,6 +30,7 @@ class Versions
             pad.sketch.showforce = false
             pad.sketch.updateDrawing()
 
-        @project.actionQueue = []
+        @project.actionQueue = [@project.actionQueue[@project.actionQueue.length-1]]
+        undoredo.pointer = 0
 
 window.tacit.Versions = Versions

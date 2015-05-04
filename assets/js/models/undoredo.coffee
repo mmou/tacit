@@ -3,9 +3,10 @@ window.tacit ?= {}
 class UndoRedo
     constructor: (@project) ->
         @pointer = -1
+        @project.actionQueue ?= []
         @log()
 
-    log: -> 
+    log: ->
         @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
 
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)

@@ -9,8 +9,12 @@
   UndoRedo = (function() {
 
     function UndoRedo(project) {
+      var _base, _ref1;
       this.project = project;
       this.pointer = -1;
+      if ((_ref1 = (_base = this.project).actionQueue) == null) {
+        _base.actionQueue = [];
+      }
       this.log();
     }
 
