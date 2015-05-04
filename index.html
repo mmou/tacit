@@ -20,8 +20,11 @@
     <script src="assets/js/models/tools/erase.js"></script>
     <script src="assets/js/models/pad.js"></script>
     <script src="assets/js/models/suggestions.js"></script>
+    <script src="assets/js/models/versions.js"></script>    
+    <script src="assets/js/models/undoredo.js"></script>        
 
     <script src="assets/js/controllers/toolbar.js"></script>
+    <script src="assets/js/controllers/versions.js"></script>    
     <script src="assets/js/index.js"></script>
 
 
@@ -69,16 +72,17 @@
 
 <div id="ProjectView" class="container-fluid">
 
-<!--
     <div id="HistoryView" class="row">
         <div id="HistorySketchesView" class="col-md-11" >
 
         </div>
         <div  class="col-md-1">
             <button id="save-btn" type="button" class="btn btn-default btn-lg">Save</button>
+            <button id="undo-btn" type="button" class="btn btn-default btn-lg">undo</button>
+            <button id="redo-btn" type="button" class="btn btn-default btn-lg">redo</button>
+
         </div>
     </div>
-  -->
 
     <div id="EaselView" class="row">
       <div id="ToolbarView" class="col-md-1">

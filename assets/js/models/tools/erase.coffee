@@ -2,6 +2,9 @@ window.tacit ?= {}
 window.tacit.tools ?= {}
 
 eraseTool =
+
+    name: "erase"
+    
     mouseDown: (easel, eventType, mouseLoc, object) ->
         @dragging = true
 

@@ -24,7 +24,7 @@ class Suggestions
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         @pads = []
         for i in [1..3]
-            @pads.push(new tacit.Pad(new dummyEasel(this, i), @htmlLoc, 200, 225, structure))
+            @pads.push(new tacit.Pad(new dummyEasel(this, i), @htmlLoc, 200, 200, structure))
         @update(structure)
 
 

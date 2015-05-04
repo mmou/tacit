@@ -3,6 +3,7 @@ window.tacit.tools ?= {}
 
 moveTool =
     allowPan: true
+    name: "move"
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         @dragging = true
