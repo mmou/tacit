@@ -15,16 +15,6 @@ $(document).ready(function() {
 
 	sketch.updateDrawing();
 
-	setTimeout(function() {
-	    s.nodeList[0].move({ x: -50 });
-	    sketch.slowDraw();
-	  }, 800);
-
-  	setTimeout(function() {
-      s.nodeList[0].move({ x: 50 });
-  	    return sketch.slowDraw();
-  	  }, 1500);
-
   	// activate tooltips
 	$('[data-toggle="tooltip"]').tooltip()
 
@@ -94,6 +84,7 @@ $(document).ready(function() {
 	$("#save-btn").attr("disabled", true)
 	$("#undo-btn").attr("disabled", true)
 	$("#redo-btn").attr("disabled", true)
+
 	$("#export-btn").click(function() {easel.export()})	
 
 	suggestions = new tacit.Suggestions(window.project, "#SuggestionsView");
