@@ -54,29 +54,32 @@ $(document).ready(function() {
 	});
 */
 
-	var gridBox = $('input[name=grid]');
-	gridBox.click(function(){
-		if(gridBox.is(":checked")){
-			sketch.rect.attr("fill", "url(#grid)");
-		} else {
-			sketch.rect.attr("fill", "transparent");
+      var gridBox = $('input[name=grid]');
+      gridBox.click(function(){
+        if(gridBox.is(":checked")){
+          easel.pad.sketch.rect.attr("fill", "url(#grid)");
 
-		}
-	});
+        } else {
+          console.log(this.rect);
+          easel.pad.sketch.rect.attr("fill", "transparent");
 
-	var baseLineBox = $('input[name=baseLine]');
-	baseLineBox.click(function(){
-		if(baseLineBox.is(":checked")){
-			sketch.baseLine.attr("stroke", "black");
-		} else {
-			sketch.baseLine.attr("stroke", "transparent");
+        }
+      });
 
-		}
-	});
+      var baseLineBox = $('input[name=baseLine]');
+      baseLineBox.click(function(){
+        if(baseLineBox.is(":checked")){
+          easel.pad.sketch.baseLine.attr("stroke", "black");
+        } else {
+          easel.pad.sketch.baseLine.attr("stroke", "transparent");
 
+        }
+      });
 
 	window.project = {"easel": easel};
 
 	suggestions = new tacit.Suggestions(project, "#SuggestionsView")
 
 })
+
+

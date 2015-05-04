@@ -99,6 +99,8 @@
           }
         });
       };
+
+
       this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g").call(this.zoomer).on("dblclick.zoom", null).append("svg:g").on("mousedown", mousedn);
       this.background = this.blank.append("svg:g")
@@ -109,17 +111,20 @@
                               }).on("mouseup", function(d) {
                                 return easel.mouseUp(easel, "background", d3.mouse(this), d);
                               })
+
       this.rect = this.background.append("svg:rect")
                                 .attr("x", -this.width / 2)
                                 .attr("y", -this.height / 2)
                                 .attr("width", this.width)
                                 .attr("height", this.height)
                                 .attr("fill", "url(#grid)")
+
       this.baseLine = this.background.append("svg:line")
                   .attr("x1", -200).attr("y1", 0)
                   .attr("x2", 300).attr("y2", 0)
                   .attr("stroke", "black")
                   .attr("stroke-width", 2)
+
       if (!window.keysCaptured) {
         d3.select(window).on("keydown", function() {
           return easel.keyDown(easel, "window", d3.event.keyCode);
@@ -153,7 +158,7 @@
         translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
         this.zoomer.scale(scale);
         this.zoomer.translate(translate);
-        this.rescale(translate, scale, draw = false);
+        this.rescale(translate, scale, draw = false);     
       }
     }
 
@@ -207,6 +212,7 @@
     Sketch.prototype.updateDrawing = function() {
       var easel;
       easel = this.pad.easel;
+
       this.links = this.links.data(this.structure.beamList);
       this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
         return easel.mouseDown(easel, "beam", d3.mouse(this), d);
@@ -445,8 +451,11 @@
 
     return Sketch;
 
+
+
   })();
 
   window.tacit.Sketch = Sketch;
+
 
 }).call(this);
