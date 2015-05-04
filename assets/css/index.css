@@ -11,19 +11,21 @@ body {
 	border: none;
 	box-shadow: none;
 	background-color: transparent;
-	height:46px;
+	height:66px;
 	font-size:18px;
 	color: white;
 	font-family: "Alegreya Sans SC";
 	font-weight: 300;
 	font-size: 2em;
-	line-height: 1;
+	line-height: 1.5;
+	width:220px;
+	text-align:right;
 }
 
 #export-btn, #save-btn, #undo-btn, #redo-btn {
-  background-color: transparent;
-  border: 1px solid white;
-  color: white;
+  background-color: white;
+  border: 1px solid #2eabe2;
+  color: #2eabe2;
 }
 
 #export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover{
@@ -31,6 +33,7 @@ body {
 }
 
 #NameView {
+	height:86px;	
 	background-color: #2eabe2;
 }
 
@@ -40,9 +43,8 @@ input[type="checkbox"] {
 }
 
 #HistoryView {
-	height: 138px;
 	padding-top:8px;
-	background-color: #d4d4d4;
+/*	background-color: #d4d4d4; */
 }
 
 .btn-default {
@@ -51,7 +53,6 @@ input[type="checkbox"] {
 }
 
 #HistorySketchesView {
-	height: 106px;
 	overflow-y: scroll;
 }
 
@@ -62,7 +63,7 @@ input[type="checkbox"] {
 #ProjectView {
 	position: absolute;
 	background-color: #d4d4d4;
-	top: 64px; /* because of the header */
+	top: 130px; /* because of the header */
 }
 
 #EaselView {
@@ -120,7 +121,7 @@ input[type="checkbox"] {
 }
 
 #SuggestionsView svg, #HistorySketchesView svg {
-	border: 1px solid #d4d4d4;
+/*	border: 1px solid #d4d4d4; */
 	border-radius: 4px;
 	margin: 4px 8px 4px 0px;
 }

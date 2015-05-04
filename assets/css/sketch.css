@@ -11,6 +11,11 @@
 .link.compression { stroke: #f15a5e; }
 .link.selected { stroke: #807ec7; }
 
+#HistorySketchesView .link { 
+	stroke: white; 
+	stroke-width: 3px !important;
+}
+
 .dragline {
   stroke: #9c7b70;
   pointer-events: none;
