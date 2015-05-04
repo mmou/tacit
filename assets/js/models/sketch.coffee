@@ -67,6 +67,7 @@ class Sketch
                                   .attr("stroke", "#3d3130")
                                   .attr("stroke-width", 0.5)
 
+
         if not window.keysCaptured
             d3.select(window).on("keydown", ->
                                  easel.keyDown(easel, "window", d3.event.keyCode))

@@ -53,6 +53,7 @@ class Suggestions
             @mutate(structure)
             pad.load(structure)
             pad.sketch.nodeSize = 0
+            pad.sketch.rect.attr("fill", "transparent")
             pad.sketch.showforce = false
             scale = Math.min(pad.height/drawpad.height,
                              pad.width/drawpad.width)
