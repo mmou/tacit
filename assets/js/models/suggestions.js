@@ -19,9 +19,13 @@
     }
 
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      var _this = this;
+      var drawpad, pad, scale,
+        _this = this;
       console.log(this.i);
-      this.suggestions.project.easel.pad.load(this.suggestions.pads[this.i].sketch.structure);
+      pad = this.suggestions.pads[this.i];
+      drawpad = this.suggestions.project.easel.pad;
+      scale = Math.min(pad.height / drawpad.height, pad.width / drawpad.width);
+      this.suggestions.project.easel.pad.load(pad.sketch.structure, scale = pad.sketch.scale / scale);
       this.suggestions.project.easel.pad.sketch.onChange = function() {
         return _this.suggestions.update(_this.suggestions.project.easel.pad.sketch.structure);
       };
@@ -53,7 +57,7 @@
       };
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       this.pads = [];
-      for (i = _i = 1; _i <= 3; i = ++_i) {
+      for (i = _i = 0; _i <= 2; i = ++_i) {
         this.pads.push(new tacit.Pad(new dummyEasel(this, i), this.htmlLoc, 200, 225, structure));
       }
       this.update(structure);
@@ -77,7 +81,8 @@
     };
 
     Suggestions.prototype.update = function(structure) {
-      var pad, _i, _len, _ref1, _results;
+      var draw, drawpad, pad, scale, _i, _len, _ref1, _results;
+      drawpad = this.project.easel.pad;
       _ref1 = this.pads;
       _results = [];
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
@@ -88,6 +93,10 @@
         pad.load(structure);
         pad.sketch.nodeSize = 0;
         pad.sketch.showforce = false;
+        scale = Math.min(pad.height / drawpad.height, pad.width / drawpad.width);
+        console.log(scale);
+        console.log(pad.sketch.scale);
+        pad.sketch.rescale([drawpad.sketch.translate[0], drawpad.sketch.translate[1]], scale * drawpad.sketch.scale, draw = false);
         _results.push(pad.sketch.updateDrawing());
       }
       return _results;

@@ -7,7 +7,12 @@ class dummyEasel
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         console.log @i
-        @suggestions.project.easel.pad.load(@suggestions.pads[@i].sketch.structure)
+        pad = @suggestions.pads[@i]
+        drawpad = @suggestions.project.easel.pad
+        scale = Math.min(pad.height/drawpad.height,
+                         pad.width/drawpad.width)
+        @suggestions.project.easel.pad.load(pad.sketch.structure,
+                                            scale=pad.sketch.scale/scale)
         @suggestions.project.easel.pad.sketch.onChange = =>
             @suggestions.update(@suggestions.project.easel.pad.sketch.structure)
         @suggestions.project.easel.pad.sketch.updateDrawing()
@@ -23,7 +28,7 @@ class Suggestions
 
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         @pads = []
-        for i in [1..3]
+        for i in [0..2]
             @pads.push(new tacit.Pad(new dummyEasel(this, i), @htmlLoc, 200, 225, structure))
         @update(structure)
 
@@ -38,6 +43,7 @@ class Suggestions
             node.move(delta)
 
     update: (structure) ->
+        drawpad = @project.easel.pad
         for pad in @pads
             structure = new tacit.Structure(structure)
             structure.solve()
@@ -45,6 +51,12 @@ class Suggestions
             pad.load(structure)
             pad.sketch.nodeSize = 0
             pad.sketch.showforce = false
+            scale = Math.min(pad.height/drawpad.height,
+                             pad.width/drawpad.width)
+            console.log scale
+            console.log pad.sketch.scale
+            pad.sketch.rescale([drawpad.sketch.translate[0], drawpad.sketch.translate[1]],
+                               scale*drawpad.sketch.scale, draw=false)
             pad.sketch.updateDrawing()
 
 
