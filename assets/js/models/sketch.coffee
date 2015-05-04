@@ -64,8 +64,8 @@ class Sketch
         @baseLine = @background.append("svg:line")
                                   .attr("x1", -200).attr("y1", 0)
                                   .attr("x2", 300).attr("y2", 0)
-                                  .attr("stroke", "black")
-                                  .attr("stroke-width", 2)
+                                  .attr("stroke", "#3d3130")
+                                  .attr("stroke-width", 0.5)
 
         if not window.keysCaptured
             d3.select(window).on("keydown", ->

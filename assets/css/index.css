@@ -1,16 +1,37 @@
 body {
 	height:100%;
 	background-color: #d4d4d4;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-weight:200;
+	font-family: "Alegreya Sans",Helvetica,Arial,sans-serif;
+	font-weight: 400;
 	font-size: 18px;
+	color: #3d3130;
 }
 
 #ProjectName {
 	border: none;
+	box-shadow: none;
 	background-color: transparent;
 	height:46px;
 	font-size:18px;
+	color: white;
+	font-family: "Alegreya Sans SC";
+	font-weight: 300;
+	font-size: 2em;
+	line-height: 1;
+}
+
+#export-btn, #save-btn, #undo-btn, #redo-btn {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+#export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover{
+  background-color: rgba(102,83,81,0.25);
+}
+
+#NameView {
+	background-color: #2eabe2;
 }
 
 input[type="checkbox"] {
@@ -24,13 +45,18 @@ input[type="checkbox"] {
 	background-color: #d4d4d4;
 }
 
+.btn-default {
+	background-color: transparent;
+	border-color: rgba(102,83,81,0.25);
+}
+
 #HistorySketchesView {
 	height: 106px;
-	overflow-y: scroll;		
+	overflow-y: scroll;
 }
 
 #save-container {
-	text-align: right;	
+	text-align: right;
 }
 
 #ProjectView {
@@ -43,8 +69,7 @@ input[type="checkbox"] {
 	position: relative;
 	min-height:100%;
 	padding-top: 14px;
-	padding-bottom: 14px;	
-	background-color:white;
+	padding-bottom: 14px;
 }
 
 #PadView svg {
@@ -90,12 +115,11 @@ input[type="checkbox"] {
 
 #SuggestionsView {
 	height:100%;
-	color: #888888;
+	color: #3d3130;
 	margin: auto;
 }
 
 #SuggestionsView svg, #HistorySketchesView svg {
-	background-color:white;
 	border: 1px solid #d4d4d4;
 	border-radius: 4px;
 	margin: 4px 8px 4px 0px;

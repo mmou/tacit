@@ -34,6 +34,10 @@
       return false;
     };
 
+    dummyEasel.prototype.allowPan = function() {
+      return false;
+    };
+
     dummyEasel.prototype.mouseUp = function(easel, eventType, mouseLoc, object) {
       return false;
     };

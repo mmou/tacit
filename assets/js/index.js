@@ -79,7 +79,7 @@ $(document).ready(function() {
 
 
 	// update project name on input change
-	$("#ProjectName").on("input", function(e){ 
+	$("#ProjectName").on("input", function(e){
 		window.project.name = $("#ProjectName").val();
 	})
 
@@ -91,9 +91,10 @@ $(document).ready(function() {
   		}
 	});
 
-	$("#save-btn").attr("disabled", true)		
+	$("#save-btn").attr("disabled", true)
 	$("#undo-btn").attr("disabled", true)
 	$("#redo-btn").attr("disabled", true)
+	$("#export-btn").click(function() {easel.export()})	
 
 	suggestions = new tacit.Suggestions(window.project, "#SuggestionsView");
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");

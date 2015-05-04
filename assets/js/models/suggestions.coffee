@@ -19,6 +19,8 @@ class dummyEasel
         undoredo.log()
         return false
 
+
+    allowPan: -> false
     mouseUp: (easel, eventType, mouseLoc, object) -> false
     mouseMove: (easel, eventType, mouseLoc, object) -> false
 
