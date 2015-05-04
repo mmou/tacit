@@ -64,8 +64,8 @@
 
   Sketch = (function() {
 
-    function Sketch(pad, htmlLoc, structure, height, width) {
-      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, scale, translate, _i, _len, _ref1, _ref2,
+    function Sketch(pad, htmlLoc, structure, height, width, scale, translate) {
+      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -73,6 +73,8 @@
       }
       this.height = height;
       this.width = width;
+      this.scale = scale;
+      this.translate = translate;
       this.showgrad = false;
       this.showforce = true;
       this.showzero = true;
@@ -139,11 +141,15 @@
         }
         scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
         translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
-        this.zoomer.scale(scale);
-        this.zoomer.translate(translate);
         this.rescale(translate, scale, draw = false);
       }
+      this.initial_translate = [this.translate[0] * this.scale, this.translate[1] * this.scale];
+      this.initial_scale = this.scale;
     }
+
+    Sketch.prototype.defaultZoom = function() {
+      return this.rescale(this.initial_translate, this.initial_scale);
+    };
 
     Sketch.prototype.rescale = function(translate, scale, draw) {
       var d, list, maxs, means, mins, n, outBottom, outLeft, outRight, outTop, _i, _len, _ref1, _ref2;
@@ -184,12 +190,13 @@
         this.translate = translate;
         this.blank.attr("transform", "scale(" + scale + ") translate(" + translate + ")");
         if (draw) {
-          return this.resize();
+          this.resize();
         }
-      } else {
-        this.zoomer.translate(this.translate);
-        return this.zoomer.scale(this.scale);
       }
+      print(this.translate);
+      print(this.scale);
+      this.zoomer.translate([this.translate[0] * this.scale, this.translate[1] * this.scale]);
+      return this.zoomer.scale(this.scale);
     };
 
     Sketch.prototype.updateDrawing = function() {

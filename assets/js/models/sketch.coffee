@@ -11,7 +11,7 @@ print = (o) -> console.log(o)
 window.tacit ?= {}
 
 class Sketch
-    constructor: (@pad, htmlLoc="body", structure, @height, @width) ->
+    constructor: (@pad, htmlLoc="body", structure, @height, @width, @scale, @translate) ->
         @showgrad = false
         @showforce = true
         @showzero = true
@@ -82,9 +82,12 @@ class Sketch
             scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
             translate = [scale*(mins.x-maxs.x)/2 + @width/2
                          scale*(mins.y-maxs.y)/2 + @height/2]
-            @zoomer.scale(scale)
-            @zoomer.translate(translate)
             @rescale(translate, scale, draw=false)
+        @initial_translate = [@translate[0]*@scale, @translate[1]*@scale]
+        @initial_scale = @scale
+
+    defaultZoom: ->
+        @rescale(@initial_translate, @initial_scale)
 
     rescale: (translate, scale, draw=true) ->
         translate ?= d3.event.translate
@@ -112,9 +115,10 @@ class Sketch
             @translate = translate
             @blank.attr("transform", "scale(#{scale}) translate(#{translate})")
             if draw then @resize()
-        else
-            @zoomer.translate(@translate)
-            @zoomer.scale(@scale)
+        print @translate
+        print @scale
+        @zoomer.translate([@translate[0]*@scale, @translate[1]*@scale])
+        @zoomer.scale(@scale)
 
     updateDrawing: ->
         easel = @pad.easel
