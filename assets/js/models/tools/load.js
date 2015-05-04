@@ -28,6 +28,11 @@
       var idx;
       this.dragging = false;
       if (this.selection) {
+        if (object === this.selection) {
+          this.selection.force.x = 0;
+          this.selection.force.y = 0;
+          console.log("hi");
+        }
         idx = easel.pad.sketch.selectedNodes.indexOf(this.selection);
         easel.pad.sketch.selectedNodes.splice(idx, 1);
         easel.pad.sketch.quickDraw();

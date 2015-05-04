@@ -15,6 +15,9 @@ loadTool =
     mouseUp: (easel, eventType, mouseLoc, object) ->
         @dragging = false
         if @selection
+            if object is @selection
+                @selection.force.x = 0
+                @selection.force.y = 0
             idx = easel.pad.sketch.selectedNodes.indexOf(@selection)
             easel.pad.sketch.selectedNodes.splice(idx, 1)
             easel.pad.sketch.quickDraw()
