@@ -18,6 +18,16 @@ class Pad
 
     load: (structure) ->
         @sketch.svg.remove()
+        translate = [@sketch.translate[0]*@sketch.scale,
+                     @sketch.translate[1]*@sketch.scale]
+        scale = @sketch.scale
+        console.log "before"
+        console.log translate
+        console.log scale
         @sketch = new tacit.Sketch(this, @htmlLoc, structure, @height, @width)
+        console.log "after"
+        console.log @sketch.translate
+        console.log @sketch.scale
+        console.log "-----"
 
 @tacit.Pad = Pad

@@ -94,7 +94,7 @@ class Sketch
             scale ?= 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
             translate ?= [scale*(mins.x-maxs.x)/2 + @width/2
                           scale*(mins.y-maxs.y)/2 + @height/2]
-        @rescale(translate, scale, draw=false)
+        @rescale(translate, scale, draw=false, force=true)
         @initial_translate = [@translate[0]*@scale, @translate[1]*@scale]
         @initial_scale = @scale
 
@@ -117,7 +117,7 @@ class Sketch
         outRight = maxs.x + translate[0] > 6/@scale*(@width/@scale - @translate[0]) #/
         outTop = maxs.y + translate[1] > 6/@scale*(@height/@scale - @translate[1]) #/
 
-        if not force and not (outLeft or outRight or outBottom or outTop)
+        if force or not (outLeft or outRight or outBottom or outTop)
             @rect.attr("x", -translate[0])
                  .attr("y", -translate[1])
                  .attr("width", @width/scale)

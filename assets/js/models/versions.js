@@ -25,6 +25,10 @@
       return false;
     };
 
+    dummyEasel.prototype.allowPan = function() {
+      return false;
+    };
+
     dummyEasel.prototype.mouseUp = function(easel, eventType, mouseLoc, object) {
       return false;
     };
@@ -43,20 +47,24 @@
       this.project = project;
       this.htmlLoc = htmlLoc;
       this.history = [];
+      this.newVersion();
     }
 
-    Versions.prototype.save = function() {
+    Versions.prototype.newVersion = function() {
       var pad, structure;
+      structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
+      structure.solve();
+      pad = new tacit.Pad(new dummyEasel(this, this.history.length), this.htmlLoc, 60, 60, structure);
+      this.history.push(pad);
+      pad.load(structure);
+      pad.sketch.nodeSize = 0;
+      pad.sketch.showforce = false;
+      return pad.sketch.updateDrawing();
+    };
+
+    Versions.prototype.save = function() {
       if (this.project.actionQueue.length > 1) {
-        console.log("save");
-        structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
-        structure.solve();
-        pad = new tacit.Pad(new dummyEasel(this, this.history.length), this.htmlLoc, 60, 60, structure);
-        this.history.push(pad);
-        pad.load(structure);
-        pad.sketch.nodeSize = 0;
-        pad.sketch.showforce = false;
-        pad.sketch.updateDrawing();
+        this.newVersion();
       }
       this.project.actionQueue = [this.project.actionQueue[this.project.actionQueue.length - 1]];
       return undoredo.pointer = 0;

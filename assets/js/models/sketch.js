@@ -65,7 +65,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width, scale, translate) {
-      var autozoom, d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
+      var autozoom, d, draw, easel, force, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -152,7 +152,7 @@
           translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
         }
       }
-      this.rescale(translate, scale, draw = false);
+      this.rescale(translate, scale, draw = false, force = true);
       this.initial_translate = [this.translate[0] * this.scale, this.translate[1] * this.scale];
       this.initial_scale = this.scale;
     }
@@ -198,7 +198,7 @@
       outBottom = mins.y + translate[1] < -this.translate[1];
       outRight = maxs.x + translate[0] > 6 / this.scale * (this.width / this.scale - this.translate[0]);
       outTop = maxs.y + translate[1] > 6 / this.scale * (this.height / this.scale - this.translate[1]);
-      if (!force && !(outLeft || outRight || outBottom || outTop)) {
+      if (force || !(outLeft || outRight || outBottom || outTop)) {
         this.rect.attr("x", -translate[0]).attr("y", -translate[1]).attr("width", this.width / scale).attr("height", this.height / scale);
         this.scale = scale;
         this.translate = translate;

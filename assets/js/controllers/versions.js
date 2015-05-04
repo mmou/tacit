@@ -45,7 +45,10 @@ $(document).ready(function() {
 			undoredo.log()
 			updateAllBtns();
 		}
+	})
 
+	$("#SuggestionsView").on("mouseup", function() {
+		updateAllBtns();		
 	})
 
 })
