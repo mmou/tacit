@@ -23,8 +23,9 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 
 
 	} else if (toolName === "test-btn") {
-		easel.currentTool = tacit.tools.test
-		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/weight.png) 10 10, auto'})
+		easel.currentTool = tacit.tools.load
+		$("#PadView svg").css({'cursor': 'default'})
+		//$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/weight.png) 10 10, auto'})
 
 	} else {
 		//Currently an issue with not pressing on image itself

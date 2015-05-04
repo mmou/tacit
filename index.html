@@ -18,13 +18,14 @@
     <script src="assets/js/models/tools/move.js"></script>
     <script src="assets/js/models/tools/draw.js"></script>
     <script src="assets/js/models/tools/erase.js"></script>
+    <script src="assets/js/models/tools/load.js"></script>
     <script src="assets/js/models/pad.js"></script>
     <script src="assets/js/models/suggestions.js"></script>
-    <script src="assets/js/models/versions.js"></script>    
-    <script src="assets/js/models/undoredo.js"></script>        
+    <script src="assets/js/models/versions.js"></script>
+    <script src="assets/js/models/undoredo.js"></script>
 
     <script src="assets/js/controllers/toolbar.js"></script>
-    <script src="assets/js/controllers/versions.js"></script>    
+    <script src="assets/js/controllers/versions.js"></script>
     <script src="assets/js/index.js"></script>
 
 
@@ -91,7 +92,7 @@
         <button type="button" class="btn btn-default toolbar-btn" id="erase-btn" data-toggle="tooltip" data-placement="right" title="Delete"><img height="40px" src="assets/resources/button-images/erase.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="Measure"><img height="40px" src="assets/resources/button-images/measure.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="test-btn" data-toggle="tooltip" data-placement="right" title="Load Test"><img height="40px" src="assets/resources/button-images/load.png"></button>
-      
+
         <div id="Options" style="margin-top: 15px;">
           <input type="checkbox" name="grid" value="hasGrid" checked="true"> Grid View <br>
           <input type="checkbox" name="baseLine" value="hasBaseLine" checked="true"> Base Line <br>
@@ -123,13 +124,12 @@
     <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
       <rect width="100" height="100" fill="url(#smallGrid)"/>
       <path d="M 100 0 L 0 0 0 100" fill="none" stroke="gray" stroke-width="1"/>
-    </pattern>    
+    </pattern>
   </defs>
-
-  <marker id="brtriangle" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#3d3130">
+  <marker id="brtriangle" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#3d3130">
       <path d="M 0 0 L 10 5 L 0 10 z"/>
   </marker>
-  <marker id="ptriangle" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#807ec7">
+  <marker id="ptriangle" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#807ec7">
       <path d="M 0 0 L 10 5 L 0 10 z"/>
   </marker>
 </svg>
