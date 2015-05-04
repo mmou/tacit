@@ -50,9 +50,19 @@ input[type="checkbox"] {
 	border-color: rgba(102,83,81,0.25);
 }
 
+#logo {
+	color: white;
+	font-weight: 900;
+	font-style: italic;
+	font-family: "Alegreya Sans SC";
+	font-size: 3em;
+	line-height: 0.46;
+}
+
 #HistorySketchesView {
-	height: 106px;
-	overflow-y: scroll;
+	height: 126px;
+overflow-x: scroll;
+overflow-y: hidden;
 }
 
 #save-container {
