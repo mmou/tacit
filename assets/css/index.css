@@ -29,6 +29,17 @@ body {
   color: #2eabe2;
   height: 60px;
   padding: 0 10px;
+  transition: all 0.3s;
+}
+
+#undo-btn-group {
+	border-right: 1px solid rgba(255,255,255,0.5);
+	padding-right: 1em;
+}
+
+#save-btn {
+	border-radius-top-left: 0;
+	border-radius-bottom-left: 0;
 }
 
 #NameView a {
@@ -168,4 +179,8 @@ input[type="checkbox"] {
 #HistorySketchesView svg:hover {
 	cursor: pointer;
 	background-color: #d4d4d4;
+}
+
+#HistorySketchesView svg {
+    transition: all 0.3s;
 }

@@ -11,7 +11,11 @@
 .link.compression { stroke: #f15a5e; }
 .link.selected { stroke: #807ec7; }
 
-#HistorySketchesView svg:not(:hover) .link { 
+#HistorySketchesView svg .link {
+    transition: all 0.3s;
+}
+
+#HistorySketchesView svg:not(:hover) .link {
 	stroke: white;
 	stroke-width: 3px !important;
 }

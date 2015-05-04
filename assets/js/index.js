@@ -90,6 +90,7 @@ $(document).ready(function() {
 	// update project name on input change
 	$("#ProjectName").on("input", function(e){
 		window.project.name = $("#ProjectName").val();
+		document.title = $("#ProjectName").val() + " | tacit.blue";
 	})
 
 	// unfocus the name input on enter
@@ -99,10 +100,6 @@ $(document).ready(function() {
     		return false;
   		}
 	});
-
-	$("#save-btn").attr("disabled", true)
-	$("#undo-btn").attr("disabled", true)
-	$("#redo-btn").attr("disabled", true)
 	$("#export-btn").click(function() {easel.export()})
 
 	suggestions = new tacit.Suggestions(window.project, "#SuggestionsView");
