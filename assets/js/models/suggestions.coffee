@@ -17,6 +17,7 @@ class dummyEasel
             @suggestions.update(@suggestions.project.easel.pad.sketch.structure)
         @suggestions.project.easel.pad.sketch.updateDrawing()
         undoredo.log()
+        
         return false
 
 

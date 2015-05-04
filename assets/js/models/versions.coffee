@@ -11,25 +11,29 @@ class dummyEasel
         @versions.project.easel.pad.sketch.updateDrawing()
         return false
 
+    allowPan: -> false
     mouseUp: (easel, eventType, mouseLoc, object) -> false
     mouseMove: (easel, eventType, mouseLoc, object) -> false
 
 class Versions
     constructor: (@project, @htmlLoc) ->
         @history = []
+        @newVersion()
+
+    newVersion: ->
+        structure = new tacit.Structure(@project.easel.pad.sketch.structure)
+        structure.solve()
+        pad = new tacit.Pad(new dummyEasel(this, @history.length), @htmlLoc, 60, 60, structure)         
+        @history.push(pad)
+        pad.load(structure)
+        pad.sketch.nodeSize = 0
+        pad.sketch.showforce = false
+        pad.sketch.updateDrawing()
+
 
     save: ->
         if @project.actionQueue.length > 1
-            console.log("save")        
-            structure = new tacit.Structure(@project.easel.pad.sketch.structure)
-            structure.solve()
-            pad = new tacit.Pad(new dummyEasel(this, @history.length), @htmlLoc, 60, 60, structure)         
-            @history.push(pad)
-            pad.load(structure)
-            pad.sketch.nodeSize = 0
-            pad.sketch.showforce = false
-            pad.sketch.updateDrawing()
-
+            @newVersion()
         @project.actionQueue = [@project.actionQueue[@project.actionQueue.length-1]]
         undoredo.pointer = 0
 

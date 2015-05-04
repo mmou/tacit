@@ -15,6 +15,8 @@ class UndoRedo
 
         @pointer = @project.actionQueue.length-1
 
+        
+
     undo: ->
         if @pointer-1>=0
             @pointer -= 1
