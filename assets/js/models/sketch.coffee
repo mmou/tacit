@@ -11,15 +11,19 @@ print = (o) -> console.log(o)
 window.tacit ?= {}
 
 class Sketch
-    constructor: (@pad, htmlLoc="body", structure, @height, @width, @scale, @translate) ->
+    constructor: (@pad, htmlLoc="body", structure, @height, @width, scale, translate) ->
         @showgrad = false
         @showforce = true
         @showzero = true
 
         htmlObj = d3.select(htmlLoc)
 
-        if structure? then @structure = structure
-        else @structure = new tacit.Structure
+        if structure?
+            autozoom = true
+            @structure = structure
+        else
+            autozoom = false
+            @structure = new tacit.Structure
 
         @svg = htmlObj
                  .append("svg:svg")
@@ -27,8 +31,11 @@ class Sketch
                     .attr("height", @height)
                     .attr("pointer-events", "all")
 
-        @scale = 1
-        @translate = [0, 0]
+        if autozoom and scale? and translate?
+            autozoom = false
+
+        @translate = [10,10]
+        @scale = 0.00001
         @nodeSize = 9
         easel = @pad.easel
 
@@ -77,16 +84,16 @@ class Sketch
                           .attr("y1", 0).attr("y2", 0)
 
         # set inital window
-        if structure?
+        if autozoom?
             [mins, maxs, means] = [{}, {}, {}]
             for d in ["x", "y", "z"]
                 list = (n[d] for n in structure.nodeList)
                 mins[d] = min(list...)
                 maxs[d] = max(list...)
-            scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
-            translate = [scale*(mins.x-maxs.x)/2 + @width/2
-                         scale*(mins.y-maxs.y)/2 + @height/2]
-            @rescale(translate, scale, draw=false)
+            scale ?= 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+            translate ?= [scale*(mins.x-maxs.x)/2 + @width/2
+                          scale*(mins.y-maxs.y)/2 + @height/2]
+        @rescale(translate, scale, draw=false)
         @initial_translate = [@translate[0]*@scale, @translate[1]*@scale]
         @initial_scale = @scale
 
@@ -119,8 +126,6 @@ class Sketch
             @translate = translate
             @blank.attr("transform", "scale(#{scale}) translate(#{translate})")
             if draw then @resize()
-        print @translate
-        print @scale
         @zoomer.translate([@translate[0]*@scale, @translate[1]*@scale])
         @zoomer.scale(@scale)
 

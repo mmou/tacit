@@ -65,7 +65,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width, scale, translate) {
-      var d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
+      var autozoom, d, draw, easel, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -73,20 +73,23 @@
       }
       this.height = height;
       this.width = width;
-      this.scale = scale;
-      this.translate = translate;
       this.showgrad = false;
       this.showforce = true;
       this.showzero = true;
       htmlObj = d3.select(htmlLoc);
       if (structure != null) {
+        autozoom = true;
         this.structure = structure;
       } else {
+        autozoom = false;
         this.structure = new tacit.Structure;
       }
       this.svg = htmlObj.append("svg:svg").attr("width", this.width).attr("height", this.height).attr("pointer-events", "all");
-      this.scale = 1;
-      this.translate = [0, 0];
+      if (autozoom && (scale != null) && (translate != null)) {
+        autozoom = false;
+      }
+      this.translate = [10, 10];
+      this.scale = 0.00001;
       this.nodeSize = 9;
       easel = this.pad.easel;
       this.zoomer = d3.behavior.zoom().on("zoom", function() {
@@ -124,7 +127,7 @@
       this.forces = this.blank.selectAll(".force");
       this.grads = this.blank.selectAll(".grad");
       this.dragline = this.blank.append("line").attr("class", "dragline").attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", 0);
-      if (structure != null) {
+      if (autozoom != null) {
         _ref1 = [{}, {}, {}], mins = _ref1[0], maxs = _ref1[1], means = _ref1[2];
         _ref2 = ["x", "y", "z"];
         for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
@@ -142,10 +145,14 @@
           mins[d] = min.apply(null, list);
           maxs[d] = max.apply(null, list);
         }
-        scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
-        translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
-        this.rescale(translate, scale, draw = false);
+        if (scale == null) {
+          scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
+        }
+        if (translate == null) {
+          translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
+        }
       }
+      this.rescale(translate, scale, draw = false);
       this.initial_translate = [this.translate[0] * this.scale, this.translate[1] * this.scale];
       this.initial_scale = this.scale;
     }
@@ -200,8 +207,6 @@
           this.resize();
         }
       }
-      print(this.translate);
-      print(this.scale);
       this.zoomer.translate([this.translate[0] * this.scale, this.translate[1] * this.scale]);
       return this.zoomer.scale(this.scale);
     };
