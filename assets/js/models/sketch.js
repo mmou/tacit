@@ -103,25 +103,15 @@
       };
       this.selectedNodes = this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g").call(this.zoomer).on("dblclick.zoom", null).append("svg:g").on("mousedown", mousedn);
-      this.background = this.blank.append("svg:g")
-                                .on("mousedown", function(d) {
-                                    return easel.mouseDown(easel, "background", d3.mouse(this), d);
-                              }).on("mousemove", function(d) {
-                                    return easel.mouseMove(easel, "background", d3.mouse(this), d);
-                              }).on("mouseup", function(d) {
-                                return easel.mouseUp(easel, "background", d3.mouse(this), d);
-                              })
-      this.rect = this.background.append("svg:rect")
-                                .attr("x", -this.width / 2)
-                                .attr("y", -this.height / 2)
-                                .attr("width", this.width)
-                                .attr("height", this.height)
-                                .attr("fill", "url(#grid)")
-      this.baseLine = this.background.append("svg:line")
-                  .attr("x1", -200).attr("y1", 0)
-                  .attr("x2", 300).attr("y2", 0)
-                  .attr("stroke", "black")
-                  .attr("stroke-width", 2)
+      this.background = this.blank.append("svg:g").on("mousedown", function(d) {
+        return easel.mouseDown(easel, "background", d3.mouse(this), d);
+      }).on("mousemove", function(d) {
+        return easel.mouseMove(easel, "background", d3.mouse(this), d);
+      }).on("mouseup", function(d) {
+        return easel.mouseUp(easel, "background", d3.mouse(this), d);
+      });
+      this.rect = this.background.append("svg:rect").attr("x", -this.width / 2).attr("y", -this.height / 2).attr("width", this.width).attr("height", this.height).attr("fill", "url(#grid)");
+      this.baseLine = this.background.append("svg:line").attr("x1", -200).attr("y1", 0).attr("x2", 300).attr("y2", 0).attr("stroke", "black").attr("stroke-width", 2);
       if (!window.keysCaptured) {
         d3.select(window).on("keydown", function() {
           return easel.keyDown(easel, "window", d3.event.keyCode);
@@ -161,13 +151,17 @@
     }
 
     Sketch.prototype.defaultZoom = function() {
-      return this.rescale(this.initial_translate, this.initial_scale);
+      var force;
+      return this.rescale(this.initial_translate, this.initial_scale, force = true);
     };
 
-    Sketch.prototype.rescale = function(translate, scale, draw) {
+    Sketch.prototype.rescale = function(translate, scale, draw, force) {
       var d, list, maxs, means, mins, n, outBottom, outLeft, outRight, outTop, _i, _len, _ref1, _ref2;
       if (draw == null) {
         draw = true;
+      }
+      if (force == null) {
+        force = false;
       }
       if (translate == null) {
         translate = d3.event.translate;
@@ -197,7 +191,7 @@
       outBottom = mins.y + translate[1] < -this.translate[1];
       outRight = maxs.x + translate[0] > 6 / this.scale * (this.width / this.scale - this.translate[0]);
       outTop = maxs.y + translate[1] > 6 / this.scale * (this.height / this.scale - this.translate[1]);
-      if (!(outLeft || outRight || outBottom || outTop)) {
+      if (!force && !(outLeft || outRight || outBottom || outTop)) {
         this.rect.attr("x", -translate[0]).attr("y", -translate[1]).attr("width", this.width / scale).attr("height", this.height / scale);
         this.scale = scale;
         this.translate = translate;

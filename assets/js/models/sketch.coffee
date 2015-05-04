@@ -44,18 +44,21 @@ class Sketch
                         .append("svg:g")
                             .on("mousedown", mousedn)
 
-        @rect = @blank.append("svg:rect")
-                        .attr("x", -@width/2)
-                        .attr("y", -@height/2)
-                        .attr("width", @width)
-                        .attr("height", @height)
-                        .attr("fill", "transparent")
-                        .on("mousedown", (d) ->
-                            easel.mouseDown(easel, "background", d3.mouse(this), d))
-                        .on("mousemove", (d) ->
-                            easel.mouseMove(easel, "background", d3.mouse(this), d))
-                        .on("mouseup", (d) ->
-                            easel.mouseUp(easel, "background", d3.mouse(this), d))
+        @background = @blank.append("svg:g")
+                .on("mousedown", (d) -> easel.mouseDown(easel, "background", d3.mouse(this), d))
+                .on("mousemove", (d) -> easel.mouseMove(easel, "background", d3.mouse(this), d))
+                .on("mouseup",   (d) -> easel.mouseUp(easel, "background", d3.mouse(this), d))
+        @rect = @background.append("svg:rect")
+                             .attr("x", -@width / 2)
+                             .attr("y", -@height / 2)
+                             .attr("width", @width)
+                             .attr("height", @height)
+                             .attr("fill", "url(#grid)")
+        @baseLine = @background.append("svg:line")
+                                  .attr("x1", -200).attr("y1", 0)
+                                  .attr("x2", 300).attr("y2", 0)
+                                  .attr("stroke", "black")
+                                  .attr("stroke-width", 2)
 
         if not window.keysCaptured
             d3.select(window).on("keydown", ->
