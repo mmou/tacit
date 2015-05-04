@@ -87,9 +87,9 @@ class Sketch
         @initial_scale = @scale
 
     defaultZoom: ->
-        @rescale(@initial_translate, @initial_scale)
+        @rescale(@initial_translate, @initial_scale, force=true)
 
-    rescale: (translate, scale, draw=true) ->
+    rescale: (translate, scale, draw=true, force=false) ->
         translate ?= d3.event.translate
         scale ?= d3.event.scale
         translate = [translate[0]/scale, translate[1]/scale]
@@ -105,7 +105,7 @@ class Sketch
         outRight = maxs.x + translate[0] > 6/@scale*(@width/@scale - @translate[0]) #/
         outTop = maxs.y + translate[1] > 6/@scale*(@height/@scale - @translate[1]) #/
 
-        if not (outLeft or outRight or outBottom or outTop)
+        if not force and not (outLeft or outRight or outBottom or outTop)
             @rect.attr("x", -translate[0])
                  .attr("y", -translate[1])
                  .attr("width", @width/scale)
