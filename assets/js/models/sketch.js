@@ -156,6 +156,13 @@
       this.rescale(translate, scale, draw = false, force = true);
       this.initial_translate = [this.translate[0] * this.scale, this.translate[1] * this.scale];
       this.initial_scale = this.scale;
+
+      //Makes sketch always start out with gridLines
+      var gridBox = $('input[name=grid]');
+      gridBox.prop('checked', true);
+      var baseLineBox = $('input[name=baseLine]');
+      baseLineBox.prop('checked', true);
+
     }
 
     Sketch.prototype.defaultZoom = function() {
