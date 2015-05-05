@@ -7,6 +7,20 @@ body {
 	color: #3d3130;
 }
 
+::-webkit-scrollbar {
+  width: 8px;  /* for vertical scrollbars */
+  height: 8px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: #2eabe2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 4px;
+}
+
 #ProjectName {
 	border: none;
 	box-shadow: none;
@@ -60,7 +74,12 @@ body {
 	color: #3d3130;
 }
 
+.navbar {
+	height: 76px;
+}
+
 #NameView {
+	height: 76px;
 	background-color: #2eabe2;
 }
 
@@ -96,8 +115,9 @@ input[type="checkbox"] {
 #HistorySketchesView {
 	overflow-y: hidden;
 	white-space: nowrap;
-	overflow-x: auto;
+	overflow-x: scroll;
 	text-align: right;
+	height: 68px;
 }
 
 #save-container {
@@ -165,8 +185,7 @@ input[type="checkbox"] {
 }
 
 #SuggestionsView svg, #HistorySketchesView svg {
-/*	border: 1px solid #d4d4d4; */
-	border-radius: 4px;
+	border-radius: 8px;
 }
 
 #SuggestionsView svg:hover {
