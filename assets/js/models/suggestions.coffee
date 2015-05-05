@@ -17,7 +17,7 @@ class dummyEasel
             @suggestions.update(@suggestions.project.easel.pad.sketch.structure)
         @suggestions.project.easel.pad.sketch.updateDrawing()
         undoredo.log()
-        
+
         return false
 
 
@@ -27,7 +27,7 @@ class dummyEasel
 
 class Suggestions
     constructor: (@project, @htmlLoc) ->
-        @project.easel.pad.sketch.onChange = =>
+        @project.onChange = =>
             @update(@project.easel.pad.sketch.structure)
 
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)

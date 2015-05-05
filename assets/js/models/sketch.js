@@ -348,7 +348,7 @@
           return 0;
         }
       });
-      this.grads.attr("x1", function(d) {
+      return this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
         return d.x - 50 / _this.scale * d.grad.x * w;
@@ -373,9 +373,6 @@
           return 0;
         }
       });
-      if (this.onChange != null) {
-        return this.onChange();
-      }
     };
 
     Sketch.prototype.quickDraw = function() {
@@ -412,7 +409,7 @@
       }).attr("y2", function(d) {
         return d.y + d.force.y / 6;
       });
-      this.grads.attr("x1", function(d) {
+      return this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
         return d.x - 50 / _this.scale * d.grad.x * w;
@@ -421,9 +418,6 @@
       }).attr("y2", function(d) {
         return d.y - 50 / _this.scale * d.grad.y * w;
       });
-      if (this.onChange != null) {
-        return this.onChange();
-      }
     };
 
     Sketch.prototype.resize = function() {

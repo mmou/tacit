@@ -20,6 +20,7 @@
 
     UndoRedo.prototype.log = function() {
       var structure;
+      this.project.onChange();
       this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();

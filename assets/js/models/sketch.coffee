@@ -252,8 +252,6 @@ class Sketch
                     else
                         0)
 
-        @onChange() if @onChange?
-
     quickDraw: ->
         @structure.solve()
         @resize()
@@ -277,8 +275,6 @@ class Sketch
               .attr("x2", (d) => d.x - 50/@scale*d.grad.x*w)
               .attr("y1", (d) => d.y)
               .attr("y2", (d) => d.y - 50/@scale*d.grad.y*w)
-
-        @onChange() if @onChange?
 
     resize: ->
         w = @structure.nodeList.length/@structure.lp.obj

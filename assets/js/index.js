@@ -2,9 +2,9 @@ $(document).ready(function() {
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 108);
-	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-800)/60))
-	var width = parseInt($(window).width()*0.9 - 267);
-	window.project = {"name":"untitled"};
+	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-774)/60))
+	var width = parseInt($(window).width()*0.89 - 267);
+	window.project = {"name": "untitled"};
 	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", height, width);
 	window.project.easel = easel;
 	window.project.actionQueue = [];
@@ -47,7 +47,6 @@ $(document).ready(function() {
 */
 
 	$("#PadView").on('mouseover', function() {
-	console.log("on Pad");
 		if (easel.currentTool.name == "select"){
 			$("#PadView svg").css({'cursor': 'default'})
 		} else if (easel.currentTool.name == "move"){

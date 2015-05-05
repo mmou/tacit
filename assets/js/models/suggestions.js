@@ -57,7 +57,7 @@
         _this = this;
       this.project = project;
       this.htmlLoc = htmlLoc;
-      this.project.easel.pad.sketch.onChange = function() {
+      this.project.onChange = function() {
         return _this.update(_this.project.easel.pad.sketch.structure);
       };
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
