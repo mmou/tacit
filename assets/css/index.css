@@ -142,6 +142,7 @@ h1 {
 
 #ToolbarView {
 /*    box-shadow: 2px 0px 5px -2px #888888; */
+	width: 130px;
 	padding-top: 1em;
 	padding-left: 2em;
 }
