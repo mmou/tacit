@@ -19,8 +19,8 @@ $(document).ready(function() {
 
   	// make draw the default active tool
 	$('.active').removeClass("active")
-	$("#draw-btn").addClass("active")
-	easel.currentTool = tacit.tools.draw
+	$("#move-btn").addClass("active")
+	easel.currentTool = tacit.tools.move
 
 
 	$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})

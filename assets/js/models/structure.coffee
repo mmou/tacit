@@ -17,6 +17,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             [@x, @y, @z] = [pos.x, pos.y, if pos.z? then pos.z else 0]
             @force = {x: 0, y: 0, z: 0}
             @grad = {x: 0, y: 0, z: 0}
+            @fgrad = {x: 0, y: 0, z: 0}
             @fixed = {x: false, y: false, z: not pos.z?}
             @sourced = []
             @targeted = []
@@ -86,6 +87,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             @l = {}
             @update()
             @grad = {x: 0, y: 0, z: 0}
+            @fgrad = {x: 0, y: 0, z: 0}
             # add to start and end nodes, and the list
             @id = beams++
             @source.sourced.push(this)
@@ -183,18 +185,29 @@ class Structure
                 beam.f = @lp["f#{beam.id}"]
                 beam.F = abs(beam.f)
             for beam in @beamList
-                beam.f = @lp["f#{beam.id}"]
-                beam.F = abs(beam.f)
                 for dim in "xyz"
                     rho = beam.f/beam.L
                     geo = 1 - 2*Math.pow(beam.l[dim]/beam.L, 2)
                     sdual = @lp["n#{beam.source.id}#{dim}"] or 0
                     tdual = @lp["n#{beam.target.id}#{dim}"] or 0
-                    beam.grad[dim] = rho*geo*(sdual - tdual)
+                    beam.fgrad[dim] = rho*geo*(sdual - tdual)
             for node in @nodeList
                 for dim in "xyz"
-                    node.grad[dim]  = sum(beam.grad[dim] for beam in node.sourced)
-                    node.grad[dim] -= sum(beam.grad[dim] for beam in node.targeted)
+                    node.fgrad[dim]  = sum(beam.fgrad[dim] for beam in node.sourced)
+                    node.fgrad[dim] -= sum(beam.fgrad[dim] for beam in node.targeted)
+        catch error
+
+    solvegrad: (nodeList) ->
+        eps = 1e-4
+        try
+            for node in nodeList
+                node.move({x: eps})
+                xdiff = (@solveLP().obj - @lp.obj)/eps
+                node.move({x: -eps, y: eps})
+                ydiff = (@solveLP().obj - @lp.obj)/eps
+                node.move({y: -eps})
+                node.grad = {x: -xdiff, y: -ydiff, z: 0}
+            console.log(@lp.obj)
         catch error
 
 

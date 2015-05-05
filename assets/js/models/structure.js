@@ -72,6 +72,11 @@
           y: 0,
           z: 0
         };
+        this.fgrad = {
+          x: 0,
+          y: 0,
+          z: 0
+        };
         this.fixed = {
           x: false,
           y: false,
@@ -250,6 +255,11 @@
         this.l = {};
         this.update();
         this.grad = {
+          x: 0,
+          y: 0,
+          z: 0
+        };
+        this.fgrad = {
           x: 0,
           y: 0,
           z: 0
@@ -438,8 +448,6 @@
         _ref2 = this.beamList;
         for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
           beam = _ref2[_j];
-          beam.f = this.lp["f" + beam.id];
-          beam.F = abs(beam.f);
           _ref3 = "xyz";
           for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
             dim = _ref3[_k];
@@ -447,7 +455,7 @@
             geo = 1 - 2 * Math.pow(beam.l[dim] / beam.L, 2);
             sdual = this.lp["n" + beam.source.id + dim] || 0;
             tdual = this.lp["n" + beam.target.id + dim] || 0;
-            beam.grad[dim] = rho * geo * (sdual - tdual);
+            beam.fgrad[dim] = rho * geo * (sdual - tdual);
           }
         }
         _ref4 = this.nodeList;
@@ -460,23 +468,23 @@
             _results1 = [];
             for (_m = 0, _len4 = _ref5.length; _m < _len4; _m++) {
               dim = _ref5[_m];
-              node.grad[dim] = sum((function() {
+              node.fgrad[dim] = sum((function() {
                 var _len5, _n, _ref6, _results2;
                 _ref6 = node.sourced;
                 _results2 = [];
                 for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
                   beam = _ref6[_n];
-                  _results2.push(beam.grad[dim]);
+                  _results2.push(beam.fgrad[dim]);
                 }
                 return _results2;
               })());
-              _results1.push(node.grad[dim] -= sum((function() {
+              _results1.push(node.fgrad[dim] -= sum((function() {
                 var _len5, _n, _ref6, _results2;
                 _ref6 = node.targeted;
                 _results2 = [];
                 for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
                   beam = _ref6[_n];
-                  _results2.push(beam.grad[dim]);
+                  _results2.push(beam.fgrad[dim]);
                 }
                 return _results2;
               })()));
@@ -485,6 +493,36 @@
           })());
         }
         return _results;
+      } catch (error) {
+
+      }
+    };
+
+    Structure.prototype.solvegrad = function(nodeList) {
+      var eps, node, xdiff, ydiff, _i, _len;
+      eps = 1e-4;
+      try {
+        for (_i = 0, _len = nodeList.length; _i < _len; _i++) {
+          node = nodeList[_i];
+          node.move({
+            x: eps
+          });
+          xdiff = (this.solveLP().obj - this.lp.obj) / eps;
+          node.move({
+            x: -eps,
+            y: eps
+          });
+          ydiff = (this.solveLP().obj - this.lp.obj) / eps;
+          node.move({
+            y: -eps
+          });
+          node.grad = {
+            x: -xdiff,
+            y: -ydiff,
+            z: 0
+          };
+        }
+        return console.log(this.lp.obj);
       } catch (error) {
 
       }

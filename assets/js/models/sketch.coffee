@@ -15,6 +15,7 @@ class Sketch
         @showgrad = false
         @showforce = true
         @showzero = true
+        @transitioning = false
 
         htmlObj = d3.select(htmlLoc)
 
@@ -208,6 +209,7 @@ class Sketch
 
     slowDraw: ->
         @structure.solve()
+        @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
 
         @dragline.attr("stroke-width", 10/@scale)
@@ -244,16 +246,17 @@ class Sketch
                                                8/@scale*@showforce
                                             else 0)
 
-        @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x - 50/@scale*d.grad.x*w)
-              .attr("y1", (d) => d.y).attr("y2", (d) => d.y - 50/@scale*d.grad.y*w)
+        @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
+              .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
               .attr("stroke-width", (d) =>
-                    if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
-                        10/@scale*@showgrad
+                    if 50/@scale*dist(l for d, l of d.grad)*w > 0.25
+                        10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
                     else
                         0)
 
     quickDraw: ->
         @structure.solve()
+        @structure.solvegrad(@selectedNodes)
         @resize()
 
         w = @structure.nodeList.length/@structure.lp.obj
@@ -271,10 +274,8 @@ class Sketch
         @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/6)
                .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/6)
 
-        @grads.attr("x1", (d) => d.x)
-              .attr("x2", (d) => d.x - 50/@scale*d.grad.x*w)
-              .attr("y1", (d) => d.y)
-              .attr("y2", (d) => d.y - 50/@scale*d.grad.y*w)
+        @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
+              .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
 
     resize: ->
         w = @structure.nodeList.length/@structure.lp.obj
@@ -283,8 +284,8 @@ class Sketch
               .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*@showzero)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
-        @nodes.attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
-              .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
+        @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
+            .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
 
         @fixed.attr("d", (d) =>
             isc = @nodeSize*3.1/9/@scale
@@ -297,9 +298,32 @@ class Sketch
                                             else 0)
 
         @grads.attr("stroke-width", (d) =>
-                    if 50/@scale*dist(l for d, l of d.grad)*w > 0.05
-                        10/@scale*@showgrad
-                    else
-                        0)
+                        if 50/@scale*dist(l for dim, l of d.grad)*w > 0.25
+                            10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
+                        else
+                            0)
+    animateSelection: ->
+        @structure.solvegrad(@selectedNodes)
+        w = @structure.nodeList.length/@structure.lp.obj
+
+        @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
+            .transition()
+              .duration(250)
+                  .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
+
+        @grads.attr("x1", (d) => d.x)
+              .attr("y1", (d) => d.y)
+              .attr("x2", (d) => d.x)
+              .attr("y2", (d) => d.y)
+              .attr("stroke-width", 0)
+              .transition()
+                .duration(250)
+                    .attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
+                    .attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
+                    .attr("stroke-width", (d) =>
+                                if 50/@scale*dist(l for dim, l of d.grad)*w > 0.25
+                                    10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
+                                else
+                                    0)
 
 window.tacit.Sketch = Sketch

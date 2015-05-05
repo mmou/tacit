@@ -76,6 +76,7 @@
       this.showgrad = false;
       this.showforce = true;
       this.showzero = true;
+      this.transitioning = false;
       htmlObj = d3.select(htmlLoc);
       if (structure != null) {
         autozoom = true;
@@ -284,6 +285,7 @@
       var w,
         _this = this;
       this.structure.solve();
+      this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
@@ -351,11 +353,11 @@
       return this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
-        return d.x - 50 / _this.scale * d.grad.x * w;
+        return d.x + 1000 / _this.scale * d.grad.x * w;
       }).attr("y1", function(d) {
         return d.y;
       }).attr("y2", function(d) {
-        return d.y - 50 / _this.scale * d.grad.y * w;
+        return d.y + 1000 / _this.scale * d.grad.y * w;
       }).attr("stroke-width", function(d) {
         var l;
         if (50 / _this.scale * dist((function() {
@@ -367,8 +369,8 @@
             _results.push(l);
           }
           return _results;
-        })()) * w > 0.05) {
-          return 10 / _this.scale * _this.showgrad;
+        })()) * w > 0.25) {
+          return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
@@ -379,6 +381,7 @@
       var w,
         _this = this;
       this.structure.solve();
+      this.structure.solvegrad(this.selectedNodes);
       this.resize();
       w = this.structure.nodeList.length / this.structure.lp.obj;
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
@@ -412,11 +415,11 @@
       return this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
-        return d.x - 50 / _this.scale * d.grad.x * w;
+        return d.x + 1000 / _this.scale * d.grad.x * w;
       }).attr("y1", function(d) {
         return d.y;
       }).attr("y2", function(d) {
-        return d.y - 50 / _this.scale * d.grad.y * w;
+        return d.y + 1000 / _this.scale * d.grad.y * w;
       });
     };
 
@@ -435,10 +438,10 @@
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
       });
-      this.nodes.attr("r", function(d) {
-        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
-      }).classed("selected", function(d) {
+      this.nodes.classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
+      }).attr("r", function(d) {
+        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
       });
       this.fixed.attr("d", function(d) {
         var isc;
@@ -463,18 +466,61 @@
         }
       });
       return this.grads.attr("stroke-width", function(d) {
-        var l;
+        var dim, l;
         if (50 / _this.scale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
           _results = [];
-          for (d in _ref1) {
-            l = _ref1[d];
+          for (dim in _ref1) {
+            l = _ref1[dim];
             _results.push(l);
           }
           return _results;
-        })()) * w > 0.05) {
-          return 10 / _this.scale * _this.showgrad;
+        })()) * w > 0.25) {
+          console.log(d.grad);
+          return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
+        } else {
+          return 0;
+        }
+      });
+    };
+
+    Sketch.prototype.animateSelection = function() {
+      var w,
+        _this = this;
+      this.structure.solvegrad(this.selectedNodes);
+      w = this.structure.nodeList.length / this.structure.lp.obj;
+      this.nodes.classed("selected", function(d) {
+        return _this.selectedNodes.indexOf(d) + 1;
+      }).transition().duration(250).attr("r", function(d) {
+        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 ? 2 : 1);
+      });
+      return this.grads.attr("x1", function(d) {
+        return d.x;
+      }).attr("y1", function(d) {
+        return d.y;
+      }).attr("x2", function(d) {
+        return d.x;
+      }).attr("y2", function(d) {
+        return d.y;
+      }).attr("stroke-width", 0).transition().duration(250).attr("x2", function(d) {
+        return d.x + 1000 / _this.scale * d.grad.x * w;
+      }).attr("y2", function(d) {
+        return d.y + 1000 / _this.scale * d.grad.y * w;
+      }).attr("stroke-width", function(d) {
+        var dim, l;
+        if (50 / _this.scale * dist((function() {
+          var _ref1, _results;
+          _ref1 = d.grad;
+          _results = [];
+          for (dim in _ref1) {
+            l = _ref1[dim];
+            _results.push(l);
+          }
+          return _results;
+        })()) * w > 0.25) {
+          console.log(d.grad);
+          return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }

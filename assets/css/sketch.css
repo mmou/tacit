@@ -26,7 +26,7 @@
 
 #SuggestionsView svg:not(:hover) .link {
 	stroke: #3d3130;
-	stroke-width: 3px !important;
+	stroke-width: 2px !important;
 }
 
 .dragline {

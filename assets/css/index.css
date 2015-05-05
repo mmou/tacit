@@ -98,6 +98,10 @@ body {
 	color: #2eabe2 !important;
 }
 
+div.notyet {
+	opacity: 0;
+}
+
 #export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover{
   background-color: #d4d4d4;
 	color: #3d3130;
@@ -206,6 +210,14 @@ h1 {
 	height: 70px;
 	width: 95%;
 	margin-bottom: 10px;
+}
+
+#Suggestions {
+	transition: opacity 1s;
+}
+
+#ToolbarView {
+	transition: opacity 1s;
 }
 
 #SuggestionsView {

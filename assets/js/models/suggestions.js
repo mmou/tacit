@@ -76,9 +76,9 @@
         node = _ref1[_i];
         dg = 200 * r() * structure.nodeList.length / structure.lp.obj;
         delta = {
-          x: node.grad.x * dg * !node.fixed.x,
-          y: node.grad.y * dg * !node.fixed.y,
-          z: node.grad.z * dg * !node.fixed.z
+          x: (node.fgrad.x * dg + (r() + 1) * node.grad.x * 1000) * !node.fixed.x,
+          y: (node.fgrad.y * dg + (r() + 1) * node.grad.y * 1000) * !node.fixed.y,
+          z: (node.fgrad.z * dg + (r() + 1) * node.grad.z * 1000) * !node.fixed.z
         };
         _results.push(node.move(delta));
       }

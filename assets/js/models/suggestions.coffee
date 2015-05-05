@@ -41,9 +41,9 @@ class Suggestions
         for node in structure.nodeList
             dg = 200*r()*structure.nodeList.length/structure.lp.obj
             delta =
-                x: node.grad.x*dg * not node.fixed.x
-                y: node.grad.y*dg * not node.fixed.y
-                z: node.grad.z*dg * not node.fixed.z
+                x: (node.fgrad.x*dg + (r()+1)*node.grad.x*1000) * not node.fixed.x
+                y: (node.fgrad.y*dg + (r()+1)*node.grad.y*1000) * not node.fixed.y
+                z: (node.fgrad.z*dg + (r()+1)*node.grad.z*1000) * not node.fixed.z
             node.move(delta)
 
     update: (structure) ->
