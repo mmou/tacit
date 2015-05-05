@@ -14,6 +14,7 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #2eabe2;
+  height
 }
 
 ::-webkit-scrollbar-thumb {
@@ -37,6 +38,7 @@ form.navbar-form {
 	font-family: "Alegreya Sans SC";
 	font-weight: 300;
 	width:142px;
+	max-width:340px;
 }
 
 #NameHolder {
@@ -171,7 +173,7 @@ h1 {
 #ProjectView {
 	position: absolute;
 	background-color: #d4d4d4;
-	top: 76px; /* because of the header */
+	top: 78px; /* because of the header */
 }
 
 #EaselView {
