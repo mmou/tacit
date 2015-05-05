@@ -4,7 +4,7 @@ $(document).ready(function() {
 	var height = parseInt($(window).height() - 108);
 	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-800)/60))
 	var width = parseInt($(window).width()*0.9 - 267);
-	window.project = {"name":"my_chair"};
+	window.project = {"name":"untitled"};
 	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", height, width);
 	window.project.easel = easel;
 	window.project.actionQueue = [];
