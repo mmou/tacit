@@ -404,7 +404,7 @@
       glp_simplex(lp, smcp);
       return new LPresult(lp);
     };
-    return [Node, Beam, solveLP, LPString];
+    return [Node, Beam, solveLP, LPstring];
   };
 
   Structure = (function() {

@@ -11,7 +11,7 @@ class dummyEasel
         @versions.project.easel.pad.sketch.onChange = =>
             suggestions.update(suggestions.project.easel.pad.sketch.structure)
         @versions.project.easel.pad.sketch.updateDrawing()
-        @versions.updateCurrentVersion()
+        @versions.project.onChange()
         return false
 
     allowPan: -> false
