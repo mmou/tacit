@@ -1,12 +1,11 @@
 $(document).ready(function() {
 
 	// initialize easel and stuff
-	var height = parseInt($(window).height()*0.7);
+	var height = parseInt($(window).height()-76);
 	var width = parseInt($(window).width()*0.7);
-	var easelHeight = (height < 450 || height > 1000) ? 450 : height;
 	var easelWidth =  (width < 1000 || width > 1500 ) ? 640 : width;
 	window.project = {"name":"my_chair"};
-	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", easelHeight, easelWidth);
+	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", height, easelWidth);
 	window.project.easel = easel;
 	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;

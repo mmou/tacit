@@ -49,18 +49,6 @@
 
     <ul class="nav navbar-nav navbar-left">
       <li>
-        <a  data-toggle="tooltip" data-placement="bottom">
-          <div id="undo-btn-group" class="btn-group" role="group" aria-label="...">
-            <button id="undo-btn" type="button" class="btn btn-default btn-lg" disabled>
-              UNDO</span>
-            </button>
-            <button id="redo-btn" type="button" class="btn btn-default btn-lg" disabled>
-              REDO</span>
-            </button>
-          </div>
-        </a>
-      </li>
-      <li>
         <div id="HistoryView">
           <div id="HistorySketchesView"></div>
         </div>
@@ -73,6 +61,18 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a  data-toggle="tooltip" data-placement="bottom">
+            <div id="undo-btn-group" class="btn-group" role="group" aria-label="...">
+              <button id="undo-btn" type="button" class="btn btn-default btn-lg" disabled>
+                UNDO</span>
+              </button>
+              <button id="redo-btn" type="button" class="btn btn-default btn-lg" disabled>
+                REDO</span>
+              </button>
+            </div>
+          </a>
+        </li>
       <li>
         <form class="navbar-form">
           <div class="form-group">
@@ -103,8 +103,9 @@
         <button type="button" class="btn btn-default toolbar-btn" id="test-btn" data-toggle="tooltip" data-placement="right" title="Load Test"><img height="40px" src="assets/resources/button-images/load.png"></button>
 
         <div id="Options" style="margin-top: 15px;">
-          <input type="checkbox" name="grid" value="hasGrid" checked="true"> Grid View <br>
-          <input type="checkbox" name="baseLine" value="hasBaseLine" checked="true"> Base Line <br>
+          <h1> display </h1>
+          <input type="checkbox" name="grid" value="hasGrid" checked="true"> Grid <br>
+          <input type="checkbox" name="baseLine" value="hasBaseLine" checked="true"> Ground <br>
         </div>
 
       </div>
@@ -116,7 +117,7 @@
 
       <div id="SuggestionsView" class="col-md-2">
           <div id="suggestions-label">
-            SUGGESTIONS
+            <h1> suggestions </h1>
           </div>
       </div>
 
@@ -129,7 +130,7 @@
     <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
       <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#3d3130" stroke-width="0.0625"/>
     </pattern>
-    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
       <rect width="100" height="100" fill="url(#smallGrid)"/>
       <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#3d3130" stroke-width="0.125"/>
     </pattern>

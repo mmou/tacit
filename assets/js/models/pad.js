@@ -9,61 +9,76 @@
   Pad = (function() {
 
     function Pad(easel, htmlLoc, height, width, structure) {
-      var dim, i, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref2, _ref3, _ref4;
+      var dim, gd, i, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref2, _ref3, _ref4;
       this.easel = easel;
       this.htmlLoc = htmlLoc;
       this.height = height;
       this.width = width;
+      gd = 1.75;
       if (!(structure != null)) {
         structure = new tacit.Structure;
         new structure.Beam({
+          x: 0,
+          y: gd
+        }, {
+          x: 60,
+          y: 30
+        });
+        new structure.Beam({
+          x: 60,
+          y: 30
+        }, {
+          x: 70,
+          y: gd
+        });
+        new structure.Beam({
+          x: 70,
+          y: gd
+        }, {
+          x: 20,
+          y: 30
+        });
+        new structure.Beam({
+          x: 20,
+          y: 30
+        }, {
+          x: 0,
+          y: gd
+        });
+        new structure.Beam({
+          x: 20,
+          y: 30
+        }, {
+          x: 60,
+          y: 30
+        });
+        new structure.Beam({
+          x: 0,
+          y: gd
+        }, {
           x: 10,
-          y: 0
-        }, {
-          x: 30,
-          y: 40
-        });
-        new structure.Beam({
-          x: 30,
-          y: 40
-        }, {
-          x: 80,
-          y: 0
+          y: 50
         });
         new structure.Beam({
           x: 10,
-          y: 0
+          y: 50
         }, {
-          x: -5,
-          y: 110
+          x: 0,
+          y: 90
         });
         new structure.Beam({
-          x: -5,
-          y: 110
+          x: 0,
+          y: 90
         }, {
-          x: 30,
-          y: 40
-        });
-        new structure.Beam({
-          x: 30,
-          y: 40
-        }, {
-          x: 100,
-          y: 40
-        });
-        new structure.Beam({
-          x: 100,
-          y: 40
-        }, {
-          x: 80,
-          y: 0
+          x: 0,
+          y: gd
         });
         new structure.Beam({
           x: 10,
-          y: 0
+          y: 50
         }, {
-          x: 100,
-          y: 40
+          x: 20,
+          y: 30
         });
         _ref1 = [0, 2];
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
@@ -75,14 +90,17 @@
           i = _ref2[_j];
           structure.nodeList[i].fixed.x = true;
         }
-        _ref3 = ["y"];
+        structure.nodeList[1].force.y = -75;
+        structure.nodeList[3].force.y = -50;
+        _ref3 = "xy";
         for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
           dim = _ref3[_k];
-          _ref4 = [1, 3, 4];
-          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-            i = _ref4[_l];
-            structure.nodeList[i].force[dim] = -100;
-          }
+          structure.nodeList[4].force[dim] = -30;
+        }
+        _ref4 = "xy";
+        for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+          dim = _ref4[_l];
+          structure.nodeList[5].force[dim] = -15;
         }
       }
       this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);

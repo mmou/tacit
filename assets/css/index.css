@@ -46,11 +46,6 @@ body {
   transition: all 0.3s;
 }
 
-#undo-btn-group {
-	border-right: 1px solid rgba(255,255,255,0.5);
-	padding-right: 1em;
-}
-
 #save-btn {
 	border-radius-top-left: 0;
 	border-radius-bottom-left: 0;
@@ -112,6 +107,13 @@ input[type="checkbox"] {
 	max-width: 600px;
 }
 
+h1 {
+	font-size: 1.25em;
+	font-family: "Alegreya Sans SC";
+	font-weight: 500;
+	margin-bottom: 0.2em;
+}
+
 #HistorySketchesView {
 	overflow-y: hidden;
 	white-space: nowrap;
@@ -127,14 +129,11 @@ input[type="checkbox"] {
 #ProjectView {
 	position: absolute;
 	background-color: #d4d4d4;
-	top: 130px; /* because of the header */
+	top: 76px; /* because of the header */
 }
 
 #EaselView {
 	position: relative;
-	min-height:100%;
-	padding-top: 14px;
-	padding-bottom: 14px;
 }
 
 #PadView svg {
@@ -143,7 +142,8 @@ input[type="checkbox"] {
 
 #ToolbarView {
 /*    box-shadow: 2px 0px 5px -2px #888888; */
-	min-height:100%;
+	padding-top: 1em;
+	padding-left: 2em;
 }
 
 #tutorial{
