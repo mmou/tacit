@@ -68,7 +68,7 @@ $(document).ready(function() {
 	var gridBox = $('input[name=grid]');
 	gridBox.click(function(){
 		if(gridBox.is(":checked")){
-			sketch.rect.attr("fill", "url(font-size: 3em; line-height: 0.75;#grid)");
+			easel.pad.sketch.rect.attr("fill", "url(#grid)");
         } else {
           easel.pad.sketch.rect.attr("fill", "transparent");
 
@@ -87,6 +87,7 @@ $(document).ready(function() {
 
 	// update project name on input change
 	$("#ProjectName").on("input", function(e){
+		e.stopPropagation();
 	    var text = $('<span style="display: none;">')
 	        .html($(this).val().replace(/ /g, "&nbsp;"))
 	        .appendTo(this.parentNode);

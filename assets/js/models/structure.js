@@ -426,8 +426,16 @@
           for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {
             node = _ref6[_j];
             localnode = this.nodeIDLookup[this.nodeLookup[node.z][node.y][node.x]];
-            localnode.fixed = node.fixed;
-            localnode.force = node.force;
+            localnode.fixed = {
+              x: node.fixed.x,
+              y: node.fixed.y,
+              z: node.fixed.z
+            };
+            localnode.force = {
+              x: node.force.x,
+              y: node.force.y,
+              z: node.force.z
+            };
           }
         } catch (error) {
 
@@ -499,9 +507,10 @@
     };
 
     Structure.prototype.solvegrad = function(nodeList) {
-      var eps, node, xdiff, ydiff, _i, _len;
+      var eps, node, xdiff, ydiff, _i, _len, _results;
       eps = 1e-4;
       try {
+        _results = [];
         for (_i = 0, _len = nodeList.length; _i < _len; _i++) {
           node = nodeList[_i];
           node.move({
@@ -516,13 +525,13 @@
           node.move({
             y: -eps
           });
-          node.grad = {
+          _results.push(node.grad = {
             x: -xdiff,
             y: -ydiff,
             z: 0
-          };
+          });
         }
-        return console.log(this.lp.obj);
+        return _results;
       } catch (error) {
 
       }

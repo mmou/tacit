@@ -156,6 +156,12 @@ h1 {
 	margin-bottom: 0.2em;
 }
 
+h2 {
+	font-size: 1em;
+	font-family: "Alegreya Sans SC";
+	font-weight: 500;
+}
+
 #HistorySketchesView {
 	overflow-y: hidden;
 	white-space: nowrap;
@@ -237,7 +243,7 @@ h1 {
 
 #suggestions-label h1 {
 	font-weight: 600;
-	text-align: center;
+	padding-left: 28px;
 }
 
 #SuggestionsView svg {
@@ -270,4 +276,8 @@ h1 {
 #HistorySketchesView svg {
     transition: all 0.3s;
 	  transition-property: background-color, color;
+}
+
+#Suggestions {
+	padding-top: 2em;
 }
