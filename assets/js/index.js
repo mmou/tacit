@@ -71,19 +71,22 @@ $(document).ready(function() {
 			easel.pad.sketch.rect.attr("fill", "url(#grid)");
         } else {
           easel.pad.sketch.rect.attr("fill", "transparent");
-
         }
       });
 
-      var baseLineBox = $('input[name=baseLine]');
-      baseLineBox.click(function(){
-        if(baseLineBox.is(":checked")){
-          easel.pad.sketch.baseLine.attr("stroke", "black");
-        } else {
-          easel.pad.sketch.baseLine.attr("stroke", "transparent");
+	var baseLineBox = $('input[name=baseLine]');
+	baseLineBox.click(function(){
+		if(baseLineBox.is(":checked")){
+		  easel.pad.sketch.baseLine.attr("stroke", "black");
+		} else {
+		  easel.pad.sketch.baseLine.attr("stroke", "transparent");
+		}
+	});
 
-        }
-      });
+	$("#HistorySketchesView, #SuggestiontsView").on("svg", "mousedown", function() {
+		gridBox.prop("checked",true)
+		baseLineBox.prop("checked",true)
+	})
 
 	// update project name on input change
 	$("#ProjectName").on("input", function(e){
