@@ -22,6 +22,7 @@
         return suggestions.update(suggestions.project.easel.pad.sketch.structure);
       };
       this.versions.project.easel.pad.sketch.updateDrawing();
+      this.versions.project.onChange();
       return false;
     };
 
