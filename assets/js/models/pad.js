@@ -111,14 +111,7 @@
       this.sketch.svg.remove();
       translate = [this.sketch.translate[0] * this.sketch.scale, this.sketch.translate[1] * this.sketch.scale];
       scale = this.sketch.scale;
-      console.log("before");
-      console.log(translate);
-      console.log(scale);
-      this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);
-      console.log("after");
-      console.log(this.sketch.translate);
-      console.log(this.sketch.scale);
-      return console.log("-----");
+      return this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);
     };
 
     return Pad;

@@ -207,7 +207,6 @@ class Structure
                 ydiff = (@solveLP().obj - @lp.obj)/eps
                 node.move({y: -eps})
                 node.grad = {x: -xdiff, y: -ydiff, z: 0}
-            console.log(@lp.obj)
         catch error
 
 
