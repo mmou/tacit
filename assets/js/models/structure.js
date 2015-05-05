@@ -404,7 +404,7 @@
       glp_simplex(lp, smcp);
       return new LPresult(lp);
     };
-    return [Node, Beam, solveLP];
+    return [Node, Beam, solveLP, LPString];
   };
 
   Structure = (function() {
@@ -414,7 +414,7 @@
       _ref1 = [{}, {}], this.nodeLookup = _ref1[0], this.nodeIDLookup = _ref1[1];
       _ref2 = [[], []], this.nodeList = _ref2[0], this.beamList = _ref2[1];
       _ref3 = [0, 0], this.nodes = _ref3[0], this.beams = _ref3[1];
-      _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2];
+      _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2], this.LPstring = _ref4[3];
       if (structure != null) {
         try {
           _ref5 = structure.beamList;

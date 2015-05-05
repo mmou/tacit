@@ -156,7 +156,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
         glp_simplex(lp, smcp)
         return new LPresult(lp)
 
-    return [Node, Beam, solveLP]
+    return [Node, Beam, solveLP, LPstring]
 
 
 class Structure
@@ -165,9 +165,9 @@ class Structure
         [@nodeLookup, @nodeIDLookup] = [{}, {}]
         [@nodeList, @beamList] = [[], []]
         [@nodes, @beams] = [0, 0]
-        [@Node, @Beam, @solveLP] = gen_classes(@nodeLookup, @nodeIDLookup,
-                                               @nodeList,   @beamList,
-                                               @nodes,      @beams)
+        [@Node, @Beam, @solveLP, @LPstring] = gen_classes(@nodeLookup, @nodeIDLookup,
+                                                          @nodeList,   @beamList,
+                                                          @nodes,      @beams)
         if structure?
             try
                 for beam in structure.beamList
