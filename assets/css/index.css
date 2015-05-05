@@ -62,6 +62,7 @@ body {
 
 .btn.disabled, .btn[disabled] {
 	background-color: #2eabe2 !important;
+	color: white !important;
 }
 
 #export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover{

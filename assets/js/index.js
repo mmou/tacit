@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 108);
+	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-800)/60))
 	var width = parseInt($(window).width()*0.9 - 267);
 	window.project = {"name":"my_chair"};
 	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", height, width);
