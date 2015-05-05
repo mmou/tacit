@@ -125,8 +125,11 @@ class Sketch
 
             @scale = scale
             @translate = translate
-            @blank.attr("transform", "scale(#{scale}) translate(#{translate})")
+            @blank.attr("transform", "scale(#{@scale}) translate(#{@translate})")
             if draw then @resize()
+        if scale < @scale
+            @scale = scale
+            @blank.attr("transform", "scale(#{@scale}) translate(#{@translate})")
         @zoomer.translate([@translate[0]*@scale, @translate[1]*@scale])
         @zoomer.scale(@scale)
 

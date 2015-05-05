@@ -108,14 +108,54 @@ function download(filename, text) {
         case 68:
           easel.currentTool = tacit.tools.draw;
           $('.active').removeClass("active");
-            	 $("#draw-btn").addClass("active");;
+            	 $("#draw-btn").addClass("active");
+                 $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'});;
+
+          break;
+        case 69:
+          if (d3.event.metaKey || d3.event.ctrlKey) {
+            $("#export-btn").click();
+          } else {
+            easel.currentTool = tacit.tools.erase;
+            $('.active').removeClass("active");
+                	 $("#erase-btn").addClass("active");
+                     $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'});;
+
+          }
+          break;
+        case 76:
+          easel.currentTool = tacit.tools.load;
+          $('.active').removeClass("active");
+            	 $("#load-btn").addClass("active");
+                 $("#PadView svg").css({'cursor': 'default'});;
+
+          break;
+        case 77:
+          easel.currentTool = tacit.tools.move;
+          $('.active').removeClass("active");
+            	 $("#move-btn").addClass("active");
+                 $("#PadView svg").css({'cursor': 'pointer'});;
 
           break;
         case 83:
-          easel.currentTool = tacit.tools.select;
-          $('.active').removeClass("active");
-            	 $("#select-btn").addClass("active");;
-
+          if (d3.event.metaKey || d3.event.ctrlKey) {
+            $("#save-btn").click();
+            d3.event.preventDefault();
+          }
+          break;
+        case 89:
+          if (d3.event.metaKey || d3.event.ctrlKey) {
+            $("#redo-btn").click();
+          }
+          break;
+        case 90:
+          if (d3.event.metaKey || d3.event.ctrlKey) {
+            if (d3.event.shiftKey) {
+              $("#redo-btn").click();
+            } else {
+              $("#undo-btn").click();
+            }
+          }
       }
       return false;
     };

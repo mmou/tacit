@@ -202,10 +202,14 @@
         this.rect.attr("x", -translate[0]).attr("y", -translate[1]).attr("width", this.width / scale).attr("height", this.height / scale);
         this.scale = scale;
         this.translate = translate;
-        this.blank.attr("transform", "scale(" + scale + ") translate(" + translate + ")");
+        this.blank.attr("transform", "scale(" + this.scale + ") translate(" + this.translate + ")");
         if (draw) {
           this.resize();
         }
+      }
+      if (scale < this.scale) {
+        this.scale = scale;
+        this.blank.attr("transform", "scale(" + this.scale + ") translate(" + this.translate + ")");
       }
       this.zoomer.translate([this.translate[0] * this.scale, this.translate[1] * this.scale]);
       return this.zoomer.scale(this.scale);

@@ -3,7 +3,7 @@
 <head>
     <title>tacit.blue</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,300,400,500,700,800,900,100italic,300italic,400italic,500italic,700italic,800italic,900italic|Alegreya+Sans:100,300,400,500,700,800,900,100italic,300italic,400italic,500italic,700italic,800italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300,500,900italic|Alegreya+Sans:100,300,400,100italic,300italic,400italic' rel='stylesheet' type='text/css'>
 
     <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/sketch.css" rel="stylesheet" type="text/css"/>
@@ -55,19 +55,19 @@
       </li>
       <li>
         <a data-toggle="tooltip" data-placement="bottom" id="save-btn-wrapper">
-          <button id="save-btn" type="button" type="button" class="btn btn-default btn-lg" disabled>SAVE</button>
+          <button id="save-btn" type="button" type="button" class="notyet btn btn-default btn-lg" disabled title="(Cmd-S)" data-toggle="tooltip" data-placement="bottom">SAVE</button>
         </a>
       </li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-          <a  data-toggle="tooltip" data-placement="bottom">
+          <a>
             <div id="undo-btn-group" class="btn-group" role="group" aria-label="...">
-              <button id="undo-btn" type="button" class="btn btn-default btn-lg" disabled>
+              <button id="undo-btn" type="button" class="notyet btn btn-default btn-lg" disabled title="(Cmd-Z)" data-toggle="tooltip" data-placement="bottom">
                 UNDO</span>
               </button>
-              <button id="redo-btn" type="button" class="btn btn-default btn-lg" disabled>
+              <button id="redo-btn" type="button" class="notyet btn btn-default btn-lg" disabled title="(Cmd-Y)" data-toggle="tooltip" data-placement="bottom">
                 REDO</span>
               </button>
             </div>
@@ -82,7 +82,7 @@
       </li>
       <li>
         <a data-toggle="tooltip" data-placement="bottom">
-          <button id="export-btn" type="button" class="btn btn-default btn-lg">EXPORT</button>
+          <button id="export-btn" type="button" class="btn btn-default btn-lg" title="(Cmd-E)" data-toggle="tooltip" data-placement="bottom">EXPORT</button>
         </a>
       </li>
     </ul>
@@ -96,11 +96,11 @@
     <div id="EaselView" class="row">
       <div id="ToolbarView" class="col-md-1">
         <button type="button" class="btn btn-default toolbar-btn" id="select-btn" data-toggle="tooltip" data-placement="right" title="Select" style="display:none"><img height="40px" width="40px" src="assets/resources/button-images/select.png"></button>
-        <button type="button" class="btn btn-default toolbar-btn" id="move-btn" data-toggle="tooltip" data-placement="right" title="Move"><img height="40px" src="assets/resources/button-images/move.png"></button>
-        <button type="button" class="btn btn-default toolbar-btn" id="draw-btn" data-toggle="tooltip" data-placement="right" title="Draw"><img height="40px" src="assets/resources/button-images/draw.png"></button>
-        <button type="button" class="btn btn-default toolbar-btn" id="erase-btn" data-toggle="tooltip" data-placement="right" title="Delete"><img height="40px" src="assets/resources/button-images/erase.png"></button>
-        <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="Measure" style="display:none"><img height="40px" src="assets/resources/button-images/measure.png"></button>
-        <button type="button" class="btn btn-default toolbar-btn" id="test-btn" data-toggle="tooltip" data-placement="right" title="Load Test"><img height="40px" src="assets/resources/button-images/load.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="move-btn" data-toggle="tooltip" data-placement="right" title="(M)ove"><img height="40px" src="assets/resources/button-images/move.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="draw-btn" data-toggle="tooltip" data-placement="right" title="(D)raw"><img height="40px" src="assets/resources/button-images/draw.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="erase-btn" data-toggle="tooltip" data-placement="right" title="(E)rase"><img height="40px" src="assets/resources/button-images/erase.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="(M)easure" style="display:none"><img height="40px" src="assets/resources/button-images/measure.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="load-btn" data-toggle="tooltip" data-placement="right" title="(L)oad"><img height="40px" src="assets/resources/button-images/load.png"></button>
 
         <div id="Options" style="margin-top: 15px;">
           <h1> display </h1>

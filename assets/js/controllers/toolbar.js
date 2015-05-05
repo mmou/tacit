@@ -22,7 +22,7 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/ruler.png) 6 20, auto'})
 
 
-	} else if (toolName === "test-btn") {
+	} else if (toolName === "load-btn") {
 		easel.currentTool = tacit.tools.load
 		$("#PadView svg").css({'cursor': 'default'})
 		//$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/weight.png) 10 10, auto'})

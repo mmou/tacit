@@ -44,6 +44,7 @@ body {
   height: 60px;
   padding: 0 10px;
   transition: all 0.3s;
+  transition-property: background-color, color;
 }
 
 #save-btn {
@@ -63,6 +64,11 @@ body {
 .btn.disabled, .btn[disabled] {
 	background-color: #2eabe2 !important;
 	color: white !important;
+}
+
+.notyet.btn.disabled, .notyet.btn[disabled] {
+	background-color: #2eabe2 !important;
+	color: #2eabe2 !important;
 }
 
 #export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover{
@@ -204,4 +210,5 @@ h1 {
 
 #HistorySketchesView svg {
     transition: all 0.3s;
+	  transition-property: background-color, color;
 }
