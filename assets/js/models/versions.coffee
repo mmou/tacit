@@ -8,8 +8,6 @@ class dummyEasel
 
         structure = new tacit.Structure(@versions.history[@i].sketch.structure)
         @versions.project.easel.pad.load(structure)
-        @versions.project.easel.pad.sketch.onChange = =>
-            suggestions.update(suggestions.project.easel.pad.sketch.structure)
         @versions.project.easel.pad.sketch.updateDrawing()
         @versions.project.onChange()
         return false
