@@ -477,7 +477,6 @@
           }
           return _results;
         })()) * w > 0.25) {
-          console.log(d.grad);
           return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
@@ -519,7 +518,6 @@
           }
           return _results;
         })()) * w > 0.25) {
-          console.log(d.grad);
           return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
