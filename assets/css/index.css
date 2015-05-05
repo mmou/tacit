@@ -21,20 +21,29 @@ body {
   border-radius: 4px;
 }
 
+form.navbar-form {
+	padding: 0;
+}
+
 #ProjectName {
 	border: none;
 	box-shadow: none;
 	background-color: transparent;
 	height:63px;
 	padding-top: 0;
-	padding-right: 0;
-	font-size:18px;
+	padding-left: 0;
+	font-size:36px;
 	color: white;
 	font-family: "Alegreya Sans SC";
 	font-weight: 300;
-	font-size: 2em;
-	width:220px;
-	text-align:right;
+	width:142px;
+}
+
+#NameHolder {
+	color: white;
+	font-family: "Alegreya Sans SC";
+	font-weight: 300;
+	font-size:36px;
 }
 
 #export-btn, #save-btn, #undo-btn, #redo-btn {
@@ -93,7 +102,7 @@ body {
 	color: white !important;
 }
 
-.notyet.btn.disabled, .notyet.btn[disabled] {
+.notyet.btn {
 	background-color: #2eabe2 !important;
 	color: #2eabe2 !important;
 }

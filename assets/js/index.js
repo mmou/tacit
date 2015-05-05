@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 108);
-	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-774)/60))
+	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-660)/60))
 	var width = parseInt($(window).width()*0.89 - 267);
 	window.project = {"name": "untitled"};
 	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", height, width);
@@ -87,6 +87,13 @@ $(document).ready(function() {
 
 	// update project name on input change
 	$("#ProjectName").on("input", function(e){
+	    var text = $('<span style="display: none;">')
+	        .html($(this).val().replace(/ /g, "&nbsp;"))
+	        .appendTo(this.parentNode);
+	    var w = text.innerWidth();
+	    text.remove();
+		$("#ProjectName").width(w);
+		$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-540-w)/60))
 		window.project.name = $("#ProjectName").val();
 		document.title = $("#ProjectName").val() + " | tacit.blue";
 	})

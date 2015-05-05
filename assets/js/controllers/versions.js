@@ -43,6 +43,7 @@ $(document).ready(function() {
 	})
 
 	$("#PadView").on("mouseup", function() {
+		$("#ProjectName").trigger('blur');
 		$(".notyet").removeClass("notyet")
 		var tool = project.easel.currentTool;
 		if (tool &&
