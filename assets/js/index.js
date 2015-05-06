@@ -92,10 +92,10 @@ $(document).ready(function() {
 	    var text = $('<span style="display: none;">')
 	        .html($(this).val().replace(/ /g, "&nbsp;"))
 	        .appendTo(this.parentNode);
-	    var w = Math.min(400, 4 + text.innerWidth());
+	    var w = Math.min(400, 12 + text.innerWidth());
 	    text.remove();
 		$("#ProjectName").width(w);
-		$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-560-w)/60))
+		$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-570-w)/60))
 		window.project.name = $("#ProjectName").val();
 		document.title = $("#ProjectName").val() + " | tacit.blue";
 	})
@@ -123,6 +123,7 @@ $(document).ready(function() {
 		$("footer").addClass("active");
 		window.update_footer();
 		setTimeout(function(){$("footer").height(footer_height)}, 500)
+		$("#footer_close").removeClass("hidden");
 	}
 
 	window.footer_height = $("footer").height();
