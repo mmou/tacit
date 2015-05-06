@@ -49,16 +49,9 @@ $(document).ready(function() {
 	$("#PadView").on("mouseup", function() {
 		$("#ProjectName").trigger('blur');
 		$(".notyet").removeClass("notyet")
+		updateAllBtns();
 		if (window.tutorial_state === 0)
 			window.advance_tutorial()
-		var tool = project.easel.currentTool;
-		if (tool &&
-			tool.name === "draw" ||
-			tool.name === "erase" ||
-			tool.name === "move") {
-			undoredo.log()
-			updateAllBtns();
-		}
 	})
 
 	$("#SuggestionsView").on("mouseup", function() {

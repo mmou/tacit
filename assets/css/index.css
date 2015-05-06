@@ -38,6 +38,7 @@ form.navbar-form {
 	font-family: "Alegreya Sans SC";
 	font-weight: 300;
 	width:150px;
+	max-width:340px;
 }
 
 #NameHolder {
