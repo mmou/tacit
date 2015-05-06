@@ -47,6 +47,7 @@ class Easel
                 @currentTool.mouseUp(easel, eventType, mouseLoc, object)
         undoredo.log()       
         @selection = null
+        undoredo.log()       
         return false
     mouseMove: (easel, eventType, mouseLoc, object) ->
         if @currentTool?
