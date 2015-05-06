@@ -92,7 +92,7 @@ $(document).ready(function() {
 	    var text = $('<span style="display: none;">')
 	        .html($(this).val().replace(/ /g, "&nbsp;"))
 	        .appendTo(this.parentNode);
-	    var w = 4 + text.innerWidth();
+	    var w = Math.min(400, 4 + text.innerWidth());
 	    text.remove();
 		$("#ProjectName").width(w);
 		$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-540-w)/60))
