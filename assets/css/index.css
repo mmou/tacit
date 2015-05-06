@@ -58,7 +58,6 @@ form.navbar-form {
 }
 
 #save-btn {
-	margin-left: -8px;
 	border: 0;
 }
 
@@ -133,7 +132,6 @@ input[type="checkbox"] {
 
 #HistoryView {
 	padding-top:8px;
-	margin-left: -8px;
 }
 
 .btn-default {

@@ -29,7 +29,7 @@ $(document).ready(function() {
 		var hsv = $("#HistorySketchesView");
 		var hsvpos = hsv.scrollLeft();
 		farRightScroll = 60*hsv.children().length - hsv.width()
-		if (farRightScroll === 60+hsvpos) { // was at far edge
+		if (farRightScroll > hsvpos) { // was at far edge
 			hsv.scrollLeft(farRightScroll);
 		}
 	})

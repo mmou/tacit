@@ -95,7 +95,7 @@ $(document).ready(function() {
 	    var w = Math.min(400, 4 + text.innerWidth());
 	    text.remove();
 		$("#ProjectName").width(w);
-		$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-540-w)/60))
+		$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-560-w)/60))
 		window.project.name = $("#ProjectName").val();
 		document.title = $("#ProjectName").val() + " | tacit.blue";
 	})
@@ -135,9 +135,13 @@ $(document).ready(function() {
 			$("#footertitle").html("about");
 			$("#footertitle").css("padding-left", 300);
 		}
-		if ($(this).height() == 32) $(this).height(footer_height)
-		else $(this).height(32)
-		$("#footer_close").toggleClass("hidden");
+		if ($(this).height() == 32) {
+			$(this).height(footer_height);
+			$("#footer_close").removeClass("hidden");}
+		else {
+			$(this).height(32)
+			$("#footer_close").addClass("hidden");
+			}
 	})
 
 	$("#footer_close").click(function(e) {
@@ -147,6 +151,8 @@ $(document).ready(function() {
 		$("#footertitle").html("about");
 		$("#footertitle").css("padding-left", 300);
 	})
+
+	$("footer").css("left", (width - 676)/2 + 146);
 	window.advance_tutorial();
 
 })
