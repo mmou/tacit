@@ -308,12 +308,13 @@ footer {
 	height: 34px;
 	color: #d4d4d4;
 	background-color: #3d3130;
-	text-align: center;
 	padding: 0;
+	padding-left: 280px;
 	padding-bottom: 4px;
 	font-family: "Alegreya Sans SC";
 	font-weight: 500;
 	line-height: 1.1;
+	cursor: pointer;
 }
 
 .tutorial_step {
@@ -337,4 +338,16 @@ wm {
 	line-height: 0.9;
 	padding-left: 0.1em;
 	padding-right: 0.1em;
+}
+
+#footer_close {
+	float: right;
+	margin-left: -16px;
+	font-weight: 100;
+	text-align: center;
+	width: 30px;
+}
+
+#footer_close:hover {
+	font-weight: 400;
 }
