@@ -21,7 +21,9 @@
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
       var drawpad, pad, scale,
         _this = this;
-      console.log(this.i);
+      if (window.tutorial_state === 9) {
+        window.advance_tutorial();
+      }
       pad = this.suggestions.pads[this.i];
       drawpad = this.suggestions.project.easel.pad;
       scale = Math.min(pad.height / drawpad.height, pad.width / drawpad.width);

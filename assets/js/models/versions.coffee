@@ -4,7 +4,7 @@ class dummyEasel
     constructor: (@versions, @i) -> null
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        if window.tutorial_state is 2
+        if window.tutorial_state is 2 or window.tutorial_state is 8
             window.advance_tutorial()
         structure = new tacit.Structure(@versions.history[@i].sketch.structure)
         @versions.project.easel.pad.load(structure)

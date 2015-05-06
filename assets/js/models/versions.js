@@ -16,7 +16,7 @@
 
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
       var structure;
-      if (window.tutorial_state === 2) {
+      if (window.tutorial_state === 2 || window.tutorial_state === 8) {
         window.advance_tutorial();
       }
       structure = new tacit.Structure(this.versions.history[this.i].sketch.structure);

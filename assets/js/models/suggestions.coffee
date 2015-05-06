@@ -6,7 +6,8 @@ class dummyEasel
     constructor: (@suggestions, @i) -> null
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        console.log @i
+        if window.tutorial_state is 9
+            window.advance_tutorial()
         pad = @suggestions.pads[@i]
         drawpad = @suggestions.project.easel.pad
         scale = Math.min(pad.height/drawpad.height,
