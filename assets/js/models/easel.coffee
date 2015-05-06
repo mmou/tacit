@@ -33,19 +33,38 @@ class Easel
         download(filename, d3.select(easel.pad.htmlLoc).html())
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
+        $("footer").height(32)
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)
+        if eventType is "node"
+            @selection = object
         return false
     mouseUp: (easel, eventType, mouseLoc, object) ->
         if @currentTool?
             if @currentTool.mouseUp?
                 @currentTool.mouseUp(easel, eventType, mouseLoc, object)
+        @selection = null
         return false
     mouseMove: (easel, eventType, mouseLoc, object) ->
         if @currentTool?
             if @currentTool.mouseMove?
                 @currentTool.mouseMove(easel, eventType, mouseLoc, object)
+        if not @currentTool.dragging
+            change = false
+            if eventType is "node"
+                if not 1 + easel.pad.sketch.selectedNodes.indexOf(object)
+                    change = true
+                    easel.pad.sketch.selectedNodes = [object]
+            else if easel.pad.sketch.selectedNodes.length > 0
+                change = true
+                @selection = null
+                easel.pad.sketch.selectedNodes = []
+            if change and object isnt @selection
+                if eventType is "node"
+                    easel.project.onChange()
+                    @selection = object
+                easel.pad.sketch.animateSelection()
         return false
 
     keyDown: (easel, eventType, keyCode) ->

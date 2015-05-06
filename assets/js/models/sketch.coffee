@@ -99,6 +99,12 @@ class Sketch
         @initial_translate = [@translate[0]*@scale, @translate[1]*@scale]
         @initial_scale = @scale
 
+        # Makes sketch always start out with gridLines
+        gridBox = $('input[name=grid]')
+        gridBox.prop('checked', true)
+        baseLineBox = $('input[name=baseLine]')
+        baseLineBox.prop('checked', true)
+
     defaultZoom: ->
         @rescale(@initial_translate, @initial_scale, force=true)
 

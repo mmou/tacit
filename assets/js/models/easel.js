@@ -54,10 +54,14 @@ function download(filename, text) {
     };
 
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
+      $("footer").height(32);
       if (this.currentTool != null) {
         if (this.currentTool.mouseDown != null) {
           this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
         }
+      }
+      if (eventType === "node") {
+        this.selection = object;
       }
       return false;
     };
@@ -68,13 +72,35 @@ function download(filename, text) {
           this.currentTool.mouseUp(easel, eventType, mouseLoc, object);
         }
       }
+      this.selection = null;
       return false;
     };
 
     Easel.prototype.mouseMove = function(easel, eventType, mouseLoc, object) {
+      var change;
       if (this.currentTool != null) {
         if (this.currentTool.mouseMove != null) {
           this.currentTool.mouseMove(easel, eventType, mouseLoc, object);
+        }
+      }
+      if (!this.currentTool.dragging) {
+        change = false;
+        if (eventType === "node") {
+          if (!1 + easel.pad.sketch.selectedNodes.indexOf(object)) {
+            change = true;
+            easel.pad.sketch.selectedNodes = [object];
+          }
+        } else if (easel.pad.sketch.selectedNodes.length > 0) {
+          change = true;
+          this.selection = null;
+          easel.pad.sketch.selectedNodes = [];
+        }
+        if (change && object !== this.selection) {
+          if (eventType === "node") {
+            easel.project.onChange();
+            this.selection = object;
+          }
+          easel.pad.sketch.animateSelection();
         }
       }
       return false;

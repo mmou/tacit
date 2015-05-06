@@ -14,6 +14,7 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #2eabe2;
+  height
 }
 
 ::-webkit-scrollbar-thumb {
@@ -36,7 +37,7 @@ form.navbar-form {
 	color: white;
 	font-family: "Alegreya Sans SC";
 	font-weight: 300;
-	width:146px;
+	width:142px;
 }
 
 #NameHolder {
@@ -151,9 +152,16 @@ input[type="checkbox"] {
 
 h1 {
 	font-size: 1.25em;
+	margin: 0;
+	font-family: "Alegreya Sans SC";
+	font-weight: 600;
+	margin-bottom: 0.2em;
+}
+
+h2 {
+	font-size: 1em;
 	font-family: "Alegreya Sans SC";
 	font-weight: 500;
-	margin-bottom: 0.2em;
 }
 
 #HistorySketchesView {
@@ -171,7 +179,7 @@ h1 {
 #ProjectView {
 	position: absolute;
 	background-color: #d4d4d4;
-	top: 76px; /* because of the header */
+	top: 78px; /* because of the header */
 }
 
 #EaselView {
@@ -235,9 +243,8 @@ h1 {
 	margin: auto;
 }
 
-#suggestions-label h1 {
-	font-weight: 600;
-	text-align: center;
+#suggestions-label {
+	padding-left: 28px;
 }
 
 #SuggestionsView svg {
@@ -258,7 +265,7 @@ h1 {
 
 #SuggestionsView svg:hover {
 	cursor: pointer;
-	border-color: #807ec7
+	border-color: #807ec7;
 }
 
 
@@ -270,4 +277,63 @@ h1 {
 #HistorySketchesView svg {
     transition: all 0.3s;
 	  transition-property: background-color, color;
+}
+
+#Suggestions {
+	padding-top: 2em;
+}
+
+
+.tooltip.in {
+	opacity: 1;
+}
+
+strong {
+	font-weight: 500;
+}
+
+footer {
+	transition: height 0.3s;
+	position: fixed;
+	height: 400px;
+	bottom: 0;
+	font-size: 1.5em;
+	background: white;
+	left: 146px;
+	width: 676px;
+}
+
+#footertitle {
+	height: 34px;
+	color: #d4d4d4;
+	background-color: #3d3130;
+	text-align: center;
+	padding: 0;
+	padding-bottom: 4px;
+	font-family: "Alegreya Sans SC";
+	font-weight: 500;
+	line-height: 1.1;
+}
+
+.tutorial_step {
+	padding: 18px 24px;
+}
+
+.active #footertitle {
+	color: white;
+	background-color: #807ec7;
+}
+
+.hidden {
+	display: none;
+}
+
+wm {
+	font-family: "Alegreya Sans SC";
+	font-style: italic;
+	font-weight: 900;
+	font-size: 1.1em;
+	line-height: 0.9;
+	padding-left: 0.1em;
+	padding-right: 0.1em;
 }

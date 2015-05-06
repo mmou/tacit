@@ -404,7 +404,7 @@
       glp_simplex(lp, smcp);
       return new LPresult(lp);
     };
-    return [Node, Beam, solveLP];
+    return [Node, Beam, solveLP, LPstring];
   };
 
   Structure = (function() {
@@ -414,7 +414,7 @@
       _ref1 = [{}, {}], this.nodeLookup = _ref1[0], this.nodeIDLookup = _ref1[1];
       _ref2 = [[], []], this.nodeList = _ref2[0], this.beamList = _ref2[1];
       _ref3 = [0, 0], this.nodes = _ref3[0], this.beams = _ref3[1];
-      _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2];
+      _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2], this.LPstring = _ref4[3];
       if (structure != null) {
         try {
           _ref5 = structure.beamList;
@@ -426,8 +426,16 @@
           for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {
             node = _ref6[_j];
             localnode = this.nodeIDLookup[this.nodeLookup[node.z][node.y][node.x]];
-            localnode.fixed = node.fixed;
-            localnode.force = node.force;
+            localnode.fixed = {
+              x: node.fixed.x,
+              y: node.fixed.y,
+              z: node.fixed.z
+            };
+            localnode.force = {
+              x: node.force.x,
+              y: node.force.y,
+              z: node.force.z
+            };
           }
         } catch (error) {
 
@@ -499,9 +507,10 @@
     };
 
     Structure.prototype.solvegrad = function(nodeList) {
-      var eps, node, xdiff, ydiff, _i, _len;
+      var eps, node, xdiff, ydiff, _i, _len, _results;
       eps = 1e-4;
       try {
+        _results = [];
         for (_i = 0, _len = nodeList.length; _i < _len; _i++) {
           node = nodeList[_i];
           node.move({
@@ -516,13 +525,13 @@
           node.move({
             y: -eps
           });
-          node.grad = {
+          _results.push(node.grad = {
             x: -xdiff,
             y: -ydiff,
             z: 0
-          };
+          });
         }
-        return console.log(this.lp.obj);
+        return _results;
       } catch (error) {
 
       }

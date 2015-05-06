@@ -13,6 +13,8 @@ loadTool =
             easel.pad.sketch.quickDraw()
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
+        if window.tutorial_state is 4
+            window.advance_tutorial()
         @dragging = false
         if @selection
             if object is @selection and eventType is "node"

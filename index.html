@@ -5,7 +5,7 @@
 
     <link rel="shortcut icon" href="assets/resources/favicon.ico">
 
-    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300,500,900italic|Alegreya+Sans:100,300,400,100italic,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300,500,900italic|Alegreya+Sans:100,300,400,500,100italic,300italic,400italic,500italic' rel='stylesheet' type='text/css'>
 
     <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/sketch.css" rel="stylesheet" type="text/css"/>
@@ -92,7 +92,6 @@
   </div>
 </nav>
 
-
 <div id="ProjectView" class="container-fluid">
 
     <div id="EaselView" class="row">
@@ -105,9 +104,10 @@
         <button type="button" class="btn btn-default toolbar-btn" id="load-btn" data-toggle="tooltip" data-placement="right" title="(L)oad"><img height="40px" src="assets/resources/button-images/load.png"></button>
 
         <div id="Options" style="margin-top: 15px;">
-          <h1> display </h1>
-          <input type="checkbox" name="grid" value="hasGrid" checked="true"> Grid <br>
-          <input type="checkbox" name="baseLine" value="hasBaseLine" checked="true"> Ground <br>
+          <h2>
+          <input type="checkbox" name="grid" value="hasGrid" checked="true"> grid <br>
+          <input type="checkbox" name="baseLine" value="hasBaseLine" checked="true"> ground <br>
+      </h2>
         </div>
 
       </div>
@@ -149,6 +149,42 @@
 
 
 </div>
+
+<footer class="footer">
+    <div id="footertitle"> tutorial </div>
+      <div id="footercontent0" class="tutorial_step">
+          <p> Welcome to <wm>tacit.blue</wm>, a tool for sketching structures.
+          <p> <wm>tacit</wm> helps you change shape to improve structure.
+          <p> Try <strong>mousing over the dark brown dot</strong> above.
+          <p> A purple arrow will appear.
+          <p> <strong>Drag the node along that arrow</strong> until the arrow disppears.
+      </div>
+      <div id="footercontent1" class="tutorial_step hidden">
+        <p> Nice!
+        <p> First, save your modification: <strong>click the "Save" button.</strong>
+      </div>
+      <div id="footercontent2" class="tutorial_step hidden">
+        <p> Nice!
+        <p> Now let's save your modification: <strong>click the "Save" button.</strong>
+        <p> Let's then <strong>load the original drawing</strong> by clicking on its icon (it's to the left by "untitled").
+      </div>
+      <div id="footercontent3" class="tutorial_step hidden">
+         <p> Great.
+         <p> Now, let's change the forces acting on your chair.
+         <p> First <strong>click the weight icon</strong> in the toolbar.
+      </div>
+      <div id="footercontent4" class="tutorial_step hidden">
+         <p> Great.
+         <p> Now, let's change the forces acting on your chair.
+         <p> First <strong>click the weight icon</strong> in the toolbar.
+         <p> Then <strong>click on the dot</strong> and drag away from it.
+      </div>
+      <div id="footercontent5" class="tutorial_step hidden">
+         <p> There's that purple arrow again, moving as you dragged the brown arrow.
+         <p> The <span style="font-weight: 600; color: #807ec7;">purple arrow</span> points in the direction of <strong>reduced structural weight</strong>.
+         <p> The <span style="font-weight: 600;">brown arrow</span> shows the <strong>pull on the structure</strong> at that point.
+      </div>
+    </footer>
 
 
 </body>

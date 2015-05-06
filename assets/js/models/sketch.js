@@ -65,7 +65,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width, scale, translate) {
-      var autozoom, d, draw, easel, force, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
+      var autozoom, baseLineBox, d, draw, easel, force, gridBox, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -156,6 +156,10 @@
       this.rescale(translate, scale, draw = false, force = true);
       this.initial_translate = [this.translate[0] * this.scale, this.translate[1] * this.scale];
       this.initial_scale = this.scale;
+      gridBox = $('input[name=grid]');
+      gridBox.prop('checked', true);
+      baseLineBox = $('input[name=baseLine]');
+      baseLineBox.prop('checked', true);
     }
 
     Sketch.prototype.defaultZoom = function() {

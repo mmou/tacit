@@ -22,12 +22,14 @@ $(document).ready(function() {
 	}
 
 	$("#save-btn").click(function() {
+		if (window.tutorial_state === 1)
+			window.advance_tutorial()
 		versions.save()
 		updateAllBtns();
 		var hsv = $("#HistorySketchesView");
 		var hsvpos = hsv.scrollLeft();
 		farRightScroll = 60*hsv.children().length - hsv.width()
-		if (farRightScroll == 60+hsvpos) { // was at far edge
+		if (farRightScroll === 60+hsvpos) { // was at far edge
 			hsv.scrollLeft(farRightScroll);
 		}
 	})
@@ -45,6 +47,8 @@ $(document).ready(function() {
 	$("#PadView").on("mouseup", function() {
 		$("#ProjectName").trigger('blur');
 		$(".notyet").removeClass("notyet")
+		if (window.tutorial_state === 0)
+			window.advance_tutorial()
 		var tool = project.easel.currentTool;
 		if (tool &&
 			tool.name === "draw" ||

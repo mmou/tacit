@@ -15,12 +15,12 @@
     }
 
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      var _this = this;
-      console.log(this.i);
-      this.versions.project.easel.pad.load(this.versions.history[this.i].sketch.structure);
-      this.versions.project.easel.pad.sketch.onChange = function() {
-        return suggestions.update(suggestions.project.easel.pad.sketch.structure);
-      };
+      var structure;
+      if (window.tutorial_state === 2) {
+        window.advance_tutorial();
+      }
+      structure = new tacit.Structure(this.versions.history[this.i].sketch.structure);
+      this.versions.project.easel.pad.load(structure);
       this.versions.project.easel.pad.sketch.updateDrawing();
       this.versions.project.onChange();
       return false;
@@ -56,11 +56,11 @@
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
       pad = new tacit.Pad(new dummyEasel(this, this.history.length), this.htmlLoc, 60, 60, structure);
-      this.history.push(pad);
       pad.load(structure);
       pad.sketch.nodeSize = 0;
       pad.sketch.showforce = false;
-      return pad.sketch.updateDrawing();
+      pad.sketch.updateDrawing();
+      return this.history.push(pad);
     };
 
     Versions.prototype.save = function() {
