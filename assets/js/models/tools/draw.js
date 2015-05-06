@@ -36,7 +36,7 @@
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var node, pos;
-      if (window.tutorial_state === 6) {
+      if (window.tutorial_state === 6 || window.tutorial_state === 7) {
         window.advance_tutorial();
       }
       if (this.drawStart) {

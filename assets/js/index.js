@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	window.tutorial_state = -1
+	window.tutorial_state = 5
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 110);
@@ -127,7 +127,7 @@ $(document).ready(function() {
 
 	$("footer").click(function(e) {
 		$("footer").removeClass("active");
-		if ($(this).height() == 32) $(this).height(400)
+		if ($(this).height() == 32) $(this).height(416)
 		else $(this).height(32)
 		window.update_footer();
 	})
