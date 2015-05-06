@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	window.tutorial_state = 5
+	window.tutorial_state = 8
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 110);
@@ -130,6 +130,10 @@ $(document).ready(function() {
 		if ($(this).height() == 32) $(this).height(416)
 		else $(this).height(32)
 		window.update_footer();
+		if (window.tutorial_state === 10) {
+			$("#last_step").addClass("hidden");
+			$("#footertitle").html("about");
+		}
 	})
 
 	window.advance_tutorial();
