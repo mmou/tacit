@@ -45,14 +45,7 @@ $(document).ready(function() {
 	$("#PadView").on("mouseup", function() {
 		$("#ProjectName").trigger('blur');
 		$(".notyet").removeClass("notyet")
-		var tool = project.easel.currentTool;
-		if (tool &&
-			tool.name === "draw" ||
-			tool.name === "erase" ||
-			tool.name === "move") {
-			undoredo.log()
-			updateAllBtns();
-		}
+		updateAllBtns();
 	})
 
 	$("#SuggestionsView").on("mouseup", function() {
