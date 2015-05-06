@@ -20,6 +20,8 @@ drawTool =
                             .attr("y1", pos.y).attr("y2", pos.y)
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
+        if window.tutorial_state is 6
+            window.advance_tutorial()
         if @drawStart
             if eventType isnt "node"
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}
