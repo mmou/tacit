@@ -1,7 +1,8 @@
 $(document).ready(function() {
+	window.tutorial_state = -1
 
 	// initialize easel and stuff
-	var height = parseInt($(window).height() - 108);
+	var height = parseInt($(window).height() - 110);
 	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-660)/60))
 	var width = parseInt($(window).width()*0.89 - 267);
 	window.project = {"name": "untitled"};
@@ -78,7 +79,7 @@ $(document).ready(function() {
       var baseLineBox = $('input[name=baseLine]');
       baseLineBox.click(function(){
         if(baseLineBox.is(":checked")){
-          easel.pad.sketch.baseLine.attr("stroke", "black");
+          easel.pad.sketch.baseLine.attr("stroke", "#3d3130");
         } else {
           easel.pad.sketch.baseLine.attr("stroke", "transparent");
 
@@ -111,5 +112,26 @@ $(document).ready(function() {
 	suggestions = new tacit.Suggestions(window.project, "#SuggestionsView");
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
 	undoredo = new tacit.UndoRedo(window.project)
+
+	window.update_footer = function() {
+		$(".tutorial_step").addClass("hidden");
+		$("#footercontent"+window.tutorial_state).removeClass("hidden");
+	}
+
+	window.advance_tutorial = function() {
+		window.tutorial_state++;
+		console.log(window.tutorial_state)
+		$("footer").addClass("active");
+		window.update_footer();
+	}
+
+	$("footer").click(function(e) {
+		$("footer").removeClass("active");
+		if ($(this).height() == 32) $(this).height(400)
+		else $(this).height(32)
+		window.update_footer();
+	})
+
+	window.advance_tutorial();
 
 })
