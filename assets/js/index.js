@@ -145,6 +145,7 @@ $(document).ready(function() {
 	})
 
 	$("#footer_close").click(function(e) {
+		$(".notyet").removeClass("notyet")
 		window.tutorial_state = 11;
 		window.update_footer();
 		footer_height = 230;
