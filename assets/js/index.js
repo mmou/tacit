@@ -130,12 +130,21 @@ $(document).ready(function() {
 		if ($(this).height() == 32) $(this).height(416)
 		else $(this).height(32)
 		window.update_footer();
+		$("#footer_close").toggleClass("hidden");
 		if (window.tutorial_state === 10) {
 			$("#last_step").addClass("hidden");
 			$("#footertitle").html("about");
+			$("#footertitle").css("padding-left", 300);
 		}
 	})
 
+	$("#footer_close").click(function(e) {
+		window.tutorial_state = 10;
+		window.update_footer();
+		$("#last_step").addClass("hidden");
+		$("#footertitle").html("about");
+		$("#footertitle").css("padding-left", 300);
+	})
 	window.advance_tutorial();
 
 })

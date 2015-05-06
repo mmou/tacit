@@ -54,7 +54,9 @@ function download(filename, text) {
     };
 
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      $("footer").height(32);
+      if ($("footer").height() > 32) {
+        $("footer").click();
+      }
       if (this.currentTool != null) {
         if (this.currentTool.mouseDown != null) {
           this.currentTool.mouseDown(easel, eventType, mouseLoc, object);

@@ -33,7 +33,8 @@ class Easel
         download(filename, d3.select(easel.pad.htmlLoc).html())
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        $("footer").height(32)
+        if $("footer").height() > 32
+            $("footer").click()
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)
