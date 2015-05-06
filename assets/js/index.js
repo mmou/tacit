@@ -120,28 +120,30 @@ $(document).ready(function() {
 
 	window.advance_tutorial = function() {
 		window.tutorial_state++;
-		console.log(window.tutorial_state)
 		$("footer").addClass("active");
 		window.update_footer();
+		setTimeout(function(){$("footer").height(footer_height)}, 500)
 	}
 
+	window.footer_height = $("footer").height();
 	$("footer").click(function(e) {
 		$("footer").removeClass("active");
-		if ($(this).height() == 32) $(this).height(416)
-		else $(this).height(32)
-		window.update_footer();
-		$("#footer_close").toggleClass("hidden");
 		if (window.tutorial_state === 10) {
-			$("#last_step").addClass("hidden");
+			window.tutorial_state++;
+			window.update_footer();
+			footer_height = 230;
 			$("#footertitle").html("about");
 			$("#footertitle").css("padding-left", 300);
 		}
+		if ($(this).height() == 32) $(this).height(footer_height)
+		else $(this).height(32)
+		$("#footer_close").toggleClass("hidden");
 	})
 
 	$("#footer_close").click(function(e) {
-		window.tutorial_state = 10;
+		window.tutorial_state = 11;
 		window.update_footer();
-		$("#last_step").addClass("hidden");
+		footer_height = 230;
 		$("#footertitle").html("about");
 		$("#footertitle").css("padding-left", 300);
 	})
