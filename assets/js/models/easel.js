@@ -74,7 +74,6 @@ function download(filename, text) {
       }
       undoredo.log();
       this.selection = null;
-      undoredo.log();
       return false;
     };
 
