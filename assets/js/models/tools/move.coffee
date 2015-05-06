@@ -27,23 +27,5 @@ moveTool =
         if @dragging and @selection
             @selection.moveto({x: mouseLoc[0], y: mouseLoc[1]})
             easel.pad.sketch.quickDraw()
-        else if not @dragging
-            change = false
-            if eventType is "node"
-                if not 1 + easel.pad.sketch.selectedNodes.indexOf(object)
-                    change = true
-                    easel.pad.sketch.selectedNodes = [object]
-            else if easel.pad.sketch.selectedNodes.length > 0
-                change = true
-                @selection = null
-                easel.pad.sketch.selectedNodes = []
-
-            if change and object isnt @selection
-                if eventType is "node"
-                    easel.project.onChange()
-                    @selection = object
-                easel.pad.sketch.animateSelection()
-
-
 
 window.tacit.tools.move = moveTool

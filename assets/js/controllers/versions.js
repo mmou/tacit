@@ -22,12 +22,14 @@ $(document).ready(function() {
 	}
 
 	$("#save-btn").click(function() {
+		if (window.tutorial_state === 1)
+			window.advance_tutorial()
 		versions.save()
 		updateAllBtns();
 		var hsv = $("#HistorySketchesView");
 		var hsvpos = hsv.scrollLeft();
 		farRightScroll = 60*hsv.children().length - hsv.width()
-		if (farRightScroll == 60+hsvpos) { // was at far edge
+		if (farRightScroll === 60+hsvpos) { // was at far edge
 			hsv.scrollLeft(farRightScroll);
 		}
 	})
@@ -46,6 +48,8 @@ $(document).ready(function() {
 		$("#ProjectName").trigger('blur');
 		$(".notyet").removeClass("notyet")
 		updateAllBtns();
+		if (window.tutorial_state === 0)
+			window.advance_tutorial()
 	})
 
 	$("#SuggestionsView").on("mouseup", function() {

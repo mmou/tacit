@@ -38,32 +38,12 @@
       }
     },
     mouseMove: function(easel, eventType, mouseLoc, object) {
-      var change;
       if (this.dragging && this.selection) {
         this.selection.moveto({
           x: mouseLoc[0],
           y: mouseLoc[1]
         });
         return easel.pad.sketch.quickDraw();
-      } else if (!this.dragging) {
-        change = false;
-        if (eventType === "node") {
-          if (!1 + easel.pad.sketch.selectedNodes.indexOf(object)) {
-            change = true;
-            easel.pad.sketch.selectedNodes = [object];
-          }
-        } else if (easel.pad.sketch.selectedNodes.length > 0) {
-          change = true;
-          this.selection = null;
-          easel.pad.sketch.selectedNodes = [];
-        }
-        if (change && object !== this.selection) {
-          if (eventType === "node") {
-            easel.project.onChange();
-            this.selection = object;
-          }
-          return easel.pad.sketch.animateSelection();
-        }
       }
     }
   };

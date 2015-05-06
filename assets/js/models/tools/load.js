@@ -26,6 +26,9 @@
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var idx;
+      if (window.tutorial_state === 4) {
+        window.advance_tutorial();
+      }
       this.dragging = false;
       if (this.selection) {
         if (object === this.selection && eventType === "node") {
