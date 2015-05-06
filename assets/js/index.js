@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	window.tutorial_state = -1
+	window.tutorial_state = 5
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 110);

@@ -10,6 +10,8 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 		easel.currentTool = tacit.tools.move
 		$("#PadView svg").css({'cursor': 'pointer'})
 	} else if (toolName === "draw-btn") {
+		if (window.tutorial_state === 5)
+            window.advance_tutorial();
 		easel.currentTool = tacit.tools.draw
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
 
