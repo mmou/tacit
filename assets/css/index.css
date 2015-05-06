@@ -32,12 +32,12 @@ form.navbar-form {
 	background-color: transparent;
 	height:63px;
 	padding-top: 0;
-	padding-left: 0;
+	padding-left: 8px;
 	font-size:36px;
 	color: white;
 	font-family: "Alegreya Sans SC";
 	font-weight: 300;
-	width:142px;
+	width:150px;
 }
 
 #NameHolder {
@@ -146,6 +146,7 @@ input[type="checkbox"] {
 	font-family: "Alegreya Sans SC";
 	font-size: 4em;
 	line-height: 0.56;
+	padding-right: 24px;
 }
 
 h1 {

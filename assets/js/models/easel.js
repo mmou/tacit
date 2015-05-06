@@ -88,11 +88,11 @@ function download(filename, text) {
       if (!this.currentTool.dragging) {
         change = false;
         if (eventType === "node") {
-          if (!1 + easel.pad.sketch.selectedNodes.indexOf(object)) {
+          if (!1 + easel.pad.sketch.selectedNodes.indexOf(object) && this.currentTool.name !== "erase") {
             change = true;
-            easel.pad.sketch.selectedNodes = [object];
+            easel.pad.sketch.selectedNodes.push(object);
           }
-        } else if (easel.pad.sketch.selectedNodes.length > 0) {
+        } else if (easel.pad.sketch.selectedNodes.length > 0 && this.currentTool.name !== "erase") {
           change = true;
           this.selection = null;
           easel.pad.sketch.selectedNodes = [];
