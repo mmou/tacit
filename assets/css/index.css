@@ -140,6 +140,7 @@ input[type="checkbox"] {
 }
 
 #logo {
+	cursor: default;
 	color: white;
 	font-weight: 900;
 	font-style: italic;

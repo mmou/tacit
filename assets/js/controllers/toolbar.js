@@ -13,6 +13,8 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 		if (window.tutorial_state === 5)
             window.advance_tutorial();
 		easel.currentTool = tacit.tools.draw
+		easel.pad.sketch.selectedNodes = []
+		easel.pad.sketch.selectedLinks = []
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
 
 	} else if (toolName === "erase-btn") {
