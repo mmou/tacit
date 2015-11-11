@@ -38,21 +38,25 @@
 
     gd = 1.75
     structure = new tacit.Structure
-    new structure.Beam({x: 20, y: gd}, {x: 70, y: 30})
-    new structure.Beam({x: 70, y: 30}, {x: 80, y: gd})
-    new structure.Beam({x: 80, y: gd}, {x: 40, y: 30})
-    new structure.Beam({x: 40, y: 30}, {x: 20, y: gd})
-    new structure.Beam({x: 40, y: 30}, {x: 70, y: 30})
-    new structure.Beam({x: 20, y: gd}, {x: 25, y: 40})
-    new structure.Beam({x: 25, y: 40}, {x:  0, y: 90})
-    new structure.Beam({x:  0, y: 90}, {x: 20, y: gd})
-    new structure.Beam({x: 25, y: 40}, {x: 40, y: 30})
+    new structure.Beam({x:20, y:gd}, {x:79, y:26})
+    new structure.Beam({x:79, y:26}, {x:79, y:gd})
+    new structure.Beam({x:79, y:gd}, {x:40, y:40})
+    new structure.Beam({x:40, y:40}, {x:20, y:gd})
+    new structure.Beam({x:40, y:40}, {x:79, y:26})
+    new structure.Beam({x:81, y:70}, {x:58, y:63})
+    new structure.Beam({x:81, y:70}, {x:79, y:26})
+    new structure.Beam({x:58, y:63}, {x:40, y:40})
+    new structure.Beam({x:58, y:63}, {x:79, y:26})
+    new structure.Beam({x:47, y:72}, {x:58, y:63})
+    new structure.Beam({x:47, y:72}, {x:40, y:40})
+    new structure.Beam({x:47, y:72}, {x:47, y:97})
+    new structure.Beam({x:47, y:97}, {x:81, y:70})
     structure.nodeList[i].fixed.y = true for i in [0,2]
-    structure.nodeList[i].fixed.x = true for i in [0]
-    structure.nodeList[1].force.y = -75
-    structure.nodeList[3].force.y = -50
-    structure.nodeList[4].force[dim] = -30 for dim in "xy"
-    structure.nodeList[5].force[dim] = -15 for dim in "xy"
+    structure.nodeList[i].fixed.x = true for i in [0,2]
+    structure.nodeList[7].force.x = 50
+    structure.nodeList[6].force.x = 50
+    # structure.nodeList[4].force[dim] = -30 for dim in "xy"
+    # structure.nodeList[5].force[dim] = -15 for dim in "xy"
 
     initialize(structure)
 
@@ -107,7 +111,7 @@
         </li>
         <li>
           <a data-toggle="tooltip" data-placement="bottom">
-            <button id="export-btn" type="button" class="notyet btn btn-default btn-lg" title="(cmd-E)" data-toggle="tooltip" data-placement="bottom">EXPORT</button>
+            <button id="export-btn" type="button" class="notyet btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom">NEXT</button>
           </a>
         </li>
       <li>

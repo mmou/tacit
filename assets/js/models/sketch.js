@@ -291,6 +291,7 @@
       this.structure.solve();
       this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
+      document.getElementById("designweight").innerText = Math.round(this.structure.lp.obj / 680);
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
         return d.source.x;
@@ -388,6 +389,7 @@
       this.structure.solvegrad(this.selectedNodes);
       this.resize();
       w = this.structure.nodeList.length / this.structure.lp.obj;
+      document.getElementById("designweight").innerText = Math.round(this.structure.lp.obj / 680);
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
         return d.source.x;

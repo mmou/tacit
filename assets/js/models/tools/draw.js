@@ -22,7 +22,7 @@
             y: mouseLoc[1]
           };
           node = new easel.pad.sketch.structure.Node(pos);
-          node.force.y = -100;
+          // node.force.y = -100;
           easel.pad.sketch.updateDrawing();
         } else {
           pos = {
@@ -43,7 +43,7 @@
             y: mouseLoc[1]
           };
           node = new easel.pad.sketch.structure.Node(pos);
-          node.force.y = -100;
+          // node.force.y = -100;
         } else {
           pos = {
             x: object.x,

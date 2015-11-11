@@ -217,6 +217,7 @@ class Sketch
         @structure.solve()
         @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
+        document.getElementById("designweight").innerText = Math.round(@structure.lp.obj/680)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
@@ -264,8 +265,8 @@ class Sketch
         @structure.solve()
         @structure.solvegrad(@selectedNodes)
         @resize()
-
         w = @structure.nodeList.length/@structure.lp.obj
+        document.getElementById("designweight").innerText = Math.round(@structure.lp.obj/680)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)

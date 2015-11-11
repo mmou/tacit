@@ -10,7 +10,7 @@ drawTool =
             if eventType isnt "node"
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}
                 node = new easel.pad.sketch.structure.Node(pos)
-                node.force.y = -100
+                # node.force.y = -100
                 easel.pad.sketch.updateDrawing()
             else
                 pos = {x: object.x, y: object.y}
@@ -24,7 +24,7 @@ drawTool =
             if eventType isnt "node"
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}
                 node = new easel.pad.sketch.structure.Node(pos)
-                node.force.y = -100
+                # node.force.y = -100
             else
                 pos = {x: object.x, y: object.y}
             if pos.x isnt @drawStart.x and pos.y isnt @drawStart.y

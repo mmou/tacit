@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function initialize(structure) {
 	window.tutorial_state = -1
 
 	// initialize easel and stuff
@@ -6,7 +6,8 @@ $(document).ready(function() {
 	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-660)/60))
 	var width = parseInt($(window).width()*0.89 - 267);
 	window.project = {"name": "untitled"};
-	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView", height, width);
+	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView",
+						    height, width, structure);
 	window.project.easel = easel;
 	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;
@@ -107,7 +108,7 @@ $(document).ready(function() {
     		return false;
   		}
 	});
-	$("#export-btn").click(function() {easel.export()})
+	$("#export-btn").click(function() {window.location.href = "airplane.html"})
 
 	suggestions = new tacit.Suggestions(window.project, "#SuggestionsView");
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
@@ -157,4 +158,6 @@ $(document).ready(function() {
 	$("footer").css("left", (width - 676)/2 + 146);
 	window.advance_tutorial();
 
-})
+}
+
+window.initialize = initialize;
