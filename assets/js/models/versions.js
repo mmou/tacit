@@ -52,10 +52,13 @@
     }
 
     Versions.prototype.newVersion = function() {
-      var pad, structure;
+      var easel, pad, structure, versionObj;
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
-      pad = new tacit.Pad(new dummyEasel(this, this.history.length), this.htmlLoc, 60, 60, structure);
+      versionObj = d3.select(this.htmlLoc).append("li").attr("id", "ver" + this.history.length);
+      easel = new dummyEasel(this, this.history.length);
+      easel.weightDisplay = versionObj.append("span")[0][0];
+      pad = new tacit.Pad(easel, "#ver" + this.history.length, 50, 50, structure);
       pad.load(structure);
       pad.sketch.nodeSize = 0;
       pad.sketch.showforce = false;

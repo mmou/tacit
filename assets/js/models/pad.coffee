@@ -2,6 +2,7 @@
 
 class Pad
     constructor: (@easel, @htmlLoc, @height, @width, structure) ->
+        console.log @easel.weightDisplay
         @sketch = new tacit.Sketch(this, @htmlLoc, structure, @height, @width)
 
     load: (structure) ->

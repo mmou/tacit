@@ -13,6 +13,7 @@
       this.htmlLoc = htmlLoc;
       this.height = height;
       this.width = width;
+      console.log(this.easel.weightDisplay);
       this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);
     }
 

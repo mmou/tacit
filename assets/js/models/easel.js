@@ -25,9 +25,10 @@ function download(filename, text) {
 
   Easel = (function() {
 
-    function Easel(project, toolbarLoc, padLoc, padHeight, padWidth, structure) {
+    function Easel(project, padLoc, padHeight, padWidth, structure, weightDisplay) {
       var padHtmlRect;
       this.project = project;
+      this.weightDisplay = weightDisplay;
       padHtmlRect = d3.select(padLoc).node().getBoundingClientRect();
       if (padWidth == null) {
         padWidth = htmlRect.width;

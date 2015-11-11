@@ -5,9 +5,10 @@ function initialize(structure) {
 	var height = parseInt($(window).height() - 110);
 	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-660)/60))
 	var width = parseInt($(window).width()*0.89 - 267);
-	window.project = {"name": "untitled"};
-	easel = new tacit.Easel(window.project, "#ToolbarView", "#PadView",
-						    height, width, structure);
+	window.project = {"name": "untitled", "onChange": function(){}};
+	global_weight = document.getElementById("designweight")
+	easel = new tacit.Easel(window.project, "#PadView",
+						    height, width, structure, global_weight);
 	window.project.easel = easel;
 	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;
@@ -110,7 +111,6 @@ function initialize(structure) {
 	});
 	$("#export-btn").click(function() {window.location.href = "airplane.html"})
 
-	suggestions = new tacit.Suggestions(window.project, "#SuggestionsView");
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
 	undoredo = new tacit.UndoRedo(window.project)
 

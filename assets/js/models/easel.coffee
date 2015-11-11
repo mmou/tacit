@@ -17,7 +17,7 @@ function download(filename, text) {
 `
 
 class Easel
-    constructor: (@project, toolbarLoc, padLoc, padHeight, padWidth, structure) ->
+    constructor: (@project, padLoc, padHeight, padWidth, structure, @weightDisplay) ->
         #@toolbar = new tacit.Toolbar(this, toolbarLoc)
 
         padHtmlRect = d3.select(padLoc).node().getBoundingClientRect()

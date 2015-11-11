@@ -118,11 +118,11 @@ div.notyet {
 }
 
 .navbar {
-	height: 76px;
+	height: 84px;
 }
 
 #NameView {
-	height: 76px;
+	height: 84px;
 	background-color: #2eabe2;
 }
 
@@ -169,7 +169,7 @@ h2 {
 	white-space: nowrap;
 	overflow-x: scroll;
 	text-align: right;
-	height: 68px;
+	height: 76px;
 }
 
 #save-container {
@@ -349,4 +349,12 @@ wm {
 
 #footer_close:hover {
 	font-weight: 400;
+}
+
+#HistorySketchesView li span {
+    position: absolute;
+    bottom: -24px;
+    text-align: center;
+    width: 100%;
+    color: white;
 }
