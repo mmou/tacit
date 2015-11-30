@@ -267,7 +267,7 @@
         this.id = beams++;
         this.source.sourced.push(this);
         this.target.targeted.push(this);
-        this.size = 20;
+        this.size = 200;
         beamList.push(this);
       }
 
@@ -384,7 +384,7 @@
       lp += "\n               \nBounds";
       for (_l = 0, _len3 = beamList.length; _l < _len3; _l++) {
         beam = beamList[_l];
-        lp += "\n  f" + beam.id + " free               \n  F" + beam.id + " >= 0               \n  F" + beam.id + " <= " + (10 * beam.size);
+        lp += "\n  f" + beam.id + " free               \n  F" + beam.id + " >= 0               \n  F" + beam.id + " <= " + beam.size;
       }
       for (_m = 0, _len4 = reactionforces.length; _m < _len4; _m++) {
         q = reactionforces[_m];
@@ -452,7 +452,7 @@
         _ref1 = this.beamList;
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           beam = _ref1[_i];
-          this.lp.obj = this.lp.obj + beam.L * 10 * beam.size;
+          this.lp.obj = this.lp.obj + beam.L * beam.size;
         }
         _ref2 = this.beamList;
         for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {

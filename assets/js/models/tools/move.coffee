@@ -52,7 +52,7 @@ moveTool =
                 ydist = pos.y-@dragstart.y
                 dist = sqrt(sqr(xdist) + sqr(ydist))
                 sign = sin(atan2(ydist, xdist))
-                @selection.size = max(0.5, sign*dist*1.4 + @dragstart.size)
+                @selection.size = max(0.5, sign*dist*14 + @dragstart.size)
             easel.pad.sketch.quickDraw()
 
 window.tacit.tools.move = moveTool

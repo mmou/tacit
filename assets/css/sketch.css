@@ -6,11 +6,6 @@
 .fixed.selected { fill: #807ec7; }
 .node.selected { fill: #807ec7; }
 
-.link { stroke: #9c7b70; }
-.link.tension { stroke: #2eabe2; }
-.link.compression { stroke: #f15a5e; }
-.link.selected { }
-
 #HistorySketchesView svg .link {
     transition: all 0.3s;
 }

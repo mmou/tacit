@@ -92,7 +92,7 @@
           ydist = pos.y - this.dragstart.y;
           dist = sqrt(sqr(xdist) + sqr(ydist));
           sign = sin(atan2(ydist, xdist));
-          this.selection.size = max(0.5, sign * dist * 1.4 + this.dragstart.size);
+          this.selection.size = max(0.5, sign * dist * 14 + this.dragstart.size);
         }
         return easel.pad.sketch.quickDraw();
       }

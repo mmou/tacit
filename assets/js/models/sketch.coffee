@@ -8,6 +8,8 @@ sum = (o) -> if o.length then o.reduce((a,b) -> a+b) else ""
 dist = (a, b) -> sqrt(sum(sqr(ai - (if b then b[i] else 0)) for ai, i in a))
 print = (o) -> console.log(o)
 
+colormap = d3.scale.cubehelix().domain([0, 1]).range(["#2eabe2","#f15a5e"])
+
 window.tacit ?= {}
 
 class Sketch
@@ -226,15 +228,14 @@ class Sketch
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
               .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
-              .classed("compression", (d) => d.f < 0)
-              .classed("tension", (d) => d.f > 0)
+              .attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
               .transition()
                   .duration(250)
                   .ease("elastic")
                       .attr("stroke-opacity", (d) => 0.9 + 0.1*(@selectedLinks.indexOf(d)+1 > 0))
                 .duration(750)
                 .ease("elastic")
-                    .attr("stroke-width",  (d) => sqrt(d.size))
+                    .attr("stroke-width",  (d) => sqrt(d.size/10))
 
 
         @nodes.attr("cx", (d) => d.x)
@@ -278,8 +279,7 @@ class Sketch
 
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
-              .classed("compression", (d) => d.f < 0)
-              .classed("tension", (d) => d.f > 0)
+              .attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
 
         @nodes.attr("cx", (d) => d.x).attr("cy", (d) => d.y)
 
@@ -293,7 +293,7 @@ class Sketch
         w = @structure.nodeList.length/@structure.lp.obj
 
         @links.attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
-              .attr("stroke-width",  (d) => sqrt(d.size))
+              .attr("stroke-width",  (d) => sqrt(d.size/10))
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)

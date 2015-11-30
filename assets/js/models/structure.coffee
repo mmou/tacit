@@ -92,7 +92,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             @id = beams++
             @source.sourced.push(this)
             @target.targeted.push(this)
-            @size = 20
+            @size = 200
             beamList.push(this)
         update: ->
             @l[d] = @target[d] - @source[d] for d in "xyz"
@@ -143,7 +143,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
                \nBounds"
         lp += "\n  f#{beam.id} free
                \n  F#{beam.id} >= 0
-               \n  F#{beam.id} <= #{10*beam.size}" for beam in beamList
+               \n  F#{beam.id} <= #{beam.size}" for beam in beamList
         lp += "\n  #{q} free" for q in reactionforces
         lp += "\n
                \nEnd\n"
@@ -185,7 +185,7 @@ class Structure
             @lp = @solveLP()
             @lp.obj = 0
             for beam in @beamList
-                @lp.obj = @lp.obj + beam.L*10*beam.size
+                @lp.obj = @lp.obj + beam.L*beam.size
             for beam in @beamList
                 beam.f = @lp["f#{beam.id}"]
                 beam.F = abs(beam.f)
