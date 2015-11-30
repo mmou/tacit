@@ -75,7 +75,7 @@
       this.width = width;
       this.showgrad = false;
       this.showforce = true;
-      this.showzero = true;
+      this.showzero = false;
       this.transitioning = false;
       htmlObj = d3.select(htmlLoc);
       if (structure != null) {
@@ -292,7 +292,7 @@
       this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
       if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 40 - Math.round(this.structure.lp.obj / 680);
+        this.pad.easel.weightDisplay.innerText = 400 - Math.round(this.structure.lp.obj / 68);
       }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
@@ -376,7 +376,7 @@
             _results.push(l);
           }
           return _results;
-        })()) * w > 0.25) {
+        })()) * w > 0.125) {
           return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
@@ -392,7 +392,7 @@
       this.resize();
       w = this.structure.nodeList.length / this.structure.lp.obj;
       if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 40 - Math.round(this.structure.lp.obj / 680);
+        this.pad.easel.weightDisplay.innerText = 400 - Math.round(this.structure.lp.obj / 68);
       }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
@@ -486,7 +486,7 @@
             _results.push(l);
           }
           return _results;
-        })()) * w > 0.25) {
+        })()) * w > 0.125) {
           return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
@@ -527,7 +527,7 @@
             _results.push(l);
           }
           return _results;
-        })()) * w > 0.25) {
+        })()) * w > 0.125) {
           return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;

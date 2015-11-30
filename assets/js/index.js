@@ -4,7 +4,7 @@ function initialize(structure) {
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 110);
 	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-660)/60))
-	var width = parseInt($(window).width()*0.89 - 267);
+	var width = parseInt($(window).width() - 160);
 	window.project = {"name": "untitled", "onChange": function(){}};
 	global_weight = document.getElementById("designweight")
 	easel = new tacit.Easel(window.project, "#PadView",

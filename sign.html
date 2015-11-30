@@ -69,14 +69,16 @@
 
 <nav class="navbar navbar-default navbar-fixed-top">
   <div id="NameView" class="container-fluid">
+      <span style="
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: 300;
+    font-size: 2em;
+    top: 0.35em;
+"><span id="designweight">-2</span> points</span>
     <ul class="nav navbar-nav navbar-left">
-        <li>
-          <form class="navbar-form">
-            <div class="form-group" id="NameHolder">
-              <input class="form-control" id="ProjectName" value="untitled"></input>
-            </div>
-          </form>
-        </li>
       <li>
         <div id="HistoryView">
          <ul id="HistorySketchesView" class="nav navbar-nav navbar-left"></ul>
@@ -87,13 +89,6 @@
           <button id="save-btn" type="button" type="button" class="notyet btn btn-default btn-lg" disabled title="(cmd-S)" data-toggle="tooltip" data-placement="bottom">SAVE</button>
         </a>
       </li>
-      <li><div class="navbar-header"><span class="navbar-brand" style="
-            color: white;
-            font-weight: 300;
-            margin-left: 10em;
-            font-size: 2em;
-            line-height: 1.1;
-        "><span id="designweight">67</span> points</span></div></li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -111,16 +106,9 @@
         </li>
         <li>
           <a data-toggle="tooltip" data-placement="bottom">
-            <button id="export-btn" type="button" class="notyet btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom">NEXT</button>
+            <button id="export-btn" type="button" class="notyet btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom">FINISH</button>
           </a>
         </li>
-      <li>
-          <div class="navbar-header">
-            <span id="logo" class="navbar-brand" href="">
-                &nbsp;tacit
-            </span>
-          </div>
-      </li>
     </ul>
 
   </div>
@@ -129,7 +117,7 @@
 <div id="ProjectView" class="container-fluid">
 
     <div id="EaselView" class="row">
-      <div id="ToolbarView" class="notyet col-md-1">
+      <div id="ToolbarView" class="notyet col-xs-1">
         <button type="button" class="btn btn-default toolbar-btn" id="select-btn" data-toggle="tooltip" data-placement="right" title="Select" style="display:none"><img height="40px" width="40px" src="assets/resources/button-images/select.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="move-btn" data-toggle="tooltip" data-placement="right" title="(M)ove"><img height="40px" src="assets/resources/button-images/move.png"></button>
         <button type="button" class="btn btn-default toolbar-btn" id="draw-btn" data-toggle="tooltip" data-placement="right" title="(D)raw"><img height="40px" src="assets/resources/button-images/draw.png"></button>
@@ -148,7 +136,7 @@
 
 
 
-      <div id="PadView" class="col-md-9">
+      <div id="PadView" class="col-xs-9">
       </div>
 
 

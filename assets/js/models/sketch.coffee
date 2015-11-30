@@ -14,7 +14,7 @@ class Sketch
     constructor: (@pad, htmlLoc="body", structure, @height, @width, scale, translate) ->
         @showgrad = false
         @showforce = true
-        @showzero = true
+        @showzero = false
         @transitioning = false
 
         htmlObj = d3.select(htmlLoc)
@@ -218,7 +218,7 @@ class Sketch
         @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
         if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 40 - Math.round(@structure.lp.obj/680)
+            @pad.easel.weightDisplay.innerText  = 400 - Math.round(@structure.lp.obj/68)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
@@ -257,7 +257,7 @@ class Sketch
         @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
               .attr("stroke-width", (d) =>
-                    if 50/@scale*dist(l for d, l of d.grad)*w > 0.25
+                    if 50/@scale*dist(l for d, l of d.grad)*w > 0.125
                         10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
                     else
                         0)
@@ -268,7 +268,7 @@ class Sketch
         @resize()
         w = @structure.nodeList.length/@structure.lp.obj
         if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 40 - Math.round(@structure.lp.obj/680)
+            @pad.easel.weightDisplay.innerText  = 400 - Math.round(@structure.lp.obj/68)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
@@ -307,7 +307,7 @@ class Sketch
                                             else 0)
 
         @grads.attr("stroke-width", (d) =>
-                        if 50/@scale*dist(l for dim, l of d.grad)*w > 0.25
+                        if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
                             10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
                         else
                             0)
@@ -330,7 +330,7 @@ class Sketch
                     .attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
                     .attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
                     .attr("stroke-width", (d) =>
-                                if 50/@scale*dist(l for dim, l of d.grad)*w > 0.25
+                                if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
                                     10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
                                 else
                                     0)
