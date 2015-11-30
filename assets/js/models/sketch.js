@@ -294,7 +294,7 @@
       this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
       if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 1500 - Math.round(this.structure.lp.obj / 68);
+        this.pad.easel.weightDisplay.innerText = 2000 - Math.round(this.structure.lp.obj / 50);
       }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
@@ -396,7 +396,7 @@
       this.resize();
       w = this.structure.nodeList.length / this.structure.lp.obj;
       if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 1500 - Math.round(this.structure.lp.obj / 68);
+        this.pad.easel.weightDisplay.innerText = 2000 - Math.round(this.structure.lp.obj / 50);
       }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {

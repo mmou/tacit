@@ -34,13 +34,13 @@ moveTool =
             idx = easel.pad.sketch.selectedNodes.indexOf(@selection)
             easel.pad.sketch.selectedNodes.splice(idx, 1)
             easel.pad.sketch.quickDraw()
-            @allowPan = true
         else if @selectiontype is "beam"
             easel.pad.sketch.selectedLinks = []
             easel.pad.sketch.slowDraw()
         @selection = null
         @selectiontype = null
         @dragstart = null
+        @allowPan = true
 
     mouseMove: (easel, eventType, mouseLoc, object) ->
         if @dragstart

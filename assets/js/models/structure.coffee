@@ -80,7 +80,8 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             (new Node(pt)).id
 
     class Beam
-        constructor: (pts...) ->
+        constructor: (pt1, pt2, @size=200) ->
+            pts = [pt1, pt2]
             [@source, @target] = (nodeIDLookup[getNodeIDX(pt)] for pt in pts)
             # determine physical characteristics
             [@f, @F] = [0, 0]
@@ -92,7 +93,6 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             @id = beams++
             @source.sourced.push(this)
             @target.targeted.push(this)
-            @size = 200
             beamList.push(this)
         update: ->
             @l[d] = @target[d] - @source[d] for d in "xyz"
@@ -107,7 +107,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
     class LPresult
         constructor: (@lp) ->
             @obj = glp_get_obj_val(@lp)
-            @obj = 1e6 if not @obj
+            @obj = null if not @obj
             for i in [1..glp_get_num_cols(lp)]
                 [name, prim] = [glp_get_col_name(lp, i), glp_get_col_prim(lp, i)]
                 this[name] = prim
@@ -173,7 +173,7 @@ class Structure
         if structure?
             try
                 for beam in structure.beamList
-                    new @Beam(beam.source, beam.target)
+                    new @Beam(beam.source, beam.target, beam.size)
                 for node in structure.nodeList
                     localnode = @nodeIDLookup[@nodeLookup[node.z][node.y][node.x]]
                     localnode.fixed = {x: node.fixed.x, y: node.fixed.y, z: node.fixed.z}
@@ -183,9 +183,12 @@ class Structure
     solve: ->
         try
             @lp = @solveLP()
-            @lp.obj = 0
-            for beam in @beamList
-                @lp.obj = @lp.obj + beam.L*beam.size
+            if not @lp.obj?
+                @lp.obj = 1e5
+            else
+                @lp.obj = 0
+                for beam in @beamList
+                    @lp.obj = @lp.obj + beam.L*beam.size
             for beam in @beamList
                 beam.f = @lp["f#{beam.id}"]
                 beam.F = abs(beam.f)

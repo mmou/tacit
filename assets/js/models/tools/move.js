@@ -69,14 +69,14 @@
         idx = easel.pad.sketch.selectedNodes.indexOf(this.selection);
         easel.pad.sketch.selectedNodes.splice(idx, 1);
         easel.pad.sketch.quickDraw();
-        this.allowPan = true;
       } else if (this.selectiontype === "beam") {
         easel.pad.sketch.selectedLinks = [];
         easel.pad.sketch.slowDraw();
       }
       this.selection = null;
       this.selectiontype = null;
-      return this.dragstart = null;
+      this.dragstart = null;
+      return this.allowPan = true;
     },
     mouseMove: function(easel, eventType, mouseLoc, object) {
       var dist, pos, sign, xdist, ydist;

@@ -220,7 +220,7 @@ class Sketch
         @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
         if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 1500 - Math.round(@structure.lp.obj/68)
+            @pad.easel.weightDisplay.innerText  = 2000 - Math.round(@structure.lp.obj/50)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
@@ -272,7 +272,7 @@ class Sketch
         @resize()
         w = @structure.nodeList.length/@structure.lp.obj
         if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 1500 - Math.round(@structure.lp.obj/68)
+            @pad.easel.weightDisplay.innerText  = 2000 - Math.round(@structure.lp.obj/50)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
