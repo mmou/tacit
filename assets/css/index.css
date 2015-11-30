@@ -48,7 +48,7 @@ form.navbar-form {
 	font-size:36px;
 }
 
-#export-btn, #save-btn, #undo-btn, #redo-btn {
+#export-btn, #save-btn, #undo-btn, #redo-btn, #zoom-btn {
   background-color: white;
   border: 1px solid #2eabe2;
   color: #2eabe2;
@@ -112,7 +112,7 @@ div.notyet {
 	opacity: 0;
 }
 
-#export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover{
+#export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover, #zoom-btn:hover{
   background-color: #d4d4d4;
 	color: #3d3130;
 }

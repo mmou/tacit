@@ -175,7 +175,7 @@
         draw = true;
       }
       if (force == null) {
-        force = false;
+        force = true;
       }
       if (translate == null) {
         translate = d3.event.translate;

@@ -110,7 +110,7 @@ class Sketch
     defaultZoom: ->
         @rescale(@initial_translate, @initial_scale, force=true)
 
-    rescale: (translate, scale, draw=true, force=false) ->
+    rescale: (translate, scale, draw=true, force=true) ->
         translate ?= d3.event.translate
         scale ?= d3.event.scale
         translate = [translate[0]/scale, translate[1]/scale]

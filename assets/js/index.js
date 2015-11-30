@@ -112,53 +112,12 @@ function initialize(structure) {
   		}
 	});
 	$("#export-btn").click(function() {window.location.href = "airplane.html"})
+	$("#zoom-btn").click(function() {easel.pad.sketch.defaultZoom()})
 
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
 	undoredo = new tacit.UndoRedo(window.project)
 
-	window.update_footer = function() {
-		$(".tutorial_step").addClass("hidden");
-		$("#footercontent"+window.tutorial_state).removeClass("hidden");
-	}
-
-	window.advance_tutorial = function() {
-		window.tutorial_state++;
-		$("footer").addClass("active");
-		window.update_footer();
-		setTimeout(function(){$("footer").height(footer_height)}, 500)
-		$("#footer_close").removeClass("hidden");
-	}
-
-	window.footer_height = $("footer").height();
-	$("footer").click(function(e) {
-		$("footer").removeClass("active");
-		if (window.tutorial_state === 10) {
-			window.tutorial_state++;
-			window.update_footer();
-			footer_height = 230;
-			$("#footertitle").html("about");
-			$("#footertitle").css("padding-left", 300);
-		}
-		if ($(this).height() == 32) {
-			$(this).height(footer_height);
-			$("#footer_close").removeClass("hidden");}
-		else {
-			$(this).height(32)
-			$("#footer_close").addClass("hidden");
-			}
-	})
-
-	$("#footer_close").click(function(e) {
-		$(".notyet").removeClass("notyet")
-		window.tutorial_state = 11;
-		window.update_footer();
-		footer_height = 230;
-		$("#footertitle").html("about");
-		$("#footertitle").css("padding-left", 300);
-	})
-
-	$("footer").css("left", (width - 676)/2 + 146);
-	window.advance_tutorial();
+	$(".notyet").removeClass("notyet")
 
 }
 
