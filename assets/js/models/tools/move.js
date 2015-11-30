@@ -39,15 +39,17 @@
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var idx;
       if (eventType === "node") {
-        this.selection = object;
-        this.selectiontype = "node";
-        this.allowPan = false;
-        this.dragstart = true;
-        idx = easel.pad.sketch.selectedNodes.indexOf(object);
-        if (idx === -1) {
-          easel.pad.sketch.selectedNodes.push(object);
+        if (!(object.immovable != null)) {
+          this.selection = object;
+          this.selectiontype = "node";
+          this.allowPan = false;
+          this.dragstart = true;
+          idx = easel.pad.sketch.selectedNodes.indexOf(object);
+          if (idx === -1) {
+            easel.pad.sketch.selectedNodes.push(object);
+          }
+          return easel.pad.sketch.quickDraw();
         }
-        return easel.pad.sketch.quickDraw();
       } else if (eventType === "beam") {
         this.selection = object;
         this.selectiontype = "beam";

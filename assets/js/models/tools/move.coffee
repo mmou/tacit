@@ -13,13 +13,14 @@ moveTool =
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         if eventType is "node"
-            @selection = object
-            @selectiontype = "node"
-            @allowPan = false
-            @dragstart = true
-            idx = easel.pad.sketch.selectedNodes.indexOf(object)
-            easel.pad.sketch.selectedNodes.push(object) if idx is -1
-            easel.pad.sketch.quickDraw()
+            if not object.immovable?
+                @selection = object
+                @selectiontype = "node"
+                @allowPan = false
+                @dragstart = true
+                idx = easel.pad.sketch.selectedNodes.indexOf(object)
+                easel.pad.sketch.selectedNodes.push(object) if idx is -1
+                easel.pad.sketch.quickDraw()
         else if eventType is "beam"
             @selection = object
             @selectiontype = "beam"
