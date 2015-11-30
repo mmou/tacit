@@ -63,7 +63,7 @@ function download(filename, text) {
           this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
         }
       }
-      if (eventType === "node") {
+      if (eventType === "node" || eventType === "beam") {
         this.selection = object;
       }
       return false;

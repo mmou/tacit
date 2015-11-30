@@ -19,8 +19,8 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 		easel.currentTool = tacit.tools.erase
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'})
 
-	} else if (toolName === "measure-btn") {
-		easel.currentTool = tacit.tools.measure
+	} else if (toolName === "thicken-btn") {
+		easel.currentTool = tacit.tools.thicken
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/ruler.png) 6 20, auto'})
 
 

@@ -218,7 +218,7 @@ class Sketch
         @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
         if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 400 - Math.round(@structure.lp.obj/68)
+            @pad.easel.weightDisplay.innerText  = 1500 - Math.round(@structure.lp.obj/68)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
@@ -228,11 +228,14 @@ class Sketch
               .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
               .classed("compression", (d) => d.f < 0)
               .classed("tension", (d) => d.f > 0)
-              .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
               .transition()
+                  .duration(250)
+                  .ease("elastic")
+                      .attr("stroke-opacity", (d) => 0.9 + 0.1*(@selectedLinks.indexOf(d)+1 > 0))
                 .duration(750)
                 .ease("elastic")
-                    .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*@showzero)
+                    .attr("stroke-width",  (d) => sqrt(d.size))
+
 
         @nodes.attr("cx", (d) => d.x)
               .attr("cy", (d) => d.y)
@@ -258,7 +261,7 @@ class Sketch
               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
               .attr("stroke-width", (d) =>
                     if 50/@scale*dist(l for d, l of d.grad)*w > 0.125
-                        10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
+                        10/@scale*(@showgrad and (@selectedNodes.indexOf(d) >= 0))
                     else
                         0)
 
@@ -268,7 +271,7 @@ class Sketch
         @resize()
         w = @structure.nodeList.length/@structure.lp.obj
         if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 400 - Math.round(@structure.lp.obj/68)
+            @pad.easel.weightDisplay.innerText  = 1500 - Math.round(@structure.lp.obj/68)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
@@ -290,7 +293,7 @@ class Sketch
         w = @structure.nodeList.length/@structure.lp.obj
 
         @links.attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
-              .attr("stroke-width",  (d) => 0.35*sqrt(d.F) or 5/@scale*@showzero)
+              .attr("stroke-width",  (d) => sqrt(d.size))
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
@@ -308,7 +311,7 @@ class Sketch
 
         @grads.attr("stroke-width", (d) =>
                         if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
-                            10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
+                            10/@scale*(@showgrad and (@selectedNodes.indexOf(d) >= 0))
                         else
                             0)
     animateSelection: ->
@@ -331,7 +334,7 @@ class Sketch
                     .attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
                     .attr("stroke-width", (d) =>
                                 if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
-                                    10/@scale*(@showgrad or (@selectedNodes.indexOf(d) >= 0))
+                                    10/@scale*(@showgrad and (@selectedNodes.indexOf(d) >= 0))
                                 else
                                     0)
 

@@ -267,6 +267,7 @@
         this.id = beams++;
         this.source.sourced.push(this);
         this.target.targeted.push(this);
+        this.size = 20;
         beamList.push(this);
       }
 
@@ -383,7 +384,7 @@
       lp += "\n               \nBounds";
       for (_l = 0, _len3 = beamList.length; _l < _len3; _l++) {
         beam = beamList[_l];
-        lp += "\n  f" + beam.id + " free               \n  F" + beam.id + " >= 0";
+        lp += "\n  f" + beam.id + " free               \n  F" + beam.id + " >= 0               \n  F" + beam.id + " <= " + (10 * beam.size);
       }
       for (_m = 0, _len4 = reactionforces.length; _m < _len4; _m++) {
         q = reactionforces[_m];
@@ -444,21 +445,27 @@
     }
 
     Structure.prototype.solve = function() {
-      var beam, dim, geo, node, rho, sdual, tdual, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref1, _ref2, _ref3, _ref4, _results;
+      var beam, dim, geo, node, rho, sdual, tdual, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2, _ref3, _ref4, _ref5, _results;
       try {
         this.lp = this.solveLP();
+        this.lp.obj = 0;
         _ref1 = this.beamList;
         for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
           beam = _ref1[_i];
-          beam.f = this.lp["f" + beam.id];
-          beam.F = abs(beam.f);
+          this.lp.obj = this.lp.obj + beam.L * 10 * beam.size;
         }
         _ref2 = this.beamList;
         for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
           beam = _ref2[_j];
-          _ref3 = "xyz";
-          for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
-            dim = _ref3[_k];
+          beam.f = this.lp["f" + beam.id];
+          beam.F = abs(beam.f);
+        }
+        _ref3 = this.beamList;
+        for (_k = 0, _len2 = _ref3.length; _k < _len2; _k++) {
+          beam = _ref3[_k];
+          _ref4 = "xyz";
+          for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
+            dim = _ref4[_l];
             rho = beam.f / beam.L;
             geo = 1 - 2 * Math.pow(beam.l[dim] / beam.L, 2);
             sdual = this.lp["n" + beam.source.id + dim] || 0;
@@ -466,32 +473,32 @@
             beam.fgrad[dim] = rho * geo * (sdual - tdual);
           }
         }
-        _ref4 = this.nodeList;
+        _ref5 = this.nodeList;
         _results = [];
-        for (_l = 0, _len3 = _ref4.length; _l < _len3; _l++) {
-          node = _ref4[_l];
+        for (_m = 0, _len4 = _ref5.length; _m < _len4; _m++) {
+          node = _ref5[_m];
           _results.push((function() {
-            var _len4, _m, _ref5, _results1;
-            _ref5 = "xyz";
+            var _len5, _n, _ref6, _results1;
+            _ref6 = "xyz";
             _results1 = [];
-            for (_m = 0, _len4 = _ref5.length; _m < _len4; _m++) {
-              dim = _ref5[_m];
+            for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
+              dim = _ref6[_n];
               node.fgrad[dim] = sum((function() {
-                var _len5, _n, _ref6, _results2;
-                _ref6 = node.sourced;
+                var _len6, _o, _ref7, _results2;
+                _ref7 = node.sourced;
                 _results2 = [];
-                for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
-                  beam = _ref6[_n];
+                for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {
+                  beam = _ref7[_o];
                   _results2.push(beam.fgrad[dim]);
                 }
                 return _results2;
               })());
               _results1.push(node.fgrad[dim] -= sum((function() {
-                var _len5, _n, _ref6, _results2;
-                _ref6 = node.targeted;
+                var _len6, _o, _ref7, _results2;
+                _ref7 = node.targeted;
                 _results2 = [];
-                for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
-                  beam = _ref6[_n];
+                for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {
+                  beam = _ref7[_o];
                   _results2.push(beam.fgrad[dim]);
                 }
                 return _results2;

@@ -92,6 +92,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             @id = beams++
             @source.sourced.push(this)
             @target.targeted.push(this)
+            @size = 20
             beamList.push(this)
         update: ->
             @l[d] = @target[d] - @source[d] for d in "xyz"
@@ -141,7 +142,8 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
         lp += "\n
                \nBounds"
         lp += "\n  f#{beam.id} free
-               \n  F#{beam.id} >= 0" for beam in beamList
+               \n  F#{beam.id} >= 0
+               \n  F#{beam.id} <= #{10*beam.size}" for beam in beamList
         lp += "\n  #{q} free" for q in reactionforces
         lp += "\n
                \nEnd\n"
@@ -181,6 +183,9 @@ class Structure
     solve: ->
         try
             @lp = @solveLP()
+            @lp.obj = 0
+            for beam in @beamList
+                @lp.obj = @lp.obj + beam.L*10*beam.size
             for beam in @beamList
                 beam.f = @lp["f#{beam.id}"]
                 beam.F = abs(beam.f)
@@ -226,7 +231,7 @@ n.fixed.x = true
 print "Failed Test 1" if nodeList[nodeLookup[0][0][0]].fixed.x isnt true
 ## TEST 2 # make sure fixed constraints are null
  # deprecated now that we use those constraints to determine reaction forces
- # print "Failed Test 2" if n.constraints().x or n.constraints().z
+# print "Failed Test 2" if n.constraints().x or n.constraints().z
 ## TEST 3 # connect two nodes with a beam
 n.fixed.x = false # unfix the node at 0,0
 b = new Beam({x: 0, y: 0}, {x: 1, y: 1})

@@ -292,7 +292,7 @@
       this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
       if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 400 - Math.round(this.structure.lp.obj / 68);
+        this.pad.easel.weightDisplay.innerText = 1500 - Math.round(this.structure.lp.obj / 68);
       }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
@@ -313,10 +313,10 @@
         return d.f < 0;
       }).classed("tension", function(d) {
         return d.f > 0;
-      }).classed("selected", function(d) {
-        return _this.selectedLinks.indexOf(d) + 1;
-      }).transition().duration(750).ease("elastic").attr("stroke-width", function(d) {
-        return 0.35 * sqrt(d.F) || 5 / _this.scale * _this.showzero;
+      }).transition().duration(250).ease("elastic").attr("stroke-opacity", function(d) {
+        return 0.9 + 0.1 * (_this.selectedLinks.indexOf(d) + 1 > 0);
+      }).duration(750).ease("elastic").attr("stroke-width", function(d) {
+        return sqrt(d.size);
       });
       this.nodes.attr("cx", function(d) {
         return d.x;
@@ -377,7 +377,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.scale * (_this.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
@@ -392,7 +392,7 @@
       this.resize();
       w = this.structure.nodeList.length / this.structure.lp.obj;
       if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 400 - Math.round(this.structure.lp.obj / 68);
+        this.pad.easel.weightDisplay.innerText = 1500 - Math.round(this.structure.lp.obj / 68);
       }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
@@ -444,7 +444,7 @@
           return 10 / _this.scale + "," + 10 / _this.scale;
         }
       }).attr("stroke-width", function(d) {
-        return 0.35 * sqrt(d.F) || 5 / _this.scale * _this.showzero;
+        return sqrt(d.size);
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
       });
@@ -487,7 +487,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.scale * (_this.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
@@ -528,7 +528,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (_this.showgrad || (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.scale * (_this.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }

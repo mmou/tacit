@@ -38,7 +38,7 @@ class Easel
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)
-        if eventType is "node"
+        if eventType in ["node", "beam"]
             @selection = object
         return false
     mouseUp: (easel, eventType, mouseLoc, object) ->

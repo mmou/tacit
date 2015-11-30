@@ -62,6 +62,8 @@ function initialize(structure) {
 			$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/ruler.png) 6 20, auto'})
 		} else if (easel.currentTool.name == "load") {
 			$("#PadView svg").css({'cursor': 'default'})
+		} else if (easel.currentTool.name == "thicken"){
+				$("#PadView svg").css({'cursor': 'default'})
 		} else {
 				console.log("no tool selected");
 
