@@ -8,6 +8,7 @@
 
 #HistorySketchesView svg .link {
     transition: all 0.3s;
+    opacity: 1 !important;
 }
 
 #HistorySketchesView svg:not(:hover) .link {
