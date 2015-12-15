@@ -20,7 +20,6 @@ window.tacit ?= {}
 
 class Sketch
     constructor: (@pad, htmlLoc="body", structure, @height, @width, scale, translate) ->
-        @showgrad = false
         @showforce = true
         @showzero = false
         @transitioning = false
@@ -273,7 +272,7 @@ class Sketch
               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
               .attr("stroke-width", (d) =>
                     if 50/@scale*dist(l for d, l of d.grad)*w > 0.125
-                        10/@scale*(@showgrad and (@selectedNodes.indexOf(d) >= 0))
+                        10/@scale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
                     else
                         0)
 
@@ -319,7 +318,7 @@ class Sketch
 
         @grads.attr("stroke-width", (d) =>
                         if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
-                            10/@scale*(@showgrad and (@selectedNodes.indexOf(d) >= 0))
+                            10/@scale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
                         else
                             0)
     animateSelection: ->
@@ -342,7 +341,7 @@ class Sketch
                     .attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
                     .attr("stroke-width", (d) =>
                                 if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
-                                    10/@scale*(@showgrad and (@selectedNodes.indexOf(d) >= 0))
+                                    10/@scale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
                                 else
                                     0)
 

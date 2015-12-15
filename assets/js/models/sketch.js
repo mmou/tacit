@@ -75,7 +75,6 @@
       }
       this.height = height;
       this.width = width;
-      this.showgrad = false;
       this.showforce = true;
       this.showzero = false;
       this.transitioning = false;
@@ -389,7 +388,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (_this.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.scale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
@@ -489,7 +488,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (_this.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.scale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
@@ -530,7 +529,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (_this.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.scale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
