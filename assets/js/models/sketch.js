@@ -344,14 +344,14 @@
         isc = _this.nodeSize * 3.1 / 9 / _this.scale;
         return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
       });
-      this.forces.attr("x1", function(d) {
+      this.forces.attr("x2", function(d) {
         return d.x;
-      }).attr("x2", function(d) {
-        return d.x + d.force.x / 6;
-      }).attr("y1", function(d) {
-        return d.y;
+      }).attr("x1", function(d) {
+        return d.x - d.force.x / 6;
       }).attr("y2", function(d) {
-        return d.y + d.force.y / 6;
+        return d.y;
+      }).attr("y1", function(d) {
+        return d.y - d.force.y / 6;
       }).attr("stroke-width", function(d) {
         var f;
         if (!d.fixed.y && dist((function() {
@@ -418,14 +418,14 @@
       }).attr("cy", function(d) {
         return d.y;
       });
-      this.forces.attr("x1", function(d) {
+      this.forces.attr("x2", function(d) {
         return d.x;
-      }).attr("x2", function(d) {
-        return d.x + d.force.x / 6;
-      }).attr("y1", function(d) {
-        return d.y;
+      }).attr("x1", function(d) {
+        return d.x - d.force.x / 6;
       }).attr("y2", function(d) {
-        return d.y + d.force.y / 6;
+        return d.y;
+      }).attr("y1", function(d) {
+        return d.y - d.force.y / 6;
       });
       return this.grads.attr("x1", function(d) {
         return d.x;

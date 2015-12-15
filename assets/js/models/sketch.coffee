@@ -263,8 +263,8 @@ class Sketch
                l #{5*isc},#{8.6*isc}
                l #{5*isc},#{-8.6*isc} Z""")
 
-        @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/6)
-               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/6)
+        @forces.attr("x2", (d) => d.x).attr("x1", (d) => d.x - d.force.x/6)
+               .attr("y2", (d) => d.y).attr("y1", (d) => d.y - d.force.y/6)
                .attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
                                                8/@scale*@showforce
                                             else 0)
@@ -291,8 +291,8 @@ class Sketch
 
         @nodes.attr("cx", (d) => d.x).attr("cy", (d) => d.y)
 
-        @forces.attr("x1", (d) => d.x).attr("x2", (d) => d.x + d.force.x/6)
-               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + d.force.y/6)
+        @forces.attr("x2", (d) => d.x).attr("x1", (d) => d.x - d.force.x/6)
+               .attr("y2", (d) => d.y).attr("y1", (d) => d.y - d.force.y/6)
 
         @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
