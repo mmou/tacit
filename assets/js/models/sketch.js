@@ -58,7 +58,7 @@
     return console.log(o);
   };
 
-  colormap = d3.scale.cubehelix().domain([0, 1]).range(["#2eabe2", "#f15a5e"]);
+  colormap = d3.scale.linear().domain([0, 0.166, 0.33, 0.5, 0.66, 0.83, 0.999, 1, 2]).range([d3.hsl("hsl(244, 100%, 39%)"), d3.hsl("hsl(214, 91%, 50%)"), d3.hsl("hsl(186, 100%, 43%)"), d3.hsl("hsl(160, 84%, 50%)"), d3.hsl("hsl(100, 100%, 50%)"), d3.hsl("hsl(60, 100%, 50%)"), d3.hsl("hsl(33, 96%, 50%)"), d3.hsl("hsl(0, 100%, 50%)"), d3.hsl("hsl(0, 100%, 0%)")]);
 
   if ((_ref = window.tacit) == null) {
     window.tacit = {};
@@ -226,7 +226,7 @@
       var easel, n;
       easel = this.pad.easel;
       this.links = this.links.data(this.structure.beamList);
-      this.links.enter().insert("line", ".node").attr("class", "link").on("mousedown", function(d) {
+      this.links.enter().insert("line", ".node").attr("class", "link").attr("stroke", "#9c7b70").on("mousedown", function(d) {
         return easel.mouseDown(easel, "beam", d3.mouse(this), d);
       }).on("mousemove", function(d) {
         return easel.mouseMove(easel, "beam", d3.mouse(this), d);
@@ -287,14 +287,34 @@
       return this.slowDraw();
     };
 
+    Sketch.prototype.fea = function() {
+      var _this = this;
+      if (this.pad.easel.weightDisplay != null) {
+        this.pad.easel.weightDisplay.innerText = 2000 - Math.round(this.structure.lp.obj / 50);
+      }
+      return this.links.attr("stroke", function(d) {
+        if (d.F) {
+          return colormap(d.F / d.size);
+        } else {
+          return "#9c7b70";
+        }
+      }).attr("stroke-dasharray", function(d) {
+        if (d.F) {
+          return null;
+        } else {
+          return 10 / _this.scale + "," + 10 / _this.scale;
+        }
+      });
+    };
+
     Sketch.prototype.slowDraw = function() {
       var w,
         _this = this;
       this.structure.solve();
       this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
-      if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 2000 - Math.round(this.structure.lp.obj / 50);
+      if (window.tool.autocolor) {
+        this.fea();
       }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
@@ -305,18 +325,6 @@
         return d.source.y;
       }).attr("y2", function(d) {
         return d.target.y;
-      }).attr("stroke-dasharray", function(d) {
-        if (d.F) {
-          return null;
-        } else {
-          return 10 / _this.scale + "," + 10 / _this.scale;
-        }
-      }).attr("stroke", function(d) {
-        if (d.F) {
-          return colormap(d.F / d.size);
-        } else {
-          return "#9c7b70";
-        }
       }).transition().duration(250).ease("elastic").attr("stroke-opacity", function(d) {
         return 0.9 + 0.1 * (_this.selectedLinks.indexOf(d) + 1 > 0);
       }).duration(750).ease("elastic").attr("stroke-width", function(d) {
@@ -395,9 +403,6 @@
       this.structure.solvegrad(this.selectedNodes);
       this.resize();
       w = this.structure.nodeList.length / this.structure.lp.obj;
-      if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 2000 - Math.round(this.structure.lp.obj / 50);
-      }
       this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
       this.links.attr("x1", function(d) {
         return d.source.x;
@@ -407,12 +412,6 @@
         return d.source.y;
       }).attr("y2", function(d) {
         return d.target.y;
-      }).attr("stroke", function(d) {
-        if (d.F) {
-          return colormap(d.F / d.size);
-        } else {
-          return "#9c7b70";
-        }
       });
       this.nodes.attr("cx", function(d) {
         return d.x;
@@ -443,13 +442,10 @@
       var w,
         _this = this;
       w = this.structure.nodeList.length / this.structure.lp.obj;
-      this.links.attr("stroke-dasharray", function(d) {
-        if (d.F) {
-          return null;
-        } else {
-          return 10 / _this.scale + "," + 10 / _this.scale;
-        }
-      }).attr("stroke-width", function(d) {
+      if (window.tool.autocolor) {
+        this.fea();
+      }
+      this.links.attr("stroke-width", function(d) {
         return sqrt(d.size / 10);
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;

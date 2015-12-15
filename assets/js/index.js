@@ -113,6 +113,10 @@ function initialize(structure) {
 	});
 	$("#export-btn").click(function() {window.location.href = "airplane.html"})
 	$("#zoom-btn").click(function() {easel.pad.sketch.defaultZoom()})
+	if (window.tool.autocolor) {
+		$("#fea-btn").hide()
+	}
+	$("#fea-btn").click(function() {easel.pad.sketch.fea()})
 
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
 	undoredo = new tacit.UndoRedo(window.project)

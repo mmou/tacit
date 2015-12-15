@@ -8,7 +8,13 @@ sum = (o) -> if o.length then o.reduce((a,b) -> a+b) else ""
 dist = (a, b) -> sqrt(sum(sqr(ai - (if b then b[i] else 0)) for ai, i in a))
 print = (o) -> console.log(o)
 
-colormap = d3.scale.cubehelix().domain([0, 1]).range(["#2eabe2","#f15a5e"])
+colormap = d3.scale.linear()
+                    .domain([0, 0.166, 0.33, 0.5, 0.66, 0.83, 0.999, 1, 2])
+            .range([d3.hsl("hsl(244, 100%, 39%)"), d3.hsl("hsl(214, 91%, 50%)"),
+                    d3.hsl("hsl(186, 100%, 43%)"), d3.hsl("hsl(160, 84%, 50%)"),
+                    d3.hsl("hsl(100, 100%, 50%)"), d3.hsl("hsl(60, 100%, 50%)"),
+                    d3.hsl("hsl(33, 96%, 50%)"), d3.hsl("hsl(0, 100%, 50%)"),
+                    d3.hsl("hsl(0, 100%, 0%)"),])
 
 window.tacit ?= {}
 
@@ -148,6 +154,7 @@ class Sketch
         @links = @links.data(@structure.beamList)
         @links.enter().insert("line", ".node")
               .attr("class", "link")
+              .attr("stroke", "#9c7b70")
               .on("mousedown", (d) ->
                   easel.mouseDown(easel, "beam", d3.mouse(this), d))
               .on("mousemove", (d) ->
@@ -215,20 +222,24 @@ class Sketch
 
         @slowDraw()
 
+    fea: ->
+        if @pad.easel.weightDisplay?
+            @pad.easel.weightDisplay.innerText  = 2000 - Math.round(@structure.lp.obj/50)
+
+        @links.attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
+              .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
+
     slowDraw: ->
         @structure.solve()
         @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
-        if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 2000 - Math.round(@structure.lp.obj/50)
+        @fea() if window.tool.autocolor
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
 
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
-              .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
-              .attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
               .transition()
                   .duration(250)
                   .ease("elastic")
@@ -271,15 +282,12 @@ class Sketch
         @structure.solvegrad(@selectedNodes)
         @resize()
         w = @structure.nodeList.length/@structure.lp.obj
-        if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 2000 - Math.round(@structure.lp.obj/50)
 
         @dragline.attr("stroke-width", 10/@scale)
                  .attr("stroke-dasharray", 10/@scale+","+10/@scale)
 
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
-              .attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
 
         @nodes.attr("cx", (d) => d.x).attr("cy", (d) => d.y)
 
@@ -291,9 +299,9 @@ class Sketch
 
     resize: ->
         w = @structure.nodeList.length/@structure.lp.obj
+        @fea() if window.tool.autocolor
 
-        @links.attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
-              .attr("stroke-width",  (d) => sqrt(d.size/10))
+        @links.attr("stroke-width",  (d) => sqrt(d.size/10))
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)

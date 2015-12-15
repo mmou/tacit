@@ -340,8 +340,8 @@
         return "-";
       }
     };
-    LPstring = function() {
-      var a, b, beam, c, con, dim, j, lp, node, q, reactionforces, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2;
+    LPstring = function(sized_beams) {
+      var a, b, beam, c, con, dim, j, lp, node, q, reactionforces, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _len5, _m, _n, _ref1, _ref2;
       reactionforces = [];
       lp = "Minimize               \n  obj:" + sum((function() {
         var _i, _len, _results;
@@ -383,20 +383,26 @@
       lp += "\n               \nBounds";
       for (_l = 0, _len3 = beamList.length; _l < _len3; _l++) {
         beam = beamList[_l];
-        lp += "\n  f" + beam.id + " free               \n  F" + beam.id + " >= 0               \n  F" + beam.id + " <= " + beam.size;
+        lp += "\n  f" + beam.id + " free               \n  F" + beam.id + " >= 0";
       }
-      for (_m = 0, _len4 = reactionforces.length; _m < _len4; _m++) {
-        q = reactionforces[_m];
+      if (sized_beams) {
+        for (_m = 0, _len4 = beamList.length; _m < _len4; _m++) {
+          beam = beamList[_m];
+          lp += "\n  F" + beam.id + " <= " + beam.size;
+        }
+      }
+      for (_n = 0, _len5 = reactionforces.length; _n < _len5; _n++) {
+        q = reactionforces[_n];
         lp += "\n  " + q + " free";
       }
       lp += "\n               \nEnd\n";
       lp = lp.replace(new RegExp("               ", "g"), "");
       return lp;
     };
-    solveLP = function() {
+    solveLP = function(sized_beams) {
       var lp, smcp;
       lp = glp_create_prob();
-      glp_read_lp_from_string(lp, null, LPstring());
+      glp_read_lp_from_string(lp, null, LPstring(sized_beams));
       glp_scale_prob(lp, GLP_SF_AUTO);
       smcp = new SMCP({
         presolve: GLP_ON
@@ -444,17 +450,20 @@
     }
 
     Structure.prototype.solve = function() {
-      var beam, dim, geo, node, rho, sdual, tdual, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2, _ref3, _ref4, _ref5, _results;
+      var beam, dim, geo, node, rho, sdual, sized_beams, tdual, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2, _ref3, _ref4, _ref5, _results;
       try {
-        this.lp = this.solveLP();
+        this.lp = this.solveLP(sized_beams = window.tool.sized_beams);
         if (!(this.lp.obj != null)) {
+          if (window.tool.sized_beams) {
+            this.lp = this.solveLP(sized_beams = false);
+          }
           this.lp.obj = 1e5;
         } else {
           this.lp.obj = 0;
           _ref1 = this.beamList;
           for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
             beam = _ref1[_i];
-            this.lp.obj = this.lp.obj + beam.L * beam.size;
+            this.lp.obj += beam.L * beam.size;
           }
         }
         _ref2 = this.beamList;

@@ -38,6 +38,8 @@
 
     <script type="text/coffeescript">
 
+    window.tool = {sized_beams: true, autocolor:false}
+
     gd = 1.75
     structure = new tacit.Structure
     new structure.Beam({x:20, y:gd}, {x:79, y:26})
@@ -80,7 +82,7 @@
     font-weight: 300;
     font-size: 2em;
     top: 0.35em;
-"><span id="designweight">-2</span> points</span>
+"><span id="designweight">0</span> points</span>
     <ul class="nav navbar-nav navbar-left">
       <li>
         <div id="HistoryView">
@@ -106,7 +108,12 @@
               </button>
             </div>
           </a>
-        </li>
+       </li>
+       <li>
+            <a data-toggle="tooltip" data-placement="bottom">
+                <button id="fea-btn" type="button" class="notyet btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom">FEA</button>
+            </a>
+       </li>
         <li>
           <a data-toggle="tooltip" data-placement="bottom">
             <button id="zoom-btn" type="button" class="notyet btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom">ZOOM TO FIT</button>

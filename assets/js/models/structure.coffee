@@ -120,7 +120,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
 
     strsign = (n) -> if n > 0 then "+" else "-"
 
-    LPstring = ->
+    LPstring = (sized_beams) ->
         reactionforces = []
         lp  =   "Minimize
                \n  obj:" + sum(" + #{beam.L} F#{beam.id}" for beam in beamList)
@@ -142,17 +142,18 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
         lp += "\n
                \nBounds"
         lp += "\n  f#{beam.id} free
-               \n  F#{beam.id} >= 0
-               \n  F#{beam.id} <= #{beam.size}" for beam in beamList
+               \n  F#{beam.id} >= 0" for beam in beamList
+        if sized_beams
+             lp += "\n  F#{beam.id} <= #{beam.size}" for beam in beamList
         lp += "\n  #{q} free" for q in reactionforces
         lp += "\n
                \nEnd\n"
         lp = lp.replace(new RegExp("               ", "g"),"")
         return lp
 
-    solveLP = ->
+    solveLP = (sized_beams) ->
         lp = glp_create_prob()
-        glp_read_lp_from_string(lp, null, LPstring())
+        glp_read_lp_from_string(lp, null, LPstring(sized_beams))
         glp_scale_prob(lp, GLP_SF_AUTO)
         smcp = new SMCP({presolve: GLP_ON})
         glp_simplex(lp, smcp)
@@ -182,13 +183,15 @@ class Structure
 
     solve: ->
         try
-            @lp = @solveLP()
+            @lp = @solveLP(sized_beams=window.tool.sized_beams)
             if not @lp.obj?
+                if window.tool.sized_beams
+                    @lp = @solveLP(sized_beams=false)
                 @lp.obj = 1e5
             else
                 @lp.obj = 0
                 for beam in @beamList
-                    @lp.obj = @lp.obj + beam.L*beam.size
+                    @lp.obj += beam.L*beam.size
             for beam in @beamList
                 beam.f = @lp["f#{beam.id}"]
                 beam.F = abs(beam.f)
