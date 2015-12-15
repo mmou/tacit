@@ -184,11 +184,12 @@ class Structure
     solve: ->
         try
             @lp = @solveLP(sized_beams=window.tool.sized_beams)
+            # objective fix
             if not @lp.obj?
                 if window.tool.sized_beams
                     @lp = @solveLP(sized_beams=false)
                 @lp.obj = 1e5
-            else
+            else if window.tool.sized_beams
                 @lp.obj = 0
                 for beam in @beamList
                     @lp.obj += beam.L*beam.size
@@ -206,6 +207,9 @@ class Structure
                 for dim in "xyz"
                     node.fgrad[dim]  = sum(beam.fgrad[dim] for beam in node.sourced)
                     node.fgrad[dim] -= sum(beam.fgrad[dim] for beam in node.targeted)
+            if not window.tool.sized_beams
+                for beam in @beamList
+                    beam.size = beam.F*(1+1e-6)
         catch error
 
     solvegrad: (nodeList) ->

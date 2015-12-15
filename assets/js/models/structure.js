@@ -450,7 +450,7 @@
     }
 
     Structure.prototype.solve = function() {
-      var beam, dim, geo, node, rho, sdual, sized_beams, tdual, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref1, _ref2, _ref3, _ref4, _ref5, _results;
+      var beam, dim, geo, node, rho, sdual, sized_beams, tdual, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _len5, _len6, _m, _n, _o, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _results;
       try {
         this.lp = this.solveLP(sized_beams = window.tool.sized_beams);
         if (!(this.lp.obj != null)) {
@@ -458,7 +458,7 @@
             this.lp = this.solveLP(sized_beams = false);
           }
           this.lp.obj = 1e5;
-        } else {
+        } else if (window.tool.sized_beams) {
           this.lp.obj = 0;
           _ref1 = this.beamList;
           for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
@@ -486,40 +486,42 @@
           }
         }
         _ref5 = this.nodeList;
-        _results = [];
         for (_m = 0, _len4 = _ref5.length; _m < _len4; _m++) {
           node = _ref5[_m];
-          _results.push((function() {
-            var _len5, _n, _ref6, _results1;
-            _ref6 = "xyz";
-            _results1 = [];
-            for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
-              dim = _ref6[_n];
-              node.fgrad[dim] = sum((function() {
-                var _len6, _o, _ref7, _results2;
-                _ref7 = node.sourced;
-                _results2 = [];
-                for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {
-                  beam = _ref7[_o];
-                  _results2.push(beam.fgrad[dim]);
-                }
-                return _results2;
-              })());
-              _results1.push(node.fgrad[dim] -= sum((function() {
-                var _len6, _o, _ref7, _results2;
-                _ref7 = node.targeted;
-                _results2 = [];
-                for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {
-                  beam = _ref7[_o];
-                  _results2.push(beam.fgrad[dim]);
-                }
-                return _results2;
-              })()));
-            }
-            return _results1;
-          })());
+          _ref6 = "xyz";
+          for (_n = 0, _len5 = _ref6.length; _n < _len5; _n++) {
+            dim = _ref6[_n];
+            node.fgrad[dim] = sum((function() {
+              var _len6, _o, _ref7, _results;
+              _ref7 = node.sourced;
+              _results = [];
+              for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {
+                beam = _ref7[_o];
+                _results.push(beam.fgrad[dim]);
+              }
+              return _results;
+            })());
+            node.fgrad[dim] -= sum((function() {
+              var _len6, _o, _ref7, _results;
+              _ref7 = node.targeted;
+              _results = [];
+              for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {
+                beam = _ref7[_o];
+                _results.push(beam.fgrad[dim]);
+              }
+              return _results;
+            })());
+          }
         }
-        return _results;
+        if (!window.tool.sized_beams) {
+          _ref7 = this.beamList;
+          _results = [];
+          for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {
+            beam = _ref7[_o];
+            _results.push(beam.size = beam.F * (1 + 1e-6));
+          }
+          return _results;
+        }
       } catch (error) {
 
       }

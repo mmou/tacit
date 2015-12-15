@@ -58,7 +58,7 @@
     return console.log(o);
   };
 
-  colormap = d3.scale.linear().domain([0, 0.166, 0.33, 0.5, 0.66, 0.83, 0.999, 1, 2]).range([d3.hsl("hsl(244, 100%, 39%)"), d3.hsl("hsl(214, 91%, 50%)"), d3.hsl("hsl(186, 100%, 43%)"), d3.hsl("hsl(160, 84%, 50%)"), d3.hsl("hsl(100, 100%, 50%)"), d3.hsl("hsl(60, 100%, 50%)"), d3.hsl("hsl(33, 96%, 50%)"), d3.hsl("hsl(0, 100%, 50%)"), d3.hsl("hsl(0, 100%, 0%)")]);
+  colormap = d3.scale.linear().domain([0, 0.166, 0.33, 0.5, 0.66, 0.83, 1 - 1e-6, 1, 2]).range([d3.hsl("hsl(244, 100%, 39%)"), d3.hsl("hsl(214, 91%, 50%)"), d3.hsl("hsl(186, 100%, 43%)"), d3.hsl("hsl(160, 84%, 50%)"), d3.hsl("hsl(100, 100%, 50%)"), d3.hsl("hsl(60, 100%, 50%)"), d3.hsl("hsl(33, 96%, 50%)"), d3.hsl("hsl(0, 100%, 50%)"), d3.hsl("hsl(0, 100%, 0%)")]);
 
   if ((_ref = window.tacit) == null) {
     window.tacit = {};
