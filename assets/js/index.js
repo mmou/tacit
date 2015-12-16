@@ -113,9 +113,17 @@ function initialize(structure) {
 	});
 	$("#export-btn").click(function() {window.location.href = "airplane.html"})
 	$("#zoom-btn").click(function() {easel.pad.sketch.defaultZoom()})
-	if (window.tool.autocolor) {
-		$("#fea-btn").hide()
+
+	window.updateTool = function () {
+		if (window.tool.autocolor) {
+			$("#fea-btn").hide()
+		} else {
+			$("#fea-btn").show()
+		}
+		easel.pad.sketch.slowDraw()
 	}
+
+    updateTool()
 	$("#fea-btn").click(function() {easel.pad.sketch.fea()})
 
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");

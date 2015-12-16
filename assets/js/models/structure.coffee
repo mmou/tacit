@@ -179,6 +179,7 @@ class Structure
                     localnode = @nodeIDLookup[@nodeLookup[node.z][node.y][node.x]]
                     localnode.fixed = {x: node.fixed.x, y: node.fixed.y, z: node.fixed.z}
                     localnode.force = {x: node.force.x, y: node.force.y, z: node.force.z}
+                    localnode.immovable = node.immovable
             catch error
 
     solve: ->

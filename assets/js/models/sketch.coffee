@@ -17,6 +17,7 @@ colormap = d3.scale.linear()
                     d3.hsl("hsl(0, 100%, 50%)"), d3.hsl("hsl(0, 100%, 0%)"),])
 
 window.tacit ?= {}
+window.tacit.colormap = colormap
 
 class Sketch
     constructor: (@pad, htmlLoc="body", structure, @height, @width, scale, translate) ->

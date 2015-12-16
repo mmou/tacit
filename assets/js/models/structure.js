@@ -442,6 +442,7 @@
               y: node.force.y,
               z: node.force.z
             };
+            localnode.immovable = node.immovable;
           }
         } catch (error) {
 

@@ -64,6 +64,8 @@
     window.tacit = {};
   }
 
+  window.tacit.colormap = colormap;
+
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width, scale, translate) {
