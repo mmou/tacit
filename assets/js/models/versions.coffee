@@ -38,7 +38,10 @@ class Versions
     save: ->
         if @project.actionQueue.length > 1
             @newVersion()
-        @project.actionQueue = [@project.actionQueue[@project.actionQueue.length-1]]
+        currently_at = @project.actionQueue[undoredo.pointer]
+        structure = new tacit.Structure(currently_at)
+        structure.solve()
+        @project.actionQueue = [structure]
         undoredo.pointer = 0
 
 window.tacit.Versions = Versions

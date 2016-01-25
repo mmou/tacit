@@ -18,13 +18,13 @@ class UndoRedo
 
 
     undo: ->
-        if @pointer-1>=0
+        if @pointer - 1 >= 0
             @pointer -= 1
             @project.easel.pad.load(@project.actionQueue[@pointer])
             @project.easel.pad.sketch.updateDrawing()
 
     redo: ->
-        if @pointer+1<@project.actionQueue.length
+        if @pointer + 1 < @project.actionQueue.length
             @pointer += 1
             @project.easel.pad.load(@project.actionQueue[@pointer])
             @project.easel.pad.sketch.updateDrawing()
