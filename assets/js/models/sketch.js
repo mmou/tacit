@@ -108,7 +108,8 @@
           }
         });
       };
-      this.selectedNodes = this.selectedLinks = [];
+      this.selectedNodes = [];
+      this.selectedLinks = [];
       this.blank = this.svg.append("svg:g").attr("transform", "translate(0," + height + ") scale(1,-1)").append("svg:g").call(this.zoomer).on("dblclick.zoom", null).append("svg:g").on("mousedown", mousedn);
       this.background = this.blank.append("svg:g").on("mousedown", function(d) {
         return easel.mouseDown(easel, "background", d3.mouse(this), d);
@@ -289,9 +290,11 @@
     };
 
     Sketch.prototype.fea = function() {
-      var _this = this;
+      var cost,
+        _this = this;
       if (this.pad.easel.weightDisplay != null) {
-        this.pad.easel.weightDisplay.innerText = 2000 - Math.round(this.structure.lp.obj / 50);
+        cost = Math.round(this.structure.lp.obj / 100);
+        this.pad.easel.weightDisplay.innerText = "\$" + (cost !== 1000 ? cost : "\$\$\$");
       }
       return this.links.attr("stroke", function(d) {
         if (d.F) {

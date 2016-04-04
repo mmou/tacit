@@ -29,10 +29,10 @@ eraseTool =
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
         @dragging = false
-        for node in easel.pad.sketch.selectedNodes
-            node.delete()
+        node.delete() for node in easel.pad.sketch.selectedNodes
         link.delete() for link in easel.pad.sketch.selectedLinks
-        easel.pad.sketch.selectedLinks = easel.pad.sketch.selectedNodes = []
+        easel.pad.sketch.selectedLinks = []
+        easel.pad.sketch.selectedNodes = []
         easel.pad.sketch.updateDrawing()
 
     mouseMove: (easel, eventType, mouseLoc, object) ->

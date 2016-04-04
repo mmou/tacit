@@ -42,24 +42,17 @@
 
     gd = 1.75
     structure = new tacit.Structure
-    new structure.Beam({x:20, y:gd}, {x:79, y:26})
-    new structure.Beam({x:79, y:26}, {x:79, y:gd})
-    new structure.Beam({x:79, y:gd}, {x:40, y:40})
-    new structure.Beam({x:40, y:40}, {x:20, y:gd})
-    new structure.Beam({x:40, y:40}, {x:79, y:26})
-    new structure.Beam({x:81, y:70}, {x:58, y:63})
-    new structure.Beam({x:81, y:70}, {x:79, y:26})
-    new structure.Beam({x:58, y:63}, {x:40, y:40})
-    new structure.Beam({x:58, y:63}, {x:79, y:26})
-    new structure.Beam({x:47, y:72}, {x:58, y:63})
-    new structure.Beam({x:47, y:72}, {x:40, y:40})
+    new structure.Beam({x:20, y:gd}, {x:66, y:66})
+    new structure.Beam({x:66, y:66}, {x:79, y:gd})
+    new structure.Beam({x:20, y:gd}, {x:47, y:72})
     new structure.Beam({x:47, y:72}, {x:47, y:97})
-    new structure.Beam({x:47, y:97}, {x:81, y:70})
+    new structure.Beam({x:47, y:72}, {x:66, y:66})
+    new structure.Beam({x:47, y:97}, {x:66, y:66})
     structure.nodeList[i].fixed.y = true for i in [0,2]
     structure.nodeList[i].fixed.x = true for i in [0,2]
-    structure.nodeList[7].force.x = 50
-    structure.nodeList[6].force.x = 50
-    structure.nodeList[i].immovable = true for i in [0,2,6,7]
+    structure.nodeList[3].force.x = 50
+    structure.nodeList[4].force.x = 50
+    structure.nodeList[i].immovable = true for i in [0,2,3,4]
     # structure.nodeList[4].force[dim] = -30 for dim in "xy"
     # structure.nodeList[5].force[dim] = -15 for dim in "xy"
 
@@ -105,7 +98,7 @@
     font-weight: 300;
     font-size: 2em;
     top: 0.35em;
-"><span id="designweight">0</span> points</span>
+"><span id="designweight">0</span></span>
     <ul class="nav navbar-nav navbar-left">
       <li>
         <div id="HistoryView">
@@ -169,22 +162,20 @@
             <img height="40px" src="assets/resources/button-images/load.png"></button>
 
         <div id="Options" style="margin-top: 15px;">
-
             <h2>
-            <input type="radio" name="tool"
-             onclick="window.tool = {sized_beams: false, autocolor: true, showgrad: true}; window.updateTool()" checked> optimal <br>
-            <input type="radio" name="tool"
-             onclick="window.tool =  {sized_beams: true, autocolor: true, showgrad: false}; window.updateTool()"> auto <br>
-            <input type="radio" name="tool"
-             onclick="window.tool = {sized_beams: true, autocolor: false, showgrad: false}; window.updateTool()"> manual <br>
-        </h2>
-        
-            <div id="colorbar"><h2>stress</h2>
+                <input type="radio" name="tool"
+                 onclick="window.tool = {sized_beams: false, autocolor: true, showgrad: true}; window.updateTool()" checked> optimal <br>
+                <input type="radio" name="tool"
+                 onclick="window.tool =  {sized_beams: true, autocolor: true, showgrad: false}; window.updateTool()"> auto <br>
+                <input type="radio" name="tool"
+                 onclick="window.tool = {sized_beams: true, autocolor: false, showgrad: false}; window.updateTool()"> manual <br>
+            </h2>
+          <div id="colorbar"><h2>stress</h2>
           <span style="float: left; font-size: 0.8em; text-align: right; padding-right: 9px;">
               <div>2 &#x3c3; <sub>max</sub></div>
               <div style="padding-top: 18px;"> &#x3c3; <sub>max</sub></div>
               <div style="padding-top: 26px;">0</div>
-      </span>
+          </span>
         </div>
           <h2>
           <input type="checkbox" name="grid" value="hasGrid" checked="true"> grid <br>

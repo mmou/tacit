@@ -55,7 +55,7 @@ class Easel
         if not @currentTool.dragging
             change = false
             if eventType is "node"
-                if not 1 + easel.pad.sketch.selectedNodes.indexOf(object)  and @currentTool.name isnt "erase"
+                if not 1 + easel.pad.sketch.selectedNodes.indexOf(object) and @currentTool.name isnt "erase"
                     change = true
                     easel.pad.sketch.selectedNodes.push(object)
             else if easel.pad.sketch.selectedNodes.length > 0 and @currentTool.name isnt "erase"
@@ -79,7 +79,8 @@ class Easel
                 for node in @pad.sketch.selectedNodes
                     node.delete()
                 link.delete() for link in @pad.sketch.selectedLinks
-                @pad.sketch.selectedLinks = @pad.sketch.selectedNodes = []
+                @pad.sketch.selectedLinks = []
+                @pad.sketch.selectedNodes = []
                 @pad.sketch.updateDrawing()
             when 68 # d
                 easel.currentTool = tacit.tools.draw

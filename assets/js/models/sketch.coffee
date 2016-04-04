@@ -51,7 +51,8 @@ class Sketch
         @zoomer = d3.behavior.zoom().on("zoom", => @rescale() if easel.allowPan())
         mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale() if easel.allowPan())
 
-        @selectedNodes = @selectedLinks = []
+        @selectedNodes = []
+        @selectedLinks = []
         @blank = @svg.append("svg:g")
                      .attr("transform", "translate(0,#{height}) scale(1,-1)")
                      .append("svg:g")
@@ -224,7 +225,8 @@ class Sketch
 
     fea: ->
         if @pad.easel.weightDisplay?
-            @pad.easel.weightDisplay.innerText  = 2000 - Math.round(@structure.lp.obj/50)
+            cost = Math.round(@structure.lp.obj/100)
+            @pad.easel.weightDisplay.innerText  = "\$" + if cost isnt 1000 then cost else "\$\$\$"
 
         @links.attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
               .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)

@@ -48,7 +48,8 @@
         link = _ref3[_j];
         link["delete"]();
       }
-      easel.pad.sketch.selectedLinks = easel.pad.sketch.selectedNodes = [];
+      easel.pad.sketch.selectedLinks = [];
+      easel.pad.sketch.selectedNodes = [];
       return easel.pad.sketch.updateDrawing();
     },
     mouseMove: function(easel, eventType, mouseLoc, object) {

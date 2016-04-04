@@ -132,7 +132,8 @@ function download(filename, text) {
             link = _ref2[_j];
             link["delete"]();
           }
-          this.pad.sketch.selectedLinks = this.pad.sketch.selectedNodes = [];
+          this.pad.sketch.selectedLinks = [];
+          this.pad.sketch.selectedNodes = [];
           this.pad.sketch.updateDrawing();
           break;
         case 68:
