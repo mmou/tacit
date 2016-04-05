@@ -255,8 +255,10 @@
       });
       this.grads.exit().remove();
       this.nodes = this.nodes.data(this.structure.nodeList);
-      this.nodes.enter().insert("circle").attr("class", function(d) {
-        return "node" + (d.fixed.x || d.fixed.y ? " fixed" : "");
+      this.nodes.enter().insert("circle").classed("node", true).classed("fixed", function(d) {
+        return d.fixed.x || d.fixed.y;
+      }).classed("immovable", function(d) {
+        return d.immovable;
       }).attr("r", this.nodeSize / this.scale / 2).on("mousedown", function(d) {
         return easel.mouseDown(easel, "node", d3.mouse(this), d);
       }).on("mousemove", function(d) {

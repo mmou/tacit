@@ -3,6 +3,7 @@
 
 .node { fill: #3d3130; }
 .fixed { fill: #3d3130; }
+/*.immovable { fill: red; }*/
 .fixed.selected { fill: #807ec7; }
 .node.selected { fill: #807ec7; }
 

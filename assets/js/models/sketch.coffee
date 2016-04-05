@@ -194,7 +194,9 @@ class Sketch
 
         @nodes = @nodes.data(@structure.nodeList)
         @nodes.enter().insert("circle")
-            .attr("class", (d) -> "node" + if d.fixed.x or d.fixed.y then " fixed" else "")
+            .classed("node", true)
+            .classed("fixed", (d) -> d.fixed.x or d.fixed.y)
+            .classed("immovable", (d) -> d.immovable)
             .attr("r", @nodeSize/@scale/2)
             .on("mousedown", (d) ->
                 easel.mouseDown(easel, "node", d3.mouse(this), d))
