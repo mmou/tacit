@@ -296,7 +296,7 @@
         _this = this;
       if (this.pad.easel.weightDisplay != null) {
         cost = Math.round(this.structure.lp.obj / 100);
-        this.pad.easel.weightDisplay.innerText = "\$" + (cost !== 1000 ? cost : "\$\$\$");
+        this.pad.easel.weightDisplay.innerText = cost !== 1000 ? "\$" + cost : "INFEASIBLE";
       }
       return this.links.attr("stroke", function(d) {
         if (d.F) {
