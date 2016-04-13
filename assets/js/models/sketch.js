@@ -353,11 +353,11 @@
       this.forces.attr("x2", function(d) {
         return d.x;
       }).attr("x1", function(d) {
-        return d.x - d.force.x / 6;
+        return d.x - d.force.x / 4;
       }).attr("y2", function(d) {
         return d.y;
       }).attr("y1", function(d) {
-        return d.y - d.force.y / 6;
+        return d.y - d.force.y / 4;
       }).attr("stroke-width", function(d) {
         var f;
         if (!d.fixed.y && dist((function() {
@@ -385,7 +385,9 @@
         return d.y + 1000 / _this.scale * d.grad.y * w;
       }).attr("stroke-width", function(d) {
         var l;
-        if (50 / _this.scale * dist((function() {
+        if ((d.immovable != null) && d.immovable) {
+          return 0;
+        } else if (50 / _this.scale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
           _results = [];
@@ -427,11 +429,11 @@
       this.forces.attr("x2", function(d) {
         return d.x;
       }).attr("x1", function(d) {
-        return d.x - d.force.x / 6;
+        return d.x - d.force.x / 4;
       }).attr("y2", function(d) {
         return d.y;
       }).attr("y1", function(d) {
-        return d.y - d.force.y / 6;
+        return d.y - d.force.y / 4;
       });
       return this.grads.attr("x1", function(d) {
         return d.x;
@@ -485,7 +487,9 @@
       });
       return this.grads.attr("stroke-width", function(d) {
         var dim, l;
-        if (50 / _this.scale * dist((function() {
+        if ((d.immovable != null) && d.immovable) {
+          return 0;
+        } else if (50 / _this.scale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
           _results = [];
@@ -526,7 +530,9 @@
         return d.y + 1000 / _this.scale * d.grad.y * w;
       }).attr("stroke-width", function(d) {
         var dim, l;
-        if (50 / _this.scale * dist((function() {
+        if ((d.immovable != null) && d.immovable) {
+          return 0;
+        } else if (50 / _this.scale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
           _results = [];

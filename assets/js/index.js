@@ -159,7 +159,6 @@ function initialize(structure) {
 	var mins = 5
 	var d = new Date
 	initializeClock("timer", new Date(d.getTime() + mins*60000));
-	console.log(d)
 
 }
 

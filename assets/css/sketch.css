@@ -1,11 +1,12 @@
-.force { stroke: #3d3130; }
+.force { stroke: #e14a4e; }
 .grad { stroke: #807ec7; }
 
 .node { fill: #3d3130; }
-.fixed { fill: #3d3130; }
-/*.immovable { fill: red; }*/
-.fixed.selected { fill: #807ec7; }
+.immovable { fill: #e14a4e; }
+.fixed { fill: #2eabe2; }
 .node.selected { fill: #807ec7; }
+.immovable.selected { fill: #e14a4e; }
+.fixed.selected { fill: #2eabe2; }
 
 #HistorySketchesView svg .link {
     transition: all 0.3s;
