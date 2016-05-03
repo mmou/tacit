@@ -24,10 +24,11 @@ class Versions
     newVersion: ->
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         structure.solve()
-        versionObj = d3.select(@htmlLoc).append("li").attr("id", "ver"+@history.length)
+        versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
         easel = new dummyEasel(this, @history.length)
-        easel.weightDisplay = versionObj.append("span")[0][0]
-        pad = new tacit.Pad(easel, "#ver"+@history.length,
+        versionObj.append("div").attr("id", "versvg"+@history.length).classed("versvg", true)
+        easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0]
+        pad = new tacit.Pad(easel, "#versvg"+@history.length,
                             50, 50, structure)
         pad.load(structure)
         pad.sketch.nodeSize = 0

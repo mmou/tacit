@@ -334,7 +334,11 @@
       }).transition().duration(250).ease("elastic").attr("stroke-opacity", function(d) {
         return 0.9 + 0.1 * (_this.selectedLinks.indexOf(d) + 1 > 0);
       }).duration(750).ease("elastic").attr("stroke-width", function(d) {
-        return sqrt(d.size / 10);
+        if (d.size > 1e-3) {
+          return sqrt(d.size / 10);
+        } else {
+          return 1;
+        }
       });
       this.nodes.attr("cx", function(d) {
         return d.x;
@@ -454,7 +458,11 @@
         this.fea();
       }
       this.links.attr("stroke-width", function(d) {
-        return sqrt(d.size / 10);
+        if (d.size > 1e-3) {
+          return sqrt(d.size / 10);
+        } else {
+          return 1;
+        }
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
       });

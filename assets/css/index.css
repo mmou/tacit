@@ -164,14 +164,6 @@ h2 {
 	font-weight: 500;
 }
 
-#HistorySketchesView {
-	overflow-y: hidden;
-	white-space: nowrap;
-	overflow-x: scroll;
-	text-align: right;
-	height: 76px;
-}
-
 #save-container {
 	text-align: right;
 }
@@ -351,10 +343,30 @@ wm {
 	font-weight: 400;
 }
 
-#HistorySketchesView li span {
-    position: absolute;
-    bottom: -24px;
+#HistorySketchesView {
+	overflow-y: hidden;
+	white-space: nowrap;
+	overflow-x: scroll;
+	text-align: right;
+	max-width: 300px;
+}
+
+#HistorySketchesView .ver {
+	display: inline-block;
+	color: rgba(255,255,255,0.9);
+}
+
+#HistorySketchesView .ver:hover {
+	color: white;
+}
+
+#HistorySketchesView .versvg {
+	display: inline;
+}
+
+#HistorySketchesView .verwd {
+	display: block;
+	height: 27px;
+	width: 50px;
     text-align: center;
-    width: 100%;
-    color: white;
 }

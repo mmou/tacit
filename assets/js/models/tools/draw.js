@@ -36,7 +36,15 @@
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var node, pos;
       if (this.drawStart) {
-        if (eventType !== "node") {
+        if (eventType === "beam") {
+          pos = {
+            x: mouseLoc[0],
+            y: mouseLoc[1]
+          };
+          new easel.pad.sketch.structure.Beam(pos, object.source);
+          new easel.pad.sketch.structure.Beam(pos, object.target);
+          object["delete"]();
+        } else if (eventType !== "node") {
           pos = {
             x: mouseLoc[0],
             y: mouseLoc[1]

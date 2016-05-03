@@ -250,7 +250,7 @@ class Sketch
                       .attr("stroke-opacity", (d) => 0.9 + 0.1*(@selectedLinks.indexOf(d)+1 > 0))
                 .duration(750)
                 .ease("elastic")
-                    .attr("stroke-width",  (d) => sqrt(d.size/10))
+                    .attr("stroke-width",  (d) => if d.size > 1e-3 then  sqrt(d.size/10) else 1)
 
 
         @nodes.attr("cx", (d) => d.x)
@@ -307,7 +307,7 @@ class Sketch
         w = @structure.nodeList.length/@structure.lp.obj
         @fea() if window.tool.autocolor
 
-        @links.attr("stroke-width",  (d) => sqrt(d.size/10))
+        @links.attr("stroke-width",  (d) => if d.size > 1e-3 then  sqrt(d.size/10) else 1)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)

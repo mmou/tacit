@@ -21,7 +21,12 @@ drawTool =
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
         if @drawStart
-            if eventType isnt "node"
+            if eventType is "beam"
+                pos = {x: mouseLoc[0], y: mouseLoc[1]}
+                new easel.pad.sketch.structure.Beam(pos, object.source)
+                new easel.pad.sketch.structure.Beam(pos, object.target)
+                object.delete()
+            else if eventType isnt "node"
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}
                 node = new easel.pad.sketch.structure.Node(pos)
                 # node.force.y = -100
