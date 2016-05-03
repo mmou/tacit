@@ -353,7 +353,7 @@ wm {
 	white-space: nowrap;
 	overflow-x: scroll;
 	text-align: right;
-	max-width: 300px;
+	max-width: 350px;
 }
 
 #HistorySketchesView .ver {

@@ -149,16 +149,21 @@ function initialize(structure) {
 	  var timeinterval = setInterval(function(){
 	    var t = getTimeRemaining(endtime);
 		var seconds = t.seconds;
+		if (t.minutes === 1 || (t.minutes === 0 && t.seconds > 30))
+			seconds = 10 * Math.round(seconds/10-0.5);
 		if (seconds < 10)
 			seconds = "0" + seconds
-	    clock.innerHTML =  ' | ' + t.minutes + ':' + seconds;
+		if (t.minutes > 1)
+		    clock.innerHTML =  ' | ' + t.minutes + ' minutes';
+		else
+			clock.innerHTML = " | " + t.minutes + ':' + seconds;
 	    if(t.total<=0){
 	      clearInterval(timeinterval);
 	    }
 	  }, 1000);
 	}
 
-	var mins = 5
+	var mins = 1.1
 	var d = new Date
 	initializeClock("timer", new Date(d.getTime() + mins*60000));
 
