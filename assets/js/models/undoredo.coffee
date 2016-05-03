@@ -8,19 +8,20 @@ class UndoRedo
 
     log: ->
         @project.onChange()
-        @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
-
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         structure.solve()
+
         if !@project.actionQueue[@pointer]? || @project.actionQueue[@pointer].LPstring() != structure.LPstring()
+            @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
             @project.actionQueue.push(structure)
-        @pointer = @project.actionQueue.length-1
+            @pointer = @project.actionQueue.length-1
 
 
     undo: ->
         if @pointer - 1 >= 0
             @pointer -= 1
-            @project.easel.pad.load(@project.actionQueue[@pointer])
+            structure = new tacit.Structure(@project.actionQueue[@pointer])
+            @project.easel.pad.load(structure)
             @project.easel.pad.sketch.updateDrawing()
 
     redo: ->

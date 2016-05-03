@@ -21,19 +21,21 @@
     UndoRedo.prototype.log = function() {
       var structure;
       this.project.onChange();
-      this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
       if (!(this.project.actionQueue[this.pointer] != null) || this.project.actionQueue[this.pointer].LPstring() !== structure.LPstring()) {
+        this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
+        return this.pointer = this.project.actionQueue.length - 1;
       }
-      return this.pointer = this.project.actionQueue.length - 1;
     };
 
     UndoRedo.prototype.undo = function() {
+      var structure;
       if (this.pointer - 1 >= 0) {
         this.pointer -= 1;
-        this.project.easel.pad.load(this.project.actionQueue[this.pointer]);
+        structure = new tacit.Structure(this.project.actionQueue[this.pointer]);
+        this.project.easel.pad.load(structure);
         return this.project.easel.pad.sketch.updateDrawing();
       }
     };

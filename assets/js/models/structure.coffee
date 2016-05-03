@@ -152,11 +152,15 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
         return lp
 
     solveLP = (sized_beams) ->
+        start = performance.now()
         lp = glp_create_prob()
         glp_read_lp_from_string(lp, null, LPstring(sized_beams))
         glp_scale_prob(lp, GLP_SF_AUTO)
         smcp = new SMCP({presolve: GLP_ON})
         glp_simplex(lp, smcp)
+        if window.delaytime?
+            while performance.now() - start < window.delaytime
+                ;
         return new LPresult(lp)
 
     return [Node, Beam, solveLP, LPstring]

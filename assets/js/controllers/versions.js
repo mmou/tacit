@@ -36,13 +36,11 @@ $(document).ready(function() {
 
 	$("#undo-btn").click(function() {
 		undoredo.undo();
-		project.onChange()
 		updateAllBtns();
 	})
 
 	$("#redo-btn").click(function() {
-		undoredo.redo()
-		project.onChange()
+		undoredo.redo();
 		updateAllBtns();
 	})
 

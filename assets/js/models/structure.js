@@ -400,7 +400,8 @@
       return lp;
     };
     solveLP = function(sized_beams) {
-      var lp, smcp;
+      var lp, smcp, start;
+      start = performance.now();
       lp = glp_create_prob();
       glp_read_lp_from_string(lp, null, LPstring(sized_beams));
       glp_scale_prob(lp, GLP_SF_AUTO);
@@ -408,6 +409,9 @@
         presolve: GLP_ON
       });
       glp_simplex(lp, smcp);
+      if (window.delaytime != null) {
+        while (performance.now() - start < window.delaytime) {}
+      }
       return new LPresult(lp);
     };
     return [Node, Beam, solveLP, LPstring];
