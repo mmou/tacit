@@ -228,7 +228,12 @@ class Sketch
     fea: ->
         if @pad.easel.weightDisplay?
             cost = Math.round(@structure.lp.obj/100)
-            @pad.easel.weightDisplay.innerText  = if cost isnt 1000 then "\$"+cost else "INFEASIBLE"
+            if cost isnt 1000
+                @pad.easel.weightDisplay.innerText = "\$"+cost
+                if window.helper? then window.helper.attr("opacity", 0)
+            else
+                @pad.easel.weightDisplay.innerHTML = "&oslash;"
+                if window.helper? then window.helper.attr("opacity", 1)
 
         @links.attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
               .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)

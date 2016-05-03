@@ -8,6 +8,8 @@
 .immovable.selected { fill: #e14a4e; }
 .fixed.selected { fill: #2eabe2; }
 
+#helper { fill: #e14a4e; }
+
 #HistorySketchesView svg .link {
     transition: all 0.3s;
     opacity: 1 !important;

@@ -48,7 +48,7 @@ form.navbar-form {
 	font-size:36px;
 }
 
-#fea-btn, #export-btn, #save-btn, #undo-btn, #redo-btn, #zoom-btn {
+#export-btn, #save-btn, #undo-btn, #redo-btn {
   background-color: white;
   border: 1px solid #2eabe2;
   color: #2eabe2;
@@ -187,6 +187,11 @@ h2 {
 	width: 130px;
 	padding-top: 1em;
 	padding-left: 2em;
+}
+
+#ToolbarView button {
+	font-weight: 900;
+	text-shadow: -1px 1px white;
 }
 
 #tutorial{
@@ -369,4 +374,8 @@ wm {
 	height: 27px;
 	width: 50px;
     text-align: center;
+}
+
+#textbtns button {
+	height: 50%;
 }

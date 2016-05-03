@@ -296,7 +296,17 @@
         _this = this;
       if (this.pad.easel.weightDisplay != null) {
         cost = Math.round(this.structure.lp.obj / 100);
-        this.pad.easel.weightDisplay.innerText = cost !== 1000 ? "\$" + cost : "INFEASIBLE";
+        if (cost !== 1000) {
+          this.pad.easel.weightDisplay.innerText = "\$" + cost;
+          if (window.helper != null) {
+            window.helper.attr("opacity", 0);
+          }
+        } else {
+          this.pad.easel.weightDisplay.innerHTML = "&oslash;";
+          if (window.helper != null) {
+            window.helper.attr("opacity", 1);
+          }
+        }
       }
       return this.links.attr("stroke", function(d) {
         if (d.F) {
