@@ -12,6 +12,8 @@ class UndoRedo
         structure.solve()
 
         if !@project.actionQueue[@pointer]? || @project.actionQueue[@pointer].LPstring() != structure.LPstring()
+            window.log ?= ""
+            window.log += "\n# new structure\n" + structure.strucstr
             @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
             @project.actionQueue.push(structure)
             @pointer = @project.actionQueue.length-1
@@ -19,6 +21,7 @@ class UndoRedo
 
     undo: ->
         if @pointer - 1 >= 0
+            window.log += "\n# undo"
             @pointer -= 1
             structure = new tacit.Structure(@project.actionQueue[@pointer])
             @project.easel.pad.load(structure)
@@ -26,6 +29,7 @@ class UndoRedo
 
     redo: ->
         if @pointer + 1 < @project.actionQueue.length
+            window.log += "\n# redo"
             @pointer += 1
             @project.easel.pad.load(@project.actionQueue[@pointer])
             @project.easel.pad.sketch.updateDrawing()

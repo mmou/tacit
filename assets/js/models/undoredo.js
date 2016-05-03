@@ -19,11 +19,15 @@
     }
 
     UndoRedo.prototype.log = function() {
-      var structure;
+      var structure, _ref1;
       this.project.onChange();
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
       if (!(this.project.actionQueue[this.pointer] != null) || this.project.actionQueue[this.pointer].LPstring() !== structure.LPstring()) {
+        if ((_ref1 = window.log) == null) {
+          window.log = "";
+        }
+        window.log += "\n# new structure\n" + structure.strucstr;
         this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
         return this.pointer = this.project.actionQueue.length - 1;
@@ -33,6 +37,7 @@
     UndoRedo.prototype.undo = function() {
       var structure;
       if (this.pointer - 1 >= 0) {
+        window.log += "\n# undo";
         this.pointer -= 1;
         structure = new tacit.Structure(this.project.actionQueue[this.pointer]);
         this.project.easel.pad.load(structure);
@@ -42,6 +47,7 @@
 
     UndoRedo.prototype.redo = function() {
       if (this.pointer + 1 < this.project.actionQueue.length) {
+        window.log += "\n# redo";
         this.pointer += 1;
         this.project.easel.pad.load(this.project.actionQueue[this.pointer]);
         return this.project.easel.pad.sketch.updateDrawing();

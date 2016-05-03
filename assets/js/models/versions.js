@@ -23,6 +23,7 @@
       this.versions.project.easel.pad.load(structure);
       this.versions.project.easel.pad.sketch.updateDrawing();
       this.versions.project.onChange();
+      window.log += "\n# loaded structure\n" + structure.strucstr;
       return false;
     };
 
@@ -76,7 +77,8 @@
       structure = new tacit.Structure(currently_at);
       structure.solve();
       this.project.actionQueue = [structure];
-      return undoredo.pointer = 0;
+      undoredo.pointer = 0;
+      return window.log += "\n# saved";
     };
 
     return Versions;

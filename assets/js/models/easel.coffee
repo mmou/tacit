@@ -32,6 +32,10 @@ class Easel
         filename += ".svg"
         download(filename, d3.select(easel.pad.htmlLoc).html())
 
+    saveLog: ->
+        filename = new Date().toLocaleString() + ".txt"
+        download(filename, window.log)
+
     mouseDown: (easel, eventType, mouseLoc, object) ->
         if $("footer").height() > 32
             $("footer").click()

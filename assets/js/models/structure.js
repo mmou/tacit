@@ -420,7 +420,7 @@
   Structure = (function() {
 
     function Structure(structure) {
-      var beam, localnode, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
+      var b, beam, localnode, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
       _ref1 = [{}, {}], this.nodeLookup = _ref1[0], this.nodeIDLookup = _ref1[1];
       _ref2 = [[], []], this.nodeList = _ref2[0], this.beamList = _ref2[1];
       _ref3 = [0, 0], this.nodes = _ref3[0], this.beams = _ref3[1];
@@ -452,6 +452,16 @@
 
         }
       }
+      this.strucstr = ((function() {
+        var _k, _len2, _ref7, _results;
+        _ref7 = this.beamList;
+        _results = [];
+        for (_k = 0, _len2 = _ref7.length; _k < _len2; _k++) {
+          b = _ref7[_k];
+          _results.push("" + b.source.x + ", " + b.source.y + ", " + b.target.x + ", " + b.target.y);
+        }
+        return _results;
+      }).call(this)).join("\n");
     }
 
     Structure.prototype.solve = function() {

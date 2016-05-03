@@ -54,6 +54,12 @@ function download(filename, text) {
       return download(filename, d3.select(easel.pad.htmlLoc).html());
     };
 
+    Easel.prototype.saveLog = function() {
+      var filename;
+      filename = new Date().toLocaleString() + ".txt";
+      return download(filename, window.log);
+    };
+
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
       if ($("footer").height() > 32) {
         $("footer").click();

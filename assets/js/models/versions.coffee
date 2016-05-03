@@ -10,6 +10,7 @@ class dummyEasel
         @versions.project.easel.pad.load(structure)
         @versions.project.easel.pad.sketch.updateDrawing()
         @versions.project.onChange()
+        window.log += "\n# loaded structure\n" + structure.strucstr
         return false
 
     allowPan: -> false
@@ -44,5 +45,6 @@ class Versions
         structure.solve()
         @project.actionQueue = [structure]
         undoredo.pointer = 0
+        window.log += "\n# saved"
 
 window.tacit.Versions = Versions
