@@ -56,7 +56,7 @@ function download(filename, text) {
 
     Easel.prototype.saveLog = function() {
       var filename;
-      filename = new Date().toLocaleString() + ".txt";
+      filename = this.project.name + new Date().toLocaleString() + ".txt";
       return download(filename, window.log);
     };
 

@@ -57,7 +57,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
                     b: -@force[d]
             return constraints
         delete: ->
-            if not (@fixed.x or @fixed.y)
+            if not @immovable
                 beam.delete() for beam in @sourced.concat(@targeted)
                 pos = nodeList.indexOf(this)
                 if pos + 1
@@ -98,10 +98,11 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             @l[d] = @target[d] - @source[d] for d in "xyz"
             @L = dist(l for d, l of @l)
         delete: ->
-            for list in [@source.sourced, @target.targeted, beamList]
-                pos = list.indexOf(this)
-                if pos + 1 then list.splice(pos, 1)
-            delete this
+            if not @immovable
+                for list in [@source.sourced, @target.targeted, beamList]
+                    pos = list.indexOf(this)
+                    if pos + 1 then list.splice(pos, 1)
+                delete this
 
 
     class LPresult

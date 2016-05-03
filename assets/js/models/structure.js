@@ -194,7 +194,7 @@
 
       Node.prototype["delete"] = function() {
         var beam, pos, _i, _len, _ref1;
-        if (!(this.fixed.x || this.fixed.y)) {
+        if (!this.immovable) {
           _ref1 = this.sourced.concat(this.targeted);
           for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
             beam = _ref1[_i];
@@ -291,15 +291,17 @@
 
       Beam.prototype["delete"] = function() {
         var list, pos, _i, _len, _ref1;
-        _ref1 = [this.source.sourced, this.target.targeted, beamList];
-        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          list = _ref1[_i];
-          pos = list.indexOf(this);
-          if (pos + 1) {
-            list.splice(pos, 1);
+        if (!this.immovable) {
+          _ref1 = [this.source.sourced, this.target.targeted, beamList];
+          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+            list = _ref1[_i];
+            pos = list.indexOf(this);
+            if (pos + 1) {
+              list.splice(pos, 1);
+            }
           }
+          return delete this;
         }
-        return delete this;
       };
 
       return Beam;

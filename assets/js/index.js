@@ -111,7 +111,9 @@ function initialize(structure) {
     		return false;
   		}
 	});
-	$("#export-btn").click(function() {window.location.href = "airplane.html"})
+	$("#export-btn").click(function() {
+		easel.saveLog()
+		window.location.href = "airplane.html"})
 	$("#zoom-btn").click(function() {easel.pad.sketch.defaultZoom()})
 
 	window.updateTool = function () {

@@ -33,7 +33,7 @@ class Easel
         download(filename, d3.select(easel.pad.htmlLoc).html())
 
     saveLog: ->
-        filename = new Date().toLocaleString() + ".txt"
+        filename = @project.name + new Date().toLocaleString() + ".txt"
         download(filename, window.log)
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
