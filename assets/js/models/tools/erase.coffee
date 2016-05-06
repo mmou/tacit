@@ -2,10 +2,11 @@ window.tacit ?= {}
 window.tacit.tools ?= {}
 
 eraseTool =
-
+    allowPan: true
     name: "erase"
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
+        @allowPan = false
         @dragging = true
 
         if eventType isnt "background"
@@ -28,6 +29,7 @@ eraseTool =
             easel.pad.sketch.slowDraw()
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
+        @allowPan = true
         @dragging = false
         node.delete() for node in easel.pad.sketch.selectedNodes
         link.delete() for link in easel.pad.sketch.selectedLinks

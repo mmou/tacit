@@ -11,9 +11,11 @@
   }
 
   eraseTool = {
+    allowPan: true,
     name: "erase",
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var idx, selection;
+      this.allowPan = false;
       this.dragging = true;
       if (eventType !== "background") {
         if (eventType === "node") {
@@ -37,6 +39,7 @@
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var link, node, _i, _j, _len, _len1, _ref2, _ref3;
+      this.allowPan = true;
       this.dragging = false;
       _ref2 = easel.pad.sketch.selectedNodes;
       for (_i = 0, _len = _ref2.length; _i < _len; _i++) {

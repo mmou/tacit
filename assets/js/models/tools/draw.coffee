@@ -3,9 +3,11 @@ window.tacit.tools ?= {}
 
 drawTool =
     drawStart: null
+    allowPan: true
     name: "draw"
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
+        @allowPan = false
         if not @drawStart
             if eventType is "beam"
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}
@@ -26,6 +28,7 @@ drawTool =
                             .attr("y1", pos.y).attr("y2", pos.y)
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
+        @allowPan = true
         if @drawStart
             if eventType is "beam"
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}

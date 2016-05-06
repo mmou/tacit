@@ -12,9 +12,11 @@
 
   drawTool = {
     drawStart: null,
+    allowPan: true,
     name: "draw",
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var node, pos;
+      this.allowPan = false;
       if (!this.drawStart) {
         if (eventType === "beam") {
           pos = {
@@ -44,6 +46,7 @@
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var node, pos;
+      this.allowPan = true;
       if (this.drawStart) {
         if (eventType === "beam") {
           pos = {
