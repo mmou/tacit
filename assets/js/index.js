@@ -150,11 +150,9 @@ function initialize(structure) {
 	    var t = getTimeRemaining(endtime);
 		var seconds = t.seconds;
 		if (seconds >= 0) {
-			if (t.minutes === 1 || (t.minutes === 0 && t.seconds > 30))
-				seconds = 10 * Math.round(seconds/10-0.5);
 			if (seconds < 10)
 				seconds = "0" + seconds
-			if (t.minutes > 1)
+			if (t.minutes >= 1)
 			    clock.innerHTML =  ' | ' + t.minutes + ' minutes';
 			else
 				clock.innerHTML = " | " + t.minutes + ':' + seconds;
@@ -165,7 +163,7 @@ function initialize(structure) {
 	  }, 1000);
 	}
 
-	var mins = 1.1
+	var mins = 5
 	var d = new Date
 	initializeClock("timer", new Date(d.getTime() + mins*60000));
 

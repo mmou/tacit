@@ -42,18 +42,18 @@
 
     gd = 1.65
     structure = new tacit.Structure
+    new structure.Node({x:20, y:100})
+    new structure.Node({x:40, y:100})
+    for node in structure.nodeList
+        node.fixed.x = node.fixed.y = true
     new structure.Beam({x:60, y:20}, {x:100, y:20})
     new structure.Beam({x:60, y:40}, {x:100, y:40})
     new structure.Beam({x:60, y:20}, {x:60, y:40})
     new structure.Beam({x:100, y:20}, {x:100, y:40})
     new structure.Beam({x:60, y:20}, {x:100, y:40})
     new structure.Beam({x:60, y:40}, {x:100, y:20})
-    for node in structure.nodeList
-        node.fixed.x = node.fixed.y = true
-    n1 = new structure.Node({x:20, y:100})
-    n2 = new structure.Node({x:40, y:100})
-    n1.force.y = -50
-    n2.force.y = -50
+    structure.nodeList[i].force.y = -50 for i in [2, 3, 4, 5]
+    structure.nodeList[i].force.x = -1 for i in [2, 3, 4, 5]
     node.immovable = true for node in structure.nodeList
     beam.immovable = true for beam in structure.beamList
     # new structure.Beam({x:20, y:gd}, {x:66, y:66})

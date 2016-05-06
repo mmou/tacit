@@ -9,6 +9,7 @@ class dummyEasel
         structure = new tacit.Structure(@versions.history[@i].sketch.structure)
         @versions.project.easel.pad.load(structure)
         @versions.project.easel.pad.sketch.updateDrawing()
+        @versions.project.easel.pad.sketch.fea()
         @versions.project.onChange()
         window.log += "\n# loaded structure\n" + structure.strucstr
         return false
@@ -24,6 +25,7 @@ class Versions
 
     newVersion: ->
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
+        @project.easel.pad.sketch.fea()
         structure.solve()
         versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
         easel = new dummyEasel(this, @history.length)
@@ -36,6 +38,7 @@ class Versions
         pad.sketch.showforce = false
         pad.sketch.updateDrawing()
         @history.push(pad)
+        pad.sketch.fea()
 
     save: ->
         if @project.actionQueue.length > 1

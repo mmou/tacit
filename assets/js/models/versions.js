@@ -22,6 +22,7 @@
       structure = new tacit.Structure(this.versions.history[this.i].sketch.structure);
       this.versions.project.easel.pad.load(structure);
       this.versions.project.easel.pad.sketch.updateDrawing();
+      this.versions.project.easel.pad.sketch.fea();
       this.versions.project.onChange();
       window.log += "\n# loaded structure\n" + structure.strucstr;
       return false;
@@ -55,6 +56,7 @@
     Versions.prototype.newVersion = function() {
       var easel, pad, structure, versionObj;
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
+      this.project.easel.pad.sketch.fea();
       structure.solve();
       versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + this.history.length).classed("ver", true);
       easel = new dummyEasel(this, this.history.length);
@@ -65,7 +67,8 @@
       pad.sketch.nodeSize = 0;
       pad.sketch.showforce = false;
       pad.sketch.updateDrawing();
-      return this.history.push(pad);
+      this.history.push(pad);
+      return pad.sketch.fea();
     };
 
     Versions.prototype.save = function() {

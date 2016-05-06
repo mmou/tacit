@@ -233,10 +233,10 @@ class Sketch
                 if window.helper? then window.helper.attr("opacity", 0)
             else
                 @pad.easel.weightDisplay.innerHTML = "&oslash;"
-                if window.helper? then window.helper.attr("opacity", 1)
+                if window.helper? then window.helper.attr("opacity", 0.3)
 
-        @links.attr("stroke", (d) => if d.F then colormap(d.F/d.size) else "#9c7b70")
-              .attr("stroke-dasharray", (d) => if d.F then null else 10/@scale+","+10/@scale)
+        @links.attr("stroke", (d) => if d.size > 1e-3 then colormap(d.F/d.size) else "#9c7b70")
+              .attr("stroke-dasharray", (d) => if d.size > 1e-3 then null else 10/@scale+","+10/@scale)
 
     slowDraw: ->
         @structure.solve()
@@ -264,7 +264,7 @@ class Sketch
               .transition()
                 .duration(750)
                 .ease("elastic")
-                    .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
+                    .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
         @fixed.attr("d", (d) =>
             isc = @nodeSize*3.1/9/@scale
@@ -316,7 +316,7 @@ class Sketch
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
-            .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
+            .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
         @fixed.attr("d", (d) =>
             isc = @nodeSize*3.1/9/@scale
@@ -342,7 +342,7 @@ class Sketch
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
             .transition()
               .duration(250)
-                  .attr("r", (d) => @nodeSize/@scale * if @selectedNodes.indexOf(d)+1 then 2 else 1)
+                  .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
         @grads.attr("x1", (d) => d.x)
               .attr("y1", (d) => d.y)
