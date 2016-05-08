@@ -142,6 +142,11 @@ function download(filename, text) {
           this.pad.sketch.selectedNodes = [];
           this.pad.sketch.updateDrawing();
           break;
+        case 27:
+          if (easel.currentTool === tacit.tools.draw) {
+            easel.currentTool.stopDrawing(easel);
+          }
+          break;
         case 68:
           easel.currentTool = tacit.tools.draw;
           $('.active').removeClass("active");

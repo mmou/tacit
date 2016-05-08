@@ -84,6 +84,11 @@
         easel.pad.sketch.dragline.attr("x2", mouseLoc[0]).attr("y2", mouseLoc[1]);
         return easel.pad.sketch.quickDraw();
       }
+    },
+    stopDrawing: function(easel) {
+      easel.pad.sketch.dragline.attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", 0);
+      easel.pad.sketch.updateDrawing();
+      return this.drawStart = null;
     }
   };
 

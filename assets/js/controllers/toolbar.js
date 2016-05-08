@@ -2,6 +2,9 @@ $(document).ready(function() {
 
 $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 	// make tool current tool
+	if (easel.currentTool === tacit.tools.draw) {
+		easel.currentTool.stopDrawing(easel)
+	}
 	var toolName = e.target.id || e.target.parentElement.id;
 	if (toolName === "select-btn") {
 		easel.currentTool = tacit.tools.select

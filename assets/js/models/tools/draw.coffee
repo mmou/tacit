@@ -58,4 +58,12 @@ drawTool =
                             .attr("y2", mouseLoc[1])
             easel.pad.sketch.quickDraw()
 
+    stopDrawing: (easel) ->
+        easel.pad.sketch.dragline
+                        .attr("x1", 0).attr("x2", 0)
+                        .attr("y1", 0).attr("y2", 0)
+        easel.pad.sketch.updateDrawing()
+        @drawStart = null
+
+
 window.tacit.tools.draw = drawTool

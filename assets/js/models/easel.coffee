@@ -86,6 +86,9 @@ class Easel
                 @pad.sketch.selectedLinks = []
                 @pad.sketch.selectedNodes = []
                 @pad.sketch.updateDrawing()
+            when 27 # esc
+                if easel.currentTool is tacit.tools.draw
+                    easel.currentTool.stopDrawing(easel)
             when 68 # d
                 easel.currentTool = tacit.tools.draw
                 `$('.active').removeClass("active");
