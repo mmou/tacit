@@ -364,9 +364,7 @@
           _ref2 = c.A;
           for (j = _j = 0, _len1 = _ref2.length; _j < _len1; j = ++_j) {
             a = _ref2[j];
-            if (a !== 0) {
-              con += " " + (strsign(a)) + " " + (abs(a)) + " f" + c.i[j] + "                                ";
-            }
+            con += " " + (strsign(a)) + " " + (abs(a)) + " f" + c.i[j] + "                                ";
           }
           if (con) {
             if (!node.fixed[dim]) {

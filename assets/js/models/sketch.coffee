@@ -235,8 +235,8 @@ class Sketch
                 @pad.easel.weightDisplay.innerHTML = "&oslash;"
                 if window.helper? then window.helper.attr("opacity", 0.3)
 
-        @links.attr("stroke", (d) => if d.size > 1e-3 then colormap(d.F/d.size) else "#9c7b70")
-              .attr("stroke-dasharray", (d) => if d.size > 1e-3 then null else 10/@scale+","+10/@scale)
+        @links.attr("stroke", (d) => if d.F > 1e-3 then colormap(d.F/d.size) else "#9c7b70")
+              .attr("stroke-dasharray", (d) => if d.F > 1e-3 then null else 10/@scale+","+10/@scale)
 
     slowDraw: ->
         @structure.solve()

@@ -309,13 +309,13 @@
         }
       }
       return this.links.attr("stroke", function(d) {
-        if (d.size > 1e-3) {
+        if (d.F > 1e-3) {
           return colormap(d.F / d.size);
         } else {
           return "#9c7b70";
         }
       }).attr("stroke-dasharray", function(d) {
-        if (d.size > 1e-3) {
+        if (d.F > 1e-3) {
           return null;
         } else {
           return 10 / _this.scale + "," + 10 / _this.scale;

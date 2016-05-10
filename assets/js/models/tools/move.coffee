@@ -2,6 +2,7 @@ window.tacit ?= {}
 window.tacit.tools ?= {}
 
 sqr = (a) -> Math.pow(a, 2)
+abs = (a) -> Math.abs(a)
 sqrt = (a) -> Math.sqrt(a)
 max = (n...) -> Math.max(n...)
 sin = (a) -> Math.sin(a)
@@ -48,11 +49,15 @@ moveTool =
             if @selectiontype is "node"
                 @selection.moveto(pos)
             else if @selectiontype is "beam"
-                xdist = pos.x-@dragstart.x
-                ydist = pos.y-@dragstart.y
-                dist = sqrt(sqr(xdist) + sqr(ydist))
-                sign = sin(atan2(ydist, xdist))
-                @selection.size = max(0.5, sign*dist*14 + @dragstart.size)
+                d_x = pos.x-@dragstart.x
+                d_y = pos.y-@dragstart.y
+                b_x = @selection.source.x - @selection.target.x
+                b_y = @selection.source.y - @selection.target.y
+                orthogonal = -(b_x*d_y - b_y*d_x)/@selection.L
+                orthogonal *=  abs(orthogonal)/10
+                if orthogonal < 0
+                    orthogonal = orthogonal/2
+                @selection.size = max(0.5, orthogonal + @dragstart.size)
             easel.pad.sketch.quickDraw()
 
 window.tacit.tools.move = moveTool

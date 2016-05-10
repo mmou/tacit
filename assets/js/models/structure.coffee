@@ -131,7 +131,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             for dim, c of node.constraints()
                 con = ""
                 con += " #{strsign(a)} #{abs(a)} f#{c.i[j]}
-                                " for a, j in c.A when a isnt 0
+                                " for a, j in c.A# when a isnt 0
                 if con
                     if not node.fixed[dim]
                         lp += "\n  n#{node.id}#{dim}:#{con} = #{c.b}"
