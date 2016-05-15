@@ -10,5 +10,6 @@ class Pad
                      @sketch.translate[1]*@sketch.scale]
         scale = @sketch.scale
         @sketch = new tacit.Sketch(this, @htmlLoc, structure, @height, @width)
+        if window.genhelper? then window.genhelper()
 
 @tacit.Pad = Pad

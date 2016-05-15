@@ -312,8 +312,8 @@
             window.helper.attr("opacity", 0);
           }
         } else {
-          this.pad.easel.weightDisplay.innerHTML = "&oslash;";
-          if (window.helper != null) {
+          this.pad.easel.weightDisplay.innerHTML = "$&infin;";
+          if ((window.helper != null) && !this.structure.lp.undersized) {
             window.helper.attr("opacity", 0.3);
           }
         }

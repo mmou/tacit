@@ -472,6 +472,7 @@
           if (window.tool.sized_beams) {
             this.lp = this.solveLP(sized_beams = false);
           }
+          this.lp.undersized = Boolean(this.lp.obj);
           this.lp.obj = 1e5;
         } else if (window.tool.sized_beams) {
           this.lp.obj = 0;

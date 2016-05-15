@@ -196,6 +196,7 @@ class Structure
             if not @lp.obj?
                 if window.tool.sized_beams
                     @lp = @solveLP(sized_beams=false)
+                @lp.undersized = Boolean(@lp.obj)
                 @lp.obj = 1e5
             else if window.tool.sized_beams
                 @lp.obj = 0
