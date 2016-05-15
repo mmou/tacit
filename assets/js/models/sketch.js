@@ -363,6 +363,8 @@
         var isc;
         isc = _this.nodeSize * 3.1 / 9 / _this.scale;
         return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
+      }).classed("selected", function(d) {
+        return _this.selectedNodes.indexOf(d) + 1;
       });
       this.forces.attr("x2", function(d) {
         return d.x;
@@ -485,6 +487,8 @@
         var isc;
         isc = _this.nodeSize * 3.1 / 9 / _this.scale;
         return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
+      }).classed("selected", function(d) {
+        return _this.selectedNodes.indexOf(d) + 1;
       });
       this.forces.attr("stroke-width", function(d) {
         var f;
@@ -529,6 +533,9 @@
         _this = this;
       this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
+      this.fixed.classed("selected", function(d) {
+        return _this.selectedNodes.indexOf(d) + 1;
+      });
       this.nodes.classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(250).attr("r", function(d) {

@@ -11,6 +11,7 @@ atan2 = (a,b) -> Math.atan2(a,b)
 moveTool =
     allowPan: true
     name: "move"
+    dontSelectImmovable: true
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         if eventType is "node"

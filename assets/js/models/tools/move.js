@@ -40,6 +40,7 @@
   moveTool = {
     allowPan: true,
     name: "move",
+    dontSelectImmovable: true,
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var idx;
       if (eventType === "node") {

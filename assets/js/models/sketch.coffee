@@ -271,6 +271,7 @@ class Sketch
             """M #{-5*isc+d.x},#{-3*isc+d.y}
                l #{5*isc},#{8.6*isc}
                l #{5*isc},#{-8.6*isc} Z""")
+             .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
 
         @forces.attr("x2", (d) => d.x).attr("x1", (d) => d.x - d.force.x/4)
                .attr("y2", (d) => d.y).attr("y1", (d) => d.y - d.force.y/4)
@@ -323,6 +324,8 @@ class Sketch
             """M #{-5*isc+d.x},#{-3*isc+d.y}
                l #{5*isc},#{8.6*isc}
                l #{5*isc},#{-8.6*isc} Z""")
+              .classed("selected", (d) =>
+                  @selectedNodes.indexOf(d)+1)
 
         @forces.attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
                                                8/@scale*@showforce
@@ -338,6 +341,8 @@ class Sketch
     animateSelection: ->
         @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
+
+        @fixed.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
             .transition()

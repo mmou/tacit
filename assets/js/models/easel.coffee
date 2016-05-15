@@ -59,10 +59,11 @@ class Easel
         if not @currentTool.dragging
             change = false
             if eventType is "node"
-                if not 1 + easel.pad.sketch.selectedNodes.indexOf(object) and @currentTool.name isnt "erase"
-                    change = true
-                    easel.pad.sketch.selectedNodes.push(object)
-            else if easel.pad.sketch.selectedNodes.length > 0 and @currentTool.name isnt "erase"
+                if not (object.immovable and easel.currentTool.dontSelectImmovable)
+                    if not 1 + easel.pad.sketch.selectedNodes.indexOf(object)
+                        change = true
+                        easel.pad.sketch.selectedNodes.push(object)
+            else if easel.pad.sketch.selectedNodes.length > 0
                 change = true
                 @selection = null
                 easel.pad.sketch.selectedNodes = []

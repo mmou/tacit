@@ -2,11 +2,11 @@
 .grad { stroke: #807ec7; }
 
 .node { fill: #3d3130; }
-.immovable { fill: #e14a4e; }
+.node.selected { fill: #807ec7;}
+.node.immovable { fill: #e14a4e; }
+.node.fixed { fill: #2eabe2; }
 .fixed { fill: #2eabe2; }
-.node.selected { fill: #807ec7; stroke:white; stroke-width: 0.5px;}
-.immovable.selected { fill: #e14a4e; }
-.fixed.selected { fill: #2eabe2; }
+.selected { stroke:white; stroke-width: 0.5px; }
 
 #helper { fill: #e14a4e; }
 
