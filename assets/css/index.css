@@ -379,3 +379,7 @@ wm {
 #textbtns button {
 	height: 50%;
 }
+
+#designweight {
+	font-weight: 400;
+}
