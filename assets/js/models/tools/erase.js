@@ -39,6 +39,7 @@
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var link, node, _i, _j, _len, _len1, _ref2, _ref3;
+      this.mouseDown(easel, eventType, mouseLoc, object);
       this.allowPan = true;
       this.dragging = false;
       _ref2 = easel.pad.sketch.selectedNodes;

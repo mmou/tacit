@@ -29,6 +29,7 @@ eraseTool =
             easel.pad.sketch.slowDraw()
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
+        @mouseDown(easel, eventType, mouseLoc, object)
         @allowPan = true
         @dragging = false
         node.delete() for node in easel.pad.sketch.selectedNodes
