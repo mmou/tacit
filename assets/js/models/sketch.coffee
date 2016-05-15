@@ -87,6 +87,7 @@ class Sketch
         @fixed = @blank.selectAll(".fixed")
         @nodes = @blank.selectAll(".node")
         @links = @blank.selectAll(".link")
+        @selectablelinks = @blank.selectAll(".selectablelinks")
         @forces = @blank.selectAll(".force")
         @grads = @blank.selectAll(".grad")
         @dragline = @blank.append("line")
@@ -151,6 +152,19 @@ class Sketch
 
     updateDrawing: ->
         easel = @pad.easel
+
+        @selectablelinks = @selectablelinks.data(@structure.beamList)
+        @selectablelinks.enter().insert("line", ".node")
+            .attr("class", "selectablelinks")
+            .on("mousedown", (d) ->
+                easel.mouseDown(easel, "beam", d3.mouse(this), d))
+            .on("mousemove", (d) ->
+                easel.mouseMove(easel, "beam", d3.mouse(this), d))
+            .on("mouseup", (d) ->
+                easel.mouseUp(easel, "beam", d3.mouse(this), d))
+        @selectablelinks.exit().transition()
+          .attr("r", 0)
+        .remove()
 
         @links = @links.data(@structure.beamList)
         @links.enter().insert("line", ".node")
@@ -257,6 +271,13 @@ class Sketch
                 .ease("elastic")
                     .attr("stroke-width",  (d) => if d.size > 1e-3 then  sqrt(d.size/10) else 1)
 
+        @selectablelinks.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
+              .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
+              .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
+              .transition()
+                .duration(750)
+                .ease("elastic")
+                    .attr("stroke-width",  (d) => max(2, 0.75 + sqrt(d.size/10)))
 
         @nodes.attr("cx", (d) => d.x)
               .attr("cy", (d) => d.y)
@@ -301,6 +322,9 @@ class Sketch
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
 
+        @selectablelinks.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
+                        .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
+
         @nodes.attr("cx", (d) => d.x).attr("cy", (d) => d.y)
 
         @forces.attr("x2", (d) => d.x).attr("x1", (d) => d.x - d.force.x/4)
@@ -314,6 +338,9 @@ class Sketch
         @fea() if window.tool.autocolor
 
         @links.attr("stroke-width",  (d) => if d.size > 1e-3 then  sqrt(d.size/10) else 1)
+              .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
+
+        @selectablelinks.attr("stroke-width",  (d) => max(2, 0.75 + sqrt(d.size/10)))
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
@@ -343,6 +370,9 @@ class Sketch
         w = @structure.nodeList.length/@structure.lp.obj
 
         @fixed.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
+
+        @selectablelinks.attr("stroke-width",  (d) => max(2, 0.75 + sqrt(d.size/10)))
+              .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
             .transition()

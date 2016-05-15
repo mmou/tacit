@@ -95,6 +95,12 @@ function download(filename, text) {
       }
       if (!this.currentTool.dragging) {
         change = false;
+        if ((easel.pad.sketch.selectedLinks.length + easel.pad.sketch.selectedNodes.length > 0) && object !== this.selection) {
+          change = true;
+          this.selection = null;
+          easel.pad.sketch.selectedNodes = [];
+          easel.pad.sketch.selectedLinks = [];
+        }
         if (eventType === "node") {
           if (!(object.immovable && easel.currentTool.dontSelectImmovable)) {
             if (!1 + easel.pad.sketch.selectedNodes.indexOf(object)) {
@@ -102,10 +108,13 @@ function download(filename, text) {
               easel.pad.sketch.selectedNodes.push(object);
             }
           }
-        } else if (easel.pad.sketch.selectedNodes.length > 0) {
-          change = true;
-          this.selection = null;
-          easel.pad.sketch.selectedNodes = [];
+        } else if (eventType === "beam") {
+          if (true) {
+            if (!1 + easel.pad.sketch.selectedLinks.indexOf(object)) {
+              change = true;
+              easel.pad.sketch.selectedLinks.push(object);
+            }
+          }
         }
         if (change && object !== this.selection) {
           if (eventType === "node") {

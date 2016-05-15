@@ -48,7 +48,7 @@
           this.selection = object;
           this.selectiontype = "node";
           this.allowPan = false;
-          this.dragstart = true;
+          this.dragging = true;
           idx = easel.pad.sketch.selectedNodes.indexOf(object);
           if (idx === -1) {
             easel.pad.sketch.selectedNodes.push(object);
@@ -59,7 +59,7 @@
         this.selection = object;
         this.selectiontype = "beam";
         this.allowPan = false;
-        this.dragstart = {
+        this.dragging = {
           x: mouseLoc[0],
           y: mouseLoc[1],
           size: object.size
@@ -80,12 +80,12 @@
       }
       this.selection = null;
       this.selectiontype = null;
-      this.dragstart = null;
+      this.dragging = null;
       return this.allowPan = true;
     },
     mouseMove: function(easel, eventType, mouseLoc, object) {
       var b_x, b_y, d_x, d_y, orthogonal, pos;
-      if (this.dragstart) {
+      if (this.dragging) {
         pos = {
           x: mouseLoc[0],
           y: mouseLoc[1]
@@ -93,8 +93,8 @@
         if (this.selectiontype === "node") {
           this.selection.moveto(pos);
         } else if (this.selectiontype === "beam") {
-          d_x = pos.x - this.dragstart.x;
-          d_y = pos.y - this.dragstart.y;
+          d_x = pos.x - this.dragging.x;
+          d_y = pos.y - this.dragging.y;
           b_x = this.selection.source.x - this.selection.target.x;
           b_y = this.selection.source.y - this.selection.target.y;
           orthogonal = -(b_x * d_y - b_y * d_x) / this.selection.L;
@@ -102,7 +102,7 @@
           if (orthogonal < 0) {
             orthogonal = orthogonal / 2;
           }
-          this.selection.size = max(0.5, orthogonal + this.dragstart.size);
+          this.selection.size = max(0.5, orthogonal + this.dragging.size);
         }
         return easel.pad.sketch.quickDraw();
       }

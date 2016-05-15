@@ -19,7 +19,7 @@ moveTool =
                 @selection = object
                 @selectiontype = "node"
                 @allowPan = false
-                @dragstart = true
+                @dragging = true
                 idx = easel.pad.sketch.selectedNodes.indexOf(object)
                 easel.pad.sketch.selectedNodes.push(object) if idx is -1
                 easel.pad.sketch.quickDraw()
@@ -27,7 +27,7 @@ moveTool =
             @selection = object
             @selectiontype = "beam"
             @allowPan = false
-            @dragstart = {x: mouseLoc[0], y: mouseLoc[1], size:object.size}
+            @dragging = {x: mouseLoc[0], y: mouseLoc[1], size:object.size}
             easel.pad.sketch.selectedLinks = [@selection]
             easel.pad.sketch.slowDraw()
 
@@ -41,24 +41,24 @@ moveTool =
             easel.pad.sketch.slowDraw()
         @selection = null
         @selectiontype = null
-        @dragstart = null
+        @dragging = null
         @allowPan = true
 
     mouseMove: (easel, eventType, mouseLoc, object) ->
-        if @dragstart
+        if @dragging
             pos = {x: mouseLoc[0], y: mouseLoc[1]}
             if @selectiontype is "node"
                 @selection.moveto(pos)
             else if @selectiontype is "beam"
-                d_x = pos.x-@dragstart.x
-                d_y = pos.y-@dragstart.y
+                d_x = pos.x-@dragging.x
+                d_y = pos.y-@dragging.y
                 b_x = @selection.source.x - @selection.target.x
                 b_y = @selection.source.y - @selection.target.y
                 orthogonal = -(b_x*d_y - b_y*d_x)/@selection.L
                 orthogonal *=  abs(orthogonal)/10
                 if orthogonal < 0
                     orthogonal = orthogonal/2
-                @selection.size = max(0.5, orthogonal + @dragstart.size)
+                @selection.size = max(0.5, orthogonal + @dragging.size)
             easel.pad.sketch.quickDraw()
 
 window.tacit.tools.move = moveTool

@@ -58,15 +58,21 @@ class Easel
                 @currentTool.mouseMove(easel, eventType, mouseLoc, object)
         if not @currentTool.dragging
             change = false
+            if (easel.pad.sketch.selectedLinks.length + easel.pad.sketch.selectedNodes.length > 0) and object isnt @selection
+                change = true
+                @selection = null
+                easel.pad.sketch.selectedNodes = []
+                easel.pad.sketch.selectedLinks = []
             if eventType is "node"
                 if not (object.immovable and easel.currentTool.dontSelectImmovable)
                     if not 1 + easel.pad.sketch.selectedNodes.indexOf(object)
                         change = true
                         easel.pad.sketch.selectedNodes.push(object)
-            else if easel.pad.sketch.selectedNodes.length > 0
-                change = true
-                @selection = null
-                easel.pad.sketch.selectedNodes = []
+            else if eventType is "beam"
+                if true #not (object.immovable and easel.currentTool.dontSelectImmovable)
+                    if not 1 + easel.pad.sketch.selectedLinks.indexOf(object)
+                        change = true
+                        easel.pad.sketch.selectedLinks.push(object)
             if change and object isnt @selection
                 if eventType is "node"
                     easel.project.onChange()

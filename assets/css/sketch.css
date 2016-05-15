@@ -5,8 +5,11 @@
 .node.selected { fill: #807ec7;}
 .node.immovable { fill: #e14a4e; }
 .node.fixed { fill: #2eabe2; }
+.node.selected { stroke:white; stroke-width: 0.5px; }
 .fixed { fill: #2eabe2; }
-.selected { stroke:white; stroke-width: 0.5px; }
+.fixed.selected { stroke:white; stroke-width: 0.5px; }
+.selectablelinks { stroke: transparent; }
+.selectablelinks.selected { stroke: white; }
 
 #helper { fill: #e14a4e; }
 
