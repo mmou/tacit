@@ -41,7 +41,7 @@ drawTool =
                 # node.force.y = -100
             else
                 pos = {x: object.x, y: object.y}
-            if pos.x isnt @drawStart.x and pos.y isnt @drawStart.y
+            if pos.x isnt @drawStart.x or pos.y isnt @drawStart.y
                 new easel.pad.sketch.structure.Beam(@drawStart, pos)
                 easel.pad.sketch.dragline
                                 .attr("x1", pos.x).attr("x2", pos.x)

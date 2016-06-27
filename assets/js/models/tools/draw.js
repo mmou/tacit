@@ -68,7 +68,7 @@
             y: object.y
           };
         }
-        if (pos.x !== this.drawStart.x && pos.y !== this.drawStart.y) {
+        if (pos.x !== this.drawStart.x || pos.y !== this.drawStart.y) {
           new easel.pad.sketch.structure.Beam(this.drawStart, pos);
           easel.pad.sketch.dragline.attr("x1", pos.x).attr("x2", pos.x).attr("y1", pos.y).attr("y2", pos.y);
           easel.pad.sketch.updateDrawing();
