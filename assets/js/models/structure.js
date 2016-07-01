@@ -421,35 +421,42 @@
 
     function Structure(structure) {
       var b, beam, localnode, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
+      this.lp = {
+        obj: 1e5
+      };
       _ref1 = [{}, {}], this.nodeLookup = _ref1[0], this.nodeIDLookup = _ref1[1];
       _ref2 = [[], []], this.nodeList = _ref2[0], this.beamList = _ref2[1];
       _ref3 = [0, 0], this.nodes = _ref3[0], this.beams = _ref3[1];
       _ref4 = gen_classes(this.nodeLookup, this.nodeIDLookup, this.nodeList, this.beamList, this.nodes, this.beams), this.Node = _ref4[0], this.Beam = _ref4[1], this.solveLP = _ref4[2], this.LPstring = _ref4[3];
       if (structure != null) {
-        try {
-          _ref5 = structure.beamList;
-          for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
-            beam = _ref5[_i];
-            new this.Beam(beam.source, beam.target, beam.size);
-          }
-          _ref6 = structure.nodeList;
-          for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {
-            node = _ref6[_j];
+        _ref5 = structure.beamList;
+        for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
+          beam = _ref5[_i];
+          new this.Beam(beam.source, beam.target, beam.size);
+        }
+        _ref6 = structure.nodeList;
+        for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {
+          node = _ref6[_j];
+          try {
             localnode = this.nodeIDLookup[this.nodeLookup[node.z][node.y][node.x]];
-            localnode.fixed = {
-              x: node.fixed.x,
-              y: node.fixed.y,
-              z: node.fixed.z
-            };
-            localnode.force = {
-              x: node.force.x,
-              y: node.force.y,
-              z: node.force.z
-            };
-            localnode.immovable = node.immovable;
+          } catch (error) {
+            localnode = void 0;
           }
-        } catch (error) {
-
+          if (!(localnode != null)) {
+            new this.Node(node);
+            localnode = this.nodeList[this.nodeList.length - 1];
+          }
+          localnode.fixed = {
+            x: node.fixed.x,
+            y: node.fixed.y,
+            z: node.fixed.z
+          };
+          localnode.force = {
+            x: node.force.x,
+            y: node.force.y,
+            z: node.force.z
+          };
+          localnode.immovable = node.immovable;
         }
       }
       this.strucstr = ((function() {

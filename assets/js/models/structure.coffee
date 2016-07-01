@@ -170,6 +170,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
 class Structure
     # TODO: import / export list of coordinates etc. + list of connections
     constructor: (structure) ->
+        @lp = {obj: 1e5}
         [@nodeLookup, @nodeIDLookup] = [{}, {}]
         [@nodeList, @beamList] = [[], []]
         [@nodes, @beams] = [0, 0]
@@ -177,15 +178,19 @@ class Structure
                                                           @nodeList,   @beamList,
                                                           @nodes,      @beams)
         if structure?
-            try
-                for beam in structure.beamList
-                    new @Beam(beam.source, beam.target, beam.size)
-                for node in structure.nodeList
+            for beam in structure.beamList
+                new @Beam(beam.source, beam.target, beam.size)
+            for node in structure.nodeList
+                try
                     localnode = @nodeIDLookup[@nodeLookup[node.z][node.y][node.x]]
-                    localnode.fixed = {x: node.fixed.x, y: node.fixed.y, z: node.fixed.z}
-                    localnode.force = {x: node.force.x, y: node.force.y, z: node.force.z}
-                    localnode.immovable = node.immovable
-            catch error
+                catch error
+                    localnode = undefined
+                if not localnode?
+                    new @Node(node)
+                    localnode = @nodeList[@nodeList.length-1]
+                localnode.fixed = {x: node.fixed.x, y: node.fixed.y, z: node.fixed.z}
+                localnode.force = {x: node.force.x, y: node.force.y, z: node.force.z}
+                localnode.immovable = node.immovable
 
         @strucstr = ("#{b.source.x}, #{b.source.y} >> #{b.target.x}, #{b.target.y} | #{b.size}" for b in @beamList).join("\n")
 
