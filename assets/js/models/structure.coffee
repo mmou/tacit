@@ -145,7 +145,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
         lp += "\n  f#{beam.id} free
                \n  F#{beam.id} >= 0" for beam in beamList
         if sized_beams
-             lp += "\n  F#{beam.id} <= #{beam.size}" for beam in beamList
+             lp += "\n F#{beam.id} <= #{beam.size/(1+1e-6)}" for beam in beamList
         lp += "\n  #{q} free" for q in reactionforces
         lp += "\n
                \nEnd\n"
@@ -206,7 +206,8 @@ class Structure
             else if window.tool.sized_beams
                 @lp.obj = 0
                 for beam in @beamList
-                    @lp.obj += beam.L*beam.size
+                    if @lp["f#{beam.id}"] > 1e-3
+                        @lp.obj += beam.L*beam.size
             for beam in @beamList
                 beam.f = @lp["f#{beam.id}"]
                 beam.F = abs(beam.f)

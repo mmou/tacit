@@ -219,7 +219,7 @@ class Sketch
             .on("mouseup", (d) ->
                 easel.mouseUp(easel, "node", d3.mouse(this), d))
           .transition()
-            .duration(750)
+            .duration(150)
             .ease("elastic")
             .attr("r", @nodeSize/@scale)
         @nodes.exit().transition()
@@ -265,10 +265,10 @@ class Sketch
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
               .transition()
-                  .duration(250)
+                  .duration(50)
                   .ease("elastic")
                       .attr("stroke-opacity", (d) => 0.9 + 0.1*(@selectedLinks.indexOf(d)+1 > 0))
-                .duration(750)
+                .duration(150)
                 .ease("elastic")
                     .attr("stroke-width",  (d) => if d.size > 1e-3 then  sqrt(d.size/10) else 1)
 
@@ -276,7 +276,7 @@ class Sketch
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
               .transition()
-                .duration(750)
+                .duration(150)
                 .ease("elastic")
                     .attr("stroke-width",  (d) => max(2, 0.75 + sqrt(d.size/10)))
 
@@ -284,7 +284,7 @@ class Sketch
               .attr("cy", (d) => d.y)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
               .transition()
-                .duration(750)
+                .duration(150)
                 .ease("elastic")
                     .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
@@ -377,7 +377,7 @@ class Sketch
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
             .transition()
-              .duration(250)
+              .duration(50)
                   .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
         @grads.attr("x1", (d) => d.x)
@@ -386,7 +386,7 @@ class Sketch
               .attr("y2", (d) => d.y)
               .attr("stroke-width", 0)
               .transition()
-                .duration(250)
+                .duration(50)
                     .attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
                     .attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
                     .attr("stroke-width", (d) =>

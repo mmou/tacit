@@ -388,7 +388,7 @@
       if (sized_beams) {
         for (_m = 0, _len4 = beamList.length; _m < _len4; _m++) {
           beam = beamList[_m];
-          lp += "\n  F" + beam.id + " <= " + beam.size;
+          lp += "\n F" + beam.id + " <= " + (beam.size / (1 + 1e-6));
         }
       }
       for (_n = 0, _len5 = reactionforces.length; _n < _len5; _n++) {
@@ -486,7 +486,9 @@
           _ref1 = this.beamList;
           for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
             beam = _ref1[_i];
-            this.lp.obj += beam.L * beam.size;
+            if (this.lp["f" + beam.id] > 1e-3) {
+              this.lp.obj += beam.L * beam.size;
+            }
           }
         }
         _ref2 = this.beamList;
