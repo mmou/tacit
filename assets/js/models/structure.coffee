@@ -216,7 +216,7 @@ class Structure
                 for dim in "xyz"
                     node.fgrad[dim]  = sum(beam.fgrad[dim] for beam in node.sourced)
                     node.fgrad[dim] -= sum(beam.fgrad[dim] for beam in node.targeted)
-            if not window.tool.sized_beams
+            if not window.tool.sized_beams and @lp.obj isnt 1e5
                 for beam in @beamList
                     beam.size = beam.F*(1+1e-6)
         catch error

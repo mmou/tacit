@@ -13,7 +13,6 @@ function initialize(structure) {
 	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;
 	s = sketch.structure;
-	console.log(s);
 
 	sketch.updateDrawing();
 

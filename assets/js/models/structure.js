@@ -529,7 +529,7 @@
             })());
           }
         }
-        if (!window.tool.sized_beams) {
+        if (!window.tool.sized_beams && this.lp.obj !== 1e5) {
           _ref7 = this.beamList;
           _results = [];
           for (_o = 0, _len6 = _ref7.length; _o < _len6; _o++) {

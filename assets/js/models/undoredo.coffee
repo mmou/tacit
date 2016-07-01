@@ -11,7 +11,7 @@ class UndoRedo
         structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         structure.solve()
 
-        if !@project.actionQueue[@pointer]? || @project.actionQueue[@pointer].LPstring() != structure.LPstring()
+        if !@project.actionQueue[@pointer]? or @project.actionQueue[@pointer].LPstring() != structure.LPstring()
             window.log ?= ""
             window.log += "\n# new structure\n" + structure.strucstr
             @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
