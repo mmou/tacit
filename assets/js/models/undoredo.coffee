@@ -26,6 +26,9 @@ class UndoRedo
             structure = new tacit.Structure(@project.actionQueue[@pointer])
             @project.easel.pad.load(structure)
             @project.easel.pad.sketch.updateDrawing()
+            @project.easel.pad.sketch.dragline.attr("x1", 0).attr("x2", 0)
+                                              .attr("y1", 0).attr("y2", 0)
+            @project.easel.currentTool.drawStart = false
 
     redo: ->
         if @pointer + 1 < @project.actionQueue.length
