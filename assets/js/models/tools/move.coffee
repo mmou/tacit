@@ -50,10 +50,16 @@ moveTool =
             if @selectiontype is "node"
                 @selection.moveto(pos)
             else if @selectiontype is "beam"
+                source = @selection.source
+                target = @selection.target
+                if source.y > target.y or (source.y is target.y and source.x > target.x)
+                    tmp = source
+                    source = target
+                    target = tmp
                 d_x = pos.x-@dragging.x
                 d_y = pos.y-@dragging.y
-                b_x = @selection.source.x - @selection.target.x
-                b_y = @selection.source.y - @selection.target.y
+                b_x = source.x - target.x
+                b_y = source.y - target.y
                 orthogonal = -(b_x*d_y - b_y*d_x)/@selection.L
                 orthogonal *=  abs(orthogonal)/10
                 if orthogonal < 0

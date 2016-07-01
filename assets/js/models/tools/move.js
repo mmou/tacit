@@ -84,7 +84,7 @@
       return this.allowPan = true;
     },
     mouseMove: function(easel, eventType, mouseLoc, object) {
-      var b_x, b_y, d_x, d_y, orthogonal, pos;
+      var b_x, b_y, d_x, d_y, orthogonal, pos, source, target, tmp;
       if (this.dragging) {
         pos = {
           x: mouseLoc[0],
@@ -93,10 +93,17 @@
         if (this.selectiontype === "node") {
           this.selection.moveto(pos);
         } else if (this.selectiontype === "beam") {
+          source = this.selection.source;
+          target = this.selection.target;
+          if (source.y > target.y || (source.y === target.y && source.x > target.x)) {
+            tmp = source;
+            source = target;
+            target = tmp;
+          }
           d_x = pos.x - this.dragging.x;
           d_y = pos.y - this.dragging.y;
-          b_x = this.selection.source.x - this.selection.target.x;
-          b_y = this.selection.source.y - this.selection.target.y;
+          b_x = source.x - target.x;
+          b_y = source.y - target.y;
           orthogonal = -(b_x * d_y - b_y * d_x) / this.selection.L;
           orthogonal *= abs(orthogonal) / 10;
           if (orthogonal < 0) {
