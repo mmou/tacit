@@ -187,7 +187,7 @@ class Structure
                     localnode.immovable = node.immovable
             catch error
 
-        @strucstr = ("#{b.source.x}, #{b.source.y}, #{b.target.x}, #{b.target.y}" for b in @beamList).join("\n")
+        @strucstr = ("#{b.source.x}, #{b.source.y} >> #{b.target.x}, #{b.target.y} | #{b.size}" for b in @beamList).join("\n")
 
     solve: ->
         try

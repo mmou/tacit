@@ -458,7 +458,7 @@
         _results = [];
         for (_k = 0, _len2 = _ref7.length; _k < _len2; _k++) {
           b = _ref7[_k];
-          _results.push("" + b.source.x + ", " + b.source.y + ", " + b.target.x + ", " + b.target.y);
+          _results.push("" + b.source.x + ", " + b.source.y + " >> " + b.target.x + ", " + b.target.y + " | " + b.size);
         }
         return _results;
       }).call(this)).join("\n");

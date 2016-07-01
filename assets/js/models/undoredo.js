@@ -23,11 +23,11 @@
       this.project.onChange();
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
-      if (!(this.project.actionQueue[this.pointer] != null) || this.project.actionQueue[this.pointer].LPstring() !== structure.LPstring()) {
+      if (!(this.project.actionQueue[this.pointer] != null) || this.project.actionQueue[this.pointer].strucstr !== structure.strucstr) {
         if ((_ref1 = window.log) == null) {
           window.log = "";
         }
-        window.log += "\n# new structure\n" + structure.strucstr;
+        window.log += "# new structure\n" + structure.strucstr + "\n";
         this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
         return this.pointer = this.project.actionQueue.length - 1;
