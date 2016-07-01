@@ -160,9 +160,11 @@ function download(filename, text) {
           break;
         case 68:
           easel.currentTool = tacit.tools.draw;
-          $('.active').removeClass("active");
+          $('.active').blur();
+                 $('.active').removeClass("active");
             	 $("#draw-btn").addClass("active");
-                 $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'});;
+                 $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'});
+                 ;
 
           break;
         case 69:
@@ -170,24 +172,30 @@ function download(filename, text) {
             $("#export-btn").click();
           } else {
             easel.currentTool = tacit.tools.erase;
-            $('.active').removeClass("active");
+            $('.active').blur();
+                     $('.active').removeClass("active");
                 	 $("#erase-btn").addClass("active");
-                     $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'});;
+                     $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'});
+                     ;
 
           }
           break;
         case 76:
           easel.currentTool = tacit.tools.load;
-          $('.active').removeClass("active");
+          $('.active').blur();
+                 $('.active').removeClass("active");
             	 $("#load-btn").addClass("active");
-                 $("#PadView svg").css({'cursor': 'default'});;
+                 $("#PadView svg").css({'cursor': 'default'});
+                 ;
 
           break;
         case 77:
           easel.currentTool = tacit.tools.move;
-          $('.active').removeClass("active");
+          $('.active').blur();
+                 $('.active').removeClass("active");
             	 $("#move-btn").addClass("active");
-                 $("#PadView svg").css({'cursor': 'pointer'});;
+                 $("#PadView svg").css({'cursor': 'pointer'});
+                 ;
 
           break;
         case 83:

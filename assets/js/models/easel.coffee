@@ -98,27 +98,35 @@ class Easel
                     easel.currentTool.stopDrawing(easel)
             when 68 # d
                 easel.currentTool = tacit.tools.draw
-                `$('.active').removeClass("active");
+                `$('.active').blur();
+                 $('.active').removeClass("active");
             	 $("#draw-btn").addClass("active");
-                 $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'});`
+                 $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'});
+                 `
             when 69 # e
                 if d3.event.metaKey or d3.event.ctrlKey
                     $("#export-btn").click()
                 else
                     easel.currentTool = tacit.tools.erase
-                    `$('.active').removeClass("active");
+                    `$('.active').blur();
+                     $('.active').removeClass("active");
                 	 $("#erase-btn").addClass("active");
-                     $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'});`
+                     $("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'});
+                     `
             when 76 # l
                 easel.currentTool = tacit.tools.load
-                `$('.active').removeClass("active");
+                `$('.active').blur();
+                 $('.active').removeClass("active");
             	 $("#load-btn").addClass("active");
-                 $("#PadView svg").css({'cursor': 'default'});`
+                 $("#PadView svg").css({'cursor': 'default'});
+                 `
             when 77 # m
                 easel.currentTool = tacit.tools.move
-                `$('.active').removeClass("active");
+                `$('.active').blur();
+                 $('.active').removeClass("active");
             	 $("#move-btn").addClass("active");
-                 $("#PadView svg").css({'cursor': 'pointer'});`
+                 $("#PadView svg").css({'cursor': 'pointer'});
+                 `
             when 83 # s
                 if d3.event.metaKey or d3.event.ctrlKey
                     $("#save-btn").click()
