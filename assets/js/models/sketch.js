@@ -69,7 +69,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width, scale, translate) {
-      var autozoom, baseLineBox, d, draw, easel, force, gridBox, htmlObj, list, maxs, means, mins, mousedn, n, _i, _len, _ref1, _ref2,
+      var autozoom, baseLineBox, easel, gridBox, htmlObj, mousedn,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -134,33 +134,8 @@
       this.grads = this.blank.selectAll(".grad");
       this.dragline = this.blank.append("line").attr("class", "dragline").attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", 0);
       if (autozoom != null) {
-        _ref1 = [{}, {}, {}], mins = _ref1[0], maxs = _ref1[1], means = _ref1[2];
-        _ref2 = ["x", "y", "z"];
-        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-          d = _ref2[_i];
-          list = (function() {
-            var _j, _len1, _ref3, _results;
-            _ref3 = structure.nodeList;
-            _results = [];
-            for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
-              n = _ref3[_j];
-              _results.push(n[d]);
-            }
-            return _results;
-          })();
-          mins[d] = min.apply(null, list);
-          maxs[d] = max.apply(null, list);
-        }
-        if (scale == null) {
-          scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
-        }
-        if (translate == null) {
-          translate = [scale * (mins.x - maxs.x) / 2 + this.width / 2, scale * (mins.y - maxs.y) / 2 + this.height / 2];
-        }
+        this.defaultZoom();
       }
-      this.rescale(translate, scale, draw = false, force = true);
-      this.initial_translate = [this.translate[0] * this.scale, this.translate[1] * this.scale];
-      this.initial_scale = this.scale;
       gridBox = $('input[name=grid]');
       gridBox.prop('checked', true);
       baseLineBox = $('input[name=baseLine]');
@@ -168,8 +143,29 @@
     }
 
     Sketch.prototype.defaultZoom = function() {
-      var force;
-      return this.rescale(this.initial_translate, this.initial_scale, force = true);
+      var d, list, maxs, means, mins, n, scale, translate, _i, _len, _ref1, _ref2;
+      _ref1 = [{}, {}, {}], mins = _ref1[0], maxs = _ref1[1], means = _ref1[2];
+      _ref2 = ["x", "y", "z"];
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        d = _ref2[_i];
+        list = (function() {
+          var _j, _len1, _ref3, _results;
+          _ref3 = this.structure.nodeList;
+          _results = [];
+          for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
+            n = _ref3[_j];
+            _results.push(n[d]);
+          }
+          return _results;
+        }).call(this);
+        mins[d] = min.apply(null, list);
+        maxs[d] = max.apply(null, list);
+      }
+      scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
+      translate = [this.width / 2 - scale * (maxs.x + mins.x) / 2, this.height / 2 - scale * (maxs.y + mins.y) / 2];
+      console.log(maxs);
+      console.log(mins);
+      return this.rescale(translate, scale);
     };
 
     Sketch.prototype.rescale = function(translate, scale, draw, force) {

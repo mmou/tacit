@@ -97,17 +97,7 @@ class Sketch
 
         # set inital window
         if autozoom?
-            [mins, maxs, means] = [{}, {}, {}]
-            for d in ["x", "y", "z"]
-                list = (n[d] for n in structure.nodeList)
-                mins[d] = min(list...)
-                maxs[d] = max(list...)
-            scale ?= 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
-            translate ?= [scale*(mins.x-maxs.x)/2 + @width/2
-                          scale*(mins.y-maxs.y)/2 + @height/2]
-        @rescale(translate, scale, draw=false, force=true)
-        @initial_translate = [@translate[0]*@scale, @translate[1]*@scale]
-        @initial_scale = @scale
+            @defaultZoom()
 
         # Makes sketch always start out with gridLines
         gridBox = $('input[name=grid]')
@@ -116,7 +106,17 @@ class Sketch
         baseLineBox.prop('checked', true)
 
     defaultZoom: ->
-        @rescale(@initial_translate, @initial_scale, force=true)
+        [mins, maxs, means] = [{}, {}, {}]
+        for d in ["x", "y", "z"]
+            list = (n[d] for n in @structure.nodeList)
+            mins[d] = min(list...)
+            maxs[d] = max(list...)
+        scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+        translate = [@width/2 - scale*(maxs.x+mins.x)/2,
+                     @height/2- scale*(maxs.y+mins.y)/2]
+        console.log maxs
+        console.log mins
+        @rescale(translate, scale)
 
     rescale: (translate, scale, draw=true, force=true) ->
         translate ?= d3.event.translate
