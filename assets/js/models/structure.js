@@ -486,7 +486,7 @@
           _ref1 = this.beamList;
           for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
             beam = _ref1[_i];
-            if (this.lp["f" + beam.id] > 1e-3) {
+            if (abs(this.lp["f" + beam.id]) > 1e-3) {
               this.lp.obj += beam.L * beam.size;
             }
           }

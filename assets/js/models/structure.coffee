@@ -206,7 +206,7 @@ class Structure
             else if window.tool.sized_beams
                 @lp.obj = 0
                 for beam in @beamList
-                    if @lp["f#{beam.id}"] > 1e-3
+                    if abs(@lp["f#{beam.id}"]) > 1e-3
                         @lp.obj += beam.L*beam.size
             for beam in @beamList
                 beam.f = @lp["f#{beam.id}"]

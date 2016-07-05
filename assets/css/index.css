@@ -7,6 +7,22 @@ body {
 	color: #3d3130;
 }
 
+#project { opacity: 0; transition: opacity,0.75s; }
+
+#intro {
+	position: fixed;
+	left: 0;
+	width: 100%;
+	top: 0;
+	background-color: #2eabe2;
+	color: white;
+	padding: 5em;
+	height: 100%;
+	font-size: 2em;
+	opacity: 1;
+	transition: opacity,0.5s;
+}
+
 ::-webkit-scrollbar {
   width: 8px;  /* for vertical scrollbars */
   height: 8px; /* for horizontal scrollbars */

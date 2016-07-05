@@ -1,5 +1,14 @@
 function initialize(structure) {
 	window.tutorial_state = -1
+	finalsurvey = "http://example.com"
+	intermediatesurveys = {
+						 "ab": "https://mit.co1.qualtrics.com/jfe/form/SV_0PS7Qf1aao9R2RL",
+	                     "mb": "https://mit.co1.qualtrics.com/jfe/form/SV_bqJcWJjc8iuDMX3",
+	                     "ob": "https://mit.co1.qualtrics.com/jfe/form/SV_cGTB92zlQM0WMct",
+	                     "as": "https://mit.co1.qualtrics.com/jfe/form/SV_bpchs8TwetTDQzj",
+	                     "ms": "https://mit.co1.qualtrics.com/jfe/form/SV_eWJGUTLbgYIuVMx",
+	                     "os": "https://mit.co1.qualtrics.com/jfe/form/SV_50e1i0hCQAwK5KJ",
+	                       }
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 110);
@@ -13,7 +22,6 @@ function initialize(structure) {
 	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;
 	s = sketch.structure;
-
 	sketch.updateDrawing();
 
   	// activate tooltips
@@ -112,7 +120,10 @@ function initialize(structure) {
 	});
 	$("#export-btn").click(function() {
 		easel.saveLog()
-		window.location.href = "airplane.html"})
+		if (location.hash.length < 6)
+            location.href = finalsurvey
+        else
+            location.href = intermediatesurveys[location.hash.substr(4,2)]})
 	$("#zoom-btn").click(function() {easel.pad.sketch.defaultZoom()})
 
 	window.updateTool = function () {
@@ -131,41 +142,42 @@ function initialize(structure) {
 	undoredo = new tacit.UndoRedo(window.project)
 
 	$(".notyet").removeClass("notyet")
+}
 
+window.initialize = initialize;
+
+window.startClock = function () {
 	function getTimeRemaining(endtime){
 	  var t = Date.parse(endtime) - Date.parse(new Date());
 	  var seconds = Math.floor( (t/1000) % 60 );
 	  var minutes = Math.floor( (t/1000/60) % 60 );
 	  return {
 		'total': t,
-	    'minutes': minutes,
-	    'seconds': seconds
+		'minutes': minutes,
+		'seconds': seconds
 	  };
 	}
 
 	function initializeClock(id, endtime){
 	  var clock = document.getElementById(id);
 	  var timeinterval = setInterval(function(){
-	    var t = getTimeRemaining(endtime);
+		var t = getTimeRemaining(endtime);
 		var seconds = t.seconds;
 		if (seconds >= 0) {
 			if (seconds < 10)
 				seconds = "0" + seconds
 			if (t.minutes >= 1)
-			    clock.innerHTML =  ' | ' + t.minutes + ' minutes';
+				clock.innerHTML =  ' | ' + t.minutes + ' minutes';
 			else
 				clock.innerHTML = " | " + t.minutes + ':' + seconds;
-		    if(t.total<=0){
-		      clearInterval(timeinterval);
-		    }
+			if(t.total<=0){
+			  clearInterval(timeinterval);
+			}
 		}
 	  }, 1000);
 	}
 
-	var mins = 5
+	var mins = 12.99
 	var d = new Date
 	initializeClock("timer", new Date(d.getTime() + mins*60000));
-
 }
-
-window.initialize = initialize;
