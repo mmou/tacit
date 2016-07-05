@@ -21,8 +21,6 @@ window.sign = ->
 
         window.helper.append("path").attr("d", "M 250.6446,866.99644 186.66003,758.22268 312.96581,757.2612 250.6446,866.99644 z")
 
-    genhelper()
-
     window.project.name = "sign"
 
     return structure
