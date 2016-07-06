@@ -54,7 +54,7 @@
     }
 
     Versions.prototype.newVersion = function() {
-      var easel, pad, structure, versionObj;
+      var easel, pad, saved, structure, versionObj;
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       this.project.easel.pad.sketch.fea();
       structure.solve();
@@ -68,7 +68,12 @@
       pad.sketch.showforce = false;
       pad.sketch.updateDrawing();
       this.history.push(pad);
-      return pad.sketch.fea();
+      pad.sketch.fea();
+      saved = Math.round(pad.sketch.structure.lp.obj / 100);
+      if (saved <= $("#goalweight").text().substr(1)) {
+        $("#goalweight").text("$" + saved);
+        return $("#goaltitle").text("best saved");
+      }
     };
 
     Versions.prototype.save = function() {

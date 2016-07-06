@@ -9,6 +9,19 @@ body {
 
 #project { opacity: 0; transition: opacity,0.75s; }
 
+#weights {
+	font-size: 0.66em;
+    font-style: italic;
+    font-weight: 200;
+	margin-left: -2em;
+}
+
+#goalweight {
+	font-style: normal;
+	font-weight: 300;
+	padding-right: 0.5em;
+}
+
 #intro {
 	position: fixed;
 	left: 0;
@@ -408,4 +421,6 @@ wm {
 
 #designweight {
 	font-weight: 400;
+	font-style: normal;
+	font-size: 1.5em;
 }

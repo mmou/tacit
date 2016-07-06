@@ -39,6 +39,10 @@ class Versions
         pad.sketch.updateDrawing()
         @history.push(pad)
         pad.sketch.fea()
+        saved = Math.round(pad.sketch.structure.lp.obj/100)
+        if saved <= $("#goalweight").text().substr(1)
+            $("#goalweight").text("$"+saved)
+            $("#goaltitle").text("best saved")
 
     save: ->
         if @project.actionQueue.length > 1
