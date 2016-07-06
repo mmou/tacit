@@ -95,11 +95,12 @@
                 else
                     $("#steptext").html(stephtml)
                 $("#stepname").text("step "+window.tutorialidx+" of "+window.tutorialsteps.length)
+                return ""
             else
                 location.hash = location.hash.substr(2)
                 location.reload()
 
-        goalweights = {optimal: 160, auto: 170, manual: 180}
+        goalweights = {optimal: 160, auto: 200, manual: 270}
         $("#goalweight").text("$"+goalweights[window.tool.name])
 
         window.upNext = ->
@@ -113,89 +114,100 @@
             creationidx++
             return upOnlyRightAfterCreation
 
-        window.tutorialsteps = ["""
+    window.tutorialsteps = ["""
 
-        Welcome!
+    Welcome!
 
-        This is the interface you'll be using to draw structures for the next problem.
-        The <span style="color: #e14a4e; font-weight: 700;"> red arrows </span> show the load that your structure will have to support.
+    This is the interface you'll be using to draw structures for the next problem.
+    The <span style="color: #e14a4e; font-weight: 700;"> red arrows </span> show the load that your structure will have to support.
 
-        The <span style="color: #2eabe2; font-weight: 700;"> blue triangles </span> are where your structure will anchor to the ground.
+    The <span style="color: #2eabe2; font-weight: 700;"> blue triangles </span> are where your structure will anchor to the ground.
 
-        Your task is to design the structure that will connect those<span style="color: #e14a4e; font-weight: 700;"> red circles </span> to the <span style="color: #2eabe2; font-weight: 700;"> blue triangles </span> to support the load.
+    Your task is to design the structure that will connect those<span style="color: #e14a4e; font-weight: 700;"> red circles </span> to the <span style="color: #2eabe2; font-weight: 700;"> blue triangles </span> to support the load.
 
-        Your goal is to do so with the least possible material, as represented in the top bar by the cost to build your current structure.
+    Your goal is to do so with the least possible material, as represented in the top bar by the cost to build your current structure.
 
-        Because the loads are totally unsupported, the current cost is the rather expensive <span style="font-weight: 700;">$&infin;</span>.
+    Because the loads are totally unsupported, the current cost is the rather expensive <span style="font-weight: 700;">$&infin;</span>.
 
-        Let's fix that:
-        <script> $("#draw-btn").addClass("tutorial_highlight")\<\/script\>
+    Let's fix that:
+    <script> $("#draw-btn").addClass("tutorial_highlight")\<\/script\>
 
-        <b>Click the <span style="color: #807ec7; font-weight: 700;">purple-outlined draw button</span> on the left.</b>
-        <script> $("#draw-btn").click(upNext())\<\/script\>
-        """,
-        "
-        Great! Now <b>draw a beam from an anchor to a load</b> by either clicking on one and then on the other or by dragging between them
-        <script> $('#draw-btn').removeClass('tutorial_highlight')\<\/script\>
-        <script> window.triggers.beam = upNext()\<\/script\>",
-        # click the FEA button when you're ready to analyze it
-        "Looks like the loads aren't fully supported yet. Dotted lines indicate a beam with no force, either because the loads aren't supported yet or because no forces go through that beam in supporting the load.
+    <b>Click the <span style="color: #807ec7; font-weight: 700;">purple-outlined draw button</span> on the left.</b>
+    <script> $("#draw-btn").click(upNext())\<\/script\>
+    """,
+    "
+    Great! Now <b>draw a beam from an anchor to a load</b> by either clicking on one and then on the other or by dragging between them
+    <script> $('#draw-btn').removeClass('tutorial_highlight')\<\/script\>
+    <script> window.triggers.beam = upNext()\<\/script\>",
+    # click the FEA button when you're ready to analyze it
+    "Looks like the loads aren't fully supported yet. Dotted lines indicate a beam with no force, either because the loads aren't supported yet or because no forces go through that beam in supporting the load, and they don't count towards the cost of your structure.
 
-        \n\n<b>Draw a couple more beams</b> to create a working structure.
-        <script> window.triggers.solve = upNext()\<\/script\>",
-        "Great, a working structure! Only saved designs count towards your goal, so <b>click the SAVE button in the left of the blue status bar at the top of the screen</b>.
-        <script> window.triggers.save = upNext()\<\/script\>",
-        """
-        In the center of the status bar you can see the <b>cost</b> of your current structure. Cost is the sum of all beam's thicknesses times their lengths. You want this to be <i>as low as possible</i>.
+    \n\n<b>Draw a couple more beams</b> to create a working structure.
+    #{if window.tool.name is "manual" then "\n\nTo analyze the structure, <b>click the ANALYZE button</b> in the left toolbar." else ""}
+    <script> window.triggers.solve = upNext()\<\/script\>",
+    "Neat, a working structure. Only saved designs count towards your goal, so <b>click the SAVE button in the left of the blue status bar at the top of the screen</b>.
+    <script> window.triggers.save = upNext()\<\/script\>",
+    """
+    In the center of the status bar you can see the <b>cost</b> of your current structure. Cost is the sum of all beam's thicknesses times their lengths. You want this to be <i>as low as possible</i>.
 
-        To the right of the cost is your <b>time limit</b>.
+    To the right of the cost is your <b>time limit</b>.
 
-        <b> Click the eraser button to continue.</b>
-        <script> $("#erase-btn").addClass("tutorial_highlight")\<\/script\>
-        <script> $("#erase-btn").click(upNext())\<\/script\>""",
-        "
-        <script> $('#erase-btn').removeClass('tutorial_highlight')\<\/script\>
-        <b>Click any diagonal beams you've drawn to erase them.</b>
-        <script> window.triggers.erase = upNext()\<\/script\>",
-        """
-        You should have two vertical and one horizontal beam: <b>if not, draw them now</b>.
+    <b> Click the eraser button to continue.</b>
+    <script> $("#erase-btn").addClass("tutorial_highlight")\<\/script\>
+    <script> $("#erase-btn").click(upNext())\<\/script\>""",
+    "
+    <script> $('#erase-btn').removeClass('tutorial_highlight')\<\/script\>
+    <b>Click any diagonal beams you've drawn to erase them.</b>
+    <script> window.triggers.erase = upNext()\<\/script\>",
+    """
+    You should have two vertical and one horizontal beam: <b>if not, draw them now</b>.
 
-        To continue improving designs you'll often need to add <b>new nodes.</b>
+    To continue improving designs you'll often need to add <b>new nodes.</b>
 
-        Nodes can be created in empty space or by adding a joint to an existing beam.
+    Nodes can be created in empty space or by adding a joint to an existing beam.
 
-        <b>Create a beam from a corner to the empty space inside your current design.</b>
-        <script> window.triggers.floatnode = upNext()\<\/script\>""",
+    <b>Create a beam from a corner to the empty space inside your current design.</b>
+    <script> window.triggers.floatnode = upNext()\<\/script\>""",
 
-        "Great! Now <b>connect that node to the other three corners</b> and then <b>save your design</b>
-        <script> window.triggers.save = upNext()\<\/script\>",
-        # note that beam sizing handled automatically for optimal
-        """A design has three components: <i>topology</i> (the network of beams), <i>geometry</i> (the positions of nodes) and <i>sizing</i> (how large each beam is).
+    "Great! Now <b>connect that node to the other three corners</b> and then <b>save your design</b>
+    <script> window.triggers.save = upNext()\<\/script\>",
+    # note that beam sizing handled automatically for optimal
+    """A design has three components: <i>topology</i> (the network of beams), <i>geometry</i> (the positions of nodes) and <i>sizing</i> (how large each beam is). By making new beams, you've altered the topology of your first design.
 
-        By making new beams, you've altered the topology of your first design. Now, within that topology, we can change the geometry by moving the new node.
+    Now we can move the new node to change the geometry#{if window.tool.sized_beams then " and the beam sizing" else ""} of the design.
 
-        <b>Click on the hand button.</b>
-        <script> $('#move-btn').addClass('tutorial_highlight')\<\/script\>
-        <script> $('#move-btn').click(upNext())\<\/script\>""",
-        # RESIZE BEAMS AND STRESS COLORS TUTORIAL
-        # MENTION PURPLE ARROWS TUTORIAL
-        "
-        To the left of the cost is your <b>target cost</b>. To get your current structure to this target value will take some work.
+    <b>Click on the hand button.</b>
+    <script> $('#move-btn').addClass('tutorial_highlight')\<\/script\>
+    <script> $('#move-btn').click(upNext())\<\/script\>""",
+    "
+    <script> $('#move-btn').removeClass('tutorial_highlight')\<\/script\>
+    <b>Move the node by clicking it and dragging</b>.
+    <script> window.triggers.movenode = upNext()\<\/script\>",
+    "#{if window.tool.sized_beams then "Now let's resize the beams. <b>Click a beam and drag away from it</b> and the beam will change size.
+    <script> window.triggers.resizebeam = upNext()\<\/script\>
+    " else "<script>nextTutorialStep()\<\/script\>"}",
+    "#{if not window.tool.autocolor then "Now <b>analyze your new structure</b>.
+    <script> window.triggers.solve = upNext()\<\/script\>
+    " else "<script>nextTutorialStep()\<\/script\>"}",
+    """
+    #{if window.tool.showgrad then "The <span style='color: #807ec7; font-weight: 700;'>purple arrow</span> you see while moving the node indicates the direction to move the node to decrease cost, and the amount that the cost would decrease if moved in that direction; it's another tool for you to use." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. As you can see in the stress color bar, red and black beams are broken and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. \n\n A beam that is perfectly loaded is <i>orange</i>, tipping to red as soon as it fails."}
 
-        Move the node {and resize beams} until your cost is lower than the threshold, then <b>save</b>.
-        <script> window.triggers.beat = upNext()\<\/script\>",
-        """
-        Congratulations! Your saved design has met the starting goal, and the status bar will now tell you the cost of your best saved design.
+    To the left of the current cost is your <b>target cost</b>. To get your current structure to this target value will take some work.
 
-        We'll finish this tutorial by creating this deisgn ...
-        """,
-        "Now <b>click on another empty location.</b>",
-        "You've created a beam to nowhere! You could use Cmd-Z or the Undo button to remove it, but let's use the eraser tool. <b> Click on the eraser button </b>",
-        "erase a node.",
-        "draw from a beam",
-        "Erasing a node erases all beams attached to it"
-        # you'll have to resize some beams to meet the goal. [colormap etc..., save]
-        ]
+    Move the node#{if window.tool.sized_beams then " and/or resize beams" else ""} until your cost is lower than the threshold, then <b>save</b>.
+    <script> window.triggers.beat = upNext()\<\/script\>""",
+    """
+    Congratulations! Your saved design has met the starting goal, and the status bar will now tell you the cost of your best saved design.
+
+    We'll finish this tutorial by creating...(beam-interrupting, node erasing, harder threshold)
+    """,
+    "Now <b>click on another empty location.</b>",
+    "You've created a beam to nowhere! You could use Cmd-Z or the Undo button to remove it, but let's use the eraser tool. <b> Click on the eraser button </b>",
+    "erase a node.",
+    "draw from a beam",
+    "Erasing a node erases all beams attached to it"
+    # you'll have to resize some beams to meet the goal. [colormap etc..., save]
+    ]
 
     cm = window.tacit.colormap
     height = 100

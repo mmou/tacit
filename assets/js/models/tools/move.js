@@ -92,7 +92,13 @@
         };
         if (this.selectiontype === "node") {
           this.selection.moveto(pos);
+          if (window.triggers.movenode != null) {
+            window.triggers.movenode();
+          }
         } else if (this.selectiontype === "beam") {
+          if (window.triggers.resizebeam != null) {
+            window.triggers.resizebeam();
+          }
           source = this.selection.source;
           target = this.selection.target;
           if (source.y > target.y || (source.y === target.y && source.x > target.x)) {
@@ -105,7 +111,7 @@
           b_x = source.x - target.x;
           b_y = source.y - target.y;
           orthogonal = -(b_x * d_y - b_y * d_x) / this.selection.L;
-          orthogonal *= abs(orthogonal) / 10;
+          orthogonal *= abs(orthogonal) / 5;
           if (orthogonal < 0) {
             orthogonal = orthogonal / 2;
           }

@@ -240,7 +240,7 @@
 
       function Beam(pt1, pt2, size) {
         var pt, pts, _ref1, _ref2;
-        this.size = size != null ? size : 200;
+        this.size = size != null ? size : 150;
         pts = [pt1, pt2];
         _ref1 = (function() {
           var _i, _len, _results;

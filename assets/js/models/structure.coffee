@@ -80,7 +80,7 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             (new Node(pt)).id
 
     class Beam
-        constructor: (pt1, pt2, @size=200) ->
+        constructor: (pt1, pt2, @size=150) ->
             pts = [pt1, pt2]
             [@source, @target] = (nodeIDLookup[getNodeIDX(pt)] for pt in pts)
             # determine physical characteristics
