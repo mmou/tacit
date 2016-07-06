@@ -19,8 +19,15 @@ colormap = d3.scale.linear()
 window.tacit ?= {}
 window.tacit.colormap = colormap
 
+class dummyEasel
+    constructor: (@versions, @i) -> null
+    mouseDown: (easel, eventType, mouseLoc, object) -> false
+    allowPan: -> false
+    mouseUp: (easel, eventType, mouseLoc, object) -> false
+    mouseMove: (easel, eventType, mouseLoc, object) -> false
+
 class Sketch
-    constructor: (@pad, htmlLoc="body", structure, @height, @width, scale, translate) ->
+    constructor: (@pad, htmlLoc="body", structure, @height, @width, scale, translate, feapad=true) ->
         @showforce = true
         @showzero = false
         @transitioning = false
@@ -104,6 +111,10 @@ class Sketch
         gridBox.prop('checked', true)
         baseLineBox = $('input[name=baseLine]')
         baseLineBox.prop('checked', true)
+        if feapad and not window.feapad
+            window.feapad = true
+            deasel = new dummyEasel()
+            @feapad = new tacit.Pad(deasel, "#FEAview", height, width, @structure, feapad=false)
 
     defaultZoom: ->
         [mins, maxs, means] = [{}, {}, {}]
@@ -114,8 +125,6 @@ class Sketch
         scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
         translate = [@width/2 - scale*(maxs.x+mins.x)/2,
                      @height/2- scale*(maxs.y+mins.y)/2]
-        console.log maxs
-        console.log mins
         @rescale(translate, scale)
 
     rescale: (translate, scale, draw=true, force=true) ->
@@ -219,7 +228,7 @@ class Sketch
             .on("mouseup", (d) ->
                 easel.mouseUp(easel, "node", d3.mouse(this), d))
           .transition()
-            .duration(150)
+            .duration(50)
             .ease("elastic")
             .attr("r", @nodeSize/@scale)
         @nodes.exit().transition()
@@ -249,9 +258,16 @@ class Sketch
                 @pad.easel.weightDisplay.innerHTML = "$&infin;"
                 if window.helper? and not @structure.lp.undersized
                     window.helper.attr("opacity", 0.3)
-
-        @links.attr("stroke", (d) => if d.F > 1e-3 then colormap(d.F/d.size) else "#9c7b70")
-              .attr("stroke-dasharray", (d) => if d.F > 1e-3 then null else 10/@scale+","+10/@scale)
+        if @feapad?
+            @feapad.load(@structure)
+            @feapad.sketch.updateDrawing()
+            @feapad.sketch.fea()
+            @links.attr("stroke", "#9c7b70")
+                  .attr("stroke-dasharray", null)
+            @feapad.sketch.defaultZoom()
+        else
+            @links.attr("stroke", (d) => if d.F > 1e-3 then colormap(d.F/d.size) else "#9c7b70")
+                  .attr("stroke-dasharray", (d) => if d.F > 1e-3 then null else 10/@scale+","+10/@scale)
 
     slowDraw: ->
         @structure.solve()
@@ -268,7 +284,7 @@ class Sketch
                   .duration(50)
                   .ease("elastic")
                       .attr("stroke-opacity", (d) => 0.9 + 0.1*(@selectedLinks.indexOf(d)+1 > 0))
-                .duration(150)
+                .duration(50)
                 .ease("elastic")
                     .attr("stroke-width",  (d) => if d.size > 1e-3 then  sqrt(d.size/10) else 1)
 
@@ -276,7 +292,7 @@ class Sketch
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
               .transition()
-                .duration(150)
+                .duration(50)
                 .ease("elastic")
                     .attr("stroke-width",  (d) => max(2, 0.75 + sqrt(d.size/10)))
 
@@ -284,7 +300,7 @@ class Sketch
               .attr("cy", (d) => d.y)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
               .transition()
-                .duration(150)
+                .duration(50)
                 .ease("elastic")
                     .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 

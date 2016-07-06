@@ -23,6 +23,9 @@ window.sign = ->
 
     window.project.name = "sign"
 
+    goalweights = {optimal: 350, auto: 400, manual: 450}
+    $("#goalweight").text("$"+goalweights[window.tool.name])
+
     return structure
 
 
@@ -47,5 +50,7 @@ window.bridge = ->
         text: "A bridge fixed at both ends."
 
     window.project.name = "bridge"
+    goalweights = {optimal: 750, auto: 850, manual: 950}
+    $("#goalweight").text("$"+goalweights[window.tool.name])
 
     return structure

@@ -45,11 +45,13 @@
     #     location.hash = location.hash.substr(1).
 
     if location.hash[1] is "m"
-        window.tool = {sized_beams: true, autocolor: false, showgrad: false}
+        window.tool = {name: "manual", sized_beams: true, autocolor: false, showgrad: false}
     else if location.hash[1] is "a"
-        window.tool = {sized_beams: true, autocolor: true, showgrad: false}
+        window.tool = {name: "auto", sized_beams: true, autocolor: true, showgrad: false}
+        window.feapad = true
     else if location.hash[1] is "o"
-        window.tool = {sized_beams: false, autocolor: true, showgrad: true}
+        window.tool = {name: "optimal", sized_beams: false, autocolor: true, showgrad: true}
+        window.feapad = true
 
 
     if location.hash[2] is "b"
@@ -195,8 +197,11 @@
 
 
 
-      <div id="PadView" class="col-xs-9">
+      <div id="PadView" class="col-xs-1">
       </div>
+      <div id="FEAview" class="col-xs-1">
+      </div>
+
 
 
     </div>

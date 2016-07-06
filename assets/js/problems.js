@@ -5,7 +5,7 @@
   gd = 1.65;
 
   window.sign = function() {
-    var i, node, structure, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    var goalweights, i, node, structure, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
     structure = new tacit.Structure;
     new structure.Node({
       x: 20,
@@ -49,11 +49,17 @@
       return window.helper.append("path").attr("d", "M 250.6446,866.99644 186.66003,758.22268 312.96581,757.2612 250.6446,866.99644 z");
     };
     window.project.name = "sign";
+    goalweights = {
+      optimal: 350,
+      auto: 400,
+      manual: 450
+    };
+    $("#goalweight").text("$" + goalweights[window.tool.name]);
     return structure;
   };
 
   window.bridge = function() {
-    var hg, i, node, structure, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    var goalweights, hg, i, node, structure, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
     hg = 50;
     structure = new tacit.Structure;
     new structure.Node({
@@ -107,6 +113,12 @@
       text: "A bridge fixed at both ends."
     };
     window.project.name = "bridge";
+    goalweights = {
+      optimal: 750,
+      auto: 850,
+      manual: 950
+    };
+    $("#goalweight").text("$" + goalweights[window.tool.name]);
     return structure;
   };
 
