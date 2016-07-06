@@ -111,6 +111,7 @@
       this.showforce = true;
       this.showzero = false;
       this.transitioning = false;
+      this.drawscale = 6;
       htmlObj = d3.select(htmlLoc);
       if (structure != null) {
         autozoom = true;
@@ -175,6 +176,7 @@
         window.feapad = true;
         deasel = new dummyEasel();
         this.feapad = new tacit.Pad(deasel, "#FEAview", height, width, this.structure, feapad = false);
+        this.feapad.showforce = false;
         window.feapadpad = this.feapad;
       }
     }
@@ -360,7 +362,9 @@
         return this.feapad.sketch.defaultZoom();
       } else {
         if (!window.tool.autocolor && this.height > 100) {
+          this.showforce = false;
           this.rect.attr("fill", "rgba(255,255,255,1)").attr("stroke", "#2eabe2");
+          this.baseLine.attr("stroke", 0);
         }
         return this.links.attr("stroke", function(d) {
           if (d.F > 1e-3) {
@@ -387,7 +391,7 @@
       if (window.tool.autocolor) {
         this.fea();
       }
-      this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
+      this.dragline.attr("stroke-width", 10 / this.drawscale).attr("stroke-dasharray", 10 / this.drawscale + "," + 10 / this.drawscale);
       this.links.attr("x1", function(d) {
         return d.source.x;
       }).attr("x2", function(d) {
@@ -425,11 +429,11 @@
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(50).ease("elastic").attr("r", function(d) {
-        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
+        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
       });
       this.fixed.attr("d", function(d) {
         var isc;
-        isc = _this.nodeSize * 3.1 / 9 / _this.scale;
+        isc = _this.nodeSize * 3.1 / 9 / _this.drawscale;
         return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
@@ -454,7 +458,7 @@
           }
           return _results;
         })()) > 0) {
-          return 8 / _this.scale * _this.showforce;
+          return 8 / _this.drawscale * _this.showforce;
         } else {
           return 0;
         }
@@ -462,16 +466,16 @@
       return this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
-        return d.x + 1000 / _this.scale * d.grad.x * w;
+        return d.x + 1000 / _this.drawscale * d.grad.x * w;
       }).attr("y1", function(d) {
         return d.y;
       }).attr("y2", function(d) {
-        return d.y + 1000 / _this.scale * d.grad.y * w;
+        return d.y + 1000 / _this.drawscale * d.grad.y * w;
       }).attr("stroke-width", function(d) {
         var l;
         if ((d.immovable != null) && d.immovable) {
           return 0;
-        } else if (50 / _this.scale * dist((function() {
+        } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
           _results = [];
@@ -481,7 +485,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.drawscale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
@@ -495,7 +499,7 @@
       this.structure.solvegrad(this.selectedNodes);
       this.resize();
       w = this.structure.nodeList.length / this.structure.lp.obj;
-      this.dragline.attr("stroke-width", 10 / this.scale).attr("stroke-dasharray", 10 / this.scale + "," + 10 / this.scale);
+      this.dragline.attr("stroke-width", 10 / this.drawscale).attr("stroke-dasharray", 10 / this.drawscale + "," + 10 / this.drawscale);
       this.links.attr("x1", function(d) {
         return d.source.x;
       }).attr("x2", function(d) {
@@ -531,11 +535,11 @@
       return this.grads.attr("x1", function(d) {
         return d.x;
       }).attr("x2", function(d) {
-        return d.x + 1000 / _this.scale * d.grad.x * w;
+        return d.x + 1000 / _this.drawscale * d.grad.x * w;
       }).attr("y1", function(d) {
         return d.y;
       }).attr("y2", function(d) {
-        return d.y + 1000 / _this.scale * d.grad.y * w;
+        return d.y + 1000 / _this.drawscale * d.grad.y * w;
       });
     };
 
@@ -563,11 +567,11 @@
       this.nodes.classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).attr("r", function(d) {
-        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
+        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
       });
       this.fixed.attr("d", function(d) {
         var isc;
-        isc = _this.nodeSize * 3.1 / 9 / _this.scale;
+        isc = _this.nodeSize * 3.1 / 9 / _this.drawscale;
         return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
@@ -584,7 +588,7 @@
           }
           return _results;
         })()) > 0) {
-          return 8 / _this.scale * _this.showforce;
+          return 8 / _this.drawscale * _this.showforce;
         } else {
           return 0;
         }
@@ -593,7 +597,7 @@
         var dim, l;
         if ((d.immovable != null) && d.immovable) {
           return 0;
-        } else if (50 / _this.scale * dist((function() {
+        } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
           _results = [];
@@ -603,7 +607,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.drawscale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }
@@ -626,7 +630,7 @@
       this.nodes.classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(50).attr("r", function(d) {
-        return _this.nodeSize / _this.scale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
+        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
       });
       return this.grads.attr("x1", function(d) {
         return d.x;
@@ -637,14 +641,14 @@
       }).attr("y2", function(d) {
         return d.y;
       }).attr("stroke-width", 0).transition().duration(50).attr("x2", function(d) {
-        return d.x + 1000 / _this.scale * d.grad.x * w;
+        return d.x + 1000 / _this.drawscale * d.grad.x * w;
       }).attr("y2", function(d) {
-        return d.y + 1000 / _this.scale * d.grad.y * w;
+        return d.y + 1000 / _this.drawscale * d.grad.y * w;
       }).attr("stroke-width", function(d) {
         var dim, l;
         if ((d.immovable != null) && d.immovable) {
           return 0;
-        } else if (50 / _this.scale * dist((function() {
+        } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
           _results = [];
@@ -654,7 +658,7 @@
           }
           return _results;
         })()) * w > 0.125) {
-          return 10 / _this.scale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
+          return 10 / _this.drawscale * (window.tool.showgrad && (_this.selectedNodes.indexOf(d) >= 0));
         } else {
           return 0;
         }

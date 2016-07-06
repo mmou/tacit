@@ -31,6 +31,7 @@ class Sketch
         @showforce = true
         @showzero = false
         @transitioning = false
+        @drawscale = 6
 
         htmlObj = d3.select(htmlLoc)
 
@@ -115,6 +116,7 @@ class Sketch
             window.feapad = true
             deasel = new dummyEasel()
             @feapad = new tacit.Pad(deasel, "#FEAview", height, width, @structure, feapad=false)
+            @feapad.showforce = false
             window.feapadpad = @feapad
 
     defaultZoom: ->
@@ -270,8 +272,10 @@ class Sketch
             @feapad.sketch.defaultZoom()
         else
             if not window.tool.autocolor and @height > 100
+                @showforce = false
                 @rect.attr("fill", "rgba(255,255,255,1)")
                      .attr("stroke", "#2eabe2")
+                @baseLine.attr("stroke", 0)
             @links.attr("stroke", (d) => if d.F > 1e-3 then colormap(d.F/d.size) else "#9c7b70")
                   .attr("stroke-dasharray", (d) => if d.F > 1e-3 then null else 10/@scale+","+10/@scale)
 
@@ -281,8 +285,8 @@ class Sketch
         w = @structure.nodeList.length/@structure.lp.obj
         @fea() if window.tool.autocolor
 
-        @dragline.attr("stroke-width", 10/@scale)
-                 .attr("stroke-dasharray", 10/@scale+","+10/@scale)
+        @dragline.attr("stroke-width", 10/@drawscale)
+                 .attr("stroke-dasharray", 10/@drawscale+","+10/@drawscale)
 
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
@@ -308,10 +312,10 @@ class Sketch
               .transition()
                 .duration(50)
                 .ease("elastic")
-                    .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
+                    .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
         @fixed.attr("d", (d) =>
-            isc = @nodeSize*3.1/9/@scale
+            isc = @nodeSize*3.1/9/@drawscale
             """M #{-5*isc+d.x},#{-3*isc+d.y}
                l #{5*isc},#{8.6*isc}
                l #{5*isc},#{-8.6*isc} Z""")
@@ -320,16 +324,16 @@ class Sketch
         @forces.attr("x2", (d) => d.x).attr("x1", (d) => d.x - d.force.x/4)
                .attr("y2", (d) => d.y).attr("y1", (d) => d.y - d.force.y/4)
                .attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
-                                               8/@scale*@showforce
+                                               8/@drawscale*@showforce
                                             else 0)
 
-        @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
-              .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
+        @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@drawscale*d.grad.x*w)
+              .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@drawscale*d.grad.y*w)
               .attr("stroke-width", (d) =>
                     if d.immovable? and d.immovable
                         0
-                    else if 50/@scale*dist(l for d, l of d.grad)*w > 0.125
-                        10/@scale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
+                    else if 50/@drawscale*dist(l for d, l of d.grad)*w > 0.125
+                        10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
                     else
                         0)
 
@@ -339,8 +343,8 @@ class Sketch
         @resize()
         w = @structure.nodeList.length/@structure.lp.obj
 
-        @dragline.attr("stroke-width", 10/@scale)
-                 .attr("stroke-dasharray", 10/@scale+","+10/@scale)
+        @dragline.attr("stroke-width", 10/@drawscale)
+                 .attr("stroke-dasharray", 10/@drawscale+","+10/@drawscale)
 
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
@@ -353,8 +357,8 @@ class Sketch
         @forces.attr("x2", (d) => d.x).attr("x1", (d) => d.x - d.force.x/4)
                .attr("y2", (d) => d.y).attr("y1", (d) => d.y - d.force.y/4)
 
-        @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
-              .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
+        @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@drawscale*d.grad.x*w)
+              .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@drawscale*d.grad.y*w)
 
     resize: ->
         w = @structure.nodeList.length/@structure.lp.obj
@@ -367,10 +371,10 @@ class Sketch
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
-            .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
+            .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
         @fixed.attr("d", (d) =>
-            isc = @nodeSize*3.1/9/@scale
+            isc = @nodeSize*3.1/9/@drawscale
             """M #{-5*isc+d.x},#{-3*isc+d.y}
                l #{5*isc},#{8.6*isc}
                l #{5*isc},#{-8.6*isc} Z""")
@@ -378,14 +382,14 @@ class Sketch
                   @selectedNodes.indexOf(d)+1)
 
         @forces.attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
-                                               8/@scale*@showforce
+                                               8/@drawscale*@showforce
                                             else 0)
 
         @grads.attr("stroke-width", (d) =>
                         if d.immovable? and d.immovable
                             0
-                        else if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
-                            10/@scale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
+                        else if 50/@drawscale*dist(l for dim, l of d.grad)*w > 0.125
+                            10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
                         else
                             0)
     animateSelection: ->
@@ -400,7 +404,7 @@ class Sketch
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
             .transition()
               .duration(50)
-                  .attr("r", (d) => @nodeSize/@scale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
+                  .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
 
         @grads.attr("x1", (d) => d.x)
               .attr("y1", (d) => d.y)
@@ -409,13 +413,13 @@ class Sketch
               .attr("stroke-width", 0)
               .transition()
                 .duration(50)
-                    .attr("x2", (d) => d.x + 1000/@scale*d.grad.x*w)
-                    .attr("y2", (d) => d.y + 1000/@scale*d.grad.y*w)
+                    .attr("x2", (d) => d.x + 1000/@drawscale*d.grad.x*w)
+                    .attr("y2", (d) => d.y + 1000/@drawscale*d.grad.y*w)
                     .attr("stroke-width", (d) =>
                                 if d.immovable? and d.immovable
                                     0
-                                else if 50/@scale*dist(l for dim, l of d.grad)*w > 0.125
-                                    10/@scale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
+                                else if 50/@drawscale*dist(l for dim, l of d.grad)*w > 0.125
+                                    10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
                                 else
                                     0)
 
