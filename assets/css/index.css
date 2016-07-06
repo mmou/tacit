@@ -97,6 +97,33 @@ form.navbar-form {
   transition-property: background-color, color;
 }
 
+.tutorial_highlight {
+    border: 6px solid #807ec7 !important;
+    stroke: #807ec7 !important;
+}
+
+#tutorialpane {
+	position: fixed;
+	background: white;
+	width: 350px;
+	height: 100%;
+	right: 0;
+	padding-top: 1.5em;
+}
+
+#tutorialpane br {
+	padding-top: 0.3em;
+}
+
+.tutorial_highlight .node {
+	stroke-width: 6px;
+    stroke-dasharray: 3px;
+}
+
+.tutorial_highlight .selectablelinks {
+	stroke-width: 9px;
+}
+
 #save-btn {
 	border: 0;
 }

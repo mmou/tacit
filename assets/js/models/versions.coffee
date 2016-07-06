@@ -8,6 +8,8 @@ class dummyEasel
             window.advance_tutorial()
         structure = new tacit.Structure(@versions.history[@i].sketch.structure)
         @versions.project.easel.pad.load(structure)
+        @versions.project.easel.pad.sketch.feapad = window.feapadpad
+        console.log @versions.project.easel.pad.sketch.feapad?
         @versions.project.easel.pad.sketch.updateDrawing()
         @versions.project.easel.pad.sketch.fea()
         @versions.project.onChange()
@@ -31,8 +33,7 @@ class Versions
         easel = new dummyEasel(this, @history.length)
         versionObj.append("div").attr("id", "versvg"+@history.length).classed("versvg", true)
         easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0]
-        pad = new tacit.Pad(easel, "#versvg"+@history.length,
-                            50, 50, structure)
+        pad = new tacit.Pad(easel, "#versvg"+@history.length, 50, 50, structure)
         pad.load(structure)
         pad.sketch.nodeSize = 0
         pad.sketch.showforce = false

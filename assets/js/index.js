@@ -13,10 +13,11 @@ function initialize(structure) {
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 110);
 	$("#HistoryView").css("max-width", 60*Math.floor(($(window).width()-660)/60))
+	var offset = window.tutorial ? 510 : 200;
 	if (window.feapad)
-		var width = parseInt($(window).width() - 200);
+		var width = parseInt($(window).width() - offset);
 	else
-		var width = parseInt($(window).width()/2 - 100);
+		var width = parseInt($(window).width()/2 - offset/2);
 	window.project = {"name": "untitled", "onChange": function(){}};
 	global_weight = document.getElementById("designweight")
 	easel = new tacit.Easel(window.project, "#PadView",

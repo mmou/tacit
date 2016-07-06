@@ -21,6 +21,8 @@
       }
       structure = new tacit.Structure(this.versions.history[this.i].sketch.structure);
       this.versions.project.easel.pad.load(structure);
+      this.versions.project.easel.pad.sketch.feapad = window.feapadpad;
+      console.log(this.versions.project.easel.pad.sketch.feapad != null);
       this.versions.project.easel.pad.sketch.updateDrawing();
       this.versions.project.easel.pad.sketch.fea();
       this.versions.project.onChange();

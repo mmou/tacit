@@ -115,6 +115,7 @@ class Sketch
             window.feapad = true
             deasel = new dummyEasel()
             @feapad = new tacit.Pad(deasel, "#FEAview", height, width, @structure, feapad=false)
+            window.feapadpad = @feapad
 
     defaultZoom: ->
         [mins, maxs, means] = [{}, {}, {}]
@@ -266,6 +267,9 @@ class Sketch
                   .attr("stroke-dasharray", null)
             @feapad.sketch.defaultZoom()
         else
+            if not window.tool.autocolor and @height > 100
+                @rect.attr("fill", "rgba(255,255,255,1)")
+                     .attr("stroke", "#2eabe2")
             @links.attr("stroke", (d) => if d.F > 1e-3 then colormap(d.F/d.size) else "#9c7b70")
                   .attr("stroke-dasharray", (d) => if d.F > 1e-3 then null else 10/@scale+","+10/@scale)
 

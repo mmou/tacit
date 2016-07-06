@@ -175,6 +175,7 @@
         window.feapad = true;
         deasel = new dummyEasel();
         this.feapad = new tacit.Pad(deasel, "#FEAview", height, width, this.structure, feapad = false);
+        window.feapadpad = this.feapad;
       }
     }
 
@@ -355,6 +356,9 @@
         this.links.attr("stroke", "#9c7b70").attr("stroke-dasharray", null);
         return this.feapad.sketch.defaultZoom();
       } else {
+        if (!window.tool.autocolor && this.height > 100) {
+          this.rect.attr("fill", "rgba(255,255,255,1)").attr("stroke", "#2eabe2");
+        }
         return this.links.attr("stroke", function(d) {
           if (d.F > 1e-3) {
             return colormap(d.F / d.size);

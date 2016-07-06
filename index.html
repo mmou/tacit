@@ -39,29 +39,104 @@
 
     <script type="text/coffeescript">
 
-    # if location.hash[1] is "t"
-    #     location.href = location.hash[1]+location.hash[2]+".html"
-    # else if location.hash[1] is "n"
-    #     location.hash = location.hash.substr(1).
+    if location.hash[1] is "t"
+        location.hash = location.hash.substr(2)
+        # gd = 1.7
+        # structure = new tacit.Structure
+        # new structure.Node({x:20, y:gd})
+        # new structure.Node({x:60, y:gd})
+        # new structure.Beam({x:20, y:60}, {x:60, y:60})
+        # structure.nodeList[i].fixed.y = true for i in [0,1]
+        # structure.nodeList[i].fixed.x = true for i in [0,1]
+        # structure.nodeList[i].force.x = 40 for i in [2,3]
+        # structure.nodeList[i].force.y = -10 for i in [2,3]
+        # node.immovable = true for node in structure.nodeList
+        # window.problem_description =
+        #     title: "tutorial"
+        #     text: "Let's build a quick scaffold."
+        # window.tutorial = true
+    else if location.hash[1] is "n"
+        location.hash = location.hash.substr(2)
 
     if location.hash[1] is "m"
         window.tool = {name: "manual", sized_beams: true, autocolor: false, showgrad: false}
+        $("#featitle").css("display", "inherit")
+        $("#colorbar").css("display", "inherit")
     else if location.hash[1] is "a"
         window.tool = {name: "auto", sized_beams: true, autocolor: true, showgrad: false}
         window.feapad = true
+        $("#colorbar").css({display: "inherit", left: "1.5em", top: "18em", right: null})
     else if location.hash[1] is "o"
         window.tool = {name: "optimal", sized_beams: false, autocolor: true, showgrad: true}
         window.feapad = true
 
-
-    if location.hash[2] is "b"
-        structure = bridge()
-    else if location.hash[2] is "s"
-        structure = sign()
+    if not window.tutorial
+        $("#tutorialpane").css("display", "none")
+        if location.hash[2] is "b"
+            structure = bridge()
+        else if location.hash[2] is "s"
+            structure = sign()
+    else
+        location.hash = "t"+location.hash.substr(1)
 
     initialize(structure)
     $("#introtitle").text(window.problem_description.title)
     $("#introtext").text(window.problem_description.text)
+
+    window.tutorialidx = 0
+    window.nextTutorialStep = ->
+        window.tutorialidx++
+        if window.tutorialidx <= window.tutorialsteps.length
+            $("#steptext").html("<p>"+window.tutorialsteps[window.tutorialidx-1].replace(/\n\n/gi, "\n<p>"))
+            $("#stepname").text("step "+window.tutorialidx+" of "+window.tutorialsteps.length)
+        else
+            location.hash = location.hash.substr(2)
+            location.reload()
+
+
+    window.upNext = ->
+
+    window.tutorialsteps = ["""
+
+    Welcome!
+
+    This is the interface you'll be using to draw structures for the next problem.
+    The <span style="color: #e14a4e; font-weight: 700;"> red arrows </span> show the load that your structure will have to support.
+
+    The <span style="color: #2eabe2; font-weight: 700;"> blue triangles </span> are where your structure will anchor to the ground.
+
+    Your task is to design the structure that will connect those<span style="color: #e14a4e; font-weight: 700;"> red circles </span> to the <span style="color: #2eabe2; font-weight: 700;"> blue triangles </span> to support the load.
+
+    Your goal is to do so with the least possible material, as represented in the top bar by the cost to build your current structure.
+
+    Because the loads are totally unsupported, the current cost is the rather expensive <span style="font-weight: 700;">$&infin;</span>.
+
+    Let's fix that:
+    <script> $("#draw-btn").addClass("tutorial_highlight")\<\/script\>
+
+    <i>Click the <span style="color: #807ec7; font-weight: 700;">purple-outlined draw button</span> on the left.</i>
+    """,
+    "
+    Great! Now <i>draw a beam from an anchor to a load</i> by either clicking on one and then on the other or by dragging between them",
+    # click the FEA button here?
+    "Looks like the loads aren't fully supported yet. <i>Draw a couple more beams</i> to create a working structure.",
+    # click the FEA button when you're ready to analyze it
+    "Great, a working structure! Only saved designs count towards your goal, so <i>click the SAVE button in the upper-left corner</i>.",
+    # if manual or auto:
+    "Next to the cost you can see a target cost. To get your current structure to this target value, you'll have to resize some beams. [colormap etc..., save]",
+    # endif
+    """
+    Congratulations! Your saved design has met the starting goal, and the title bar will now tell you the cost of your best design.
+
+    To continue improving a design you'll often need to add new nodes. Nodes are created either when a new beam is started or ends in empty space, or when a new joint is adding to an existing beam by clicking on it with the draw tool.
+
+    Let's first create a node in empty space: <i>click somewhere without a node or beam</i>.
+    """,
+    "Now <i>click on another empty location.</i>",
+    "You've created a beam to nowhere! You could use Cmd-Z or the Undo button to remove it, but let's use the eraser tool. <i> Click on the eraser button </i>",
+    "Click on a node.",
+    "Erasing a node erases all beams attached to it"
+    ]
 
     cm = window.tacit.colormap
     height = 100
@@ -147,8 +222,8 @@
 </nav>
 
 <div id="ProjectView" class="container-fluid">
-
-    <div id="EaselView" class="row">
+    <div class="row">
+    <div id="EaselView">
       <div id="ToolbarView" class="notyet col-xs-1">
         <button type="button" class="btn btn-default toolbar-btn" id="select-btn" data-toggle="tooltip" data-placement="right" title="Select" style="display:none">
             <img height="40px" width="40px" src="assets/resources/button-images/select.png"></button>
@@ -163,17 +238,9 @@
             <img height="40px" src="assets/resources/button-images/load.png"></button> -->
 
         <div style="margin-top: 25px; text-align: right;">
-            <div id="colorbar" style=" margin-right: 15px;"><h2>stress</h2>
-            <span style="float: left; font-size: 0.75em; padding-right: 5px;">
-                <div style="margin-top: -6px;">2 &#x3c3; <sub>max</sub></div>
-                <div style="padding-top: 24px;"> &#x3c3; <sub>max</sub></div>
-                <div style="padding-top: 32px;">0</div>
-            </span>
-            </div>
-
         <div id="textbtns" style="margin-top: 30px;">
             <button id="zoom-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="show structure">ZOOM</button>
-            <button id="fea-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="analyze structure">FEA</button>
+            <button id="fea-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="analyze structure" style="font-size: 0.7em;">ANALYZE</button>
         </div>
 
 <!--
@@ -201,6 +268,19 @@
       </div>
       <div id="FEAview" class="col-xs-1">
       </div>
+      <div id="featitle" style="display: none; position: absolute; left: 50%; padding: 1em; font-size: 2em; opacity: 0.5; margin-left: 2em;"><h1>structural analysis</h1></div>
+      <div id="colorbar" style="display: none;  position: absolute; right: 40px; padding: 1em;"><h2>stress</h2>
+      <span style="float: left; font-size: 0.75em; padding-right: 5px;">
+          <div style="margin-top: -6px;">2 &#x3c3; <sub>max</sub></div>
+          <div style="padding-top: 24px;"> &#x3c3; <sub>max</sub></div>
+          <div style="padding-top: 32px;">0</div>
+      </span>
+      </div>
+      </div>
+      <div id="tutorialpane" class="col-xs-1">
+          <h1 id="stepname"></h1>
+          <div id="steptext">
+     </div></div>
 
 
 
@@ -228,12 +308,12 @@
 
 </div>
 </div>
-<div id="intro" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); startClock();">
+<div id="intro" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); startClock(); if (window.tutorial && window.tutorialidx == 0) nextTutorialStep();">
     <h1 id="introtitle"></h1>
 
     <div id="introtext"></div>
 
-    <div id="introhelp">Click to begin.</div>
+    <div id="introhelp">click to begin</div>
 </div>
 </body>
 
