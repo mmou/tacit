@@ -41,7 +41,7 @@
         this.pointer -= 1;
         structure = new tacit.Structure(this.project.actionQueue[this.pointer]);
         this.project.easel.pad.load(structure);
-        this.versions.project.easel.pad.sketch.feapad = window.feapadpad;
+        this.project.easel.pad.sketch.feapad = window.feapadpad;
         this.project.easel.pad.sketch.updateDrawing();
         this.project.easel.pad.sketch.dragline.attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", 0);
         return this.project.easel.currentTool.drawStart = false;
@@ -53,7 +53,7 @@
         window.log += "\n# redo";
         this.pointer += 1;
         this.project.easel.pad.load(this.project.actionQueue[this.pointer]);
-        this.versions.project.easel.pad.sketch.feapad = window.feapadpad;
+        this.project.easel.pad.sketch.feapad = window.feapadpad;
         return this.project.easel.pad.sketch.updateDrawing();
       }
     };

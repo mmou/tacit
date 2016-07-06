@@ -123,6 +123,8 @@ function initialize(structure) {
   		}
 	});
 	$("#export-btn").click(function() {
+		if (window.tutorial)
+			return nextTutorialStep();
 		if (location.hash[1] === "t" ) {
 			location.hash = location.hash.substr(2)
 			console.log(location.hash)
