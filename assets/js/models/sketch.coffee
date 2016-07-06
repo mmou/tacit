@@ -123,7 +123,7 @@ class Sketch
             list = (n[d] for n in @structure.nodeList)
             mins[d] = min(list...)
             maxs[d] = max(list...)
-        scale = 0.75*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+        scale = 0.6*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
         translate = [@width/2 - scale*(maxs.x+mins.x)/2,
                      @height/2- scale*(maxs.y+mins.y)/2]
         @rescale(translate, scale)

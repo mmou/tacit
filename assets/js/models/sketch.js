@@ -198,7 +198,7 @@
         mins[d] = min.apply(null, list);
         maxs[d] = max.apply(null, list);
       }
-      scale = 0.75 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
+      scale = 0.6 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
       translate = [this.width / 2 - scale * (maxs.x + mins.x) / 2, this.height / 2 - scale * (maxs.y + mins.y) / 2];
       return this.rescale(translate, scale);
     };

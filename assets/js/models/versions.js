@@ -72,7 +72,8 @@
       saved = Math.round(pad.sketch.structure.lp.obj / 100);
       if (saved <= $("#goalweight").text().substr(1)) {
         $("#goalweight").text("$" + saved);
-        return $("#goaltitle").text("best saved");
+        $("#goaltitle").text("best saved");
+        return window.triggers.beat();
       }
     };
 
