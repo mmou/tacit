@@ -4,7 +4,8 @@ class dummyEasel
     constructor: (@versions, @i) -> null
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        window.triggers.load()
+        if window.triggers.load?
+            window.triggers.load()
         structure = new tacit.Structure(@versions.history[@i].sketch.structure)
         @versions.project.easel.pad.load(structure)
         @versions.project.easel.pad.sketch.feapad = window.feapadpad
@@ -43,10 +44,12 @@ class Versions
         if saved <= $("#goalweight").text().substr(1)
             $("#goalweight").text("$"+saved)
             $("#goaltitle").text("best saved")
-            window.triggers.beat()
+            if window.triggers.beat?
+                window.triggers.beat()
 
     save: ->
-        window.triggers.save()
+        if window.triggers.save?
+            window.triggers.save()
         if @project.actionQueue.length > 1
             @newVersion()
         currently_at = @project.actionQueue[undoredo.pointer]

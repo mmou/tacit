@@ -57,7 +57,9 @@
           new easel.pad.sketch.structure.Beam(pos, object.target);
           object["delete"]();
         } else if (eventType !== "node") {
-          window.triggers.floatnode();
+          if (window.triggers.floatnode != null) {
+            window.triggers.floatnode();
+          }
           pos = {
             x: mouseLoc[0],
             y: mouseLoc[1]
@@ -74,7 +76,9 @@
           easel.pad.sketch.dragline.attr("x1", pos.x).attr("x2", pos.x).attr("y1", pos.y).attr("y2", pos.y);
           easel.pad.sketch.updateDrawing();
           this.drawStart = null;
-          return window.triggers.beam();
+          if (window.triggers.beam != null) {
+            return window.triggers.beam();
+          }
         }
       }
     },

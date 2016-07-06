@@ -33,7 +33,8 @@ eraseTool =
         @allowPan = true
         @dragging = false
         if easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length > 0
-            window.triggers.erase()
+            if window.triggers.erase?
+                window.triggers.erase()
         node.delete() for node in easel.pad.sketch.selectedNodes
         link.delete() for link in easel.pad.sketch.selectedLinks
         easel.pad.sketch.selectedLinks = []

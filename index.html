@@ -83,6 +83,7 @@
     $("#introtitle").text(window.problem_description.title)
     $("#introtext").text(window.problem_description.text)
 
+    window.triggers = {}
     if window.tutorial
         window.tutorialidx = 0
         window.nextTutorialStep = ->
@@ -98,7 +99,6 @@
                 location.hash = location.hash.substr(2)
                 location.reload()
 
-        window.triggers = {}
         goalweights = {optimal: 160, auto: 170, manual: 180}
         $("#goalweight").text("$"+goalweights[window.tool.name])
 

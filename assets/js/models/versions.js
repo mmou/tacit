@@ -16,7 +16,9 @@
 
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
       var structure;
-      window.triggers.load();
+      if (window.triggers.load != null) {
+        window.triggers.load();
+      }
       structure = new tacit.Structure(this.versions.history[this.i].sketch.structure);
       this.versions.project.easel.pad.load(structure);
       this.versions.project.easel.pad.sketch.feapad = window.feapadpad;
@@ -73,13 +75,17 @@
       if (saved <= $("#goalweight").text().substr(1)) {
         $("#goalweight").text("$" + saved);
         $("#goaltitle").text("best saved");
-        return window.triggers.beat();
+        if (window.triggers.beat != null) {
+          return window.triggers.beat();
+        }
       }
     };
 
     Versions.prototype.save = function() {
       var currently_at, structure;
-      window.triggers.save();
+      if (window.triggers.save != null) {
+        window.triggers.save();
+      }
       if (this.project.actionQueue.length > 1) {
         this.newVersion();
       }
