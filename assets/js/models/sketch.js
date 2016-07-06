@@ -339,6 +339,7 @@
         cost = Math.round(this.structure.lp.obj / 100);
         if (cost !== 1000) {
           this.pad.easel.weightDisplay.innerText = "\$" + cost;
+          window.triggers.solve();
           if (window.helper != null) {
             window.helper.attr("opacity", 0);
           }

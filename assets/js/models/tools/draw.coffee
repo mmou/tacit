@@ -36,6 +36,7 @@ drawTool =
                 new easel.pad.sketch.structure.Beam(pos, object.target)
                 object.delete()
             else if eventType isnt "node"
+                window.triggers.floatnode()
                 pos = {x: mouseLoc[0], y: mouseLoc[1]}
                 node = new easel.pad.sketch.structure.Node(pos)
                 # node.force.y = -100
@@ -48,8 +49,7 @@ drawTool =
                                 .attr("y1", pos.y).attr("y2", pos.y)
                 easel.pad.sketch.updateDrawing()
                 @drawStart = null
-                if window.tutorial_state is 6 or window.tutorial_state is 7
-                    window.advance_tutorial()
+                window.triggers.beam()
 
     mouseMove: (easel, eventType, mouseLoc, object) ->
         if @drawStart

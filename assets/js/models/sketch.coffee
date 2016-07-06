@@ -254,6 +254,7 @@ class Sketch
             cost = Math.round(@structure.lp.obj/100)
             if cost isnt 1000
                 @pad.easel.weightDisplay.innerText = "\$"+cost
+                window.triggers.solve()
                 if window.helper? then window.helper.attr("opacity", 0)
             else
                 @pad.easel.weightDisplay.innerHTML = "$&infin;"

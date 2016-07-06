@@ -123,11 +123,18 @@ function initialize(structure) {
   		}
 	});
 	$("#export-btn").click(function() {
-		easel.saveLog()
-		if (location.hash.length < 6)
-            location.href = finalsurvey
-        else
-            location.href = intermediatesurveys[location.hash.substr(4,2)]})
+		if (location.hash[1] === "t" ) {
+			location.hash = location.hash.substr(2)
+			console.log(location.hash)
+			location.reload()
+		} else {
+			easel.saveLog()
+			if (location.hash.length < 6)
+	            location.href = finalsurvey
+	        else
+	            location.href = intermediatesurveys[location.hash.substr(4,2)]
+		}
+		})
 	$("#zoom-btn").click(function() {easel.pad.sketch.defaultZoom()})
 
 	window.updateTool = function () {

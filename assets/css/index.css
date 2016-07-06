@@ -7,6 +7,15 @@ body {
 	color: #3d3130;
 }
 
+#steptext {
+	color: rgba(61, 49, 48, 0.5);
+}
+
+
+#steptext .step:last-of-type {
+	color: #3d3130;
+}
+
 #project { opacity: 0; transition: opacity,0.75s; }
 
 #weights {

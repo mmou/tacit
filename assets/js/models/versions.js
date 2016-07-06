@@ -16,9 +16,7 @@
 
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
       var structure;
-      if (window.tutorial_state === 2 || window.tutorial_state === 8) {
-        window.advance_tutorial();
-      }
+      window.triggers.load();
       structure = new tacit.Structure(this.versions.history[this.i].sketch.structure);
       this.versions.project.easel.pad.load(structure);
       this.versions.project.easel.pad.sketch.feapad = window.feapadpad;
@@ -80,6 +78,7 @@
 
     Versions.prototype.save = function() {
       var currently_at, structure;
+      window.triggers.save();
       if (this.project.actionQueue.length > 1) {
         this.newVersion();
       }
