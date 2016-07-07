@@ -181,8 +181,11 @@ window.startClock = function () {
 				seconds = "0" + seconds
 			if (t.minutes >= 1)
 				clock.innerHTML =  ' | ' + t.minutes + ' minutes';
-			else
+			else {
 				clock.innerHTML = " | " + t.minutes + ':' + seconds;
+				if (seconds < 1)
+					$("#export-btn").click()
+			}
 			if(t.total<=0){
 			  clearInterval(timeinterval);
 			}
@@ -190,7 +193,7 @@ window.startClock = function () {
 	  }, 1000);
 	}
 
-	var mins = window.tutorial ? 15.99 : 12.99
+	var mins = window.tutorial ? 15.99 : 0.49
 	var d = new Date
 	initializeClock("timer", new Date(d.getTime() + mins*60000));
 }

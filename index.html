@@ -60,7 +60,7 @@
             new structure.Beam({x:30, y:30}, {x:60, y:60})
         window.problem_description =
             title: "tutorial"
-            text: "Let's build a quick scaffold."
+            text: "Let's build a quick scaffold! Follow the tutorial on the right side of the page."
         window.tutorial = true
     else if location.hash[1] is "n"
         location.hash = location.hash.substr(2)
@@ -110,6 +110,7 @@
 
         goalweights = {optimal: 160, auto: 200, manual: 300}
         $("#goalweight").text("$"+goalweights[window.tool.name])
+        $("#bestweight").text("$"+goalweights[window.tool.name])
 
         window.upNext = ->
             console.log "upNext called"

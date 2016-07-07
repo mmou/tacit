@@ -13,11 +13,11 @@ window.sign = ->
     window.problem_description =
         title: "sign"
         text: """
-        <p> You will be designing support for a road sign able to withstand gale force winds.
+        <p> You will be designing support for a road sign able to withstand strong winds.
 
         <img src="assets/resources/introimages/sign_intro_2.jpg" />
 
-        <p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to anchors a horizontally loaded beam between two fixed supports.
+        <p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to anchor a horizontally loaded beam between two fixed supports.
 
         <img src="assets/resources/introimages/sign.png" />
 
@@ -35,6 +35,7 @@ window.sign = ->
 
     goalweights = {optimal: 360, auto: 400, manual: 450}
     $("#goalweight").text("$"+goalweights[window.tool.name])
+    $("#bestweight").text("$"+goalweights[window.tool.name])
 
     return structure
 
@@ -72,6 +73,7 @@ window.bridge = ->
     window.project.name = "bridge"
     goalweights = {optimal: 375, auto: 425, manual: 475}
     $("#goalweight").text("$"+goalweights[window.tool.name])
+    $("#bestweight").text("$"+goalweights[window.tool.name])
     window.scalemult = 0.3
 
     return structure

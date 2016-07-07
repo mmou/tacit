@@ -72,7 +72,7 @@
       this.history.push(pad);
       pad.sketch.fea();
       saved = Math.round(pad.sketch.structure.lp.obj / 100);
-      if (saved <= $("#goalweight").text().substr(1)) {
+      if (saved <= $("#bestweight").text().substr(1)) {
         $("#bestweight").text("$" + saved);
         $("#bestcontainer").css("display", "");
         if (window.triggers.beat != null) {
