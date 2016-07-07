@@ -111,10 +111,7 @@
           b_x = source.x - target.x;
           b_y = source.y - target.y;
           orthogonal = -(b_x * d_y - b_y * d_x) / this.selection.L;
-          orthogonal *= abs(orthogonal) / 5;
-          if (orthogonal < 0) {
-            orthogonal = orthogonal / 2;
-          }
+          orthogonal *= abs(orthogonal) / 2;
           this.selection.size = max(0.5, orthogonal + this.dragging.size);
         }
         return easel.pad.sketch.quickDraw();
