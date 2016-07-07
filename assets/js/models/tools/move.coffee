@@ -65,7 +65,7 @@ moveTool =
                 b_x = source.x - target.x
                 b_y = source.y - target.y
                 orthogonal = -(b_x*d_y - b_y*d_x)/@selection.L
-                orthogonal *=  abs(orthogonal)/2
+                orthogonal *=  abs(orthogonal)/3
                 @selection.size = max(0.5, orthogonal + @dragging.size)
             easel.pad.sketch.quickDraw()
 
