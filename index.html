@@ -107,7 +107,7 @@
                 location.hash = location.hash.substr(2)
                 location.reload()
 
-        goalweights = {optimal: 160, auto: 200, manual: 270}
+        goalweights = {optimal: 160, auto: 200, manual: 300}
         $("#goalweight").text("$"+goalweights[window.tool.name])
 
         window.upNext = ->
@@ -220,14 +220,14 @@
     ]
 
     cm = window.tacit.colormap
-    height = 100
+    height = 150
     window.delaytime = 10
 
     `
     var canvas = d3.select("#colorbar").append("canvas")
     .attr("width", 1)
     .attr("height", height)
-    .style("width", 22 + "px")
+    .style("width", 33 + "px")
     .style("height", height + "px")
     .each(function(d) {
       var context = this.getContext("2d"),
@@ -321,7 +321,7 @@
         <div style="margin-top: 25px; text-align: right;">
         <div id="textbtns" style="margin-top: 30px;">
             <button id="zoom-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="show structure">ZOOM</button>
-            <button id="fea-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="analyze structure" style="font-size: 0.7em;">ANALYZE</button>
+            <button id="fea-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="analyze structure" style="font-size: 0.65em;">ANALYZE</button>
         </div>
 
 <!--
@@ -350,11 +350,11 @@
       <div id="FEAview" class="col-xs-1">
       </div>
       <div id="featitle" style="display: none; position: absolute; left: 50%; padding: 1em; font-size: 2em; opacity: 0.5; margin-left: 2em;"><h1>structural analysis</h1></div>
-      <div id="colorbar" style="display: none;  position: absolute; right: 40px; padding: 1em;"><h2>stress</h2>
+      <div id="colorbar" style="display: none;  position: absolute; right: 40px; padding: 1em; font-size: 1.25em;"><h2>stress</h2>
       <span style="float: left; font-size: 0.75em; padding-right: 5px;">
           <div style="margin-top: -6px;">2 &#x3c3; <sub>max</sub></div>
-          <div style="padding-top: 24px;"> &#x3c3; <sub>max</sub></div>
-          <div style="padding-top: 32px;">0</div>
+          <div style="padding-top: 42px;"> &#x3c3; <sub>max</sub></div>
+          <div style="padding-top: 48px;">0</div>
       </span>
       </div>
       </div>
@@ -389,13 +389,13 @@
 
 </div>
 </div>
-<div id="intro" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); startClock(); if (window.tutorial) {nextTutorialStep();}">
+<div id="intro">
     <div id="introstuff">
     <h1 id="introtitle"></h1>
 
     <div id="introtext"></div>
 
-    <div id="introhelp">click to begin</div>
+    <button id="introhelp" class="btn btn-default btn-lg" style="background: #2eabe2; color: white; margin-top: 1em; font-size: 1em; padding: 0.5em; border: 0; border-radius: 2px;" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); startClock(); if (window.tutorial) {nextTutorialStep();}">begin</div>
 </div>
 </div>
 </body>

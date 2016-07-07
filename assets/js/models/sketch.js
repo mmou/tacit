@@ -376,7 +376,7 @@
           if (d.F > 1e-3) {
             return null;
           } else {
-            return 10 / _this.scale + "," + 10 / _this.scale;
+            return 10 / _this.drawscale + "," + 10 / _this.drawscale;
           }
         });
       }
