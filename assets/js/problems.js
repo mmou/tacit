@@ -101,8 +101,8 @@
       x: 100,
       y: gd
     });
-    structure.nodeList[2].force.y = -79;
-    structure.nodeList[3].force.y = -79;
+    structure.nodeList[2].force.y = -160;
+    structure.nodeList[3].force.y = -160;
     _ref2 = structure.nodeList;
     for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
       node = _ref2[_k];

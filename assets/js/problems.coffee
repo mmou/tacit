@@ -52,8 +52,8 @@ window.bridge = ->
     new structure.Beam({x:33, y:gd}, {x:66, y:gd})
     new structure.Beam({x:66, y:gd}, {x:100, y:gd})
     # new structure.Beam({x:2, y:gd}, {x:200, y:gd})
-    structure.nodeList[2].force.y = -79
-    structure.nodeList[3].force.y = -79
+    structure.nodeList[2].force.y = -160
+    structure.nodeList[3].force.y = -160
     node.immovable = true for node in structure.nodeList
     window.problem_description =
         title: "bridge",
