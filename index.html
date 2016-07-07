@@ -72,7 +72,7 @@
     else if location.hash[1] is "a"
         window.tool = {name: "auto", sized_beams: true, autocolor: true, showgrad: false}
         window.feapad = true
-        $("#colorbar").css({display: "inherit", left: "1.5em", top: "18em", right: ""})
+        $("#colorbar").css({display: "inherit", top: "15em", right: ""})
     else if location.hash[1] is "o"
         window.tool = {name: "optimal", sized_beams: false, autocolor: true, showgrad: true}
         window.feapad = true
@@ -147,7 +147,7 @@
     Great! Now <b>draw a beam from an anchor to a load</b> by either clicking on one and then on the other or by dragging between them
     <script> $('#draw-btn').removeClass('tutorial_highlight')\<\/script\>
     <script> window.triggers.beam = upNext()\<\/script\>",
-    # click the FEA button when you're ready to analyze it
+    # helper tutorial goes here
     "Looks like the loads aren't fully supported yet. Dotted lines indicate a beam with no force, either because the loads aren't supported yet or because no forces go through that beam in supporting the load. They don't count towards the cost of your structure.
 
     \n\n<b>Draw a couple more beams</b> to create a working structure.
@@ -208,7 +208,7 @@
     Move the node#{if window.tool.sized_beams then " and/or resize beams" else ""} until your cost is lower than the threshold, then <b>save</b>.
     <script> window.triggers.beat = upNext()\<\/script\>""",
     """
-     Congratulations! Your saved design has met the starting goal, and the status bar will now tell you the cost of your <i>best saved design.</i>
+     Congratulations! Your saved design has met the starting goal, and the status bar will now also tell you the cost of your <i>best saved design.</i>
 
     A few more tips (feel free to try them to the left):
 
@@ -244,6 +244,8 @@
     });
     `
 
+    if window.genhelper? then window.genhelper()
+
     </script>
 
 
@@ -265,7 +267,7 @@
 ">
 
 <span id="weights"> <span id="goaltitle">goal </span> <span id="goalweight">$350</span>
-<span id="bestcontainer" style="display:none"><span id="besttitle">best saved </span> <span id="bestweight"></span></span> currently 
+<span id="bestcontainer" style="display:none"><span id="besttitle">best saved </span> <span id="bestweight"></span></span> currently
   <span id="designweight"></span></span>
 
 <div id="timer" style="display: inline-block; text-align: left; width: 170px;"></div></span>

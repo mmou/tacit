@@ -261,11 +261,15 @@ class Sketch
                     window.triggers.solve()
                 if window.helper? then window.helper.attr("opacity", 0)
             else
+                console.log "heyeye"
                 @pad.easel.weightDisplay.innerHTML = "$&infin;"
-                if window.helper? and not @structure.lp.undersized
-                    window.helper.attr("opacity", 0.3)
+                if window.helper?
+                    if not @structure.lp.undersized
+                        window.helper.attr("opacity", 0.3)
+                    else
+                        window.helper.attr("opacity", 0)
         if @feapad?
-            @feapad.load(@structure)
+            @feapad.load(@structure, genhelper=false)
             @feapad.sketch.updateDrawing()
             @feapad.sketch.fea()
             @links.attr("stroke", "#9c7b70")

@@ -16,13 +16,16 @@
       this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);
     }
 
-    Pad.prototype.load = function(structure) {
+    Pad.prototype.load = function(structure, genhelper) {
       var scale, translate;
+      if (genhelper == null) {
+        genhelper = true;
+      }
       this.sketch.svg.remove();
       translate = [this.sketch.translate[0] * this.sketch.scale, this.sketch.translate[1] * this.sketch.scale];
       scale = this.sketch.scale;
       this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);
-      if (window.genhelper != null) {
+      if (genhelper && (window.genhelper != null)) {
         return window.genhelper();
       }
     };

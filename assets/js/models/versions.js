@@ -56,7 +56,7 @@
     }
 
     Versions.prototype.newVersion = function() {
-      var easel, pad, saved, structure, versionObj;
+      var easel, genhelper, pad, saved, structure, versionObj;
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       this.project.easel.pad.sketch.fea();
       structure.solve();
@@ -65,7 +65,7 @@
       versionObj.append("div").attr("id", "versvg" + this.history.length).classed("versvg", true);
       easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0];
       pad = new tacit.Pad(easel, "#versvg" + this.history.length, 50, 50, structure);
-      pad.load(structure);
+      pad.load(structure, genhelper = false);
       pad.sketch.nodeSize = 0;
       pad.sketch.showforce = false;
       pad.sketch.updateDrawing();

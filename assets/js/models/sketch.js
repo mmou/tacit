@@ -338,7 +338,7 @@
     };
 
     Sketch.prototype.fea = function() {
-      var cost,
+      var cost, genhelper,
         _this = this;
       if (this.pad.easel.weightDisplay != null) {
         cost = Math.round(this.structure.lp.obj / 100);
@@ -351,14 +351,19 @@
             window.helper.attr("opacity", 0);
           }
         } else {
+          console.log("heyeye");
           this.pad.easel.weightDisplay.innerHTML = "$&infin;";
-          if ((window.helper != null) && !this.structure.lp.undersized) {
-            window.helper.attr("opacity", 0.3);
+          if (window.helper != null) {
+            if (!this.structure.lp.undersized) {
+              window.helper.attr("opacity", 0.3);
+            } else {
+              window.helper.attr("opacity", 0);
+            }
           }
         }
       }
       if (this.feapad != null) {
-        this.feapad.load(this.structure);
+        this.feapad.load(this.structure, genhelper = false);
         this.feapad.sketch.updateDrawing();
         this.feapad.sketch.fea();
         this.links.attr("stroke", "#9c7b70").attr("stroke-dasharray", null);
