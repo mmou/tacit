@@ -111,7 +111,7 @@
       this.showforce = true;
       this.showzero = false;
       this.transitioning = false;
-      this.drawscale = 6;
+      this.drawscale = 5;
       htmlObj = d3.select(htmlLoc);
       if (structure != null) {
         autozoom = true;

@@ -67,7 +67,7 @@
       y: gd
     });
     new structure.Node({
-      x: 200,
+      x: 100,
       y: gd
     });
     _ref = [0, 1];
@@ -84,25 +84,25 @@
       x: 0,
       y: gd
     }, {
-      x: 67,
+      x: 33,
       y: gd
     });
     new structure.Beam({
-      x: 67,
+      x: 33,
       y: gd
     }, {
-      x: 133,
+      x: 66,
       y: gd
     });
     new structure.Beam({
-      x: 133,
+      x: 66,
       y: gd
     }, {
-      x: 200,
+      x: 100,
       y: gd
     });
-    structure.nodeList[2].force.y = -158;
-    structure.nodeList[3].force.y = -158;
+    structure.nodeList[2].force.y = -79;
+    structure.nodeList[3].force.y = -79;
     _ref2 = structure.nodeList;
     for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
       node = _ref2[_k];
@@ -114,9 +114,9 @@
     };
     window.project.name = "bridge";
     goalweights = {
-      optimal: 750,
-      auto: 850,
-      manual: 950
+      optimal: 375,
+      auto: 425,
+      manual: 475
     };
     $("#goalweight").text("$" + goalweights[window.tool.name]);
     return structure;

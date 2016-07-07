@@ -45,15 +45,15 @@ window.bridge = ->
     structure = new tacit.Structure
 
     new structure.Node({x:0, y:gd})
-    new structure.Node({x:200, y:gd})
+    new structure.Node({x:100, y:gd})
     structure.nodeList[i].fixed.y = true for i in [0,1]
     structure.nodeList[i].fixed.x = true for i in [0,1]
-    new structure.Beam({x:0, y:gd}, {x:67, y:gd})
-    new structure.Beam({x:67, y:gd}, {x:133, y:gd})
-    new structure.Beam({x:133, y:gd}, {x:200, y:gd})
+    new structure.Beam({x:0, y:gd}, {x:33, y:gd})
+    new structure.Beam({x:33, y:gd}, {x:66, y:gd})
+    new structure.Beam({x:66, y:gd}, {x:100, y:gd})
     # new structure.Beam({x:2, y:gd}, {x:200, y:gd})
-    structure.nodeList[2].force.y = -158
-    structure.nodeList[3].force.y = -158
+    structure.nodeList[2].force.y = -79
+    structure.nodeList[3].force.y = -79
     node.immovable = true for node in structure.nodeList
     window.problem_description =
         title: "bridge",
@@ -70,7 +70,7 @@ window.bridge = ->
         """
 
     window.project.name = "bridge"
-    goalweights = {optimal: 750, auto: 850, manual: 950}
+    goalweights = {optimal: 375, auto: 425, manual: 475}
     $("#goalweight").text("$"+goalweights[window.tool.name])
 
     return structure

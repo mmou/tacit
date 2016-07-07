@@ -31,7 +31,7 @@ class Sketch
         @showforce = true
         @showzero = false
         @transitioning = false
-        @drawscale = 6
+        @drawscale = 5
 
         htmlObj = d3.select(htmlLoc)
 
