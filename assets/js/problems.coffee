@@ -12,7 +12,17 @@ window.sign = ->
     node.immovable = true for node in structure.nodeList
     window.problem_description =
         title: "sign"
-        text: "A sign held against the wind."
+        text: """
+        <p> You will be designing support for a road sign able to withstand gale force winds.
+
+        <img src="assets/resources/introimages/sign_intro_2.jpg" />
+
+        <p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to anchors a horizontally loaded beam between two fixed supports.
+
+        <img src="assets/resources/introimages/sign.png" />
+
+        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $10 in compensation and if your design is the best design made with this software tool you will receive an additional $65 in compensation.
+        """
 
     window.genhelper = ->
         window.helper = window.easel.pad.sketch.background.append("g").attr("id", "helper").attr("transform", "scale(-0.12, 0.12) rotate(180) translate(140, -925)").attr("opacity", 0.3)
@@ -23,7 +33,7 @@ window.sign = ->
 
     window.project.name = "sign"
 
-    goalweights = {optimal: 350, auto: 400, manual: 450}
+    goalweights = {optimal: 360, auto: 400, manual: 450}
     $("#goalweight").text("$"+goalweights[window.tool.name])
 
     return structure
@@ -47,7 +57,17 @@ window.bridge = ->
     node.immovable = true for node in structure.nodeList
     window.problem_description =
         title: "bridge",
-        text: "A bridge fixed at both ends."
+        text: """
+        <p> You will be designing a bridge to span a deep river and support the passage of cars along its roadbed.
+
+        <img src="assets/resources/introimages/bridge_intro_2.jpg" />
+
+        <p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to span the two fixed supports and support two loads in the center.
+
+        <img src="assets/resources/introimages/bridge.png" />
+
+        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $10 in compensation, and if your design is the best design made with this software tool you will receive an additional $65 in compensation.
+        """
 
     window.project.name = "bridge"
     goalweights = {optimal: 750, auto: 850, manual: 950}

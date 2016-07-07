@@ -51,6 +51,13 @@
         structure.nodeList[i].force.x = 40 for i in [2,3]
         structure.nodeList[i].force.y = -10 for i in [2,3]
         node.immovable = true for node in structure.nodeList
+        if location.hash.length < 6
+            new structure.Beam({x:20, y:gd}, {x:20, y:60})
+            new structure.Beam({x:60, y:gd}, {x:60, y:60})
+            new structure.Beam({x:40, y:40}, {x:20, y:gd})
+            new structure.Beam({x:40, y:40}, {x:60, y:gd})
+            new structure.Beam({x:40, y:40}, {x:20, y:60})
+            new structure.Beam({x:40, y:40}, {x:60, y:60})
         window.problem_description =
             title: "tutorial"
             text: "Let's build a quick scaffold."
@@ -79,13 +86,13 @@
     else
         location.hash = "t"+location.hash.substr(1)
 
-    initialize(structure)
-    $("#introtitle").text(window.problem_description.title)
-    $("#introtext").text(window.problem_description.text)
-
     window.triggers = {}
+    initialize(structure)
+    $("#introtitle").html(window.problem_description.title)
+    $("#introtext").html(window.problem_description.text)
+
     if window.tutorial
-        window.tutorialidx = 0
+        window.tutorialidx = if location.hash.length >= 6 then 0 else 8
         window.nextTutorialStep = ->
             window.tutorialidx++
             if window.tutorialidx <= window.tutorialsteps.length
@@ -171,10 +178,10 @@
 
     "Great! Now <b>connect that node to the other three corners</b> and then <b>save your design</b>
     <script> window.triggers.save = upNext()\<\/script\>",
-    # note that beam sizing handled automatically for optimal
-    """A design has three components: <i>topology</i> (the network of beams), <i>geometry</i> (the positions of nodes) and <i>sizing</i> (how large each beam is). By making new beams, you've altered the topology of your first design.
+    # TODO: cut the theory below?
+    """#{if location.hash.length < 6 then "Welcome back! Let's get you up to speed on this new tool." else ""}
 
-    Now we can move the new node to change the geometry#{if window.tool.sized_beams then " and the beam sizing" else ""} of the design.
+    A design consists of three things: the connections of beams, the positions of nodes, and the sizes of the beams. By #{if location.hash.length <6 then "making beams we've determined the first" else "making new beams you've altered the first"}, and now you can move the center node to change the second.
 
     <b>Click on the hand button.</b>
     <script> $('#move-btn').addClass('tutorial_highlight')\<\/script\>
@@ -183,30 +190,33 @@
     <script> $('#move-btn').removeClass('tutorial_highlight')\<\/script\>
     <b>Move the node by clicking it and dragging</b>.
     <script> window.triggers.movenode = upNext()\<\/script\>",
-    "#{if window.tool.sized_beams then "Now let's resize the beams. <b>Click a beam and drag away from it</b> and the beam will change size.
+    "#{if window.tool.sized_beams then "Now let's resize the beams. <b>Click a beam and drag away from it</b> and the beam will change size #{if window.tool.name is "manual" then "in the drawing pane; <b>click the ANALYZE button</b> to see its new stress in the analysis pane" else ""}.
     <script> window.triggers.resizebeam = upNext()\<\/script\>
     " else "<script>nextTutorialStep()\<\/script\>"}",
     "#{if not window.tool.autocolor then "Now <b>analyze your new structure</b>.
     <script> window.triggers.solve = upNext()\<\/script\>
     " else "<script>nextTutorialStep()\<\/script\>"}",
     """
-    #{if window.tool.showgrad then "The <span style='color: #807ec7; font-weight: 700;'>purple arrow</span> you see while moving the node indicates the direction to move the node to decrease cost, and the amount that the cost would decrease if moved in that direction; it's another tool for you to use." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. As you can see in the stress color bar, red and black beams are broken and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. \n\n A beam that is perfectly loaded is <i>orange</i>, tipping to red as soon as it fails."}
+     #{if window.tool.showgrad then "The <span style='color: #807ec7; font-weight: 700;'>purple arrow</span>
+    you see while moving the node indicates the direction to move the node to decrease cost, and the amount that the cost would decrease if moved in that direction; it's another tool for you to use." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. Red and black beams are overloaded and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. A legend for these beams can be seen to the left under the STRESS heading.
+
+    At the point of failure the color shifts dramatically: a beam that is fully loaded is <i>orange</i>, while one that is ever-so-slightly overloaded turns red as the structure fails."}
 
     To the left of the current cost is your <b>target cost</b>. To get your current structure to this target value will take some work.
 
     Move the node#{if window.tool.sized_beams then " and/or resize beams" else ""} until your cost is lower than the threshold, then <b>save</b>.
     <script> window.triggers.beat = upNext()\<\/script\>""",
     """
-    Congratulations! Your saved design has met the starting goal, and the status bar will now tell you the cost of your best saved design.
+     Congratulations! Your saved design has met the starting goal, and the status bar will now tell you the cost of your <i>best saved design.</i>
 
-    We'll finish this tutorial by creating...(beam-interrupting, node erasing, harder threshold)
+    A few more tips (feel free to try them to the left):
+
+    If you wanted to erase this design efficiently, you could erase the central node, as erasing a node erases all connected beams.
+
+    If you then wanted to redraw it, you could draw a diagonal beam, and then draw a beam from a third corner to the center of that beam. Putting nodes into beams adds a pin joint to that beam, so such interrupted beams are quite different from straight ones.
+
+    That's it for the tutorial! Click the finish button to proceed.
     """,
-    "Now <b>click on another empty location.</b>",
-    "You've created a beam to nowhere! You could use Cmd-Z or the Undo button to remove it, but let's use the eraser tool. <b> Click on the eraser button </b>",
-    "erase a node.",
-    "draw from a beam",
-    "Erasing a node erases all beams attached to it"
-    # you'll have to resize some beams to meet the goal. [colormap etc..., save]
     ]
 
     cm = window.tacit.colormap
@@ -379,7 +389,7 @@
 
 </div>
 </div>
-<div id="intro" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); startClock(); if (window.tutorial) {nextTutorialStep();}">
+<div id="intro" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); startClock(); if (window.tutorial) {nextTutorialStep();}">
     <h1 id="introtitle"></h1>
 
     <div id="introtext"></div>

@@ -39,7 +39,7 @@ body {
 	background-color: #2eabe2;
 	color: white;
 	padding: 5em;
-	height: 100%;
+	min-height: 100%;
 	font-size: 2em;
 	opacity: 1;
 	transition: opacity,0.5s;
@@ -54,6 +54,16 @@ body {
 	font-size: 0.75em;
     padding-top: 0.5em;
     font-style: italic;
+}
+
+#introtext {
+	font-size: 0.75em;
+}
+
+#introtext img {
+	padding: 1em;
+	display: block;
+	margin: 0 auto;
 }
 
 ::-webkit-scrollbar {
@@ -119,6 +129,7 @@ form.navbar-form {
 	height: 100%;
 	right: 0;
 	padding-top: 1.5em;
+	border-left: 6px solid #2eabe2;
 }
 
 #tutorialpane br {

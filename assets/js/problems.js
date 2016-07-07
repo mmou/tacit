@@ -41,7 +41,7 @@
     }
     window.problem_description = {
       title: "sign",
-      text: "A sign held against the wind."
+      text: "<p> You will be designing support for a road sign able to withstand gale force winds.\n\n<img src=\"assets/resources/introimages/sign_intro_2.jpg\" />\n\n<p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to anchors a horizontally loaded beam between two fixed supports.\n\n<img src=\"assets/resources/introimages/sign.png\" />\n\n<p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $10 in compensation and if your design is the best design made with this software tool you will receive an additional $65 in compensation."
     };
     window.genhelper = function() {
       window.helper = window.easel.pad.sketch.background.append("g").attr("id", "helper").attr("transform", "scale(-0.12, 0.12) rotate(180) translate(140, -925)").attr("opacity", 0.3);
@@ -50,7 +50,7 @@
     };
     window.project.name = "sign";
     goalweights = {
-      optimal: 350,
+      optimal: 360,
       auto: 400,
       manual: 450
     };
@@ -110,7 +110,7 @@
     }
     window.problem_description = {
       title: "bridge",
-      text: "A bridge fixed at both ends."
+      text: "<p> You will be designing a bridge to span a deep river and support the passage of cars along its roadbed.\n\n<img src=\"assets/resources/introimages/bridge_intro_2.jpg\" />\n\n<p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to span the two fixed supports and support two loads in the center.\n\n<img src=\"assets/resources/introimages/bridge.png\" />\n\n<p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $10 in compensation, and if your design is the best design made with this software tool you will receive an additional $65 in compensation."
     };
     window.project.name = "bridge";
     goalweights = {
