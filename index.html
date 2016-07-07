@@ -104,6 +104,7 @@
                 $("#stepname").text("step "+window.tutorialidx+" of "+window.tutorialsteps.length)
                 return ""
             else
+                easel.saveLog()
                 location.hash = location.hash.substr(2)
                 location.reload()
 
