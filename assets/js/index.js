@@ -2,12 +2,12 @@ function initialize(structure) {
 	window.tutorial_state = -1
 	finalsurvey = "https://mit.co1.qualtrics.com/jfe/form/SV_blSYkZCcbfUCQa9"
 	intermediatesurveys = {
-						 "ab": "https://mit.co1.qualtrics.com/jfe/form/SV_0PS7Qf1aao9R2RL",
-	                     "mb": "https://mit.co1.qualtrics.com/jfe/form/SV_bqJcWJjc8iuDMX3",
-	                     "ob": "https://mit.co1.qualtrics.com/jfe/form/SV_cGTB92zlQM0WMct",
-	                     "as": "https://mit.co1.qualtrics.com/jfe/form/SV_bpchs8TwetTDQzj",
-	                     "ms": "https://mit.co1.qualtrics.com/jfe/form/SV_eWJGUTLbgYIuVMx",
-	                     "os": "https://mit.co1.qualtrics.com/jfe/form/SV_50e1i0hCQAwK5KJ",
+						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_0PS7Qf1aao9R2RL",
+	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_cx7OqOtjs1RwAWF",
+	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_8dZqivtuo3IwLGJ",
+	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_bOtVIqEfgUvPDJr",
+	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_bOtVIqEfgUvPDJr",
+	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_6tZksXAnobhMPZP",
 	                       }
 
 	// initialize easel and stuff
