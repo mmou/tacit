@@ -193,7 +193,7 @@ window.startClock = function () {
 	  }, 1000);
 	}
 
-	var mins = window.tutorial ? 15.99 : 0.49
+	var mins = window.tutorial ? 15.99 : 12.99
 	var d = new Date
 	initializeClock("timer", new Date(d.getTime() + mins*60000));
 }

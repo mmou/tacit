@@ -62,6 +62,10 @@
             title: "tutorial"
             text: "Let's build a quick scaffold! Follow the tutorial on the right side of the page."
         window.tutorial = true
+        window.genhelper = ->
+            window.helper = window.easel.pad.sketch.background.append("g").attr("id", "helper").attr("transform", "scale(-0.12, 0.135) rotate(180) translate(-20, -750)").attr("opacity", 0.3)
+
+            window.helper.append("path").attr("d", "M 339.96875 335.625 C 339.96875 335.625 339.96886 335.99228 339.96875 336 L 339.625 336 C 339.625 336 339.69057 340.99297 339.78125 346.125 C 339.39293 368.15254 338.21494 427.71107 335.6875 492.15625 C 334.52282 521.8533 329.84792 558.21994 322.34375 591.375 C 314.83958 624.53006 304.07312 654.68548 292.875 670.84375 C 281.93959 686.62293 270.52732 690.85598 261.3125 692.1875 C 259.96867 692.38168 258.69632 692.49305 257.5 692.5625 L 257 676.90625 L 212.25 704.6875 L 258.65625 729.53125 L 258.25 717 C 260.34829 716.91718 262.53242 716.76697 264.8125 716.4375 C 279.51514 714.31299 298.42617 705.8868 313.03125 684.8125 C 327.86103 663.41394 338.38021 631.55169 346.25 596.78125 C 348.39207 587.31711 350.29122 577.65692 351.96875 567.96875 C 353.68003 578.11339 355.6426 588.2578 357.84375 598.1875 C 365.70594 633.65494 376.14989 666.16943 391.0625 687.6875 C 405.75198 708.88359 425.1124 716.70674 440 717.96875 L 439.5625 731.71875 L 488.96875 705.25 L 441.34375 675.6875 L 440.78125 693.4375 C 432.00427 692.4549 421.56483 688.6788 411.21875 673.75 C 400.10346 657.71124 389.26177 626.76163 381.75 592.875 C 374.23823 558.98837 369.57122 521.86077 368.40625 492.15625 C 365.87881 427.71108 364.70082 368.15255 364.3125 346.125 C 364.40376 340.96283 364.46875 335.96875 364.46875 335.96875 L 364.125 335.96875 C 364.1249 335.96226 364.125 335.625 364.125 335.625 L 352.5625 335.8125 L 339.96875 335.625 z ")
     else if location.hash[1] is "n"
         location.hash = location.hash.substr(2)
 
@@ -92,7 +96,9 @@
     $("#introtext").html(window.problem_description.text)
 
     if window.tutorial
-        window.tutorialidx = if location.hash.length >= 6 then 0 else 8
+        window.tutorialidx = 0
+        if location.hash.length < 6
+            window.tutorialidx = 8
         window.nextTutorialStep = ->
             window.tutorialidx++
             if window.tutorialidx <= window.tutorialsteps.length
@@ -245,7 +251,9 @@
     });
     `
 
-    if window.genhelper? then window.genhelper()
+    window.genhelper()
+    if location.hash.length < 6
+        window.helper.attr("opacity", 0)
 
     </script>
 
