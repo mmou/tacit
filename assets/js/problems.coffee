@@ -72,5 +72,6 @@ window.bridge = ->
     window.project.name = "bridge"
     goalweights = {optimal: 375, auto: 425, manual: 475}
     $("#goalweight").text("$"+goalweights[window.tool.name])
+    window.scalemult = 0.3
 
     return structure

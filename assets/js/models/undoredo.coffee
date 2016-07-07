@@ -13,7 +13,7 @@ class UndoRedo
 
         if !@project.actionQueue[@pointer]? or @project.actionQueue[@pointer].strucstr != structure.strucstr
             window.log ?= ""
-            window.log += "# new structure\n" + structure.strucstr + "\n"
+            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj}\n" + structure.strucstr + "\n"
             @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
             @project.actionQueue.push(structure)
             @pointer = @project.actionQueue.length-1

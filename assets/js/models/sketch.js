@@ -182,17 +182,20 @@
     }
 
     Sketch.prototype.defaultZoom = function() {
-      var d, list, maxs, means, mins, n, scale, translate, _i, _len, _ref1, _ref2;
-      _ref1 = [{}, {}, {}], mins = _ref1[0], maxs = _ref1[1], means = _ref1[2];
-      _ref2 = ["x", "y", "z"];
-      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-        d = _ref2[_i];
+      var d, list, maxs, means, mins, n, scale, translate, _i, _len, _ref1, _ref2, _ref3;
+      if ((_ref1 = window.scalemult) == null) {
+        window.scalemult = 0.6;
+      }
+      _ref2 = [{}, {}, {}], mins = _ref2[0], maxs = _ref2[1], means = _ref2[2];
+      _ref3 = ["x", "y", "z"];
+      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
+        d = _ref3[_i];
         list = (function() {
-          var _j, _len1, _ref3, _results;
-          _ref3 = this.structure.nodeList;
+          var _j, _len1, _ref4, _results;
+          _ref4 = this.structure.nodeList;
           _results = [];
-          for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
-            n = _ref3[_j];
+          for (_j = 0, _len1 = _ref4.length; _j < _len1; _j++) {
+            n = _ref4[_j];
             _results.push(n[d]);
           }
           return _results;
@@ -200,7 +203,7 @@
         mins[d] = min.apply(null, list);
         maxs[d] = max.apply(null, list);
       }
-      scale = 0.6 * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
+      scale = window.scalemult * min(this.width / (maxs.x - mins.x), this.height / (maxs.y - mins.y));
       translate = [this.width / 2 - scale * (maxs.x + mins.x) / 2, this.height / 2 - scale * (maxs.y + mins.y) / 2];
       return this.rescale(translate, scale);
     };

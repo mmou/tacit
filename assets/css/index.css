@@ -25,7 +25,7 @@ body {
 	margin-left: -10em;
 }
 
-#goalweight {
+#goalweight, #bestweight {
 	font-style: normal;
 	font-weight: 300;
 	padding-right: 0.5em;

@@ -27,7 +27,7 @@
         if ((_ref1 = window.log) == null) {
           window.log = "";
         }
-        window.log += "# new structure\n" + structure.strucstr + "\n";
+        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + "\n") + structure.strucstr + "\n";
         this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
         return this.pointer = this.project.actionQueue.length - 1;

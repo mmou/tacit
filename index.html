@@ -54,10 +54,10 @@
         if location.hash.length < 6
             new structure.Beam({x:20, y:gd}, {x:20, y:60})
             new structure.Beam({x:60, y:gd}, {x:60, y:60})
-            new structure.Beam({x:40, y:40}, {x:20, y:gd})
-            new structure.Beam({x:40, y:40}, {x:60, y:gd})
-            new structure.Beam({x:40, y:40}, {x:20, y:60})
-            new structure.Beam({x:40, y:40}, {x:60, y:60})
+            new structure.Beam({x:30, y:30}, {x:20, y:gd})
+            new structure.Beam({x:30, y:30}, {x:60, y:gd})
+            new structure.Beam({x:30, y:30}, {x:20, y:60})
+            new structure.Beam({x:30, y:30}, {x:60, y:60})
         window.problem_description =
             title: "tutorial"
             text: "Let's build a quick scaffold."
@@ -264,7 +264,8 @@
     padding-left: 4em;
 ">
 
-<span id="weights"> <span id="goaltitle">goal</span> <span id="goalweight">$350</span> currently
+<span id="weights"> <span id="goaltitle">goal </span> <span id="goalweight">$350</span>
+<span id="bestcontainer" style="display:none"><span id="besttitle">best saved </span> <span id="bestweight"></span></span> currently 
   <span id="designweight"></span></span>
 
 <div id="timer" style="display: inline-block; text-align: left; width: 170px;"></div></span>
@@ -396,7 +397,7 @@
 
     <div id="introtext"></div>
 
-    <button id="introhelp" class="btn btn-default btn-lg" style="background: #2eabe2; color: white; margin-top: 1em; font-size: 1em; padding: 0.5em; border: 0; border-radius: 2px;" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); startClock(); if (window.tutorial) {nextTutorialStep();}">begin</div>
+    <button id="introhelp" class="btn btn-default btn-lg" style="background: #2eabe2; color: white; margin-top: 1em; font-size: 1em; padding: 0.5em; border: 0; border-radius: 2px;" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); startClock(); if (window.tutorial) {nextTutorialStep();}">click to begin</div>
 </div>
 </div>
 </body>

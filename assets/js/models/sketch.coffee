@@ -120,12 +120,13 @@ class Sketch
             window.feapadpad = @feapad
 
     defaultZoom: ->
+        window.scalemult ?= 0.6
         [mins, maxs, means] = [{}, {}, {}]
         for d in ["x", "y", "z"]
             list = (n[d] for n in @structure.nodeList)
             mins[d] = min(list...)
             maxs[d] = max(list...)
-        scale = 0.6*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
+        scale = window.scalemult*min(@width/(maxs.x-mins.x), @height/(maxs.y-mins.y))
         translate = [@width/2 - scale*(maxs.x+mins.x)/2,
                      @height/2- scale*(maxs.y+mins.y)/2]
         @rescale(translate, scale)
