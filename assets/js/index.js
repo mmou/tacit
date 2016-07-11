@@ -1,13 +1,13 @@
 function initialize(structure) {
 	window.tutorial_state = -1
-	finalsurvey = "http://mit.co1.qualtrics.com/SE/?SID=SV_6xkYCQH0nyZdZQ1"
+	finalsurvey = "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x"
 	intermediatesurveys = {
-						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_6xkYCQH0nyZdZQ1",
-	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_6xkYCQH0nyZdZQ1",
-	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_6xkYCQH0nyZdZQ1",
-	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_6xkYCQH0nyZdZQ1",
-	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_6xkYCQH0nyZdZQ1",
-	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_6xkYCQH0nyZdZQ1",
+						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
+	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
+	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
+	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
+	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
+	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
 	                       }
 
 	// initialize easel and stuff
