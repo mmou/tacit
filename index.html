@@ -84,7 +84,7 @@
     if not window.tutorial
         $("#tutorialpane").css("display", "none")
         if location.hash[2] is "b"
-            structure = bridge()
+            structure = bridge2()
         else if location.hash[2] is "s"
             structure = sign()
     else
@@ -189,7 +189,7 @@
     # TODO: cut the theory below?
     """#{if location.hash.length < 6 then "Welcome back! Let's get you up to speed on this new tool." else ""}
 
-    A design consists of three things: the connections of beams, the positions of nodes, and the sizes of the beams. By #{if location.hash.length <6 then "making beams we've determined the first" else "making new beams you've altered the first"}, and now you can move the center node to change the second.
+    A design consists of three things: the connections of beams, the positions of nodes, and the sizes of the beams. By #{if location.hash.length <6 then "making beams we've determined the first thing " else "making new beams you've altered the first thing "}, and now you can move the center node to change the second.
 
     <b>Click on the hand button.</b>
     <script> $('#move-btn').addClass('tutorial_highlight')\<\/script\>
@@ -201,13 +201,13 @@
     "#{if window.tool.sized_beams then "Now let's resize the beams. <b>Click a beam and drag away from it</b> and the beam will change size #{if window.tool.name is "manual" then "in the drawing pane; <b>click the ANALYZE button</b> to see its new stress in the analysis pane" else ""}.
     <script> window.triggers.resizebeam = upNext()\<\/script\>
     " else "<script>nextTutorialStep()\<\/script\>"}",
-    "#{if not window.tool.autocolor then "Now <b>analyze your new structure</b>.
+    "#{if not window.tool.autocolor then "Now resize and analyze your structure untiil it solves (if you made a beam small enough to turn red you may need to increase its size instead).
     <script> window.triggers.solve = upNext()\<\/script\>
     " else "<script>nextTutorialStep()\<\/script\>"}",
     """
      #{if window.tool.showgrad then "The <span style='color: #807ec7; font-weight: 700;'>purple arrow</span>
     you see while moving the node indicates the direction to move the node to decrease cost, and the amount that the cost would decrease if moved in that direction; it's another tool for you to use." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. Red and black beams are overloaded and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. A legend for these beams can be seen to the left under the STRESS heading.
-
+    \n\n
     At the point of failure the color shifts dramatically: a beam that is fully loaded is <i>orange</i>, while one that is ever-so-slightly overloaded turns red as the structure fails."}
 
     To the left of the current cost is your <b>target cost</b>. To get your current structure to this target value will take some work.
@@ -252,7 +252,7 @@
     `
 
     window.genhelper()
-    if location.hash.length < 6
+    if location.hash.length < 6 and location.hash[1] is "t"
         window.helper.attr("opacity", 0)
 
     </script>

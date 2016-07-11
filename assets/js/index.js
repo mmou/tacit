@@ -129,6 +129,10 @@ function initialize(structure) {
 			location.hash = location.hash.substr(2)
 			console.log(location.hash)
 			location.reload()
+		} else if (location.hash.search("x") !== -1) {
+			location.hash = location.hash.substr(3)
+			console.log(location.hash)
+			location.reload()
 		} else {
 			easel.saveLog()
 			if (location.hash.length < 6)
