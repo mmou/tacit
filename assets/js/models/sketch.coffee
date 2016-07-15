@@ -395,6 +395,8 @@ class Sketch
         @grads.attr("stroke-width", (d) =>
                         if d.immovable is true
                             0
+                        else if d.grad.x is 1000000000
+                            0
                         else if 50/@drawscale*dist(l for dim, l of d.grad)*w > 0.125
                             10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
                         else
@@ -424,6 +426,8 @@ class Sketch
                     .attr("y2", (d) => d.y + 1000/@drawscale*d.grad.y*w)
                     .attr("stroke-width", (d) =>
                                 if d.immovable is true
+                                    0
+                                else if d.grad.x is 1000000000
                                     0
                                 else if 50/@drawscale*dist(l for dim, l of d.grad)*w > 0.125
                                     10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))

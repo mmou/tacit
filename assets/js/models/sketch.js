@@ -609,6 +609,8 @@
         var dim, l;
         if (d.immovable === true) {
           return 0;
+        } else if (d.grad.x === 1000000000) {
+          return 0;
         } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;
           _ref1 = d.grad;
@@ -659,6 +661,8 @@
       }).attr("stroke-width", function(d) {
         var dim, l;
         if (d.immovable === true) {
+          return 0;
+        } else if (d.grad.x === 1000000000) {
           return 0;
         } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;
