@@ -55,11 +55,14 @@
       this.newVersion();
     }
 
-    Versions.prototype.newVersion = function() {
-      var easel, genhelper, pad, saved, structure, versionObj;
-      structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
+    Versions.prototype.newVersion = function(structure) {
+      var easel, genhelper, pad, saved, versionObj;
+      if (!(structure != null)) {
+        structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
+      } else {
+        console.log("yo");
+      }
       this.project.easel.pad.sketch.fea();
-      structure.solve();
       versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + this.history.length).classed("ver", true);
       easel = new dummyEasel(this, this.history.length);
       versionObj.append("div").attr("id", "versvg" + this.history.length).classed("versvg", true);
@@ -81,13 +84,13 @@
       }
     };
 
-    Versions.prototype.save = function() {
-      var currently_at, structure;
+    Versions.prototype.save = function(structure) {
+      var currently_at;
       if (window.triggers.save != null) {
         window.triggers.save();
       }
-      if (this.project.actionQueue.length > 1) {
-        this.newVersion();
+      if (this.project.actionQueue.length > 1 || (structure != null)) {
+        this.newVersion(structure);
       }
       currently_at = this.project.actionQueue[undoredo.pointer];
       structure = new tacit.Structure(currently_at);

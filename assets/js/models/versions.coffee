@@ -25,10 +25,12 @@ class Versions
         @history = []
         @newVersion()
 
-    newVersion: ->
-        structure = new tacit.Structure(@project.easel.pad.sketch.structure)
+    newVersion: (structure) ->
+        if not structure?
+            structure = new tacit.Structure(@project.easel.pad.sketch.structure)
+        else
+            console.log "yo"
         @project.easel.pad.sketch.fea()
-        structure.solve()
         versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
         easel = new dummyEasel(this, @history.length)
         versionObj.append("div").attr("id", "versvg"+@history.length).classed("versvg", true)
@@ -47,11 +49,11 @@ class Versions
             if window.triggers.beat?
                 window.triggers.beat()
 
-    save: ->
+    save: (structure) ->
         if window.triggers.save?
             window.triggers.save()
-        if @project.actionQueue.length > 1
-            @newVersion()
+        if @project.actionQueue.length > 1 or structure?
+            @newVersion(structure)
         currently_at = @project.actionQueue[undoredo.pointer]
         structure = new tacit.Structure(currently_at)
         structure.solve()

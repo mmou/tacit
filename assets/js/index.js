@@ -141,7 +141,10 @@ function initialize(structure) {
 	            location.href = intermediatesurveys[location.hash.substr(4,2)]
 		}
 		})
-	$("#zoom-btn").click(function() {easel.pad.sketch.defaultZoom()})
+	$("#zoom-btn").click(function() {
+		if (window.triggers.zoom !== undefined)
+            window.triggers.zoom()
+		easel.pad.sketch.defaultZoom()})
 
 	window.updateTool = function () {
 		if (window.tool.autocolor) {
