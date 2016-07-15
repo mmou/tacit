@@ -13,7 +13,7 @@ window.tutorialstruct = ->
     node.immovable = true for node in structure.nodeList
     window.problem_description =
         title: "tutorial"
-        text: "Let's build a quick scaffold! Follow the tutorial on the right side of the page."
+        text: "#{if location.hash.length > 3 then "Let's build a quick scaffold! Follow the tutorial on the right side of the page." else "We're going to complete a shortened version of the scaffold exercise with a  new tool. Follow the tutorial on the right side of the page."}"
     window.tutorial = true
     window.genhelper = ->
         window.helper = window.easel.pad.sketch.background.append("g").attr("id", "helper").attr("transform", "scale(-0.12, 0.135) rotate(180) translate(-20, -750)").attr("opacity", 0.3)

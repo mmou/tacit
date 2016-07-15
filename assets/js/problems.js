@@ -50,7 +50,7 @@
     }
     window.problem_description = {
       title: "tutorial",
-      text: "Let's build a quick scaffold! Follow the tutorial on the right side of the page."
+      text: "" + (location.hash.length > 3 ? "Let's build a quick scaffold! Follow the tutorial on the right side of the page." : "We're going to complete a shortened version of the scaffold exercise with a  new tool. Follow the tutorial on the right side of the page.")
     };
     window.tutorial = true;
     window.genhelper = function() {
