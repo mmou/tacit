@@ -37,7 +37,6 @@ class Easel
         download(filename, window.log)
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        console.log "xxx"
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)

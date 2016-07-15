@@ -36,7 +36,7 @@ window.sign = ->
         text: """
         <p> You will be designing support for a road sign able to withstand strong winds.
 
-        <img src="assets/resources/introimages/sign_intro_2.jpg" />
+        <img src="assets/resources/introimages/sign_nathan.jpg" width="100%" />
 
         <p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to anchor a horizontally loaded beam between two fixed supports.
 
@@ -82,7 +82,7 @@ window.bridge = ->
         text: """
         <p> You will be designing a bridge to span a deep river and support the passage of cars along its roadbed.
 
-        <img src="assets/resources/introimages/bridge_intro_2.jpg" />
+        <img src="assets/resources/introimages/bridge_nathan.jpg" width="100%" />
 
         <p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to span the two fixed supports and support two loads in the center.
 
@@ -126,7 +126,7 @@ window.bridge2 = ->
         text: """
         <p> You will be designing a bridge to span a deep river and support the passage of cars along its roadbed.
 
-        <img src="assets/resources/introimages/bridge_intro_2.jpg" />
+        <img src="assets/resources/introimages/bridge_nathan.jpg" width="100%" />
 
         <p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to span the two fixed supports and support two loads in the center.
 

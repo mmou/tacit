@@ -61,7 +61,6 @@ function download(filename, text) {
     };
 
     Easel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      console.log("xxx");
       if (this.currentTool != null) {
         if (this.currentTool.mouseDown != null) {
           this.currentTool.mouseDown(easel, eventType, mouseLoc, object);
