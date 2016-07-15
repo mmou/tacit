@@ -20,8 +20,8 @@ function initialize(structure) {
 		var width = parseInt($(window).width()/2 - offset/2);
 	window.project = {"name": "untitled", "onChange": function(){}};
 	global_weight = document.getElementById("designweight")
-	easel = new tacit.Easel(window.project, "#PadView",
-						    height, width, structure, global_weight);
+	var easel = new tacit.Easel(window.project, "#PadView",
+						    	height, width, structure, global_weight);
 	window.project.easel = easel;
 	window.project.actionQueue = [];
 	sketch = easel.pad.sketch;

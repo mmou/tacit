@@ -15,6 +15,7 @@ moveTool =
     dontSelectImmovable: true
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
+        console.log "yyy"
         if eventType is "node"
             if not object.immovable?
                 @selection = object

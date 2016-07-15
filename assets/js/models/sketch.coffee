@@ -55,6 +55,7 @@ class Sketch
         @scale = 0.00001
         @nodeSize = 9
         @easel = @pad.easel
+        easel = @pad.easel  # for capture by mousedowns below
 
         @zoomer = d3.behavior.zoom().on("zoom", => @rescale() if easel.allowPan())
         mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale() if easel.allowPan())

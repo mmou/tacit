@@ -97,7 +97,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width, scale, translate, feapad) {
-      var autozoom, baseLineBox, deasel, gridBox, htmlObj, mousedn,
+      var autozoom, baseLineBox, deasel, easel, gridBox, htmlObj, mousedn,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -128,6 +128,7 @@
       this.scale = 0.00001;
       this.nodeSize = 9;
       this.easel = this.pad.easel;
+      easel = this.pad.easel;
       this.zoomer = d3.behavior.zoom().on("zoom", function() {
         if (easel.allowPan()) {
           return _this.rescale();

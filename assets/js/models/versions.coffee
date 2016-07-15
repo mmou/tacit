@@ -13,7 +13,6 @@ class dummyEasel
         structure = new tacit.Structure(structure)
         @versions.project.easel.pad.load(structure)
         @versions.project.easel.pad.sketch.feapad = window.feapadpad
-        console.log @versions.project.easel.pad.sketch.feapad?
         @versions.project.easel.pad.sketch.updateDrawing()
         @versions.project.easel.pad.sketch.fea()
         @versions.project.onChange()

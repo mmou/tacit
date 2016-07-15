@@ -47,6 +47,7 @@
     dontSelectImmovable: true,
     mouseDown: function(easel, eventType, mouseLoc, object) {
       var idx;
+      console.log("yyy");
       if (eventType === "node") {
         if (!(object.immovable != null)) {
           this.selection = object;

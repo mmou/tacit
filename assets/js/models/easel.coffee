@@ -37,8 +37,7 @@ class Easel
         download(filename, window.log)
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
-        if $("footer").height() > 32
-            $("footer").click()
+        console.log "xxx"
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)
