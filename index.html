@@ -263,7 +263,7 @@
     <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it.</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
-    """<b> Load the next problem (the newest save) to continue. </b>
+    """#{if not window.tool.sized_beams then " " else ""}<b> Load the next problem (the newest save) to continue. </b>
     <script> window.triggers.load = upNext()\<\/script\>
     <script>
     var structure = tutorialstruct()
@@ -391,7 +391,7 @@
       </li>
       <li>
         <a data-toggle="tooltip" data-placement="bottom" id="save-btn-wrapper">
-          <button id="save-btn" type="button" type="button" class="notyet btn btn-default btn-lg" disabled title="(cmd-S)" data-toggle="tooltip" data-placement="bottom">SAVE</button>
+          <button id="save-btn" type="button" type="button" class="notyet btn btn-default btn-lg" disabled title="(&#x2318;-S)" data-toggle="tooltip" data-placement="bottom">SAVE</button>
         </a>
       </li>
     </ul>
@@ -399,7 +399,7 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
           <a>
-            <div id="undo-btn-group" class="btn-group" role="group" aria-label="..." title="(cmd-Z / cmd-Y)" data-toggle="tooltip" data-placement="bottom">
+            <div id="undo-btn-group" class="btn-group" role="group" aria-label="..." title="(&#x2318;-Z / &#x2318;-Y)" data-toggle="tooltip" data-placement="bottom">
               <button id="undo-btn" type="button" class="notyet btn btn-default btn-lg" disabled>
                 UNDO</span>
               </button>
