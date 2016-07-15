@@ -196,11 +196,11 @@
     " else "<script>nextTutorialStep()\<\/script\>"}",
     """
      #{if window.tool.showgrad then "The <span style='color: #807ec7; font-weight: 700;'>purple arrow</span>
-     you see while moving the node indicates the direction to move the node to decrease cost, and the amount that the cost would decrease if moved in that direction; it's another tool for you to use." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. Red and black beams are overloaded and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. A legend for these beams can be seen to the left under the STRESS heading.
+     you see while moving the node indicates the direction to move the node to decrease cost." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. Red and black beams are overloaded and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. A legend for these beams can be seen to the left under the STRESS heading.
     \n\n
     At the point of failure the color shifts dramatically: a beam that is fully loaded is <i>orange</i>, while one that is ever-so-slightly overloaded turns red as the structure fails."}
 
-    To the left of the current cost is your <b>target cost</b>. To get your current structure to this target value will take some work.
+    To the left of the current cost is your <b>target cost</b>..
 
     Move the node#{if window.tool.sized_beams then " and/or resize beams" else ""} until your cost is lower than the threshold, then <b>save</b>.
     <script> window.triggers.beat = upNext()\<\/script\>""",
