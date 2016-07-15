@@ -217,7 +217,7 @@
      new structure.Beam({x:30, y:30}, {x:20, y:60})
      new structure.Beam({x:30, y:30}, {x:60, y:60})
      versions.save(structure)
-     easel.pad.sketch.fea()
+     project.easel.pad.sketch.fea()
      \<\/script\>
 
     Before finishing the tutorial let's fix some common problem you might see while designing a structure.
@@ -230,7 +230,7 @@
     Additionally, the problem is too zoomed in to see clearly. While you could pan and scroll with the hand tool to get a proper zoom level, the ZOOM button provides a quick default zoom-to-fit.
 
     <b> Click the ZOOM button. </b>
-    <script> setTimeout(function() {window.easel.pad.sketch.rescale([0,400], 40)}, 10);
+    <script> setTimeout(function() {project.easel.pad.sketch.rescale([0,400], 40)}, 10);
     window.triggers.zoom = upNext()\<\/script\>
     """,
     """
@@ -251,7 +251,7 @@
         new structure.Beam({x:30, y:30}, {x:60, y:gd}, 100)
         new structure.Beam({x:30, y:30}, {x:20, y:60})
         new structure.Beam({x:30, y:30}, {x:60, y:60})
-        setTimeout(function() {versions.save(structure); easel.pad.sketch.fea()}, 10)
+        setTimeout(function() {versions.save(structure); project.easel.pad.sketch.fea()}, 10)
     }
     \<\/script\>""",
     """ #{if not window.tool.sized_beams then "<script>nextTutorialStep()\<\/script\>" else ""}
@@ -274,7 +274,7 @@
     new structure.Beam({x:30, y:30}, {x:60, y:gd})
     new structure.Beam({x:30, y:30}, {x:20, y:60})
     new structure.Beam({x:30, y:30}, {x:60, y:60})
-    setTimeout(function() {versions.save(structure); easel.pad.sketch.fea()}, 10)
+    setTimeout(function() {versions.save(structure); project.easel.pad.sketch.fea()}, 10)
     \<\/script\>""",
     """ Another potential problem is a series of straight beams that looks stable but has an unanchored pin joint in it. The helper arrows will also show for this failure.
 
@@ -307,7 +307,7 @@
         new structure.Beam({x:30, y:50}, {x:60, y:gd}, 80)
         new structure.Beam({x:30, y:50}, {x:20, y:60})
         new structure.Beam({x:30, y:50}, {x:60, y:60})
-        setTimeout(function() {versions.save(structure); easel.pad.sketch.fea()}, 10)
+        setTimeout(function() {versions.save(structure); project.easel.pad.sketch.fea()}, 10)
     }
     \<\/script\>""",
     """ #{if not window.tool.sized_beams then "<script>nextTutorialStep()\<\/script\>" else ""}
