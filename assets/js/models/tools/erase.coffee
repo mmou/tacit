@@ -31,7 +31,7 @@ eraseTool =
             easel.pad.sketch.slowDraw()
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
-        if not easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length
+        if easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length <= 0
             @mouseDown(easel, eventType, mouseLoc, object)
         if easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length > 0
             if window.triggers.erase?

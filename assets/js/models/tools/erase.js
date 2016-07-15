@@ -41,7 +41,7 @@
     },
     mouseUp: function(easel, eventType, mouseLoc, object) {
       var link, node, _i, _j, _len, _len1, _ref2, _ref3;
-      if (!easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length) {
+      if (easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length <= 0) {
         this.mouseDown(easel, eventType, mouseLoc, object);
       }
       if (easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length > 0) {
