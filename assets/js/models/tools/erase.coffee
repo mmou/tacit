@@ -4,6 +4,8 @@ window.tacit.tools ?= {}
 eraseTool =
     allowPan: true
     name: "erase"
+    dontSelectImmovable: true
+    dragging: false
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         @allowPan = false
@@ -29,12 +31,13 @@ eraseTool =
             easel.pad.sketch.slowDraw()
 
     mouseUp: (easel, eventType, mouseLoc, object) ->
-        @mouseDown(easel, eventType, mouseLoc, object)
-        @allowPan = true
-        @dragging = false
+        if not easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length
+            @mouseDown(easel, eventType, mouseLoc, object)
         if easel.pad.sketch.selectedNodes.length + easel.pad.sketch.selectedLinks.length > 0
             if window.triggers.erase?
                 window.triggers.erase()
+        @allowPan = true
+        @dragging = false
         node.delete() for node in easel.pad.sketch.selectedNodes
         link.delete() for link in easel.pad.sketch.selectedLinks
         easel.pad.sketch.selectedLinks = []

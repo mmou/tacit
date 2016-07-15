@@ -37,6 +37,9 @@
     UndoRedo.prototype.undo = function() {
       var structure;
       if (this.pointer - 1 >= 0) {
+        if (window.triggers.undo != null) {
+          window.triggers.undo();
+        }
         window.log += "\n# undo";
         this.pointer -= 1;
         structure = new tacit.Structure(this.project.actionQueue[this.pointer]);

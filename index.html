@@ -138,14 +138,14 @@
     Great! Now <b>draw a beam from an anchor to a load</b> by either clicking on one and then on the other or by dragging between them
     <script> $('#draw-btn').removeClass('tutorial_highlight')\<\/script\>
     <script> window.triggers.beam = upNext()\<\/script\>",
-    "Looks like the loads aren't fully supported yet. Dotted lines indicate a beam with no force, either because the loads aren't supported yet or because no forces go through that beam in supporting the load. They don't count towards the cost of your structure.
+    "Looks like the loads aren't fully supported yet. Dotted lines indicate a beam with no force, either because the loads aren't supported yet or because no forces go through that beam. They don't count towards the cost of your structure.
     \n\n
-    The red <i>helper arrows</i> that have appeared tell you that the structure needs new beams to be stable.
+    The red <i>helper arrows</i> tell you that the structure needs new beams to be stable.
     \n\n
-    <b>Draw a couple more beams</b> to create a working structure.
+    <b>Draw a couple more beams</b> to create a stable structure.
     #{if window.tool.name is "manual" then "\n\nTo analyze the structure, <b>click the ANALYZE button</b> in the left toolbar." else ""}
     <script> window.triggers.solve = upNext()\<\/script\>",
-    " Neat, a working structure! Only saved designs count towards your goal. <b>Click the SAVE button in the left of the blue status bar at the top of the screen</b>.
+    " Neat, a stable structure! Only saved designs count towards your goal. <b>Click the SAVE button in the left of the blue status bar at the top of the screen</b>.
     <script> window.triggers.save = upNext()\<\/script\>",
     """
     In the center of the status bar you can see the <b>cost</b> of your current structure. Cost is the sum of all beam's thicknesses times their lengths. You want this to be <i>as low as possible</i>.
@@ -187,6 +187,7 @@
     " <script> $('#move-btn').removeClass('tutorial_highlight')\<\/script\>
     <b>Move the node by clicking it and dragging</b>.
     <script> window.triggers.movenode = upNext()\<\/script\>",
+    # TODO: note directionality of beam resizing
     "#{if window.tool.sized_beams then "Now let's resize the beams. <b>Click a beam and drag away from it</b> and the beam will change size #{if window.tool.name is "manual" then "in the drawing pane; <b>click the ANALYZE button</b> to see its new stress in the analysis pane" else ""}.
     <script> window.triggers.resizebeam = upNext()\<\/script\>
     " else "<script>nextTutorialStep()\<\/script\>"}",
@@ -219,7 +220,9 @@
      easel.pad.sketch.fea()
      \<\/script\>
 
-    Before finishing the tutorial let's fix some common problem you might see while designing a structure. Start by loading the newest (furthest-right) structure (you may have to scroll right in the save window to see it).
+    Before finishing the tutorial let's fix some common problem you might see while designing a structure.
+
+    <b>Start by loading the newest (furthest-right) structure</b> (you may have to scroll right in the save window to see it).
     <script> window.triggers.load = upNext()\<\/script\>
     """,
     """ Sometimes you may accidentally create a node near an existing one, as is the problem here. Such mistakes can't be fixed just by resizing beams, so they cause the helper arrows to appear.
@@ -231,37 +234,6 @@
     window.triggers.zoom = upNext()\<\/script\>
     """,
     """
-    <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it.</b>
-    <script> window.triggers.save = upNext()\<\/script\>
-    """,
-    """<b> Load the next problem (the newest save) to continue. </b>
-    <script> window.triggers.load = upNext()\<\/script\>
-    <script>
-    var structure = tutorialstruct()
-    var gd = 1.65
-    new structure.Beam({x:20, y:gd}, {x:19, y:40})
-    new structure.Beam({x:19, y:40}, {x:20, y:60})
-    new structure.Beam({x:60, y:gd}, {x:61, y:40})
-    new structure.Beam({x:61, y:40}, {x:60, y:60})
-    new structure.Beam({x:30, y:30}, {x:20, y:gd})
-    new structure.Beam({x:30, y:30}, {x:60, y:gd})
-    new structure.Beam({x:30, y:30}, {x:20, y:60})
-    new structure.Beam({x:30, y:30}, {x:60, y:60})
-    setTimeout(function() {versions.save(structure); easel.pad.sketch.fea()}, 10)
-    \<\/script\>""",
-    # TODO: do it both ways, undo in between
-    """ Another potential problem is a series of straight beams that looks stable but has an unanchored pin joint in it. The helper arrows will also show for this failure.
-
-    These extra pins need to either be removed (and the two beams replaced with one), or connected stably to another node.
-
-    <b>Add a beam to solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it.</b>
-    <script> window.triggers.save = upNext()\<\/script\>
-    """,
-    """
-    Now undo back to the original problem with the UNDO button in the top right corner (which, you will notice on mouse-over, has a keyboard shortcut).
-
-    Then fix the problem by erasing the extra nodes and replacing them with single beams.
-
     <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it.</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
@@ -294,6 +266,36 @@
     """<b> Load the next problem (the newest save) to continue. </b>
     <script> window.triggers.load = upNext()\<\/script\>
     <script>
+    var structure = tutorialstruct()
+    var gd = 1.65
+    new structure.Beam({x:20, y:gd}, {x:19, y:40})
+    new structure.Beam({x:19, y:40}, {x:20, y:60})
+    new structure.Beam({x:30, y:30}, {x:20, y:gd})
+    new structure.Beam({x:30, y:30}, {x:60, y:gd})
+    new structure.Beam({x:30, y:30}, {x:20, y:60})
+    new structure.Beam({x:30, y:30}, {x:60, y:60})
+    setTimeout(function() {versions.save(structure); easel.pad.sketch.fea()}, 10)
+    \<\/script\>""",
+    """ Another potential problem is a series of straight beams that looks stable but has an unanchored pin joint in it. The helper arrows will also show for this failure.
+
+    <b>Add a beam to the loose left node, then save it.</b>
+    <script> window.triggers.save = upNext()\<\/script\>
+    """,
+    """
+    #{if window.tool.sized_beams then "You'll notice that the helper arrows disappear (and the beams stop being dotted) after you add the beam, even though the structure's beams are still too small, because it's now fixable just by increasing beam sizes." else ""}
+
+    Now undo back to the original problem with the UNDO button in the top right corner (which, you will notice on mouse-over, has a keyboard shortcut).
+
+    <b>First, undo the extra beam.</b>
+    <script> window.triggers.undo = upNext()\<\/script\>
+    """,
+    """
+    <b>Now erase the extra node and replace the two left beams with a single beam, then save.</b>
+    <script> window.triggers.save = upNext()\<\/script\>
+    """,
+    """<b> Load the next problem (the newest save) to continue. </b>
+    <script> window.triggers.load = upNext()\<\/script\>
+    <script>
     if (!window.tool.sized_beams)
         nextTutorialStep()
     else {
@@ -315,11 +317,11 @@
     <b>Move the node to be more central to solve this structure, then save.</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
-    """ All of the previous problems could often be fixed by undoing or by loading a working save, so make sure to save when your solution improves or you try a different design, and reload old structures when you get off track!
+    """ All of the previous problems could often be fixed by undoing or by loading a stable save, so make sure to save when your solution improves or you try a different design, and reload old structures when you get off track!
 
     Remember as well that only saved designs count towards your goal.
 
-    <b> Load the first saved design to continue.</b>
+    Load the first saved design to continue.
     <script> window.triggers.load = upNext()\<\/script\>
     """,
     """

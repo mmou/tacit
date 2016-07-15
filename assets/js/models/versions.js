@@ -8,9 +8,10 @@
 
   dummyEasel = (function() {
 
-    function dummyEasel(versions, i) {
+    function dummyEasel(versions, i, project) {
       this.versions = versions;
       this.i = i;
+      this.project = project;
       null;
     }
 
@@ -20,6 +21,10 @@
         window.triggers.load();
       }
       structure = new tacit.Structure(this.versions.history[this.i].sketch.structure);
+      structure.solve();
+      this.project.actionQueue = [structure];
+      undoredo.pointer = 0;
+      structure = new tacit.Structure(structure);
       this.versions.project.easel.pad.load(structure);
       this.versions.project.easel.pad.sketch.feapad = window.feapadpad;
       console.log(this.versions.project.easel.pad.sketch.feapad != null);
@@ -59,12 +64,10 @@
       var easel, genhelper, pad, saved, versionObj;
       if (!(structure != null)) {
         structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
-      } else {
-        console.log("yo");
       }
       this.project.easel.pad.sketch.fea();
       versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + this.history.length).classed("ver", true);
-      easel = new dummyEasel(this, this.history.length);
+      easel = new dummyEasel(this, this.history.length, this.project);
       versionObj.append("div").attr("id", "versvg" + this.history.length).classed("versvg", true);
       easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0];
       pad = new tacit.Pad(easel, "#versvg" + this.history.length, 50, 50, structure);
@@ -91,7 +94,7 @@
       if (this.project.actionQueue.length > 1 || (structure != null)) {
         this.newVersion(structure);
       }
-      return window.log += "\n# saved";
+      return window.log += "\n# saved at " + (new Date().toLocaleString()) + "\n";
     };
 
     return Versions;

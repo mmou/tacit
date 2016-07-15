@@ -21,6 +21,8 @@ class UndoRedo
 
     undo: ->
         if @pointer - 1 >= 0
+            if window.triggers.undo?
+                window.triggers.undo()
             window.log += "\n# undo"
             @pointer -= 1
             structure = new tacit.Structure(@project.actionQueue[@pointer])

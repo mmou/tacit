@@ -1,12 +1,16 @@
 window.tacit ?= {}
 
 class dummyEasel
-    constructor: (@versions, @i) -> null
+    constructor: (@versions, @i, @project) -> null
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
         if window.triggers.load?
             window.triggers.load()
         structure = new tacit.Structure(@versions.history[@i].sketch.structure)
+        structure.solve()
+        @project.actionQueue = [structure]
+        undoredo.pointer = 0
+        structure = new tacit.Structure(structure)
         @versions.project.easel.pad.load(structure)
         @versions.project.easel.pad.sketch.feapad = window.feapadpad
         console.log @versions.project.easel.pad.sketch.feapad?
@@ -28,11 +32,9 @@ class Versions
     newVersion: (structure) ->
         if not structure?
             structure = new tacit.Structure(@project.easel.pad.sketch.structure)
-        else
-            console.log "yo"
         @project.easel.pad.sketch.fea()
         versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
-        easel = new dummyEasel(this, @history.length)
+        easel = new dummyEasel(this, @history.length, @project)
         versionObj.append("div").attr("id", "versvg"+@history.length).classed("versvg", true)
         easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0]
         pad = new tacit.Pad(easel, "#versvg"+@history.length, 50, 50, structure)
@@ -54,6 +56,6 @@ class Versions
             window.triggers.save()
         if @project.actionQueue.length > 1 or structure?
             @newVersion(structure)
-        window.log += "\n# saved"
+        window.log += "\n# saved at #{new Date().toLocaleString()}\n"
 
 window.tacit.Versions = Versions
