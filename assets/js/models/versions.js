@@ -85,18 +85,12 @@
     };
 
     Versions.prototype.save = function(structure) {
-      var currently_at;
       if (window.triggers.save != null) {
         window.triggers.save();
       }
       if (this.project.actionQueue.length > 1 || (structure != null)) {
         this.newVersion(structure);
       }
-      currently_at = this.project.actionQueue[undoredo.pointer];
-      structure = new tacit.Structure(currently_at);
-      structure.solve();
-      this.project.actionQueue = [structure];
-      undoredo.pointer = 0;
       return window.log += "\n# saved";
     };
 

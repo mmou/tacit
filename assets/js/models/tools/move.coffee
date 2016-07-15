@@ -3,6 +3,7 @@ window.tacit.tools ?= {}
 
 sqr = (a) -> Math.pow(a, 2)
 abs = (a) -> Math.abs(a)
+sign = (a) -> Math.sign(a)
 sqrt = (a) -> Math.sqrt(a)
 max = (n...) -> Math.max(n...)
 sin = (a) -> Math.sin(a)
@@ -66,6 +67,8 @@ moveTool =
                 b_y = source.y - target.y
                 orthogonal = -(b_x*d_y - b_y*d_x)/@selection.L
                 orthogonal *=  abs(orthogonal)/3
+                # if b_x < 0
+                    # if sign(d_y) is sign(dz_x)
                 @selection.size = max(0.5, orthogonal + @dragging.size)
             easel.pad.sketch.quickDraw()
 

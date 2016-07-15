@@ -212,18 +212,18 @@
       y: gd
     }, {
       x: 33,
-      y: 10
+      y: 5
     });
     new structure.Beam({
       x: 33,
-      y: 10
+      y: 5
     }, {
       x: 66,
-      y: 10
+      y: 5
     });
     new structure.Beam({
       x: 66,
-      y: 10
+      y: 5
     }, {
       x: 100,
       y: gd

@@ -114,9 +114,9 @@ window.bridge2 = ->
     new structure.Node({x:100, y:gd})
     structure.nodeList[i].fixed.y = true for i in [0,1]
     structure.nodeList[i].fixed.x = true for i in [0,1]
-    new structure.Beam({x:0, y:gd}, {x:33, y:10})
-    new structure.Beam({x:33, y:10}, {x:66, y:10})
-    new structure.Beam({x:66, y:10}, {x:100, y:gd})
+    new structure.Beam({x:0, y:gd}, {x:33, y:5})
+    new structure.Beam({x:33, y:5}, {x:66, y:5})
+    new structure.Beam({x:66, y:5}, {x:100, y:gd})
     # new structure.Beam({x:2, y:gd}, {x:200, y:gd})
     structure.nodeList[2].force.y = -160
     structure.nodeList[3].force.y = -160
