@@ -97,7 +97,7 @@
   Sketch = (function() {
 
     function Sketch(pad, htmlLoc, structure, height, width, scale, translate, feapad) {
-      var autozoom, baseLineBox, deasel, easel, gridBox, htmlObj, mousedn,
+      var autozoom, baseLineBox, deasel, gridBox, htmlObj, mousedn,
         _this = this;
       this.pad = pad;
       if (htmlLoc == null) {
@@ -127,7 +127,7 @@
       this.translate = [10, 10];
       this.scale = 0.00001;
       this.nodeSize = 9;
-      easel = this.pad.easel;
+      this.easel = this.pad.easel;
       this.zoomer = d3.behavior.zoom().on("zoom", function() {
         if (easel.allowPan()) {
           return _this.rescale();
@@ -311,7 +311,7 @@
         return easel.mouseMove(easel, "node", d3.mouse(this), d);
       }).on("mouseup", function(d) {
         return easel.mouseUp(easel, "node", d3.mouse(this), d);
-      }).transition().duration(50).ease("elastic").attr("r", this.nodeSize / this.scale);
+      }).transition().duration(80).ease("elastic").attr("r", this.nodeSize / this.scale);
       this.nodes.exit().transition().attr("r", 0).remove();
       this.fixed = this.fixed.data((function() {
         var _i, _len, _ref1, _results;
@@ -407,9 +407,9 @@
         return d.source.y;
       }).attr("y2", function(d) {
         return d.target.y;
-      }).transition().duration(50).ease("elastic").attr("stroke-opacity", function(d) {
+      }).transition().duration(80).ease("elastic").attr("stroke-opacity", function(d) {
         return 0.9 + 0.1 * (_this.selectedLinks.indexOf(d) + 1 > 0);
-      }).duration(50).ease("elastic").attr("stroke-width", function(d) {
+      }).duration(80).ease("elastic").attr("stroke-width", function(d) {
         if (d.size > 1e-3) {
           return sqrt(d.size / 10);
         } else {
@@ -426,7 +426,7 @@
         return d.target.y;
       }).classed("selected", function(d) {
         return _this.selectedLinks.indexOf(d) + 1;
-      }).transition().duration(50).ease("elastic").attr("stroke-width", function(d) {
+      }).transition().duration(80).ease("elastic").attr("stroke-width", function(d) {
         return max(2, 0.75 + sqrt(d.size / 10));
       });
       this.nodes.attr("cx", function(d) {
@@ -439,15 +439,15 @@
         return d.immovable === true;
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
-      }).transition().duration(50).ease("elastic").attr("r", function(d) {
-        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
+      }).transition().duration(80).ease("elastic").attr("r", function(d) {
+        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !(d.immovable && _this.easel.currentTool.dontSelectImmovable) ? 2 : 1);
       });
       this.fixed.attr("d", function(d) {
         var isc;
         isc = _this.nodeSize * 3.1 / 9 / _this.drawscale;
         return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
       }).classed("selected", function(d) {
-        return _this.selectedNodes.indexOf(d) + 1;
+        return _this.selectedNodes.indexOf(d) + 1 && _this.easel.currentTool.dontSelectImmovable;
       });
       this.forces.attr("x2", function(d) {
         return d.x;
@@ -578,14 +578,14 @@
       this.nodes.classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).attr("r", function(d) {
-        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
+        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !(d.immovable && _this.easel.currentTool.dontSelectImmovable) ? 2 : 1);
       });
       this.fixed.attr("d", function(d) {
         var isc;
         isc = _this.nodeSize * 3.1 / 9 / _this.drawscale;
         return "M " + (-5 * isc + d.x) + "," + (-3 * isc + d.y) + "\nl " + (5 * isc) + "," + (8.6 * isc) + "\nl " + (5 * isc) + "," + (-8.6 * isc) + " Z";
       }).classed("selected", function(d) {
-        return _this.selectedNodes.indexOf(d) + 1;
+        return _this.selectedNodes.indexOf(d) + 1 && _this.easel.currentTool.dontSelectImmovable;
       });
       this.forces.attr("stroke-width", function(d) {
         var f;
@@ -631,7 +631,7 @@
       this.structure.solvegrad(this.selectedNodes);
       w = this.structure.nodeList.length / this.structure.lp.obj;
       this.fixed.classed("selected", function(d) {
-        return _this.selectedNodes.indexOf(d) + 1;
+        return _this.selectedNodes.indexOf(d) + 1 && _this.easel.currentTool.dontSelectImmovable;
       });
       this.selectablelinks.attr("stroke-width", function(d) {
         return max(2, 0.75 + sqrt(d.size / 10));
@@ -640,8 +640,8 @@
       });
       this.nodes.classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
-      }).transition().duration(50).attr("r", function(d) {
-        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !d.immovable ? 2 : 1);
+      }).transition().duration(80).attr("r", function(d) {
+        return _this.nodeSize / _this.drawscale * (_this.selectedNodes.indexOf(d) + 1 && !(d.immovable && _this.easel.currentTool.dontSelectImmovable) ? 2 : 1);
       });
       return this.grads.attr("x1", function(d) {
         return d.x;
@@ -651,7 +651,7 @@
         return d.x;
       }).attr("y2", function(d) {
         return d.y;
-      }).attr("stroke-width", 0).transition().duration(50).attr("x2", function(d) {
+      }).attr("stroke-width", 0).transition().duration(80).attr("x2", function(d) {
         return d.x + 1000 / _this.drawscale * d.grad.x * w;
       }).attr("y2", function(d) {
         return d.y + 1000 / _this.drawscale * d.grad.y * w;

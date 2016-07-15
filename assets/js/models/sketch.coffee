@@ -54,7 +54,7 @@ class Sketch
         @translate = [10,10]
         @scale = 0.00001
         @nodeSize = 9
-        easel = @pad.easel
+        @easel = @pad.easel
 
         @zoomer = d3.behavior.zoom().on("zoom", => @rescale() if easel.allowPan())
         mousedn = => @blank.call(d3.behavior.zoom().on("zoom"), => @rescale() if easel.allowPan())
@@ -232,7 +232,7 @@ class Sketch
             .on("mouseup", (d) ->
                 easel.mouseUp(easel, "node", d3.mouse(this), d))
           .transition()
-            .duration(50)
+            .duration(80)
             .ease("elastic")
             .attr("r", @nodeSize/@scale)
         @nodes.exit().transition()
@@ -295,10 +295,10 @@ class Sketch
         @links.attr("x1", (d) => d.source.x).attr("x2", (d) => d.target.x)
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
               .transition()
-                  .duration(50)
+                  .duration(80)
                   .ease("elastic")
                       .attr("stroke-opacity", (d) => 0.9 + 0.1*(@selectedLinks.indexOf(d)+1 > 0))
-                .duration(50)
+                .duration(80)
                 .ease("elastic")
                     .attr("stroke-width",  (d) => if d.size > 1e-3 then  sqrt(d.size/10) else 1)
 
@@ -306,7 +306,7 @@ class Sketch
               .attr("y1", (d) => d.source.y).attr("y2", (d) => d.target.y)
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
               .transition()
-                .duration(50)
+                .duration(80)
                 .ease("elastic")
                     .attr("stroke-width",  (d) => max(2, 0.75 + sqrt(d.size/10)))
 
@@ -316,16 +316,16 @@ class Sketch
               .classed("immovable", (d) -> d.immovable is true)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
               .transition()
-                .duration(50)
+                .duration(80)
                 .ease("elastic")
-                    .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
+                    .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not (d.immovable and @easel.currentTool.dontSelectImmovable)) then 2 else 1)
 
         @fixed.attr("d", (d) =>
             isc = @nodeSize*3.1/9/@drawscale
             """M #{-5*isc+d.x},#{-3*isc+d.y}
                l #{5*isc},#{8.6*isc}
                l #{5*isc},#{-8.6*isc} Z""")
-             .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
+             .classed("selected", (d) => @selectedNodes.indexOf(d)+1 and @easel.currentTool.dontSelectImmovable)
 
         @forces.attr("x2", (d) => d.x).attr("x1", (d) => d.x - d.force.x/4)
                .attr("y2", (d) => d.y).attr("y1", (d) => d.y - d.force.y/4)
@@ -377,7 +377,7 @@ class Sketch
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
-            .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
+            .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not (d.immovable and @easel.currentTool.dontSelectImmovable)) then 2 else 1)
 
         @fixed.attr("d", (d) =>
             isc = @nodeSize*3.1/9/@drawscale
@@ -385,7 +385,7 @@ class Sketch
                l #{5*isc},#{8.6*isc}
                l #{5*isc},#{-8.6*isc} Z""")
               .classed("selected", (d) =>
-                  @selectedNodes.indexOf(d)+1)
+                  @selectedNodes.indexOf(d)+1 and @easel.currentTool.dontSelectImmovable)
 
         @forces.attr("stroke-width", (d) => if not d.fixed.y and dist(f for d, f of d.force) > 0
                                                8/@drawscale*@showforce
@@ -402,15 +402,15 @@ class Sketch
         @structure.solvegrad(@selectedNodes)
         w = @structure.nodeList.length/@structure.lp.obj
 
-        @fixed.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
+        @fixed.classed("selected", (d) => @selectedNodes.indexOf(d)+1 and @easel.currentTool.dontSelectImmovable)
 
         @selectablelinks.attr("stroke-width",  (d) => max(2, 0.75 + sqrt(d.size/10)))
               .classed("selected", (d) => @selectedLinks.indexOf(d)+1)
 
         @nodes.classed("selected", (d) => @selectedNodes.indexOf(d)+1)
             .transition()
-              .duration(50)
-                  .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not d.immovable) then 2 else 1)
+              .duration(80)
+                  .attr("r", (d) => @nodeSize/@drawscale * if (@selectedNodes.indexOf(d)+1 and not (d.immovable and @easel.currentTool.dontSelectImmovable)) then 2 else 1)
 
         @grads.attr("x1", (d) => d.x)
               .attr("y1", (d) => d.y)
@@ -418,7 +418,7 @@ class Sketch
               .attr("y2", (d) => d.y)
               .attr("stroke-width", 0)
               .transition()
-                .duration(50)
+                .duration(80)
                     .attr("x2", (d) => d.x + 1000/@drawscale*d.grad.x*w)
                     .attr("y2", (d) => d.y + 1000/@drawscale*d.grad.y*w)
                     .attr("stroke-width", (d) =>
