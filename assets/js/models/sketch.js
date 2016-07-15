@@ -304,7 +304,7 @@
       this.nodes.enter().insert("circle").classed("node", true).classed("fixed", function(d) {
         return d.fixed.x || d.fixed.y;
       }).classed("immovable", function(d) {
-        return d.immovable;
+        return d.immovable === true;
       }).attr("r", this.nodeSize / this.scale / 2).on("mousedown", function(d) {
         return easel.mouseDown(easel, "node", d3.mouse(this), d);
       }).on("mousemove", function(d) {
@@ -351,7 +351,6 @@
             window.helper.attr("opacity", 0);
           }
         } else {
-          console.log("heyeye");
           this.pad.easel.weightDisplay.innerHTML = "$&infin;";
           if (window.helper != null) {
             if (!this.structure.lp.undersized) {
@@ -434,6 +433,10 @@
         return d.x;
       }).attr("cy", function(d) {
         return d.y;
+      }).classed("fixed", function(d) {
+        return d.fixed.x || d.fixed.y;
+      }).classed("immovable", function(d) {
+        return d.immovable === true;
       }).classed("selected", function(d) {
         return _this.selectedNodes.indexOf(d) + 1;
       }).transition().duration(50).ease("elastic").attr("r", function(d) {
@@ -481,7 +484,7 @@
         return d.y + 1000 / _this.drawscale * d.grad.y * w;
       }).attr("stroke-width", function(d) {
         var l;
-        if ((d.immovable != null) && d.immovable) {
+        if (d.immovable === true) {
           return 0;
         } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;
@@ -603,7 +606,7 @@
       });
       return this.grads.attr("stroke-width", function(d) {
         var dim, l;
-        if ((d.immovable != null) && d.immovable) {
+        if (d.immovable === true) {
           return 0;
         } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;
@@ -654,7 +657,7 @@
         return d.y + 1000 / _this.drawscale * d.grad.y * w;
       }).attr("stroke-width", function(d) {
         var dim, l;
-        if ((d.immovable != null) && d.immovable) {
+        if (d.immovable === true) {
           return 0;
         } else if (50 / _this.drawscale * dist((function() {
           var _ref1, _results;

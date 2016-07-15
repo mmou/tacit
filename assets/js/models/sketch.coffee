@@ -223,7 +223,7 @@ class Sketch
         @nodes.enter().insert("circle")
             .classed("node", true)
             .classed("fixed", (d) -> d.fixed.x or d.fixed.y)
-            .classed("immovable", (d) -> d.immovable)
+            .classed("immovable", (d) -> d.immovable is true)
             .attr("r", @nodeSize/@scale/2)
             .on("mousedown", (d) ->
                 easel.mouseDown(easel, "node", d3.mouse(this), d))
@@ -261,7 +261,6 @@ class Sketch
                     window.triggers.solve()
                 if window.helper? then window.helper.attr("opacity", 0)
             else
-                console.log "heyeye"
                 @pad.easel.weightDisplay.innerHTML = "$&infin;"
                 if window.helper?
                     if not @structure.lp.undersized
@@ -313,6 +312,8 @@ class Sketch
 
         @nodes.attr("cx", (d) => d.x)
               .attr("cy", (d) => d.y)
+              .classed("fixed", (d) -> d.fixed.x or d.fixed.y)
+              .classed("immovable", (d) -> d.immovable is true)
               .classed("selected", (d) => @selectedNodes.indexOf(d)+1)
               .transition()
                 .duration(50)
@@ -335,7 +336,7 @@ class Sketch
         @grads.attr("x1", (d) => d.x).attr("x2", (d) => d.x + 1000/@drawscale*d.grad.x*w)
               .attr("y1", (d) => d.y).attr("y2", (d) => d.y + 1000/@drawscale*d.grad.y*w)
               .attr("stroke-width", (d) =>
-                    if d.immovable? and d.immovable
+                    if d.immovable is true
                         0
                     else if 50/@drawscale*dist(l for d, l of d.grad)*w > 0.125
                         10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
@@ -391,7 +392,7 @@ class Sketch
                                             else 0)
 
         @grads.attr("stroke-width", (d) =>
-                        if d.immovable? and d.immovable
+                        if d.immovable is true
                             0
                         else if 50/@drawscale*dist(l for dim, l of d.grad)*w > 0.125
                             10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
@@ -421,7 +422,7 @@ class Sketch
                     .attr("x2", (d) => d.x + 1000/@drawscale*d.grad.x*w)
                     .attr("y2", (d) => d.y + 1000/@drawscale*d.grad.y*w)
                     .attr("stroke-width", (d) =>
-                                if d.immovable? and d.immovable
+                                if d.immovable is true
                                     0
                                 else if 50/@drawscale*dist(l for dim, l of d.grad)*w > 0.125
                                     10/@drawscale*(window.tool.showgrad and (@selectedNodes.indexOf(d) >= 0))
