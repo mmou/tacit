@@ -20,11 +20,10 @@ function initialize(structure) {
 		var width = parseInt($(window).width()/2 - offset/2);
 	window.project = {"name": "untitled", "onChange": function(){}};
 	global_weight = document.getElementById("designweight")
-	var easel = new tacit.Easel(window.project, "#PadView",
+	window.project.easel = new tacit.Easel(window.project, "#PadView",
 						    	height, width, structure, global_weight);
-	window.project.easel = easel;
 	window.project.actionQueue = [];
-	sketch = easel.pad.sketch;
+	sketch = project.easel.pad.sketch;
 	s = sketch.structure;
 	sketch.updateDrawing();
 
@@ -34,7 +33,7 @@ function initialize(structure) {
   	// make draw the default active tool
 	$('.active').removeClass("active")
 	$("#move-btn").addClass("active")
-	easel.currentTool = tacit.tools.move
+	project.easel.currentTool = tacit.tools.move
 
 
 	$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
@@ -61,19 +60,19 @@ function initialize(structure) {
 */
 
 	$("#PadView").on('mouseover', function() {
-		if (easel.currentTool.name == "select"){
+		if (project.easel.currentTool.name == "select"){
 			$("#PadView svg").css({'cursor': 'default'})
-		} else if (easel.currentTool.name == "move"){
+		} else if (project.easel.currentTool.name == "move"){
 			$("#PadView svg").css({'cursor': 'pointer'})
-		} else if (easel.currentTool.name == "draw"){
+		} else if (project.easel.currentTool.name == "draw"){
 			$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
-		} else if (easel.currentTool.name == "erase") {
+		} else if (project.easel.currentTool.name == "erase") {
 			$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'})
-		} else if (easel.currentTool.name == "measure") {
+		} else if (project.easel.currentTool.name == "measure") {
 			$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/ruler.png) 6 20, auto'})
-		} else if (easel.currentTool.name == "load") {
+		} else if (project.easel.currentTool.name == "load") {
 			$("#PadView svg").css({'cursor': 'default'})
-		} else if (easel.currentTool.name == "thicken"){
+		} else if (project.easel.currentTool.name == "thicken"){
 				$("#PadView svg").css({'cursor': 'default'})
 		} else {
 				console.log("no tool selected");
@@ -84,9 +83,9 @@ function initialize(structure) {
 	var gridBox = $('input[name=grid]');
 	gridBox.click(function(){
 		if(gridBox.is(":checked")){
-			easel.pad.sketch.rect.attr("fill", "url(#grid)");
+			project.easel.pad.sketch.rect.attr("fill", "url(#grid)");
         } else {
-          easel.pad.sketch.rect.attr("fill", "transparent");
+          project.easel.pad.sketch.rect.attr("fill", "transparent");
 
         }
       });
@@ -94,9 +93,9 @@ function initialize(structure) {
       var baseLineBox = $('input[name=baseLine]');
       baseLineBox.click(function(){
         if(baseLineBox.is(":checked")){
-          easel.pad.sketch.baseLine.attr("stroke", "#3d3130");
+          project.easel.pad.sketch.baseLine.attr("stroke", "#3d3130");
         } else {
-          easel.pad.sketch.baseLine.attr("stroke", "transparent");
+          project.easel.pad.sketch.baseLine.attr("stroke", "transparent");
 
         }
       });
@@ -134,7 +133,7 @@ function initialize(structure) {
 			console.log(location.hash)
 			location.reload()
 		} else {
-			easel.saveLog()
+			project.easel.saveLog()
 			if (location.hash.length < 6)
 	            location.href = finalsurvey
 	        else
@@ -144,7 +143,7 @@ function initialize(structure) {
 	$("#zoom-btn").click(function() {
 		if (window.triggers.zoom !== undefined)
             window.triggers.zoom()
-		easel.pad.sketch.defaultZoom()})
+		project.easel.pad.sketch.defaultZoom()})
 
 	window.updateTool = function () {
 		if (window.tool.autocolor) {
@@ -152,11 +151,11 @@ function initialize(structure) {
 		} else {
 			$("#fea-btn").show()
 		}
-		easel.pad.sketch.slowDraw()
+		project.easel.pad.sketch.slowDraw()
 	}
 
     updateTool()
-	$("#fea-btn").click(function() {easel.pad.sketch.fea()})
+	$("#fea-btn").click(function() {project.easel.pad.sketch.fea()})
 
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
 	undoredo = new tacit.UndoRedo(window.project)
@@ -166,41 +165,27 @@ function initialize(structure) {
 
 window.initialize = initialize;
 
-window.startClock = function () {
-	function getTimeRemaining(endtime){
-	  var t = Date.parse(endtime) - Date.parse(new Date());
-	  var seconds = Math.floor( (t/1000) % 60 );
-	  var minutes = Math.floor( (t/1000/60) % 60 );
-	  return {
-		'total': t,
-		'minutes': minutes,
-		'seconds': seconds
-	  };
-	}
-
-	function initializeClock(id, endtime){
-	  var clock = document.getElementById(id);
-	  var timeinterval = setInterval(function(){
-		var t = getTimeRemaining(endtime);
-		var seconds = t.seconds;
-		if (seconds >= 0) {
-			if (seconds < 10)
-				seconds = "0" + seconds
-			if (t.minutes >= 1)
-				clock.innerHTML =  ' | ' + t.minutes + ' minutes';
-			else {
-				clock.innerHTML = " | " + t.minutes + ':' + seconds;
-				if (seconds < 1)
-					$("#export-btn").click()
-			}
-			if(t.total<=0){
-			  clearInterval(timeinterval);
-			}
+function initializeClock(id){
+  var clock = document.getElementById(id);
+  window.countdown = 60 * (window.tutorial ? .09 : 12.99)
+  var timeinterval = setInterval(function(){
+	window.countdown--
+	var t = window.countdown
+	var fractions = t % 1
+	t  = t - fractions
+	var seconds = t % 60
+	var minutes = (t-seconds)/60
+	seconds--
+	if (t < 1)
+		$("#export-btn").click()
+	else if (t >= 0) {
+		if (seconds < 10)
+			seconds = "0" + seconds
+		if (minutes >= 1)
+			clock.innerHTML =  ' | ' + minutes + ' minutes';
+		else {
+			clock.innerHTML = " | " + minutes + ':' + seconds;
 		}
-	  }, 1000);
 	}
-
-	var mins = window.tutorial ? 20.99 : 12.99
-	var d = new Date
-	initializeClock("timer", new Date(d.getTime() + mins*60000));
+  }, 1000);
 }

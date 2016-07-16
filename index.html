@@ -94,7 +94,7 @@
                 $("#stepname").text("step "+window.tutorialidx+" of "+window.tutorialsteps.length)
                 return ""
             else
-                easel.saveLog()
+                project.easel.saveLog()
                 location.hash = location.hash.substr(2)
                 location.reload()
 
@@ -200,7 +200,7 @@
     \n\n
     At the point of failure the color shifts dramatically: a beam that is fully loaded is <i>orange</i>, while one that is ever-so-slightly overloaded turns red as the structure fails."}
 
-    To the left of the current cost is your <b>target cost</b>..
+    To the left of the current cost is your <b>target cost</b>.
 
     Move the node#{if window.tool.sized_beams then " and/or resize beams" else ""} until your cost is lower than the threshold, then <b>save</b>.
     <script> window.triggers.beat = upNext()\<\/script\>""",
@@ -399,7 +399,7 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
           <a>
-            <div id="undo-btn-group" class="btn-group" role="group" aria-label="..." title="(&#x2318;-Z / &#x2318;-Y)" data-toggle="tooltip" data-placement="bottom">
+            <div id="undo-btn-group" class="btn-group" role="group" aria-label="..." title="(&#x2318;z / &#x2318;&#8679;z)" data-toggle="tooltip" data-placement="bottom">
               <button id="undo-btn" type="button" class="notyet btn btn-default btn-lg" disabled>
                 UNDO</span>
               </button>
@@ -512,7 +512,7 @@
 
     <div id="introtext"></div>
 
-    <button id="introhelp" class="btn btn-default btn-lg" style="background: #2eabe2; color: white; margin-top: 1em; font-size: 1em; padding: 0.5em; border: 0; border-radius: 2px;" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); startClock(); if (window.tutorial) {nextTutorialStep();}">click to begin</div>
+    <button id="introhelp" class="btn btn-default btn-lg" style="background: #2eabe2; color: white; margin-top: 1em; font-size: 1em; padding: 0.5em; border: 0; border-radius: 2px;" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); initializeClock('timer'); if (window.tutorial) {nextTutorialStep();}">click to begin</div>
 </div>
 </div>
 </body>
