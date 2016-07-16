@@ -420,7 +420,7 @@
   Structure = (function() {
 
     function Structure(structure) {
-      var b, beam, localnode, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
+      var b, beam, localbeam, localnode, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
       this.lp = {
         obj: 1e5
       };
@@ -432,7 +432,8 @@
         _ref5 = structure.beamList;
         for (_i = 0, _len = _ref5.length; _i < _len; _i++) {
           beam = _ref5[_i];
-          new this.Beam(beam.source, beam.target, beam.size);
+          localbeam = new this.Beam(beam.source, beam.target, beam.size);
+          localbeam.immovable = beam.immovable;
         }
         _ref6 = structure.nodeList;
         for (_j = 0, _len1 = _ref6.length; _j < _len1; _j++) {

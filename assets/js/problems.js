@@ -5,7 +5,7 @@
   gd = 1.65;
 
   window.tutorialstruct = function() {
-    var i, node, structure, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _ref, _ref1, _ref2, _ref3, _ref4;
+    var beam, i, node, structure, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _len5, _m, _n, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
     gd = 1.65;
     structure = new tacit.Structure;
     new structure.Node({
@@ -43,9 +43,14 @@
       i = _ref3[_l];
       structure.nodeList[i].force.y = -10;
     }
-    _ref4 = structure.nodeList;
+    _ref4 = structure.beamList;
     for (_m = 0, _len4 = _ref4.length; _m < _len4; _m++) {
-      node = _ref4[_m];
+      beam = _ref4[_m];
+      beam.immovable = true;
+    }
+    _ref5 = structure.nodeList;
+    for (_n = 0, _len5 = _ref5.length; _n < _len5; _n++) {
+      node = _ref5[_n];
       node.immovable = true;
     }
     window.problem_description = {
@@ -61,7 +66,7 @@
   };
 
   window.sign = function() {
-    var goalweights, i, node, structure, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    var beam, goalweights, i, node, structure, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
     structure = new tacit.Structure;
     new structure.Node({
       x: 20,
@@ -95,6 +100,11 @@
       node = _ref2[_k];
       node.immovable = true;
     }
+    _ref3 = structure.beamList;
+    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+      beam = _ref3[_l];
+      beam.immovable = true;
+    }
     window.problem_description = {
       title: "road sign",
       text: "<p> You will be designing support for a road sign able to withstand strong winds.\n\n<img src=\"assets/resources/introimages/sign_nathan.jpg\" width=\"100%\" />\n\n<p> We have formulated this as a simplified structural problem in two dimensions: you will develop a structure to anchor a horizontally loaded beam between two fixed supports.\n\n<img src=\"assets/resources/introimages/sign.png\" />\n\n<p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $5 in compensation and if your design is the best design made with this software tool you will receive an additional $55 in compensation."
@@ -116,7 +126,7 @@
   };
 
   window.bridge = function() {
-    var goalweights, hg, i, node, structure, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    var beam, goalweights, hg, i, node, structure, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
     hg = 50;
     structure = new tacit.Structure;
     new structure.Node({
@@ -164,6 +174,11 @@
     for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
       node = _ref2[_k];
       node.immovable = true;
+    }
+    _ref3 = structure.beamList;
+    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+      beam = _ref3[_l];
+      beam.immovable = true;
     }
     window.problem_description = {
       title: "bridge",
@@ -186,7 +201,7 @@
   };
 
   window.bridge2 = function() {
-    var goalweights, hg, i, node, structure, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+    var beam, goalweights, hg, i, node, structure, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
     hg = 50;
     structure = new tacit.Structure;
     new structure.Node({
@@ -234,6 +249,11 @@
     for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
       node = _ref2[_k];
       node.immovable = true;
+    }
+    _ref3 = structure.beamList;
+    for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+      beam = _ref3[_l];
+      beam.immovable = true;
     }
     window.problem_description = {
       title: "bridge",

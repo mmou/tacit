@@ -179,7 +179,8 @@ class Structure
                                                           @nodes,      @beams)
         if structure?
             for beam in structure.beamList
-                new @Beam(beam.source, beam.target, beam.size)
+                localbeam = new @Beam(beam.source, beam.target, beam.size)
+                localbeam.immovable = beam.immovable
             for node in structure.nodeList
                 try
                     localnode = @nodeIDLookup[@nodeLookup[node.z][node.y][node.x]]

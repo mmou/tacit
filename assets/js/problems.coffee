@@ -10,6 +10,7 @@ window.tutorialstruct = ->
     structure.nodeList[i].fixed.x = true for i in [0,1]
     structure.nodeList[i].force.x = 40 for i in [2,3]
     structure.nodeList[i].force.y = -10 for i in [2,3]
+    beam.immovable = true for beam in structure.beamList
     node.immovable = true for node in structure.nodeList
     window.problem_description =
         title: "tutorial"
@@ -31,6 +32,7 @@ window.sign = ->
     structure.nodeList[2].force.x = 50
     structure.nodeList[3].force.x = 50
     node.immovable = true for node in structure.nodeList
+    beam.immovable = true for beam in structure.beamList
     window.problem_description =
         title: "road sign"
         text: """
@@ -77,6 +79,7 @@ window.bridge = ->
     structure.nodeList[2].force.y = -160
     structure.nodeList[3].force.y = -160
     node.immovable = true for node in structure.nodeList
+    beam.immovable = true for beam in structure.beamList
     window.problem_description =
         title: "bridge",
         text: """
@@ -121,6 +124,7 @@ window.bridge2 = ->
     structure.nodeList[2].force.y = -160
     structure.nodeList[3].force.y = -160
     node.immovable = true for node in structure.nodeList
+    beam.immovable = true for beam in structure.beamList
     window.problem_description =
         title: "bridge",
         text: """
