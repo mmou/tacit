@@ -286,7 +286,7 @@
     """
     #{if window.tool.sized_beams then "You'll notice that the helper arrows disappear after you add the beam, even though the score is still <b>$&infin;</b>, that's because structure's beams are still too small. Fix it now by increasing beam sizes." else ""}
 
-    Now undo back to the original problem with the UNDO button in the top right corner (which, you will notice on mouse-over, has a keyboard shortcut).
+    Now undo back to the original problem with the UNDO button in the top right corner.
 
     <b>First, undo the extra beam.</b>
     <script> window.triggers.undo = upNext()\<\/script\>
@@ -314,7 +314,7 @@
     \<\/script\>""",
     """ #{if not window.tool.sized_beams then "<script>nextTutorialStep()\<\/script\>" else ""}
 
-    Sometimes beams are broken, but instead of being resized there are nodes that can be moved to reduce the forces in the structure. In this example the middle node is in an difficult location, but a symmetric structure with the same beam sizes would work.
+    Sometimes when beams fail, instead of resizing them it can be more effective to move a node to reduce the forces in the structure.
 
     <b>Move the node to be more central to solve this structure, then save.</b>
     <script> window.triggers.save = upNext()\<\/script\>
