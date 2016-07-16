@@ -42,7 +42,7 @@ window.sign = ->
 
         <img src="assets/resources/introimages/sign.png" />
 
-        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $10 in compensation and if your design is the best design made with this software tool you will receive an additional $50 in compensation.
+        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $5 in compensation and if your design is the best design made with this software tool you will receive an additional $55 in compensation.
         """
 
     window.genhelper = ->
@@ -88,7 +88,7 @@ window.bridge = ->
 
         <img src="assets/resources/introimages/bridge.png" />
 
-        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $10 in compensation, and if your design is the best design made with this software tool you will receive an additional $50 in compensation.
+        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $5 in compensation, and if your design is the best design made with this software tool you will receive an additional $55 in compensation.
         """
 
     window.project.name = "bridge"
@@ -132,7 +132,7 @@ window.bridge2 = ->
 
         <img src="assets/resources/introimages/bridge.png" />
 
-        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $10 in compensation, and if your design is the best design made with this software tool you will receive an additional $50 in compensation.
+        <p> The goal of this problem is to reduce the cost of your viable solutions, as determined by the mass of steel used in all the beams of your design. If your design reaches the cost threshold you will receive an extra $5 in compensation, and if your design is the best design made with this software tool you will receive an additional $55 in compensation.
         """
 
     window.project.name = "bridge"
@@ -142,7 +142,7 @@ window.bridge2 = ->
     window.scalemult = 0.45
 
     window.genhelper = ->
-        window.helper = project.easel.pad.sketch.background.append("g").attr("id", "helper").attr("transform", "scale(-0.28, 0.28) rotate(180) translate(-30, -375)").attr("opacity", 0.3)
+        window.helper = project.easel.pad.sketch.background.append("g").attr("id", "helper").attr("transform", "scale(-0.28, 0.28) rotate(180) translate(-30, -383)").attr("opacity", 0.3)
 
         window.helper.append("path").attr("d", "M 308 316.71875 C 303.70367 316.81645 299.34884 317.40161 295.0625 318.65625 C 286.40327 321.19089 278.23639 326.51156 273.21875 334.71875 C 269.45578 340.87372 267.84138 348.14105 268.625 355.3125 L 282.25 353.84375 C 281.80454 349.76704 282.79837 345.40514 284.9375 341.90625 C 287.81 337.2078 293.07939 333.55847 298.9375 331.84375 C 304.88216 330.1037 311.61804 330.10234 318.34375 331.25 C 327.25834 332.77118 335.94726 336.15928 344 340.8125 C 345.21813 341.51639 346.40752 342.27165 347.59375 343.03125 L 341.71875 350.75 L 352.78125 352.15625 L 361.34375 353.21875 L 372.40625 354.625 L 368.09375 344.34375 L 364.75 336.40625 L 360.40625 326.125 L 355.90625 332.0625 C 354.2558 330.98276 352.58613 329.92627 350.875 328.9375 C 341.62398 323.59186 331.41059 319.55919 320.625 317.71875 C 316.53238 317.02039 312.29633 316.62109 308 316.71875 z M 104.375 317.0625 C 101.20298 317.15888 98.077891 317.51138 95.03125 318.03125 C 84.325832 319.85801 74.213494 323.88161 65.03125 329.1875 C 63.336699 330.16668 61.671944 331.21145 60.03125 332.28125 L 55.5625 326.375 L 51.25 336.59375 L 47.9375 344.46875 L 43.625 354.6875 L 54.625 353.28125 L 63.125 352.21875 L 74.09375 350.84375 L 68.25 343.15625 C 69.429378 342.40069 70.631472 341.66926 71.84375 340.96875 C 79.836628 336.35012 88.464196 332.97861 97.3125 331.46875 C 103.98821 330.32962 110.66203 330.33538 116.5625 332.0625 C 122.37705 333.76447 127.6176 337.36772 130.46875 342.03125 C 132.59197 345.50414 133.56715 349.8286 133.125 353.875 L 146.65625 355.375 C 147.43404 348.25686 145.82875 341.04671 142.09375 334.9375 C 137.1134 326.79133 129.00112 321.48454 120.40625 318.96875 C 116.15177 317.72343 111.82689 317.15943 107.5625 317.0625 C 106.4964 317.03827 105.43234 317.03037 104.375 317.0625 z")
 
