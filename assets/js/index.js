@@ -167,7 +167,7 @@ window.initialize = initialize;
 
 function initializeClock(id){
   var clock = document.getElementById(id);
-  window.countdown = 60 * (window.tutorial ? .09 : 12.99)
+  window.countdown = 60 * (window.tutorial ? 20.99 : 12.99)
   var timeinterval = setInterval(function(){
 	window.countdown--
 	var t = window.countdown

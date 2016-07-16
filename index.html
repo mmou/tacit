@@ -196,13 +196,13 @@
     " else "<script>nextTutorialStep()\<\/script\>"}",
     """
      #{if window.tool.showgrad then "The <span style='color: #807ec7; font-weight: 700;'>purple arrow</span>
-     you see while moving the node indicates the direction to move the node to decrease cost." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. Red and black beams are overloaded and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. A legend for these beams can be seen to the left under the STRESS heading.
+     you see while moving the node indicates the direction to move the node to decrease cost." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. Red beams are overloaded and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. A legend for these beams can be seen to the left under the STRESS heading.
     \n\n
-    At the point of failure the color shifts dramatically: a beam that is fully loaded is <i>orange</i>, while one that is ever-so-slightly overloaded turns red as the structure fails."}
+    When a beam is overloaded its color shifts from <i>orange</i> (fully loaded) to <i>red</i>, showing failure."}
 
     To the left of the current cost is your <b>target cost</b>.
 
-    Move the node#{if window.tool.sized_beams then " and/or resize beams" else ""} until your cost is lower than the threshold, then <b>save</b>.
+    Move the node#{if window.tool.sized_beams then " and resize beams" else ""} until your cost is lower than the threshold, then <b>save</b>.
     <script> window.triggers.beat = upNext()\<\/script\>""",
     """
      Congratulations! Your saved design has met the starting goal, and the status bar will now also tell you the cost of your <i>best saved design.</i>
@@ -258,7 +258,7 @@
 
     Sometimes a beam is too small for the structure's loads.
 
-    Because this can be fixed by resizing red/black beams, the helper arrows will not show.
+    Because this can be fixed by resizing red beams, the helper arrows will not show.
 
     <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it.</b>
     <script> window.triggers.save = upNext()\<\/script\>
