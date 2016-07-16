@@ -198,7 +198,7 @@
      #{if window.tool.showgrad then "The <span style='color: #807ec7; font-weight: 700;'>purple arrow</span>
      you see while moving the node indicates the direction to move the node to decrease cost." else "The changing beam colors you see while resizing beams and moving nodes indicate the internal stress of those beams. Red beams are overloaded and need to be made larger to sustain their loads, while orange through blue beams are at least as strong as they need to be. A legend for these beams can be seen to the left under the STRESS heading.
     \n\n
-    When a beam is overloaded its color shifts from <i>orange</i> (fully loaded) to <i>red</i>, showing failure."}
+    When a beam is overloaded its color shifts from <i>orange</i> (fully loaded) to <i>red</i> for failure."}
 
     To the left of the current cost is your <b>target cost</b>.
 
@@ -220,7 +220,7 @@
      project.easel.pad.sketch.fea()
      \<\/script\>
 
-    Before finishing the tutorial let's fix some common problem you might see while designing a structure.
+    Now let's fix some common problem you might encounter when designing a structure.
 
     <b>Start by loading the newest (furthest-right) structure</b> (you may have to scroll right in the save window to see it).
     <script> window.triggers.load = upNext()\<\/script\>
@@ -276,13 +276,15 @@
     new structure.Beam({x:30, y:30}, {x:60, y:60})
     setTimeout(function() {versions.save(structure); project.easel.pad.sketch.fea()}, 10)
     \<\/script\>""",
-    """ Another potential problem is a series of straight beams that looks stable but has an unanchored pin joint in it. The helper arrows will also show for this failure.
+    """ Here a straight beam looks stable but it has an unanchored pin joint in the middle.
+
+    The helper arrows are displayed for this instability.
 
     <b>Add a beam to the loose left node, then save it.</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
     """
-    #{if window.tool.sized_beams then "You'll notice that the helper arrows disappear (and the beams stop being dotted) after you add the beam, even though the structure's beams are still too small, because it's now fixable just by increasing beam sizes." else ""}
+    #{if window.tool.sized_beams then "You'll notice that the helper arrows disappear after you add the beam, even though the score is still <b>$&infin;</b>, that's because structure's beams are still too small. Fix it now by increasing beam sizes." else ""}
 
     Now undo back to the original problem with the UNDO button in the top right corner (which, you will notice on mouse-over, has a keyboard shortcut).
 
