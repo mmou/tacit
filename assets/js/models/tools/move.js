@@ -105,7 +105,7 @@
           }
           source = this.selection.source;
           target = this.selection.target;
-          if (source.y > target.y || (source.y === target.y && source.x > target.x)) {
+          if (source.x > target.x || (source.x === target.x && source.y < target.y)) {
             tmp = source;
             source = target;
             target = tmp;

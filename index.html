@@ -188,7 +188,7 @@
     <b>Move the node by clicking it and dragging</b>.
     <script> window.triggers.movenode = upNext()\<\/script\>",
     # TODO: note directionality of beam resizing
-    "#{if window.tool.sized_beams then "Now let's resize the beams. <b>Click a beam and drag away from it</b> and the beam will change size #{if window.tool.name is "manual" then "in the drawing pane; <b>click the ANALYZE button</b> to see its new stress in the analysis pane" else ""}.
+    "#{if window.tool.sized_beams then "Now let's resize the beams. <b>Click a beam and drag up and away from it</b> and the beam will increase size, drag down and away to decrease the beam's size (for vertical beams, size increases to the right and decreases to the left)#{if window.tool.name is "manual" then ": in the drawing pane; <b>click the ANALYZE button</b> to see its new stress in the analysis pane" else ""}.
     <script> window.triggers.resizebeam = upNext()\<\/script\>
     " else "<script>nextTutorialStep()\<\/script\>"}",
     "#{if not window.tool.autocolor then "Now resize and analyze your structure untiil it solves (if you made a beam small enough to turn red you may need to increase its size instead).

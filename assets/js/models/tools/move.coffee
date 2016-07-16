@@ -57,7 +57,7 @@ moveTool =
                     window.triggers.resizebeam()
                 source = @selection.source
                 target = @selection.target
-                if source.y > target.y or (source.y is target.y and source.x > target.x)
+                if source.x > target.x or (source.x is target.x and source.y < target.y)
                     tmp = source
                     source = target
                     target = tmp
