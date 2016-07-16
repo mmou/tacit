@@ -27,7 +27,7 @@
         if ((_ref1 = window.log) == null) {
           window.log = "";
         }
-        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + "\n") + structure.strucstr + "\n";
+        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the " + project.easel.currentTool.name + " tool\n") + structure.strucstr + "\n";
         this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
         return this.pointer = this.project.actionQueue.length - 1;
@@ -40,7 +40,7 @@
         if (window.triggers.undo != null) {
           window.triggers.undo();
         }
-        window.log += "\n# undo";
+        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the undo tool\n") + structure.strucstr + "\n";
         this.pointer -= 1;
         structure = new tacit.Structure(this.project.actionQueue[this.pointer]);
         this.project.easel.pad.load(structure);
@@ -53,7 +53,7 @@
 
     UndoRedo.prototype.redo = function() {
       if (this.pointer + 1 < this.project.actionQueue.length) {
-        window.log += "\n# redo";
+        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the redo tool\n") + structure.strucstr + "\n";
         this.pointer += 1;
         this.project.easel.pad.load(this.project.actionQueue[this.pointer]);
         this.project.easel.pad.sketch.feapad = window.feapadpad;

@@ -155,7 +155,9 @@ function initialize(structure) {
 	}
 
     updateTool()
-	$("#fea-btn").click(function() {project.easel.pad.sketch.fea()})
+	$("#fea-btn").click(function() {
+		window.log += "# analyze button clicked at "+new Date().toLocaleString()+" \n"
+		project.easel.pad.sketch.fea()})
 
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
 	undoredo = new tacit.UndoRedo(window.project)
@@ -176,8 +178,10 @@ function initializeClock(id){
 	var seconds = t % 60
 	var minutes = (t-seconds)/60
 	seconds--
-	if (t < 1)
+	if (t < 1) {
 		$("#export-btn").click()
+		window.log += "# ran out of time at "+new Date().toLocaleString()+" \n"
+	}
 	else if (t >= 0) {
 		if (seconds < 10)
 			seconds = "0" + seconds

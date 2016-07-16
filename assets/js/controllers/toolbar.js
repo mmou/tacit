@@ -10,15 +10,18 @@ $('#ToolbarView').on('click', '.toolbar-btn', function(e) {
 		project.easel.currentTool = tacit.tools.select
 		$("#PadView svg").css({'cursor': 'default'})
 	} else if (toolName === "move-btn") {
+		window.log += "# switched to move tool at "+new Date().toLocaleString()+" \n"
 		project.easel.currentTool = tacit.tools.move
 		$("#PadView svg").css({'cursor': 'pointer'})
 	} else if (toolName === "draw-btn") {
+		window.log += "# switched to draw tool at "+new Date().toLocaleString()+" \n"
 		if (window.tutorial_state === 5)
             window.advance_tutorial();
 		project.easel.currentTool = tacit.tools.draw
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/pencil.png) 0 16, auto'})
 
 	} else if (toolName === "erase-btn") {
+		window.log += "# switched to erase tool at "+new Date().toLocaleString()+" \n"
 		project.easel.currentTool = tacit.tools.erase
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'})
 

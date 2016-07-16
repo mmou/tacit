@@ -16,7 +16,7 @@ class dummyEasel
         @versions.project.easel.pad.sketch.updateDrawing()
         @versions.project.easel.pad.sketch.fea()
         @versions.project.onChange()
-        window.log += "\n# loaded structure\n" + structure.strucstr
+        window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the load tool\n" + structure.strucstr + "\n"
         return false
 
     allowPan: -> false
@@ -55,6 +55,6 @@ class Versions
             window.triggers.save()
         if @project.actionQueue.length > 1 or structure?
             @newVersion(structure)
-        window.log += "\n# saved at #{new Date().toLocaleString()}\n"
+        window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the save tool\n" + structure.strucstr + "\n"
 
 window.tacit.Versions = Versions

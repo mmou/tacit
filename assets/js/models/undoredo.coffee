@@ -13,7 +13,7 @@ class UndoRedo
 
         if !@project.actionQueue[@pointer]? or @project.actionQueue[@pointer].strucstr != structure.strucstr
             window.log ?= ""
-            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj}\n" + structure.strucstr + "\n"
+            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the #{project.easel.currentTool.name} tool\n" + structure.strucstr + "\n"
             @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
             @project.actionQueue.push(structure)
             @pointer = @project.actionQueue.length-1
@@ -23,7 +23,7 @@ class UndoRedo
         if @pointer - 1 >= 0
             if window.triggers.undo?
                 window.triggers.undo()
-            window.log += "\n# undo"
+            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the undo tool\n" + structure.strucstr + "\n"
             @pointer -= 1
             structure = new tacit.Structure(@project.actionQueue[@pointer])
             @project.easel.pad.load(structure)
@@ -35,7 +35,7 @@ class UndoRedo
 
     redo: ->
         if @pointer + 1 < @project.actionQueue.length
-            window.log += "\n# redo"
+            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the redo tool\n" + structure.strucstr + "\n"
             @pointer += 1
             @project.easel.pad.load(@project.actionQueue[@pointer])
             @project.easel.pad.sketch.feapad = window.feapadpad

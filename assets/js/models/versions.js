@@ -30,7 +30,7 @@
       this.versions.project.easel.pad.sketch.updateDrawing();
       this.versions.project.easel.pad.sketch.fea();
       this.versions.project.onChange();
-      window.log += "\n# loaded structure\n" + structure.strucstr;
+      window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the load tool\n") + structure.strucstr + "\n";
       return false;
     };
 
@@ -93,7 +93,7 @@
       if (this.project.actionQueue.length > 1 || (structure != null)) {
         this.newVersion(structure);
       }
-      return window.log += "\n# saved at " + (new Date().toLocaleString()) + "\n";
+      return window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the save tool\n") + structure.strucstr + "\n";
     };
 
     return Versions;
