@@ -106,7 +106,7 @@ function download(filename, text) {
             }
           }
         } else if (eventType === "beam") {
-          if (true) {
+          if (window.tool.sized_beams || project.easel.currentTool.name !== "move") {
             if (!1 + easel.pad.sketch.selectedLinks.indexOf(object)) {
               change = true;
               easel.pad.sketch.selectedLinks.push(object);

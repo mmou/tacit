@@ -67,7 +67,8 @@ class Easel
                         change = true
                         easel.pad.sketch.selectedNodes.push(object)
             else if eventType is "beam"
-                if true #not (object.immovable and easel.currentTool.dontSelectImmovable)
+                #if not (object.immovable and easel.currentTool.dontSelectImmovable)
+                if window.tool.sized_beams or project.easel.currentTool.name isnt "move"
                     if not 1 + easel.pad.sketch.selectedLinks.indexOf(object)
                         change = true
                         easel.pad.sketch.selectedLinks.push(object)
