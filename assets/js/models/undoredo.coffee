@@ -23,7 +23,6 @@ class UndoRedo
         if @pointer - 1 >= 0
             if window.triggers.undo?
                 window.triggers.undo()
-            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the undo tool\n" + structure.strucstr + "\n"
             @pointer -= 1
             structure = new tacit.Structure(@project.actionQueue[@pointer])
             @project.easel.pad.load(structure)
@@ -32,13 +31,14 @@ class UndoRedo
             @project.easel.pad.sketch.dragline.attr("x1", 0).attr("x2", 0)
                                               .attr("y1", 0).attr("y2", 0)
             @project.easel.currentTool.drawStart = false
+            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the undo tool\n" + structure.strucstr + "\n"
 
     redo: ->
         if @pointer + 1 < @project.actionQueue.length
-            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the redo tool\n" + structure.strucstr + "\n"
             @pointer += 1
             @project.easel.pad.load(@project.actionQueue[@pointer])
             @project.easel.pad.sketch.feapad = window.feapadpad
             @project.easel.pad.sketch.updateDrawing()
+            window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the redo tool\n" + structure.strucstr + "\n"
 
 window.tacit.UndoRedo = UndoRedo

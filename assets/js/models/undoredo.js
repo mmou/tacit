@@ -40,24 +40,24 @@
         if (window.triggers.undo != null) {
           window.triggers.undo();
         }
-        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the undo tool\n") + structure.strucstr + "\n";
         this.pointer -= 1;
         structure = new tacit.Structure(this.project.actionQueue[this.pointer]);
         this.project.easel.pad.load(structure);
         this.project.easel.pad.sketch.feapad = window.feapadpad;
         this.project.easel.pad.sketch.updateDrawing();
         this.project.easel.pad.sketch.dragline.attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", 0);
-        return this.project.easel.currentTool.drawStart = false;
+        this.project.easel.currentTool.drawStart = false;
+        return window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the undo tool\n") + structure.strucstr + "\n";
       }
     };
 
     UndoRedo.prototype.redo = function() {
       if (this.pointer + 1 < this.project.actionQueue.length) {
-        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the redo tool\n") + structure.strucstr + "\n";
         this.pointer += 1;
         this.project.easel.pad.load(this.project.actionQueue[this.pointer]);
         this.project.easel.pad.sketch.feapad = window.feapadpad;
-        return this.project.easel.pad.sketch.updateDrawing();
+        this.project.easel.pad.sketch.updateDrawing();
+        return window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the redo tool\n") + structure.strucstr + "\n";
       }
     };
 

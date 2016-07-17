@@ -222,7 +222,7 @@
 
     Now let's fix some common problem you might encounter when designing a structure.
 
-    <b>Start by loading the newest (furthest-right) structure</b> (you may have to scroll right in the save window to see it).
+    <b>Load the newest structure</b> by clicking on the furthest-right thumbnail in the timeline by the SAVE button (you may have to scroll right in the timeline to see it).
     <script> window.triggers.load = upNext()\<\/script\>
     """,
     """ Sometimes you may accidentally create a node near an existing one, as is the problem here. This unstable structure can't be fixed by resizing beams, so the helper arrows appear to indicate instability.
@@ -280,11 +280,11 @@
 
     The helper arrows are displayed for this instability.
 
-    <b>Add a beam to the loose left node, then save it.</b>
+    <b>Add a beam to the leftmost node to create a stable structure, then save it.</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
     """
-    #{if window.tool.sized_beams then "You'll notice that the helper arrows disappear after you add the beam, even though the score is still <b>$&infin;</b>, that's because structure's beams are still too small. Fix it now by increasing beam sizes." else ""}
+    #{if window.tool.sized_beams then "You'll notice that the helper arrows disappear after you add the beam, even though the score is still <b>$&infin;</b> because of broken beams." else ""}
 
     Now undo back to the original problem with the UNDO button in the top right corner.
 
@@ -391,7 +391,7 @@
       </li>
       <li>
         <a data-toggle="tooltip" data-placement="bottom" id="save-btn-wrapper">
-          <button id="save-btn" type="button" type="button" class="notyet btn btn-default btn-lg" disabled title="(&#x2318;-S)" data-toggle="tooltip" data-placement="bottom">SAVE</button>
+          <button id="save-btn" type="button" type="button" class="notyet btn btn-default btn-lg" disabled title="&#x2318;S" data-toggle="tooltip" data-placement="bottom">SAVE</button>
         </a>
       </li>
     </ul>
@@ -399,7 +399,7 @@
     <ul class="nav navbar-nav navbar-right">
         <li>
           <a>
-            <div id="undo-btn-group" class="btn-group" role="group" aria-label="..." title="(&#x2318;z / &#x2318;&#8679;z)" data-toggle="tooltip" data-placement="bottom">
+            <div id="undo-btn-group" class="btn-group" role="group" aria-label="..." title="&#x2318;Z / &#x2318;&#8679;Z" data-toggle="tooltip" data-placement="bottom">
               <button id="undo-btn" type="button" class="notyet btn btn-default btn-lg" disabled>
                 UNDO</span>
               </button>
