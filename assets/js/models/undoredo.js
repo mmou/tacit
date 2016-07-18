@@ -19,10 +19,47 @@
     }
 
     UndoRedo.prototype.log = function() {
-      var structure, _ref1;
+      var clock, structure, tickfn, _ref1;
       this.project.onChange();
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
+      clock = document.getElementById("timer");
+      tickfn = function() {
+        var fractions, itstopped, limit, minutes, seconds, t;
+        limit = 60 * (window.tutorial ? 20.99 : 12.99);
+        t = limit - (Date.parse(new Date()) - Date.parse(project.starttime)) / 1000;
+        itstopped = Math.abs(project.last_t - t) > 1;
+        console.log(t);
+        project.last_t = t;
+        fractions = t % 1;
+        t -= fractions;
+        seconds = t % 60;
+        minutes = (t - seconds) / 60;
+        seconds--;
+        if (t < 0) {
+          if (window.log.search("ran out of time") === -1) {
+            return;
+          }
+        }
+        if (t < 1) {
+          $("#export-btn").click();
+          window.log += "# ran out of time at " + new Date().toLocaleString() + " \n";
+        } else if (t >= 0) {
+          if (seconds < 10) {
+            seconds = "0" + seconds;
+          }
+          if (minutes >= 1) {
+            clock.innerHTML = ' | ' + minutes + ' minutes';
+          } else {
+            clock.innerHTML = " | " + minutes + ':' + seconds;
+          }
+        }
+        return itstopped;
+      };
+      if (tickfn()) {
+        console.log("restarting clock");
+        setInterval(tickfn, 1000);
+      }
       if (!(this.project.actionQueue[this.pointer] != null) || this.project.actionQueue[this.pointer].strucstr !== structure.strucstr) {
         if ((_ref1 = window.log) == null) {
           window.log = "";
