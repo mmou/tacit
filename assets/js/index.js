@@ -166,30 +166,3 @@ function initialize(structure) {
 }
 
 window.initialize = initialize;
-
-function initializeClock(id){
-  var clock = document.getElementById(id);
-  window.countdown = 60 * (window.tutorial ? 20.99 : 12.99)
-  var timeinterval = setInterval(function(){
-	window.countdown--
-	var t = window.countdown
-	var fractions = t % 1
-	t  = t - fractions
-	var seconds = t % 60
-	var minutes = (t-seconds)/60
-	seconds--
-	if (t < 1) {
-		$("#export-btn").click()
-		window.log += "# ran out of time at "+new Date().toLocaleString()+" \n"
-	}
-	else if (t >= 0) {
-		if (seconds < 10)
-			seconds = "0" + seconds
-		if (minutes >= 1)
-			clock.innerHTML =  ' | ' + minutes + ' minutes';
-		else {
-			clock.innerHTML = " | " + minutes + ':' + seconds;
-		}
-	}
-  }, 1000);
-}

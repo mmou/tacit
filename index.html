@@ -26,7 +26,6 @@
     <script src="assets/js/models/tools/draw.js"></script>
     <script src="assets/js/models/tools/erase.js"></script>
     <script src="assets/js/models/tools/load.js"></script>
-    <script src="assets/js/models/tools/thicken.js"></script>
     <script src="assets/js/models/pad.js"></script>
     <script src="assets/js/models/suggestions.js"></script>
     <script src="assets/js/models/versions.js"></script>
@@ -38,6 +37,35 @@
     <script src="assets/js/controllers/versions.js"></script>
 
     <script type="text/coffeescript">
+    `
+    window.initializeClock = function(){
+      var clock = document.getElementById("timer");
+      window.countdown2 = window.countdown
+      setInterval(function() {window.countdown2--}, 1000)
+      var timeinterval = setInterval(function(){
+    	window.countdown--
+    	var t = window.countdown
+    	var fractions = t % 1
+    	t  = t - fractions
+    	var seconds = t % 60
+    	var minutes = (t-seconds)/60
+    	seconds--
+    	if (t < 1) {
+    		$("#export-btn").click()
+    		window.log += "# ran out of time at "+new Date().toLocaleString()+" \n"
+    	}
+    	else if (t >= 0) {
+    		if (seconds < 10)
+    			seconds = "0" + seconds
+    		if (minutes >= 1)
+    			clock.innerHTML =  ' | ' + minutes + ' minutes';
+    		else {
+    			clock.innerHTML = " | " + minutes + ':' + seconds;
+    		}
+    	}
+      }, 1000);
+    }
+    `
 
     if location.hash[1] is "t"
         location.hash = location.hash.substr(2)
@@ -52,6 +80,8 @@
             new structure.Beam({x:30, y:30}, {x:60, y:60})
     else if location.hash[1] is "n"
         location.hash = location.hash.substr(2)
+
+    `window.countdown = 60 * (window.tutorial ? 20.99 : 12.99)`
 
     if location.hash[1] is "m"
         window.tool = {name: "manual", sized_beams: true, autocolor: false, showgrad: false}
@@ -512,7 +542,7 @@
 
     <div id="introtext"></div>
 
-    <button id="introhelp" class="btn btn-default btn-lg" style="background: #2eabe2; color: white; margin-top: 1em; font-size: 1em; padding: 0.5em; border: 0; border-radius: 2px;" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); initializeClock('timer'); if (window.tutorial) {nextTutorialStep();}">click to begin</div>
+    <button id="introhelp" class="btn btn-default btn-lg" style="background: #2eabe2; color: white; margin-top: 1em; font-size: 1em; padding: 0.5em; border: 0; border-radius: 2px;" onclick="$('#project').css('opacity', 1); $('#intro').css('opacity', 0).css('z-index', -10); setTimeout(function(){$('#intro').css('display', 'none');}, 500); initializeClock(); if (window.tutorial) {nextTutorialStep();}">click to begin</div>
 </div>
 </div>
 </body>

@@ -31,6 +31,9 @@ class Versions
     newVersion: (structure) ->
         if not structure?
             structure = new tacit.Structure(@project.easel.pad.sketch.structure)
+        
+        window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the save tool\n" + structure.strucstr + "\n"
+
         @project.easel.pad.sketch.fea()
         versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
         easel = new dummyEasel(this, @history.length, @project)
@@ -55,6 +58,5 @@ class Versions
             window.triggers.save()
         if @project.actionQueue.length > 1 or structure?
             @newVersion(structure)
-        window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the save tool\n" + structure.strucstr + "\n"
 
 window.tacit.Versions = Versions
