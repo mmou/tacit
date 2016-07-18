@@ -60,11 +60,14 @@
     }
 
     Versions.prototype.newVersion = function(structure) {
-      var easel, genhelper, pad, saved, versionObj;
+      var easel, genhelper, pad, saved, versionObj, _ref1;
       if (!(structure != null)) {
         structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       }
-      window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the save tool\n") + structure.strucstr + "\n";
+      if ((_ref1 = window.log) == null) {
+        window.log = "";
+      }
+      window.log += "# saved at " + (new Date().toLocaleString()) + " \n";
       this.project.easel.pad.sketch.fea();
       versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + this.history.length).classed("ver", true);
       easel = new dummyEasel(this, this.history.length, this.project);

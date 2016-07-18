@@ -1,13 +1,13 @@
 function initialize(structure) {
 	window.tutorial_state = -1
-	finalsurvey = "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x"
+	finalsurvey = "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn"
 	intermediatesurveys = {
-						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
-	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
-	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
-	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
-	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
-	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_5ngp53FTyAwm46x",
+						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
+	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
+	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
+	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
+	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
+	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
 	                       }
 
 	// initialize easel and stuff
@@ -124,6 +124,7 @@ function initialize(structure) {
 	$("#export-btn").click(function() {
 		if (window.tutorial)
 			return nextTutorialStep();
+		window.log += "# finished at "+new Date().toLocaleString()+"\n"
 		if (location.hash[1] === "t" ) {
 			location.hash = location.hash.substr(2)
 			console.log(location.hash)
