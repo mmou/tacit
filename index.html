@@ -189,10 +189,10 @@
     <script> $("#erase-btn").click(upNext())\<\/script\>""",
     "
     <script> $('#erase-btn').removeClass('tutorial_highlight')\<\/script\>
-    <b>Click any diagonal beams you've drawn to erase them.</b>
+    <b>Click any diagonal beams you've drawn to erase them.</b> (note: you can't erase the horizontal beam you started with)
     <script> window.triggers.erase = upNext()\<\/script\>",
     """
-    You should have two vertical and one horizontal beam: <b>if not, draw them now to look like this:</b>.
+    Your structure should look like the below; <b>if it doesn't, draw it now.</b>.
 
     <img src="assets/resources/introimages/frame.png" width="30%"\/\>
 
@@ -266,7 +266,7 @@
     window.triggers.zoom = upNext()\<\/script\>
     """,
     """
-    <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it.</b>
+    <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it (you don't need to beat the goal, just have a finite cost).</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
     """<b> Load the next problem (the newest save) to continue. </b>
@@ -292,7 +292,7 @@
 
     Because this can be fixed by resizing red beams, the helper arrows will not show.
 
-    <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it.</b>
+    <b>Solve this structure #{if window.tool.autocolor then "" else "and analyze it"}, then save it (you don't need to beat the goal, just have a finite cost).</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
     """#{if not window.tool.sized_beams then " " else ""}<b> Load the next problem (the newest save) to continue. </b>
@@ -324,7 +324,7 @@
     <script> window.triggers.undo = upNext()\<\/script\>
     """,
     """
-    <b>Now erase the extra node and replace the two left beams with a single beam, then save.</b>
+    <b>Now erase the extra node connecting the two left beams.</b> This will delete all of the beams connected to it. <b> Replace the two left beams with a single beam, then save.</b>
     <script> window.triggers.save = upNext()\<\/script\>
     """,
     """<b> Load the next problem (the newest save) to continue. </b>
