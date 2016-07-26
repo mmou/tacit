@@ -126,6 +126,7 @@ function initialize(structure) {
 			return nextTutorialStep();
 		window.log += "# finished at "+new Date().toLocaleString()+"\n"
 		if (location.hash[1] === "t" ) {
+			project.easel.saveLog()
 			location.hash = location.hash.substr(2)
 			console.log(location.hash)
 			location.reload()
