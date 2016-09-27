@@ -36,6 +36,19 @@
     <script src="assets/js/controllers/toolbar.js"></script>
     <script src="assets/js/controllers/versions.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAKD8KHQo2bVmcYHSIlwN7xRnu9kafrfkQ",
+        authDomain: "tacit-ac84d.firebaseapp.com",
+        databaseURL: "https://tacit-ac84d.firebaseio.com",
+        storageBucket: "tacit-ac84d.appspot.com",
+        messagingSenderId: "244835257453"
+      };
+      firebase.initializeApp(config);
+    </script>
+
     <script type="text/coffeescript">
     clock = document.getElementById("timer")
 
