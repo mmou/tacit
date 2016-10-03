@@ -28,15 +28,20 @@ class Easel
     allowPan: -> if @currentTool.allowPan? then @currentTool.allowPan else false
 
     export: ->
+	console.log "export"
         filename = if @project.name? then @project.name else "tacit"
         filename += ".svg"
         download(filename, d3.select(easel.pad.htmlLoc).html())
 
     saveLog: ->
+	console.log "start saveLog"
         filename = "#{new Date().toLocaleString()}_#{window.problem_description.title}_#{window.tool.name}.txt"
+	console.log "before download"
         download(filename, window.log)
+	console.log "after download"
 
     mouseDown: (easel, eventType, mouseLoc, object) ->
+	console.log "mouse down!"
         if @currentTool?
             if @currentTool.mouseDown?
                 @currentTool.mouseDown(easel, eventType, mouseLoc, object)
@@ -44,6 +49,7 @@ class Easel
             @selection = object
         return false
     mouseUp: (easel, eventType, mouseLoc, object) ->
+	console.log "mouse up!"
         if @currentTool?
             if @currentTool.mouseUp?
                 @currentTool.mouseUp(easel, eventType, mouseLoc, object)
@@ -51,6 +57,7 @@ class Easel
         @selection = null
         return false
     mouseMove: (easel, eventType, mouseLoc, object) ->
+	console.log "mouse move"
         if @currentTool?
             if @currentTool.mouseMove?
                 @currentTool.mouseMove(easel, eventType, mouseLoc, object)
@@ -80,6 +87,7 @@ class Easel
         return false
 
     keyDown: (easel, eventType, keyCode) ->
+	console.log "key down"
         if @currentTool?
             if @currentTool.keyDown?
                 if @currentTool.keyDown(easel, eventType, keyCode)
