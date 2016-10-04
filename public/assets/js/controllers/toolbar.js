@@ -13,7 +13,7 @@ $(document).ready(function() {
 		window.log += "# switched to move tool at "+new Date().toLocaleString()+" \n"
 	        firebase.database().ref('events/').push().set({
 	          tool: "move",
-		  date: new Date().toLocaleString(),
+		  timestamp: new Date().toLocaleString(),
 	        });
 		project.easel.currentTool = tacit.tools.move
 		$("#PadView svg").css({'cursor': 'pointer'})
@@ -22,7 +22,7 @@ $(document).ready(function() {
 		window.log += "# switched to draw tool at "+new Date().toLocaleString()+" \n"
 	        firebase.database().ref('events/').push().set({
 	          tool: "draw",
-		  date: new Date().toLocaleString(),
+		  timestamp: new Date().toLocaleString(),
 	        });
 		if (window.tutorial_state === 5)
             window.advance_tutorial();
@@ -33,7 +33,7 @@ $(document).ready(function() {
 		window.log += "# switched to erase tool at "+new Date().toLocaleString()+" \n"
 	        firebase.database().ref('events/').push().set({
 	          tool: "erase",
-		  date: new Date().toLocaleString(),
+		  timestamp: new Date().toLocaleString(),
 	        });
 		project.easel.currentTool = tacit.tools.erase
 		$("#PadView svg").css({'cursor': 'url(assets/resources/cursor-images/eraser.png) 6 16, auto'})
