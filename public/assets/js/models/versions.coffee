@@ -33,6 +33,9 @@ class Versions
             structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         window.log ?= ""
         window.log += "# saved at #{new Date().toLocaleString()} \n"
+        firebase.database().ref('events/').push().set
+            tool: "save"
+            timestamp: new Date().toLocaleString()
         @project.easel.pad.sketch.fea()
         versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
         easel = new dummyEasel(this, @history.length, @project)
