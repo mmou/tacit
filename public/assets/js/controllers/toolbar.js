@@ -12,7 +12,7 @@ $(document).ready(function() {
 		console.log("switched to move button");
 		window.log += "# switched to move tool at "+new Date().toLocaleString()+" \n"
 	        firebase.database().ref('events/').push().set({
-	          tool: "move",
+	          type: "move",
 		  timestamp: new Date().toLocaleString(),
 	        });
 		project.easel.currentTool = tacit.tools.move
@@ -21,7 +21,7 @@ $(document).ready(function() {
 		console.log("switched to draw button");
 		window.log += "# switched to draw tool at "+new Date().toLocaleString()+" \n"
 	        firebase.database().ref('events/').push().set({
-	          tool: "draw",
+	          type: "draw",
 		  timestamp: new Date().toLocaleString(),
 	        });
 		if (window.tutorial_state === 5)
@@ -32,7 +32,7 @@ $(document).ready(function() {
 	} else if (toolName === "erase-btn") {
 		window.log += "# switched to erase tool at "+new Date().toLocaleString()+" \n"
 	        firebase.database().ref('events/').push().set({
-	          tool: "erase",
+	          type: "erase",
 		  timestamp: new Date().toLocaleString(),
 	        });
 		project.easel.currentTool = tacit.tools.erase

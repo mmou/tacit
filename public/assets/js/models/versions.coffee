@@ -34,7 +34,7 @@ class Versions
         window.log ?= ""
         window.log += "# saved at #{new Date().toLocaleString()} \n"
         firebase.database().ref('events/').push().set
-            tool: "save"
+            type: "save"
             timestamp: new Date().toLocaleString()
         @project.easel.pad.sketch.fea()
         versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
