@@ -105,6 +105,9 @@
     else if location.hash[1] is "n"
         location.hash = location.hash.substr(2)
 
+    if window.tutorial
+        window.problem_order += " tutorial"
+
     if location.hash[1] is "m"
         window.tool = {name: "manual", sized_beams: true, autocolor: false, showgrad: false}
         $("#featitle").css("display", "inherit")
