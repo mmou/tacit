@@ -1,13 +1,13 @@
 function initialize(structure) {
 	window.tutorial_state = -1
-	finalsurvey = "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn"
+	finalsurvey = "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5"
 	intermediatesurveys = {
-						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
-	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
-	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
-	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
-	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
-	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_eCJpPsOphiJNGFn",
+						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
+	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
+	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
+	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
+	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
+	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
 	                       }
 
 	// initialize easel and stuff
@@ -128,7 +128,7 @@ function initialize(structure) {
                 firebase.database().ref('events/').push().set({
                     type: "finished",
                     timestamp: new Date().toLocaleString(),
-                }); 
+                });
 		if (location.hash[1] === "t" ) {
 			project.easel.saveLog()
 			location.hash = location.hash.substr(2)
@@ -166,7 +166,7 @@ function initialize(structure) {
                 firebase.database().ref('events/').push().set({
                     type: "analyze",
                     timestamp: new Date().toLocaleString(),
-                }); 
+                });
 		project.easel.pad.sketch.fea()})
 
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
