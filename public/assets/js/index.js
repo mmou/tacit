@@ -1,14 +1,6 @@
 function initialize(structure) {
 	window.tutorial_state = -1
-	finalsurvey = "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5"
-	intermediatesurveys = {
-						 "ab": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
-	                     "mb": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
-	                     "ob": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
-	                     "as": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
-	                     "ms": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
-	                     "os": "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5",
-	                       }
+	surveylink = "http://mit.co1.qualtrics.com/SE/?SID=SV_2c6MrrOdYSZiIw5"
 
 	// initialize easel and stuff
 	var height = parseInt($(window).height() - 110);
@@ -140,10 +132,7 @@ function initialize(structure) {
 			location.reload()
 		} else {
 			project.easel.saveLog()
-			if (location.hash.length < 6)
-	            location.href = finalsurvey
-	        else
-	            location.href = intermediatesurveys[location.hash.substr(4,2)]
+	        location.href = surveylink
 		}
 		})
 	$("#zoom-btn").click(function() {
