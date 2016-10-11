@@ -31,7 +31,7 @@ class dummyEasel
                 start_y: start[1].replace /^\s+|\s+$/g, ""
                 end_x: end[0].replace /^\s+|\s+$/g, ""
                 end_y: end[1].replace /^\s+|\s+$/g, ""
-        firebase.database().ref(window.userid+'/structures/').push().set
+        firebase.database().ref(window.userid+"/"+window.problem_order+'/structures/').push().set
             timestamp: new Date().toLocaleString()
             weight: structure.lp.obj
             nodes: project.easel.pad.sketch.structure.nodeList.length
@@ -54,7 +54,7 @@ class Versions
             structure = new tacit.Structure(@project.easel.pad.sketch.structure)
         window.log ?= ""
         window.log += "# saved at #{new Date().toLocaleString()} \n"
-        firebase.database().ref(window.userid+'/events/').push().set
+        firebase.database().ref(window.userid+"/"+window.problem_order+'/events/').push().set
             type: "save"
             timestamp: new Date().toLocaleString()
         @project.easel.pad.sketch.fea()

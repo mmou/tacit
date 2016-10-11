@@ -86,6 +86,10 @@
 
     window.userid = location.hash.substr(location.hash.search("_")+1)
     window.db = firebase.database().ref(userid)
+    if location.hash.search("_") > 4
+        window.problem_order = "second"
+    else
+        window.problem_order = "first"
 
     if location.hash[1] is "t"
         location.hash = location.hash.substr(2)
@@ -113,18 +117,18 @@
         window.tool = {name: "optimal", sized_beams: false, autocolor: true, showgrad: true}
         window.feapad = true
 
-    firebase.database().ref(window.userid+'/meta/').push().set
+    firebase.database().ref(window.userid+"/"+window.problem_order+'/meta/').set
         tool: window.tool.name
 
     if not window.tutorial
         $("#tutorialpane").css("display", "none")
         if location.hash[2] is "b"
             structure = bridge2()
-            firebase.database().ref(window.userid+'/meta/').push().set
+            firebase.database().ref(window.userid+"/"+window.problem_order+'/meta/').set
                 problem: "bridge"
         else if location.hash[2] is "s"
             structure = sign()
-            firebase.database().ref(window.userid+'/meta/').push().set
+            firebase.database().ref(window.userid+"/"+window.problem_order+'/meta/').set
                 problem: "road sign"
     else
         location.hash = "t"+location.hash.substr(1)
@@ -133,15 +137,6 @@
     initialize(structure)
     $("#introtitle").html(window.problem_description.title)
     $("#introtext").html(window.problem_description.text)
-
-
-    if location.hash.search("_") > 4
-        firebase.database().ref(window.userid+'/meta/').push().set
-            problem_order: "first"
-        window.tutorialidx = 9
-    else
-        firebase.database().ref(window.userid+'/meta/').push().set
-            problem_order: "second"
 
     if window.tutorial
         window.tutorialidx = 0

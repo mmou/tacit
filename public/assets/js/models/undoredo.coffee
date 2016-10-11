@@ -30,7 +30,7 @@ class UndoRedo
                 $("#export-btn").click()
                 window.log += "# ran out of time at "+new Date().toLocaleString()+" \n"
 
-                firebase.database().ref(window.userid+'/structures/').push().set
+                firebase.database().ref(window.userid+"/"+window.problem_order+'/structures/').push().set
                     type: "ran out of time"
                     timestamp: new Date().toLocaleString()
             else if t >= 0
@@ -63,7 +63,7 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
-            firebase.database().ref(window.userid+'/structures/').push().set
+            firebase.database().ref(window.userid+"/"+window.problem_order+'/structures/').push().set
                 timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
@@ -102,7 +102,7 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
-            firebase.database().ref(window.userid+'/structures/').push().set
+            firebase.database().ref(window.userid+"/"+window.problem_order+'/structures/').push().set
                 timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
@@ -131,7 +131,7 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
-            firebase.database().ref(window.userid+'/structures/').push().set
+            firebase.database().ref(window.userid+"/"+window.problem_order+'/structures/').push().set
                 timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length

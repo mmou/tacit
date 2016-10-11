@@ -125,7 +125,7 @@ function initialize(structure) {
 		if (window.tutorial)
 			return nextTutorialStep();
 		window.log += "# finished at "+new Date().toLocaleString()+"\n"
-                firebase.database().ref(window.userid+'/events/').push().set({
+                firebase.database().ref(window.userid+"/"+window.problem_order+'/events/').push().set({
                     type: "finished",
                     timestamp: new Date().toLocaleString(),
                 });
@@ -163,7 +163,7 @@ function initialize(structure) {
     updateTool()
 	$("#fea-btn").click(function() {
 		window.log += "# analyze button clicked at "+new Date().toLocaleString()+" \n"
-                firebase.database().ref(window.userid+'/events/').push().set({
+                firebase.database().ref(window.userid+"/"+window.problem_order+'/events/').push().set({
                     type: "analyze",
                     timestamp: new Date().toLocaleString(),
                 });
