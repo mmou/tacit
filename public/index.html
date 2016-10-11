@@ -87,9 +87,9 @@
     window.userid = location.hash.substr(location.hash.search("_")+1)
     window.db = firebase.database().ref(userid)
     if location.hash.search("_") > 4
-        window.problem_order = "second"
-    else
         window.problem_order = "first"
+    else
+        window.problem_order = "second"
 
     if location.hash[1] is "t"
         location.hash = location.hash.substr(2)
