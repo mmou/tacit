@@ -134,10 +134,17 @@
     $("#introtitle").html(window.problem_description.title)
     $("#introtext").html(window.problem_description.text)
 
+
+    if location.hash.search("_") > 4
+        firebase.database().ref(window.userid+'/meta/').push().set
+            problem_order: "first"
+        window.tutorialidx = 9
+    else
+        firebase.database().ref(window.userid+'/meta/').push().set
+            problem_order: "second"
+
     if window.tutorial
         window.tutorialidx = 0
-        if location.hash.search("_") < 6
-            window.tutorialidx = 9
         window.nextTutorialStep = ->
             window.tutorialidx++
             if window.tutorialidx <= window.tutorialsteps.length
