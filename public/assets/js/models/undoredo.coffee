@@ -49,7 +49,16 @@ class UndoRedo
             beamObjs = []
             for beam in beams
                 data = beam.split(/\|/)
-                beamObjs.push data[1]
+                size = data[1]
+                data = data[0].split(/\>\>/)
+                start = data[0].split(/\,/)
+                end = data[1].split(/\,/)
+                beamObjs.push
+                    size: size.replace /^\s+|\s+$/g, ""
+                    start_x: start[0].replace /^\s+|\s+$/g, ""
+                    start_y: start[1].replace /^\s+|\s+$/g, ""
+                    end_x: end[0].replace /^\s+|\s+$/g, ""
+                    end_y: end[1].replace /^\s+|\s+$/g, ""
             firebase.database().ref('structures/').push().set
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
