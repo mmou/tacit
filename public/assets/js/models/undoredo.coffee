@@ -64,6 +64,7 @@ class UndoRedo
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
             firebase.database().ref(window.userid+'/structures/').push().set
+                timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
@@ -102,6 +103,7 @@ class UndoRedo
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
             firebase.database().ref(window.userid+'/structures/').push().set
+                timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
@@ -130,6 +132,7 @@ class UndoRedo
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
             firebase.database().ref(window.userid+'/structures/').push().set
+                timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length

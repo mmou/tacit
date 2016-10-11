@@ -47,7 +47,8 @@
           end_y: end[1].replace(/^\s+|\s+$/g, "")
         });
       }
-      firebase.database().ref(window.userid+'/structures/').push().set({
+      firebase.database().ref(window.userid + '/structures/').push().set({
+        timestamp: new Date().toLocaleString(),
         weight: structure.lp.obj,
         nodes: project.easel.pad.sketch.structure.nodeList.length,
         beams: project.easel.pad.sketch.structure.beamList.length,
@@ -90,7 +91,7 @@
         window.log = "";
       }
       window.log += "# saved at " + (new Date().toLocaleString()) + " \n";
-      firebase.database().ref(window.userid+'/events/').push().set({
+      firebase.database().ref(window.userid + '/events/').push().set({
         type: "save",
         timestamp: new Date().toLocaleString()
       });

@@ -43,7 +43,7 @@
         if (t < 1) {
           $("#export-btn").click();
           window.log += "# ran out of time at " + new Date().toLocaleString() + " \n";
-          firebase.database().ref(window.userid+'/structures/').push().set({
+          firebase.database().ref(window.userid + '/structures/').push().set({
             type: "ran out of time",
             timestamp: new Date().toLocaleString()
           });
@@ -85,7 +85,8 @@
             end_y: end[1].replace(/^\s+|\s+$/g, "")
           });
         }
-        firebase.database().ref(window.userid+'/structures/').push().set({
+        firebase.database().ref(window.userid + '/structures/').push().set({
+          timestamp: new Date().toLocaleString(),
           weight: structure.lp.obj,
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
@@ -129,7 +130,8 @@
             end_y: end[1].replace(/^\s+|\s+$/g, "")
           });
         }
-        return firebase.database().ref(window.userid+'/structures/').push().set({
+        return firebase.database().ref(window.userid + '/structures/').push().set({
+          timestamp: new Date().toLocaleString(),
           weight: structure.lp.obj,
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
@@ -164,7 +166,8 @@
             end_y: end[1].replace(/^\s+|\s+$/g, "")
           });
         }
-        return firebase.database().ref(window.userid+'/structures/').push().set({
+        return firebase.database().ref(window.userid + '/structures/').push().set({
+          timestamp: new Date().toLocaleString(),
           weight: structure.lp.obj,
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
