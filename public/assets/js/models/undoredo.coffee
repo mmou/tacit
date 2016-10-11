@@ -30,7 +30,7 @@ class UndoRedo
                 $("#export-btn").click()
                 window.log += "# ran out of time at "+new Date().toLocaleString()+" \n"
 
-                window.db.ref('structures/').push().set
+                firebase.database().ref(window.userid+'/structures/').push().set
                     type: "ran out of time"
                     timestamp: new Date().toLocaleString()
             else if t >= 0
@@ -63,7 +63,7 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
-            window.db.ref('structures/').push().set
+            firebase.database().ref(window.userid+'/structures/').push().set
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
@@ -101,7 +101,7 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
-            window.db.ref('structures/').push().set
+            firebase.database().ref(window.userid+'/structures/').push().set
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
@@ -129,7 +129,7 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
-            window.db.ref('structures/').push().set
+            firebase.database().ref(window.userid+'/structures/').push().set
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
