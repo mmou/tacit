@@ -17,6 +17,26 @@ class dummyEasel
         @versions.project.easel.pad.sketch.fea()
         @versions.project.onChange()
         window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the load tool\n" + structure.strucstr + "\n"
+        beams = structure.strucstr.split(/\r?\n/)
+        beamObjs = []
+        for beam in beams
+            data = beam.split(/\|/)
+            size = data[1]
+            data = data[0].split(/\>\>/)
+            start = data[0].split(/\,/)
+            end = data[1].split(/\,/)
+            beamObjs.push
+                size: size.replace /^\s+|\s+$/g, ""
+                start_x: start[0].replace /^\s+|\s+$/g, ""
+                start_y: start[1].replace /^\s+|\s+$/g, ""
+                end_x: end[0].replace /^\s+|\s+$/g, ""
+                end_y: end[1].replace /^\s+|\s+$/g, ""
+        firebase.database().ref('structures/').push().set
+            weight: structure.lp.obj
+            nodes: project.easel.pad.sketch.structure.nodeList.length
+            beams: project.easel.pad.sketch.structure.beamList.length
+            tool: "load"
+            details: beamObjs
         return false
 
     allowPan: -> false

@@ -15,7 +15,7 @@
     }
 
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      var structure;
+      var beam, beamObjs, beams, data, end, i, len, size, start, structure;
       if (window.triggers.load != null) {
         window.triggers.load();
       }
@@ -30,6 +30,30 @@
       this.versions.project.easel.pad.sketch.fea();
       this.versions.project.onChange();
       window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the load tool\n") + structure.strucstr + "\n";
+      beams = structure.strucstr.split(/\r?\n/);
+      beamObjs = [];
+      for (i = 0, len = beams.length; i < len; i++) {
+        beam = beams[i];
+        data = beam.split(/\|/);
+        size = data[1];
+        data = data[0].split(/\>\>/);
+        start = data[0].split(/\,/);
+        end = data[1].split(/\,/);
+        beamObjs.push({
+          size: size.replace(/^\s+|\s+$/g, ""),
+          start_x: start[0].replace(/^\s+|\s+$/g, ""),
+          start_y: start[1].replace(/^\s+|\s+$/g, ""),
+          end_x: end[0].replace(/^\s+|\s+$/g, ""),
+          end_y: end[1].replace(/^\s+|\s+$/g, "")
+        });
+      }
+      firebase.database().ref('structures/').push().set({
+        weight: structure.lp.obj,
+        nodes: project.easel.pad.sketch.structure.nodeList.length,
+        beams: project.easel.pad.sketch.structure.beamList.length,
+        tool: "load",
+        details: beamObjs
+      });
       return false;
     };
 
@@ -67,7 +91,7 @@
       }
       window.log += "# saved at " + (new Date().toLocaleString()) + " \n";
       firebase.database().ref('events/').push().set({
-        tool: "save",
+        type: "save",
         timestamp: new Date().toLocaleString()
       });
       this.project.easel.pad.sketch.fea();

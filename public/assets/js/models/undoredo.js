@@ -43,6 +43,10 @@
         if (t < 1) {
           $("#export-btn").click();
           window.log += "# ran out of time at " + new Date().toLocaleString() + " \n";
+          firebase.database().ref('structures/').push().set({
+            type: "ran out of time",
+            timestamp: new Date().toLocaleString()
+          });
         } else if (t >= 0) {
           if (seconds < 10) {
             seconds = "0" + seconds;
@@ -95,7 +99,7 @@
     };
 
     UndoRedo.prototype.undo = function() {
-      var structure;
+      var beam, beamObjs, beams, data, end, i, len, size, start, structure;
       if (this.pointer - 1 >= 0) {
         if (window.triggers.undo != null) {
           window.triggers.undo();
@@ -107,17 +111,66 @@
         this.project.easel.pad.sketch.updateDrawing();
         this.project.easel.pad.sketch.dragline.attr("x1", 0).attr("x2", 0).attr("y1", 0).attr("y2", 0);
         this.project.easel.currentTool.drawStart = false;
-        return window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the undo tool\n") + structure.strucstr + "\n";
+        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the undo tool\n") + structure.strucstr + "\n";
+        beams = structure.strucstr.split(/\r?\n/);
+        beamObjs = [];
+        for (i = 0, len = beams.length; i < len; i++) {
+          beam = beams[i];
+          data = beam.split(/\|/);
+          size = data[1];
+          data = data[0].split(/\>\>/);
+          start = data[0].split(/\,/);
+          end = data[1].split(/\,/);
+          beamObjs.push({
+            size: size.replace(/^\s+|\s+$/g, ""),
+            start_x: start[0].replace(/^\s+|\s+$/g, ""),
+            start_y: start[1].replace(/^\s+|\s+$/g, ""),
+            end_x: end[0].replace(/^\s+|\s+$/g, ""),
+            end_y: end[1].replace(/^\s+|\s+$/g, "")
+          });
+        }
+        return firebase.database().ref('structures/').push().set({
+          weight: structure.lp.obj,
+          nodes: project.easel.pad.sketch.structure.nodeList.length,
+          beams: project.easel.pad.sketch.structure.beamList.length,
+          tool: "undo",
+          details: beamObjs
+        });
       }
     };
 
     UndoRedo.prototype.redo = function() {
+      var beam, beamObjs, beams, data, end, i, len, size, start;
       if (this.pointer + 1 < this.project.actionQueue.length) {
         this.pointer += 1;
         this.project.easel.pad.load(this.project.actionQueue[this.pointer]);
         this.project.easel.pad.sketch.feapad = window.feapadpad;
         this.project.easel.pad.sketch.updateDrawing();
-        return window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the redo tool\n") + structure.strucstr + "\n";
+        window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the redo tool\n") + structure.strucstr + "\n";
+        beams = structure.strucstr.split(/\r?\n/);
+        beamObjs = [];
+        for (i = 0, len = beams.length; i < len; i++) {
+          beam = beams[i];
+          data = beam.split(/\|/);
+          size = data[1];
+          data = data[0].split(/\>\>/);
+          start = data[0].split(/\,/);
+          end = data[1].split(/\,/);
+          beamObjs.push({
+            size: size.replace(/^\s+|\s+$/g, ""),
+            start_x: start[0].replace(/^\s+|\s+$/g, ""),
+            start_y: start[1].replace(/^\s+|\s+$/g, ""),
+            end_x: end[0].replace(/^\s+|\s+$/g, ""),
+            end_y: end[1].replace(/^\s+|\s+$/g, "")
+          });
+        }
+        return firebase.database().ref('structures/').push().set({
+          weight: structure.lp.obj,
+          nodes: project.easel.pad.sketch.structure.nodeList.length,
+          beams: project.easel.pad.sketch.structure.beamList.length,
+          tool: "redo",
+          details: beamObjs
+        });
       }
     };
 

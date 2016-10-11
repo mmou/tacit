@@ -29,6 +29,10 @@ class UndoRedo
             if t < 1
                 $("#export-btn").click()
                 window.log += "# ran out of time at "+new Date().toLocaleString()+" \n"
+
+                firebase.database().ref('structures/').push().set
+                    type: "ran out of time"
+                    timestamp: new Date().toLocaleString()
             else if t >= 0
                 if seconds < 10
                     seconds = "0" + seconds
@@ -83,6 +87,26 @@ class UndoRedo
                                               .attr("y1", 0).attr("y2", 0)
             @project.easel.currentTool.drawStart = false
             window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the undo tool\n" + structure.strucstr + "\n"
+            beams = structure.strucstr.split(/\r?\n/)
+            beamObjs = []
+            for beam in beams
+                data = beam.split(/\|/)
+                size = data[1]
+                data = data[0].split(/\>\>/)
+                start = data[0].split(/\,/)
+                end = data[1].split(/\,/)
+                beamObjs.push
+                    size: size.replace /^\s+|\s+$/g, ""
+                    start_x: start[0].replace /^\s+|\s+$/g, ""
+                    start_y: start[1].replace /^\s+|\s+$/g, ""
+                    end_x: end[0].replace /^\s+|\s+$/g, ""
+                    end_y: end[1].replace /^\s+|\s+$/g, ""
+            firebase.database().ref('structures/').push().set
+                weight: structure.lp.obj
+                nodes: project.easel.pad.sketch.structure.nodeList.length
+                beams: project.easel.pad.sketch.structure.beamList.length
+                tool: "undo"
+                details: beamObjs
 
     redo: ->
         if @pointer + 1 < @project.actionQueue.length
@@ -91,5 +115,25 @@ class UndoRedo
             @project.easel.pad.sketch.feapad = window.feapadpad
             @project.easel.pad.sketch.updateDrawing()
             window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the redo tool\n" + structure.strucstr + "\n"
+            beams = structure.strucstr.split(/\r?\n/)
+            beamObjs = []
+            for beam in beams
+                data = beam.split(/\|/)
+                size = data[1]
+                data = data[0].split(/\>\>/)
+                start = data[0].split(/\,/)
+                end = data[1].split(/\,/)
+                beamObjs.push
+                    size: size.replace /^\s+|\s+$/g, ""
+                    start_x: start[0].replace /^\s+|\s+$/g, ""
+                    start_y: start[1].replace /^\s+|\s+$/g, ""
+                    end_x: end[0].replace /^\s+|\s+$/g, ""
+                    end_y: end[1].replace /^\s+|\s+$/g, ""
+            firebase.database().ref('structures/').push().set
+                weight: structure.lp.obj
+                nodes: project.easel.pad.sketch.structure.nodeList.length
+                beams: project.easel.pad.sketch.structure.beamList.length
+                tool: "redo"
+                details: beamObjs
 
 window.tacit.UndoRedo = UndoRedo

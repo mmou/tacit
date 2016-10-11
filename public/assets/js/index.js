@@ -125,6 +125,10 @@ function initialize(structure) {
 		if (window.tutorial)
 			return nextTutorialStep();
 		window.log += "# finished at "+new Date().toLocaleString()+"\n"
+                firebase.database().ref('events/').push().set({
+                    type: "finished",
+                    timestamp: new Date().toLocaleString(),
+                }); 
 		if (location.hash[1] === "t" ) {
 			project.easel.saveLog()
 			location.hash = location.hash.substr(2)
@@ -159,6 +163,10 @@ function initialize(structure) {
     updateTool()
 	$("#fea-btn").click(function() {
 		window.log += "# analyze button clicked at "+new Date().toLocaleString()+" \n"
+                firebase.database().ref('events/').push().set({
+                    type: "analyze",
+                    timestamp: new Date().toLocaleString(),
+                }); 
 		project.easel.pad.sketch.fea()})
 
 	versions = new tacit.Versions(window.project, "#HistorySketchesView");
