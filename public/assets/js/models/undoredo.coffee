@@ -45,12 +45,17 @@ class UndoRedo
         if !@project.actionQueue[@pointer]? or @project.actionQueue[@pointer].strucstr != structure.strucstr
             window.log ?= ""
             window.log += "# at #{new Date().toLocaleString()}, a new structure of weight #{structure.lp.obj} with #{project.easel.pad.sketch.structure.nodeList.length} nodes and #{project.easel.pad.sketch.structure.beamList.length} beams was created by the #{project.easel.currentTool.name} tool\n" + structure.strucstr + "\n"
+            beams = structure.strucstr.split(/\r?\n/)
+            beamObjs = []
+            for beam in beams
+                data = beam.split(/\|/)
+                beamObjs.push data[1]
             firebase.database().ref('structures/').push().set
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
                 tool: project.easel.currentTool.name
-                details: structure.strucstr.split(/\r?\n/)
+                details: beamObjs
             @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
             @project.actionQueue.push(structure)
             @pointer = @project.actionQueue.length-1

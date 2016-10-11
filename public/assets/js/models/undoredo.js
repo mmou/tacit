@@ -18,7 +18,7 @@
     }
 
     UndoRedo.prototype.log = function() {
-      var clock, structure, tickfn;
+      var beam, beamObjs, beams, clock, data, i, len, structure, tickfn;
       this.project.onChange();
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
@@ -64,12 +64,19 @@
           window.log = "";
         }
         window.log += ("# at " + (new Date().toLocaleString()) + ", a new structure of weight " + structure.lp.obj + " with " + project.easel.pad.sketch.structure.nodeList.length + " nodes and " + project.easel.pad.sketch.structure.beamList.length + " beams was created by the " + project.easel.currentTool.name + " tool\n") + structure.strucstr + "\n";
+        beams = structure.strucstr.split(/\r?\n/);
+        beamObjs = [];
+        for (i = 0, len = beams.length; i < len; i++) {
+          beam = beams[i];
+          data = beam.split(/\|/);
+          beamObjs.push(data[1]);
+        }
         firebase.database().ref('structures/').push().set({
           weight: structure.lp.obj,
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
           tool: project.easel.currentTool.name,
-          details: structure.strucstr.split(/\r?\n/)
+          details: beamObjs
         });
         this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
