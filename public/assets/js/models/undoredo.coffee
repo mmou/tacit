@@ -50,7 +50,7 @@ class UndoRedo
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
                 tool: project.easel.currentTool.name
-                details: structure.strucstr
+                details: structure.strucstr.split(/\r?\n/)
             @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
             @project.actionQueue.push(structure)
             @pointer = @project.actionQueue.length-1

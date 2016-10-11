@@ -69,7 +69,7 @@
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
           tool: project.easel.currentTool.name,
-          details: structure.strucstr
+          details: structure.strucstr.split(/\r?\n/)
         });
         this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
