@@ -84,6 +84,9 @@
         project.starttime = new Date()
         window.oclock = setInterval(tickfn, 1000)
 
+    userid = location.hash.subsstr(location.hash.search("_")+1)
+    window.db = firebase.database().ref(userid)
+
     if location.hash[1] is "t"
         location.hash = location.hash.substr(2)
         gd = 1.65
@@ -110,12 +113,19 @@
         window.tool = {name: "optimal", sized_beams: false, autocolor: true, showgrad: true}
         window.feapad = true
 
+    window.db.ref('meta/').push().set
+        tool: window.tool.name
+
     if not window.tutorial
         $("#tutorialpane").css("display", "none")
         if location.hash[2] is "b"
             structure = bridge2()
+            window.db.ref('meta/').push().set
+                problem: "bridge"
         else if location.hash[2] is "s"
             structure = sign()
+            window.db.ref('meta/').push().set
+                problem: "road sign"
     else
         location.hash = "t"+location.hash.substr(1)
 
@@ -126,7 +136,7 @@
 
     if window.tutorial
         window.tutorialidx = 0
-        if location.hash.length < 6
+        if location.hash.search("_") < 6
             window.tutorialidx = 9
         window.nextTutorialStep = ->
             window.tutorialidx++
