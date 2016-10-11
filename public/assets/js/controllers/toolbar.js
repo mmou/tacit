@@ -11,7 +11,7 @@ $(document).ready(function() {
 	} else if (toolName === "move-btn") {
 		console.log("switched to move button");
 		window.log += "# switched to move tool at "+new Date().toLocaleString()+" \n"
-	        window.db.ref('events/').push().set({
+	        firebase.database().ref(window.userid+'/events/').push().set({
 	          type: "move",
 		  timestamp: new Date().toLocaleString(),
 	        });
@@ -20,7 +20,7 @@ $(document).ready(function() {
 	} else if (toolName === "draw-btn") {
 		console.log("switched to draw button");
 		window.log += "# switched to draw tool at "+new Date().toLocaleString()+" \n"
-	        window.db.ref('events/').push().set({
+	        firebase.database().ref(window.userid+'/events/').push().set({
 	          type: "draw",
 		  timestamp: new Date().toLocaleString(),
 	        });
@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 	} else if (toolName === "erase-btn") {
 		window.log += "# switched to erase tool at "+new Date().toLocaleString()+" \n"
-	        window.db.ref('events/').push().set({
+	        firebase.database().ref(window.userid+'/events/').push().set({
 	          type: "erase",
 		  timestamp: new Date().toLocaleString(),
 	        });
