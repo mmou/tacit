@@ -277,6 +277,16 @@ h2 {
 	border: 1px solid #d4d4d4;
 }
 
+#Preview {
+	width: 250px;
+	height: 250px;
+	z-index: 100;
+	margin: 10px;
+	padding: 10px;
+	position: fixed;
+	border: solid;
+}
+
 #ToolbarView {
 /*    box-shadow: 2px 0px 5px -2px #888888; */
 	width: 130px;
