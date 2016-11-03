@@ -84,8 +84,16 @@
         project.starttime = new Date()
         window.oclock = setInterval(tickfn, 1000)
 
-    window.userid = location.hash.substr(location.hash.search("_")+1)
-    window.db = firebase.database().ref(userid)
+    # session id shared between team members
+    window.sessionid = location.hash.substring(location.hash.search("_")+1, location.hash.length-2)
+    console.log "window.sessionid = ", window.sessionid
+
+    # user number - either 1 or 2
+    window.usernum = location.hash.substring(location.hash.length-1, location.hash.length)
+    console.log "window.usernum = ", window.usernum
+
+    window.db = firebase.database().ref(window.sessionid+"/"+window.usernum)
+
     if location.hash.search("_") > 4
         window.problem_order = "first"
     else
@@ -120,18 +128,18 @@
         window.tool = {name: "optimal", sized_beams: false, autocolor: true, showgrad: true}
         window.feapad = true
 
-    firebase.database().ref(window.userid+"/"+window.problem_order+'/meta/').set
+    firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/meta/').set
         tool: window.tool.name
 
     if not window.tutorial
         $("#tutorialpane").css("display", "none")
         if location.hash[2] is "b"
             structure = bridge2()
-            firebase.database().ref(window.userid+"/"+window.problem_order+'/meta/').set
+            firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/meta/').set
                 problem: "bridge"
         else if location.hash[2] is "s"
             structure = sign()
-            firebase.database().ref(window.userid+"/"+window.problem_order+'/meta/').set
+            firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/meta/').set
                 problem: "road sign"
     else
         location.hash = "t"+location.hash.substr(1)
