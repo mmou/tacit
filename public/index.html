@@ -112,22 +112,11 @@
     if window.tutorial
         window.problem_order += " tutorial"
 
-    # add listener to listen to new changes from teammate
+    # add database reference to both users
     window.db = firebase.database()
 
     window.db.ref0 = window.db.ref(window.sessionid+"/0/"+window.problem_order+"/structures")
-    window.db.ref0.on 'child_added', (snapshot, prevChildKey) ->
-        newStructure = snapshot.val()
-        console.log 'user 0 num beams: ' + newStructure.beams
-        console.log 'user 0 Previous Post ID: ' + prevChildKey
-        return
-
     window.db.ref1 = window.db.ref(window.sessionid+"/1/"+window.problem_order+"/structures")
-    window.db.ref1.on 'child_added', (snapshot, prevChildKey) ->
-        newStructure = snapshot.val()
-        console.log 'user 1 num beams: ' + newStructure.beams
-        console.log 'user 1 Previous Post ID: ' + prevChildKey
-        return
 
     if location.hash[1] is "m"
         window.tool = {name: "manual", sized_beams: true, autocolor: false, showgrad: false}

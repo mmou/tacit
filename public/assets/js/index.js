@@ -26,6 +26,20 @@ function initialize(structure) {
 						    	225, 225, structure, global_weight);
 	window.preview.easel.mouseMove = function(){return;}
 	window.preview.easel.allowPan = function(){return;}
+
+	window.db.ref0.on('child_added', function(snapshot, prevChildKey) {
+		newStructure = snapshot.val();
+		console.log("user 0 num beams: " + newStructure.beams);
+		console.log("user 0 previous post id: " + prevChildKey);
+		return;
+	});
+
+	window.db.ref1.on('child_added', function(snapshot, prevChildKey) {
+		newStructure = snapshot.val();
+		console.log("user 1 num beams: " + newStructure.beams);
+		console.log("user 1 previous post id: " + prevChildKey);
+		return;
+	});
   	// activate tooltips
 	$('[data-toggle="tooltip"]').tooltip()
 
