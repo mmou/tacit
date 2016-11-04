@@ -31,6 +31,8 @@ function initialize(structure) {
 		newStructure = snapshot.val();
 		console.log("user 0 num beams: " + newStructure.beams);
 		console.log("user 0 previous post id: " + prevChildKey);
+		window.preview.easel.pad.load(window.project.easel.pad.sketch.structure);
+		window.preview.easel.pad.sketch.updateDrawing();
 		return;
 	});
 
@@ -38,6 +40,8 @@ function initialize(structure) {
 		newStructure = snapshot.val();
 		console.log("user 1 num beams: " + newStructure.beams);
 		console.log("user 1 previous post id: " + prevChildKey);
+		window.preview.easel.pad.load(window.project.easel.pad.sketch.structure);
+		window.preview.easel.pad.sketch.updateDrawing();
 		return;
 	});
   	// activate tooltips
