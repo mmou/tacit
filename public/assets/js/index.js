@@ -24,6 +24,8 @@ function initialize(structure) {
 	window.preview = {"name": "untitled", "onChange": function(){}};
 	window.preview.easel = new tacit.Easel(window.project, "#Preview",
 						    	225, 225, structure, global_weight);
+	window.preview.easel.mouseMove = function(){return;}
+	window.preview.easel.allowPan = function(){return;}
   	// activate tooltips
 	$('[data-toggle="tooltip"]').tooltip()
 
