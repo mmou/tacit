@@ -285,6 +285,11 @@ h2 {
 	padding: 10px;
 	position: fixed;
 	border: solid;
+	background-color: #d4d4d4;
+}
+
+#Preview  svg {
+	border: 1px solid #d4d4d4;
 }
 
 #ToolbarView {

@@ -19,6 +19,11 @@ function initialize(structure) {
 	s = sketch.structure;
 	sketch.updateDrawing();
 
+	// initialize preview
+	// todo: don't hardcode preview window size
+	window.preview = {"name": "untitled", "onChange": function(){}};
+	window.preview.easel = new tacit.Easel(window.project, "#Preview",
+						    	225, 225, structure, global_weight);
   	// activate tooltips
 	$('[data-toggle="tooltip"]').tooltip()
 
