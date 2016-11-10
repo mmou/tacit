@@ -26,6 +26,8 @@ function initialize(structure) {
 						    	225, 225, structure, global_weight);
 	window.preview.easel.mouseMove = function(){return;}
 	window.preview.easel.allowPan = function(){return;}
+        document.getElementById("PreviewHistory").setAttribute("previewid", window.partnernum);
+        console.log("preview history id = ", window.partnernum);
 
 	window.db.ref0.on('child_added', function(snapshot, prevChildKey) {
 	    if (window.usernum == 1) {
@@ -204,7 +206,7 @@ function initialize(structure) {
                 });
 		project.easel.pad.sketch.fea()})
 
-	versions = new tacit.Versions(window.project, "#HistorySketchesView");
+	versions = new tacit.Versions(window.project);
 	undoredo = new tacit.UndoRedo(window.project)
 
 	$(".notyet").removeClass("notyet")

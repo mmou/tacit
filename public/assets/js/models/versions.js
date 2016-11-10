@@ -88,15 +88,16 @@
 
   Versions = (function() {
 
-    function Versions(project, htmlLoc) {
+    function Versions(project) {
       this.project = project;
-      this.htmlLoc = htmlLoc;
+      this.htmlLoc = "#HistorySketchesView";
+      this.previewHtmlLoc = "#PreviewHistory";
       this.history = [];
       this.newVersion();
     }
 
     Versions.prototype.newVersion = function(structure) {
-      var easel, genhelper, pad, saved, versionObj, _ref1;
+      var easel, genhelper, pad, previewPad, previewVersionObj, saved, versionObj, _ref1;
       if (!(structure != null)) {
         structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       }
@@ -109,15 +110,23 @@
         timestamp: new Date().toLocaleString()
       });
       this.project.easel.pad.sketch.fea();
-      versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + this.history.length).classed("ver", true);
+      versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + window.usernum + "-" + this.history.length).classed("ver", true);
       easel = new dummyEasel(this, this.history.length, this.project);
-      versionObj.append("div").attr("id", "versvg" + this.history.length).classed("versvg", true);
+      versionObj.append("div").attr("id", "versvg" + window.usernum + "-" + this.history.length).classed("versvg", true);
       easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0];
-      pad = new tacit.Pad(easel, "#versvg" + this.history.length, 50, 50, structure);
+      pad = new tacit.Pad(easel, "#versvg" + window.usernum + "-" + this.history.length, 50, 50, structure);
       pad.load(structure, genhelper = false);
       pad.sketch.nodeSize = 0;
       pad.sketch.showforce = false;
       pad.sketch.updateDrawing();
+      previewVersionObj = d3.select(this.previewHtmlLoc).append("div").attr("id", "ver" + window.partnernum + "-" + this.history.length).classed("ver", true);
+      previewVersionObj.append("div").attr("id", "versvg" + window.partnernum + "-" + this.history.length).classed("versvg", true);
+      easel.weightDisplay = previewVersionObj.append("div").classed("verwd", true)[0][0];
+      previewPad = new tacit.Pad(easel, "#versvg" + window.partnernum + "-" + this.history.length, 50, 50, structure);
+      previewPad.load(structure, genhelper = false);
+      previewPad.sketch.nodeSize = 0;
+      previewPad.sketch.showforce = false;
+      previewPad.sketch.updateDrawing();
       this.history.push(pad);
       pad.sketch.fea();
       saved = Math.round(pad.sketch.structure.lp.obj / 100);

@@ -53,7 +53,9 @@ class dummyEasel
     mouseMove: (easel, eventType, mouseLoc, object) -> false
 
 class Versions
-    constructor: (@project, @htmlLoc) ->
+    constructor: (@project) ->
+        @htmlLoc = "#HistorySketchesView"
+        @previewHtmlLoc = "#PreviewHistory"
         @history = []
         @newVersion()
 
@@ -66,15 +68,26 @@ class Versions
             type: "save"
             timestamp: new Date().toLocaleString()
         @project.easel.pad.sketch.fea()
-        versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+@history.length).classed("ver", true)
+        versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+window.usernum+"-"+@history.length).classed("ver", true)
         easel = new dummyEasel(this, @history.length, @project)
-        versionObj.append("div").attr("id", "versvg"+@history.length).classed("versvg", true)
+        versionObj.append("div").attr("id", "versvg"+window.usernum+"-"+@history.length).classed("versvg", true)
         easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0]
-        pad = new tacit.Pad(easel, "#versvg"+@history.length, 50, 50, structure)
+        pad = new tacit.Pad(easel, "#versvg"+window.usernum+"-"+@history.length, 50, 50, structure)
         pad.load(structure, genhelper=false)
         pad.sketch.nodeSize = 0
         pad.sketch.showforce = false
         pad.sketch.updateDrawing()
+
+        # add to preview history
+        previewVersionObj = d3.select(@previewHtmlLoc).append("div").attr("id", "ver"+window.partnernum+"-"+@history.length).classed("ver", true)
+        previewVersionObj.append("div").attr("id", "versvg"+window.partnernum+"-"+@history.length).classed("versvg", true)
+        easel.weightDisplay = previewVersionObj.append("div").classed("verwd", true)[0][0]
+        previewPad = new tacit.Pad(easel, "#versvg"+window.partnernum+"-"+@history.length, 50, 50, structure)
+        previewPad.load(structure, genhelper=false)
+        previewPad.sketch.nodeSize = 0
+        previewPad.sketch.showforce = false
+        previewPad.sketch.updateDrawing()
+
         @history.push(pad)
         pad.sketch.fea()
         saved = Math.round(pad.sketch.structure.lp.obj/100)

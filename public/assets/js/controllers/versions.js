@@ -32,6 +32,12 @@ $(document).ready(function() {
 		if (farRightScroll > hsvpos) { // was at far edge
 			hsv.scrollLeft(farRightScroll);
 		}
+		var ph = $("#PreviewHistory");
+		var phpos = ph.scrollLeft();
+		farRightScroll = 60*ph.children().length - ph.width()
+		if (farRightScroll > phpos) { // was at far edge
+			ph.scrollLeft(farRightScroll);
+		}
 	})
 
 	$("#undo-btn").click(function() {

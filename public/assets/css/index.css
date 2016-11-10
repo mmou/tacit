@@ -278,12 +278,10 @@ h2 {
 }
 
 #Preview {
-	width: 250px;
-	height: 250px;
 	z-index: 100;
 	margin: 10px;
 	padding: 10px;
-	position: fixed;
+	position: relative;
 	border: solid;
 	background-color: #d4d4d4;
 }
@@ -370,6 +368,11 @@ h2 {
 	margin-bottom: -8px;
 }
 
+#PreviewHistory svg {
+	border-radius: 6px;
+	margin-bottom: -8px;
+}
+
 #SuggestionsView svg:hover {
 	cursor: pointer;
 	border-color: #807ec7;
@@ -381,7 +384,17 @@ h2 {
 	background-color: #d4d4d4;
 }
 
+#PreviewHistory svg:hover {
+	cursor: pointer;
+	background-color: #d4d4d4;
+}
+
 #HistorySketchesView svg {
+    transition: all 0.3s;
+	  transition-property: background-color, color;
+}
+
+#PreviewHistory svg {
     transition: all 0.3s;
 	  transition-property: background-color, color;
 }
@@ -466,9 +479,20 @@ wm {
 	max-width: 350px;
 }
 
+#PreviewHistory {
+	overflow-y: hidden;
+	white-space: nowrap;
+	overflow-x: scroll;
+	max-width: 250px;
+}
+
 #HistorySketchesView .ver {
 	display: inline-block;
 	color: rgba(255,255,255,0.9);
+}
+
+#PreviewHistory .ver {
+	display: inline-block;
 }
 
 #HistorySketchesView .ver:hover {
@@ -479,7 +503,18 @@ wm {
 	display: inline;
 }
 
+#PreviewHistory .versvg {
+	display: inline;
+}
+
 #HistorySketchesView .verwd {
+	display: block;
+	height: 27px;
+	width: 50px;
+    text-align: center;
+}
+
+#PreviewHistory .verwd {
 	display: block;
 	height: 27px;
 	width: 50px;
