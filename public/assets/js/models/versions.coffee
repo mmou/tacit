@@ -31,13 +31,21 @@ class dummyEasel
                 start_y: start[1].replace /^\s+|\s+$/g, ""
                 end_x: end[0].replace /^\s+|\s+$/g, ""
                 end_y: end[1].replace /^\s+|\s+$/g, ""
+        nodeObjs = []
+        nodes = structure.nodestr.split(/\r?\n/)
+        for node in nodes
+            data = node.split(" ")
+            nodeObjs.push
+                x: data[0]
+                y: data[1]
         firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/structures/').push().set
             timestamp: new Date().toLocaleString()
             weight: structure.lp.obj
             nodes: project.easel.pad.sketch.structure.nodeList.length
             beams: project.easel.pad.sketch.structure.beamList.length
             tool: "load"
-            details: beamObjs
+            beamList: beamObjs
+            nodeList: nodeObjs
         return false
 
     allowPan: -> false

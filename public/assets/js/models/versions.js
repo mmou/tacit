@@ -16,7 +16,7 @@
     }
 
     dummyEasel.prototype.mouseDown = function(easel, eventType, mouseLoc, object) {
-      var beam, beamObjs, beams, data, end, size, start, structure, _i, _len;
+      var beam, beamObjs, beams, data, end, node, nodeObjs, nodes, size, start, structure, _i, _j, _len, _len1;
       if (window.triggers.load != null) {
         window.triggers.load();
       }
@@ -48,13 +48,24 @@
           end_y: end[1].replace(/^\s+|\s+$/g, "")
         });
       }
+      nodeObjs = [];
+      nodes = structure.nodestr.split(/\r?\n/);
+      for (_j = 0, _len1 = nodes.length; _j < _len1; _j++) {
+        node = nodes[_j];
+        data = node.split(" ");
+        nodeObjs.push({
+          x: data[0],
+          y: data[1]
+        });
+      }
       firebase.database().ref(window.sessionid + "/" + window.usernum + "/" + window.problem_order + '/structures/').push().set({
         timestamp: new Date().toLocaleString(),
         weight: structure.lp.obj,
         nodes: project.easel.pad.sketch.structure.nodeList.length,
         beams: project.easel.pad.sketch.structure.beamList.length,
         tool: "load",
-        details: beamObjs
+        beamList: beamObjs,
+        nodeList: nodeObjs
       });
       return false;
     };
