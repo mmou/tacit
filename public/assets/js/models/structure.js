@@ -89,11 +89,7 @@
         if ((_ref3 = (_base = nodeLookup[this.z])[_name1 = this.y]) == null) {
           _base[_name1] = {};
         }
-        if (nodeLookup[this.z][this.y][this.x] != null) {
-          throw "a node is already there, aborting.";
-        } else {
-          nodeLookup[this.z][this.y][this.x] = this.id;
-        }
+        nodeLookup[this.z][this.y][this.x] = this.id;
         nodeIDLookup[this.id] = this;
         nodeList.push(this);
       }
@@ -420,7 +416,7 @@
   Structure = (function() {
 
     function Structure(structure) {
-      var b, beam, localbeam, localnode, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
+      var b, beam, localbeam, localnode, n, node, _i, _j, _len, _len1, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6;
       this.lp = {
         obj: 1e5
       };
@@ -467,6 +463,16 @@
         for (_k = 0, _len2 = _ref7.length; _k < _len2; _k++) {
           b = _ref7[_k];
           _results.push("" + b.source.x + ", " + b.source.y + " >> " + b.target.x + ", " + b.target.y + " | " + b.size);
+        }
+        return _results;
+      }).call(this)).join("\n");
+      this.nodestr = ((function() {
+        var _k, _len2, _ref7, _results;
+        _ref7 = this.nodeList;
+        _results = [];
+        for (_k = 0, _len2 = _ref7.length; _k < _len2; _k++) {
+          n = _ref7[_k];
+          _results.push("" + n.x + " " + n.y);
         }
         return _results;
       }).call(this)).join("\n");
@@ -760,5 +766,9 @@
   print("                       ...testing complete.");
 
   window.tacit.Structure = Structure;
+
+  window.tacit.Beam = Beam;
+
+  window.tacit.Node = Node;
 
 }).call(this);

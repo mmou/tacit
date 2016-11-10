@@ -63,13 +63,21 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
+            nodeObjs = []
+            nodes = structure.nodestr.split(/\r?\n/)
+            for node in nodes
+                data = node.split(" ")
+                nodeObjs.push
+                    x: data[0]
+                    y: data[1]
             firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/structures/').push().set
                 timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
                 tool: project.easel.currentTool.name
-                details: beamObjs
+                beamList: beamObjs
+                nodeList: nodeObjs
             @project.actionQueue = @project.actionQueue.slice(0,@pointer+1)
             @project.actionQueue.push(structure)
             @pointer = @project.actionQueue.length-1
@@ -102,13 +110,21 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
+            nodeObjs = []
+            nodes = structure.nodestr.split(/\r?\n/)
+            for node in nodes
+                data = node.split(" ")
+                nodeObjs.push
+                    x: data[0]
+                    y: data[1]
             firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/structures/').push().set
                 timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
                 tool: "undo"
-                details: beamObjs
+                beamList: beamObjs
+                nodeList: nodeObjs
 
     redo: ->
         if @pointer + 1 < @project.actionQueue.length
@@ -131,12 +147,20 @@ class UndoRedo
                     start_y: start[1].replace /^\s+|\s+$/g, ""
                     end_x: end[0].replace /^\s+|\s+$/g, ""
                     end_y: end[1].replace /^\s+|\s+$/g, ""
+            nodeObjs = []
+            nodes = structure.nodestr.split(/\r?\n/)
+            for node in nodes
+                data = node.split(" ")
+                nodeObjs.push
+                    x: data[0]
+                    y: data[1]
             firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/structures/').push().set
                 timestamp: new Date().toLocaleString()
                 weight: structure.lp.obj
                 nodes: project.easel.pad.sketch.structure.nodeList.length
                 beams: project.easel.pad.sketch.structure.beamList.length
                 tool: "redo"
-                details: beamObjs
+                beamList: beamObjs
+                nodeList: nodeObjs
 
 window.tacit.UndoRedo = UndoRedo

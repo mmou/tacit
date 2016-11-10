@@ -24,10 +24,11 @@ gen_classes = (nodeLookup, nodeIDLookup, nodeList, beamList, nodes, beams) ->
             # add the node to lookups and the list
             nodeLookup[@z] ?= {}
             nodeLookup[@z][@y] ?= {}
-            if nodeLookup[@z][@y][@x]?
-                throw "a node is already there, aborting."
-            else
-                nodeLookup[@z][@y][@x] = @id
+	    #if nodeLookup[@z][@y][@x]?
+	    #    throw "a node is already there, aborting."
+	    #else
+	    #    nodeLookup[@z][@y][@x] = @id
+            nodeLookup[@z][@y][@x] = @id
             nodeIDLookup[@id] = this
             nodeList.push(this)
         moveto: (pos) ->
@@ -194,6 +195,7 @@ class Structure
                 localnode.immovable = node.immovable
 
         @strucstr = ("#{b.source.x}, #{b.source.y} >> #{b.target.x}, #{b.target.y} | #{b.size}" for b in @beamList).join("\n")
+        @nodestr = ("#{n.x} #{n.y}" for n in @nodeList).join("\n")
 
     solve: ->
         try
@@ -297,3 +299,5 @@ print "Failed Test 6" if not approx(s2.solveLP().obj, 4)
 print "                       ...testing complete."
 
 window.tacit.Structure = Structure
+window.tacit.Beam = Beam
+window.tacit.Node = Node

@@ -19,7 +19,7 @@
     }
 
     UndoRedo.prototype.log = function() {
-      var beam, beamObjs, beams, clock, data, end, size, start, structure, tickfn, _i, _len, _ref1;
+      var beam, beamObjs, beams, clock, data, end, node, nodeObjs, nodes, size, start, structure, tickfn, _i, _j, _len, _len1, _ref1;
       this.project.onChange();
       structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       structure.solve();
@@ -86,13 +86,24 @@
             end_y: end[1].replace(/^\s+|\s+$/g, "")
           });
         }
+        nodeObjs = [];
+        nodes = structure.nodestr.split(/\r?\n/);
+        for (_j = 0, _len1 = nodes.length; _j < _len1; _j++) {
+          node = nodes[_j];
+          data = node.split(" ");
+          nodeObjs.push({
+            x: data[0],
+            y: data[1]
+          });
+        }
         firebase.database().ref(window.sessionid + "/" + window.usernum + "/" + window.problem_order + '/structures/').push().set({
           timestamp: new Date().toLocaleString(),
           weight: structure.lp.obj,
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
           tool: project.easel.currentTool.name,
-          details: beamObjs
+          beamList: beamObjs,
+          nodeList: nodeObjs
         });
         this.project.actionQueue = this.project.actionQueue.slice(0, this.pointer + 1);
         this.project.actionQueue.push(structure);
@@ -101,7 +112,7 @@
     };
 
     UndoRedo.prototype.undo = function() {
-      var beam, beamObjs, beams, data, end, size, start, structure, _i, _len;
+      var beam, beamObjs, beams, data, end, node, nodeObjs, nodes, size, start, structure, _i, _j, _len, _len1;
       if (this.pointer - 1 >= 0) {
         if (window.triggers.undo != null) {
           window.triggers.undo();
@@ -131,19 +142,30 @@
             end_y: end[1].replace(/^\s+|\s+$/g, "")
           });
         }
+        nodeObjs = [];
+        nodes = structure.nodestr.split(/\r?\n/);
+        for (_j = 0, _len1 = nodes.length; _j < _len1; _j++) {
+          node = nodes[_j];
+          data = node.split(" ");
+          nodeObjs.push({
+            x: data[0],
+            y: data[1]
+          });
+        }
         return firebase.database().ref(window.sessionid + "/" + window.usernum + "/" + window.problem_order + '/structures/').push().set({
           timestamp: new Date().toLocaleString(),
           weight: structure.lp.obj,
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
           tool: "undo",
-          details: beamObjs
+          beamList: beamObjs,
+          nodeList: nodeObjs
         });
       }
     };
 
     UndoRedo.prototype.redo = function() {
-      var beam, beamObjs, beams, data, end, size, start, _i, _len;
+      var beam, beamObjs, beams, data, end, node, nodeObjs, nodes, size, start, _i, _j, _len, _len1;
       if (this.pointer + 1 < this.project.actionQueue.length) {
         this.pointer += 1;
         this.project.easel.pad.load(this.project.actionQueue[this.pointer]);
@@ -167,13 +189,24 @@
             end_y: end[1].replace(/^\s+|\s+$/g, "")
           });
         }
+        nodeObjs = [];
+        nodes = structure.nodestr.split(/\r?\n/);
+        for (_j = 0, _len1 = nodes.length; _j < _len1; _j++) {
+          node = nodes[_j];
+          data = node.split(" ");
+          nodeObjs.push({
+            x: data[0],
+            y: data[1]
+          });
+        }
         return firebase.database().ref(window.sessionid + "/" + window.usernum + "/" + window.problem_order + '/structures/').push().set({
           timestamp: new Date().toLocaleString(),
           weight: structure.lp.obj,
           nodes: project.easel.pad.sketch.structure.nodeList.length,
           beams: project.easel.pad.sketch.structure.beamList.length,
           tool: "redo",
-          details: beamObjs
+          beamList: beamObjs,
+          nodeList: nodeObjs
         });
       }
     };
