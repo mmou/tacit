@@ -29,63 +29,42 @@ function initialize(structure) {
 
 	window.db.ref0.on('child_added', function(snapshot, prevChildKey) {
 	    if (window.usernum == 1) {
-                structureData = snapshot.val();
-                var beams = [];
-                for(var i = 0; i < structureData.beams; i++) {
-                    var beamData = structureData.beamList[i];
-                    var beam = new tacit.Beam(
-                        { x: beamData.start_x, y: beamData.start_y },
-                        { x: beamData.end_x, y: beamData.end_y },
-                        beamData.size
-                    );
-		    beams.push(beam);
-                }
-                var nodes =[];
-                for(var i = 0; i < structureData.nodes; i++) {
-                    var nodeData = structureData.nodeList[i];
-                    var node = new tacit.Node(
-                        { x: nodeData.x, y: nodeData.y }
-                    );
-                    nodes.push(node);
-                }
-                structure = new tacit.Structure(null);
-                structure.beamList = beams;
-                structure.nodeList = nodes;
-                window.preview.easel.pad.load(structure);
-                window.preview.easel.pad.sketch.updateDrawing();
-                return;
+                updatePreview(snapshot, prevChildKey);
             }
 	});
 
 	window.db.ref1.on('child_added', function(snapshot, prevChildKey) {
             if (window.usernum == 0) {
-                structureData = snapshot.val();
-                var beams = [];
-                for(var i = 0; i < structureData.beams; i++) {
-                    var beamData = structureData.beamList[i];
-                    var beam = new tacit.Beam(
-                        { x: beamData.start_x, y: beamData.start_y },
-                        { x: beamData.end_x, y: beamData.end_y },
-                        beamData.size
-                    );	
-                    beams.push(beam);
-                }
-                var nodes =[];
-                for(var i = 0; i < structureData.nodes; i++) {
-                    var nodeData = structureData.nodeList[i];
-                    var node = new tacit.Node(
-                        { x: nodeData.x, y: nodeData.y }
-                    );
-                    nodes.push(node);
-                }
-                structure = new tacit.Structure(null);
-                structure.beamList = beams;
-                structure.nodeList = nodes;
-                window.preview.easel.pad.load(structure);
-                window.preview.easel.pad.sketch.updateDrawing();
-                return;
+                updatePreview(snapshot, prevChildKey);
             }
 	});
+        var updatePreview = function(snapshot, prevChildKey) {
+            structureData = snapshot.val();
+            var beams = [];
+            for(var i = 0; i < structureData.beams; i++) {
+                var beamData = structureData.beamList[i];
+                var beam = new tacit.Beam(
+                    { x: beamData.start_x, y: beamData.start_y },
+                    { x: beamData.end_x, y: beamData.end_y },
+                    beamData.size
+                );
+                beams.push(beam);
+            }
+            var nodes =[];
+            for(var i = 0; i < structureData.nodes; i++) {
+                var nodeData = structureData.nodeList[i];
+                var node = new tacit.Node(
+                    { x: nodeData.x, y: nodeData.y }
+                );
+                nodes.push(node);
+            }
+            structure = new tacit.Structure(null);
+            structure.beamList = beams;
+            structure.nodeList = nodes;
+            window.preview.easel.pad.load(structure);
+            window.preview.easel.pad.sketch.updateDrawing();
+            return;
+        }
   	// activate tooltips
 	$('[data-toggle="tooltip"]').tooltip()
 
