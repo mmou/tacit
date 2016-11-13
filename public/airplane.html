@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<head>
+    <title>tacit.blue</title>
+
+    <link rel="shortcut icon" href="assets/resources/favicon.ico">
+
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300,500,900italic|Alegreya+Sans:100,300,400,500,100italic,300italic,400italic,500italic' rel='stylesheet' type='text/css'>
+
+    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/sketch.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/index.css" rel="stylesheet" type="text/css"/>
+
+    <script src="assets/js/lib/jquery-1.11.2.min.js"></script>
+    <script src="assets/js/lib/bootstrap.min.js"></script>
+    <script src="assets/js/lib/glpk.min.js"></script>
+    <script src="assets/js/lib/d3.v2.min.js"></script>
+    <script src="assets/js/lib/d3.cubehelix.js"></script>
+    <script src="assets/js/lib/coffeescript.min.js"></script>
+
+    <script src="assets/js/models/easel.js"></script>
+    <script src="assets/js/models/sketch.js"></script>
+    <script src="assets/js/models/structure.js"></script>
+    <script src="assets/js/models/tools/select.js"></script>
+    <script src="assets/js/models/tools/move.js"></script>
+    <script src="assets/js/models/tools/draw.js"></script>
+    <script src="assets/js/models/tools/erase.js"></script>
+    <script src="assets/js/models/tools/load.js"></script>
+    <script src="assets/js/models/tools/thicken.js"></script>
+    <script src="assets/js/models/pad.js"></script>
+    <script src="assets/js/models/suggestions.js"></script>
+    <script src="assets/js/models/versions.js"></script>
+    <script src="assets/js/models/undoredo.js"></script>
+
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/controllers/toolbar.js"></script>
+    <script src="assets/js/controllers/versions.js"></script>
+
+    <script type="text/coffeescript">
+
+    window.tool = {sized_beams: false, autocolor: true, showgrad: true}
+
+    gd = 1.65
+    structure = new tacit.Structure
+    new structure.Node({x:20, y:100})
+    new structure.Node({x:40, y:100})
+    for node in structure.nodeList
+        node.fixed.x = node.fixed.y = true
+    new structure.Beam({x:60, y:20}, {x:100, y:20})
+    new structure.Beam({x:60, y:40}, {x:100, y:40})
+    new structure.Beam({x:60, y:20}, {x:60, y:40})
+    new structure.Beam({x:100, y:20}, {x:100, y:40})
+    new structure.Beam({x:60, y:20}, {x:100, y:40})
+    new structure.Beam({x:60, y:40}, {x:100, y:20})
+    structure.nodeList[i].force.y = -50 for i in [2, 3, 4, 5]
+    structure.nodeList[i].force.x = -1 for i in [2, 3, 4, 5]
+    node.immovable = true for node in structure.nodeList
+    beam.immovable = true for beam in structure.beamList
+    # new structure.Beam({x:20, y:gd}, {x:66, y:66})
+    # new structure.Beam({x:66, y:66}, {x:79, y:gd})
+    # new structure.Beam({x:20, y:gd}, {x:47, y:72})
+    # new structure.Beam({x:47, y:72}, {x:47, y:97})
+    # new structure.Beam({x:47, y:72}, {x:66, y:66})
+    # new structure.Beam({x:47, y:97}, {x:66, y:66})
+    # structure.nodeList[i].fixed.y = true for i in [0,2]
+    # structure.nodeList[i].fixed.x = true for i in [0,2]
+    # structure.nodeList[3].force.x = 50
+    # structure.nodeList[4].force.x = 50
+    # structure.nodeList[i].immovable = true for i in [0,2,3,4]
+    # structure.nodeList[4].force[dim] = -30 for dim in "xy"
+    # structure.nodeList[5].force[dim] = -15 for dim in "xy"
+
+    initialize(structure)
+
+    cm = window.tacit.colormap
+    height = 100
+    window.delaytime = 10
+
+    `
+    var canvas = d3.select("#colorbar").append("canvas")
+    .attr("width", 1)
+    .attr("height", height)
+    .style("width", 22 + "px")
+    .style("height", height + "px")
+    .each(function(d) {
+      var context = this.getContext("2d"),
+          image = context.createImageData(1, height);
+      for (var i = 0, j = -1, c; i < height; ++i) {
+        c = d3.rgb(cm(2 - 2 * i / (height - 1)));
+        image.data[++j] = c.r;
+        image.data[++j] = c.g;
+        image.data[++j] = c.b;
+        image.data[++j] = 255;
+      }
+      context.putImageData(image, 0, 0);
+    });
+    `
+    #
+    # window.helper = window.sketch.background.append("g").attr("id", "helper").attr("transform", "scale(-0.12, 0.12) rotate(180) translate(120, -925)")
+    #
+    # window.helper.append("path").attr("d", "m 274.15625,202.90625 -0.5,50 101.25,1 c 30.04341,0.30037 57.89842,2.00396 80.15625,11.8125 21.89707,9.64957 40.16888,28.52914 47.375,50 7.2457,21.5888 4.22896,47.75249 -7.0625,69.21875 -11.52006,21.90084 -31.45657,40.70126 -54.71875,56.1875 -23.45556,15.61501 -50.62461,28.58361 -78.28125,44.28125 -27.76834,15.76105 -55.67472,34.47165 -79,59.8125 -23.43869,25.46405 -40.63393,56.41134 -49.6875,89.90625 -9.05529,33.50127 -9.39222,66.7839 -9.15625,97.78125 l 0.5,65.15625 50,-0.375 -0.5,-65.1875 c -0.22961,-30.16255 0.50244,-58.80218 7.40625,-84.34375 6.90553,-25.54793 20.23628,-49.55738 38.21875,-69.09375 18.09588,-19.65957 41.48367,-35.75789 66.90625,-50.1875 25.53428,-14.49302 53.82517,-27.84673 81.28125,-46.125 27.64952,-18.407 54.32845,-42.30217 71.28125,-74.53125 17.1814,-32.66366 22.43353,-72.01193 10.21875,-108.40625 -12.25436,-36.51226 -40.55387,-64.82932 -74.625,-79.84375 -33.71039,-14.85544 -68.69727,-15.75141 -99.8125,-16.0625 l -101.25,-1 z")
+    #
+    # window.helper.append("path").attr("d", "M 250.6446,866.99644 186.66003,758.22268 312.96581,757.2612 250.6446,866.99644 z")
+
+    window.project.name = "landinggear"
+
+    </script>
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div id="NameView" class="container-fluid">
+      <span style="
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: 300;
+    font-size: 2em;
+    top: 0.35em;
+    padding-left: 4em;
+"><span id="designweight"></span> <div id="timer" style="display: inline-block; text-align: left; width: 170px;"></div></span>
+    <ul class="nav navbar-nav navbar-left">
+      <li>
+        <div id="HistorySketchesView">
+        </div>
+      </li>
+      <li>
+        <a data-toggle="tooltip" data-placement="bottom" id="save-btn-wrapper">
+          <button id="save-btn" type="button" type="button" class="notyet btn btn-default btn-lg" disabled title="(cmd-S)" data-toggle="tooltip" data-placement="bottom">SAVE</button>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a>
+            <div id="undo-btn-group" class="btn-group" role="group" aria-label="..." title="(cmd-Z / cmd-Y)" data-toggle="tooltip" data-placement="bottom">
+              <button id="undo-btn" type="button" class="notyet btn btn-default btn-lg" disabled>
+                UNDO</span>
+              </button>
+              <button id="redo-btn" type="button" class="notyet btn btn-default btn-lg" disabled>
+                REDO</span>
+              </button>
+            </div>
+          </a>
+       </li>
+        <li>
+          <a data-toggle="tooltip" data-placement="bottom">
+            <button id="export-btn" type="button" class="notyet btn btn-default btn-lg" data-toggle="tooltip" data-placement="bottom">FINISH</button>
+          </a>
+        </li>
+    </ul>
+
+  </div>
+</nav>
+
+<div id="ProjectView" class="container-fluid">
+
+    <div id="EaselView" class="row">
+      <div id="ToolbarView" class="notyet col-xs-1">
+        <button type="button" class="btn btn-default toolbar-btn" id="select-btn" data-toggle="tooltip" data-placement="right" title="Select" style="display:none">
+            <img height="40px" width="40px" src="assets/resources/button-images/select.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="move-btn" data-toggle="tooltip" data-placement="right" title="(M)ove">
+            <img height="40px" src="assets/resources/button-images/move.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="draw-btn" data-toggle="tooltip" data-placement="right" title="(D)raw">
+            <img height="40px" src="assets/resources/button-images/draw.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="erase-btn" data-toggle="tooltip" data-placement="right" title="(E)rase">
+            <img height="40px" src="assets/resources/button-images/erase.png"></button>
+        <button type="button" class="btn btn-default toolbar-btn" id="measure-btn" data-toggle="tooltip" data-placement="right" title="(M)easure" style="display:none;"> <img height="40px" src="assets/resources/button-images/measure.png"></button>
+        <!--<button type="button" class="btn btn-default toolbar-btn" id="load-btn" data-toggle="tooltip" data-placement="right" title="(L)oad">
+            <img height="40px" src="assets/resources/button-images/load.png"></button> -->
+
+        <div style="margin-top: 25px; text-align: right;">
+            <div id="colorbar" style=" margin-right: 15px;"><h2>stress</h2>
+            <span style="float: left; font-size: 0.75em; padding-right: 5px;">
+                <div style="margin-top: -6px;">2 &#x3c3; <sub>max</sub></div>
+                <div style="padding-top: 24px;"> &#x3c3; <sub>max</sub></div>
+                <div style="padding-top: 32px;">0</div>
+            </span>
+            </div>
+
+        <div id="textbtns" style="margin-top: 30px;">
+            <button id="zoom-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="show structure">ZOOM</button>
+            <button id="fea-btn" type="button" class="btn btn-default toolbar-btn" data-toggle="tooltip" data-placement="right" title="analyze structure">FEA</button>
+        </div>
+
+        <div id="Options" style="margin-top: 20px; text-align: left;">
+            <h2>
+                <input type="radio" name="tool"
+                 onclick="window.tool = {sized_beams: false, autocolor: true, showgrad: true}; window.updateTool()" checked> optimal <br>
+                <input type="radio" name="tool"
+                 onclick="window.tool =  {sized_beams: true, autocolor: true, showgrad: false}; window.updateTool()"> auto <br>
+                <input type="radio" name="tool"
+                 onclick="window.tool = {sized_beams: true, autocolor: false, showgrad: false}; window.updateTool()"> manual <br>
+            </h2>
+        </div>
+<!--          <h2>
+          <input type="checkbox" name="grid" value="hasGrid" checked="true"> grid <br>
+          <input type="checkbox" name="baseLine" value="hasBaseLine" checked="true"> ground <br>
+      </h2>-->
+
+      </div>
+  </div>
+
+
+
+      <div id="PadView" class="col-xs-9">
+      </div>
+
+
+    </div>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0">
+
+ <defs>
+    <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#3d3130" stroke-width="0.0625"/>
+    </pattern>
+    <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#smallGrid)"/>
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#3d3130" stroke-width="0.125"/>
+    </pattern>
+  </defs>
+  <marker id="brtriangle" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#e14a4e">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+  </marker>
+  <marker id="ptriangle" viewBox="0 0 10 10" refX="7" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="auto" fill="#807ec7">
+      <path d="M 0 0 L 10 5 L 0 10 z"/>
+  </marker>
+</svg>
+
+
+</div>
+
+
+</body>
+
+</html>

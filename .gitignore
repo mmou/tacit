@@ -1,1 +1,4 @@
 .DS_Store
+/assets/js/models/*.js
+/assets/js/models/tools/*.js
+

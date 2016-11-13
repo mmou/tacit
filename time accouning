@@ -1,0 +1,21 @@
+DESCRIPTION     PREP/TRAIN DAYS     NOTES
+new thresholds  <1
+new problems    1
+timing study    1
+new tutorial    
+    wording     1
+    triggers    2
+appearance
+    css         1
+    sizing      2
+    other       3
+optimization    >1                  e.g. local buckling
+new tools       1-5                 e.g. gradient paintbrush
+new interface   5-10                e.g. manual/auto
+turk prep
+    firebase    3
+    survey id   1
+    turk int.   2
+    pilot       5
+    analysis    2
+    user filt   2

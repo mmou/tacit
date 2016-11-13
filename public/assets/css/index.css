@@ -1,0 +1,532 @@
+body {
+	height:100%;
+	background-color: #d4d4d4;
+	font-family: "Alegreya Sans",Helvetica,Arial,sans-serif;
+	font-weight: 400;
+	font-size: 18px;
+	color: #3d3130;
+}
+
+#steptext {
+	color: rgba(61, 49, 48, 0.5);
+}
+
+
+#steptext .step:last-of-type {
+	color: #3d3130;
+}
+
+#project { opacity: 0; transition: opacity,0.75s; }
+
+#weights {
+	font-size: 0.66em;
+    font-style: italic;
+    font-weight: 200;
+	margin-left: -10em;
+}
+
+#goalweight, #bestweight {
+	font-style: normal;
+	font-weight: 300;
+	padding-right: 0.5em;
+}
+
+#intro {
+	position: absolute;;
+	left: 0;
+	width: 100%;
+	top: 0;
+	background-color: #2eabe2;
+	color: #2eabe2;
+	min-height: 100%;
+	font-size: 2em;
+	opacity: 1;
+	transition: opacity,0.5s;
+	border-left: 4px solid #2eabe2;
+}
+
+#intro h1 {
+	font-size: 1.35em;
+}
+
+#introhelp {
+	font-size: 0.75em;
+    padding-top: 0.5em;
+    font-style: italic;
+}
+
+#introtext {
+	font-size: 0.75em;
+}
+
+#introstuff {
+	width: 800px;
+	margin: 0 auto;
+	padding: 3em 2em;
+	background: white;
+	border-radius: 2px;
+}
+
+#introtext img {
+	padding: 1em;
+	display: block;
+	margin: 0 auto;
+}
+
+::-webkit-scrollbar {
+  width: 8px;  /* for vertical scrollbars */
+  height: 8px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: #2eabe2;
+  height
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 4px;
+}
+
+form.navbar-form {
+	padding: 0;
+}
+
+#ProjectName {
+	border: none;
+	box-shadow: none;
+	background-color: transparent;
+	height:63px;
+	padding-top: 0;
+	padding-left: 8px;
+	font-size:36px;
+	color: white;
+	font-family: "Alegreya Sans SC";
+	font-weight: 300;
+	width:150px;
+	max-width:340px;
+}
+
+#NameHolder {
+	color: white;
+	font-family: "Alegreya Sans SC";
+	font-weight: 300;
+	font-size:36px;
+}
+
+#export-btn, #save-btn, #undo-btn, #redo-btn {
+  background-color: white;
+  border: 1px solid #2eabe2;
+  color: #2eabe2;
+  height: 60px;
+  padding: 0 10px;
+  transition: all 0.3s;
+  transition-property: background-color, color;
+}
+
+.tutorial_highlight {
+    border: 6px solid #807ec7 !important;
+    stroke: #807ec7 !important;
+}
+
+#tutorialpane {
+	position: fixed;
+	background: white;
+	width: 350px;
+	height: 100%;
+	right: 0;
+	padding-top: 1.5em;
+	border-left: 6px solid #2eabe2;
+	font-size: 1.25em;
+}
+
+#tutorialpane br {
+	padding-top: 0.3em;
+}
+
+.tutorial_highlight .node {
+	stroke-width: 6px;
+    stroke-dasharray: 3px;
+}
+
+.tutorial_highlight .selectablelinks {
+	stroke-width: 9px;
+}
+
+#save-btn {
+	border: 0;
+}
+
+#NameView a {
+	padding-bottom: 8px;
+	padding-top: 8px;
+	padding-left: 8px;
+}
+
+.tooltip-arrow {
+	color: #3d3130;
+}
+
+.tooltip.bottom .tooltip-arrow {
+	border-bottom-color: white;
+}
+
+.tooltip.right .tooltip-arrow {
+	border-right-color: #3d3130;
+}
+
+.tooltip.right .tooltip-inner {
+	color: #d4d4d4;
+	background-color: #3d3130;
+	font-family: "Alegreya Sans SC";
+	font-size: 1.5em;
+}
+
+.tooltip.bottom .tooltip-inner {
+	color: #2eabe2;
+	background-color:white;
+	font-family: "Alegreya Sans SC";
+	font-size: 1.2em;
+}
+
+#save-btn-wrapper {
+	padding-left: 0;
+}
+
+.btn.disabled, .btn[disabled] {
+	background-color: #2eabe2 !important;
+	color: white !important;
+}
+
+.notyet.btn {
+	background-color: #2eabe2 !important;
+	color: #2eabe2 !important;
+}
+
+div.notyet {
+	opacity: 0;
+}
+
+#fea-btn:hover, #export-btn:hover, #save-btn:hover, #undo-btn:hover, #redo-btn:hover, #zoom-btn:hover{
+  background-color: #d4d4d4;
+	color: #3d3130;
+}
+
+.navbar {
+	height: 84px;
+}
+
+#NameView {
+	height: 84px;
+	background-color: #2eabe2;
+}
+
+input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+}
+
+#HistoryView {
+	padding-top:8px;
+}
+
+.btn-default {
+	background-color: transparent;
+	border-color: rgba(102,83,81,0.25);
+}
+
+#logo {
+	color: white;
+	font-weight: 900;
+	font-style: italic;
+	font-family: "Alegreya Sans SC";
+	font-size: 4em;
+	line-height: 0.56;
+	padding-right: 24px;
+}
+
+h1 {
+	font-size: 1.25em;
+	margin: 0;
+	font-family: "Alegreya Sans SC";
+	font-weight: 600;
+	margin-bottom: 0.2em;
+}
+
+h2 {
+	font-size: 1em;
+	font-family: "Alegreya Sans SC";
+	font-weight: 500;
+}
+
+#save-container {
+	text-align: right;
+}
+
+#ProjectView {
+	position: absolute;
+	background-color: #d4d4d4;
+	top: 78px; /* because of the header */
+}
+
+#EaselView {
+	position: relative;
+}
+
+#PadView svg {
+	border: 1px solid #d4d4d4;
+}
+
+#Preview {
+	z-index: 100;
+	margin: 10px;
+	padding: 10px;
+	position: relative;
+	border: solid;
+	background-color: #d4d4d4;
+}
+
+#Preview  svg {
+	border: 1px solid #d4d4d4;
+}
+
+#ToolbarView {
+/*    box-shadow: 2px 0px 5px -2px #888888; */
+	width: 130px;
+	padding-top: 1em;
+	padding-left: 2em;
+}
+
+#ToolbarView button {
+	font-weight: 900;
+	text-shadow: -1px 1px white;
+}
+
+#tutorial{
+	position: relative;
+	top: 10px;
+	float: right;
+}
+
+#instructions{
+	color:#5C5C5C;
+	position: absolute;
+	margin-top: 20px;
+	font-size: 12px;
+}
+
+#tutorial-btn {
+	width: 150px;
+	height: 35px;
+}
+
+#PadView {
+   box-sizing:border-box;
+   -moz-box-sizing:border-box;
+   -webkit-box-sizing:border-box;
+   /*TODO: Change to make not hardcoded*/
+   width: auto;
+}
+
+.toolbar-btn {
+	height: 70px;
+	width: 95%;
+	margin-bottom: 10px;
+}
+
+#Suggestions {
+	transition: opacity 1s;
+}
+
+#ToolbarView {
+	transition: opacity 1s;
+}
+
+#SuggestionsView {
+	height:100%;
+	color: #3d3130;
+	margin: auto;
+}
+
+#suggestions-label {
+	padding-left: 28px;
+}
+
+#SuggestionsView svg {
+	border-radius: 18px;
+	border: 0px solid transparent;
+	border-right-width: 4px;
+	border-left-width: 4px;
+	margin-top: -1px;
+	margin-left: -4px;
+	margin-right: -4px;
+	margin-bottom: -7px;
+}
+
+#HistorySketchesView svg {
+	border-radius: 6px;
+	margin-bottom: -8px;
+}
+
+#PreviewHistory svg {
+	border-radius: 6px;
+	margin-bottom: -8px;
+}
+
+#SuggestionsView svg:hover {
+	cursor: pointer;
+	border-color: #807ec7;
+}
+
+
+#HistorySketchesView svg:hover {
+	cursor: pointer;
+	background-color: #d4d4d4;
+}
+
+#PreviewHistory svg:hover {
+	cursor: pointer;
+	background-color: #d4d4d4;
+}
+
+#HistorySketchesView svg {
+    transition: all 0.3s;
+	  transition-property: background-color, color;
+}
+
+#PreviewHistory svg {
+    transition: all 0.3s;
+	  transition-property: background-color, color;
+}
+
+#Suggestions {
+	padding-top: 2em;
+}
+
+
+.tooltip.in {
+	opacity: 1;
+}
+
+strong {
+	font-weight: 500;
+}
+
+footer {
+	transition: height 0.3s;
+	position: fixed;
+	height: 416px;
+	bottom: 0;
+	font-size: 1.5em;
+	background: white;
+	left: 146px;
+	width: 676px;
+}
+
+#footertitle {
+	height: 34px;
+	color: #d4d4d4;
+	background-color: #3d3130;
+	padding: 0;
+	padding-left: 280px;
+	padding-bottom: 4px;
+	font-family: "Alegreya Sans SC";
+	font-weight: 500;
+	line-height: 1.1;
+	cursor: pointer;
+}
+
+.tutorial_step {
+	padding: 18px 24px;
+}
+
+.active #footertitle {
+	color: white;
+	background-color: #807ec7;
+}
+
+.hidden {
+	display: none;
+}
+
+wm {
+	font-family: "Alegreya Sans SC";
+	font-style: italic;
+	font-weight: 900;
+	font-size: 1.1em;
+	line-height: 0.9;
+	padding-left: 0.1em;
+	padding-right: 0.1em;
+}
+
+#footer_close {
+	float: right;
+	margin-left: -16px;
+	font-weight: 100;
+	text-align: center;
+	width: 30px;
+}
+
+#footer_close:hover {
+	font-weight: 400;
+}
+
+#HistorySketchesView {
+	overflow-y: hidden;
+	white-space: nowrap;
+	overflow-x: scroll;
+	text-align: right;
+	max-width: 350px;
+}
+
+#PreviewHistory {
+	overflow-y: hidden;
+	white-space: nowrap;
+	overflow-x: scroll;
+	max-width: 250px;
+}
+
+#HistorySketchesView .ver {
+	display: inline-block;
+	color: rgba(255,255,255,0.9);
+}
+
+#PreviewHistory .ver {
+	display: inline-block;
+}
+
+#HistorySketchesView .ver:hover {
+	color: white;
+}
+
+#HistorySketchesView .versvg {
+	display: inline;
+}
+
+#PreviewHistory .versvg {
+	display: inline;
+}
+
+#HistorySketchesView .verwd {
+	display: block;
+	height: 27px;
+	width: 50px;
+    text-align: center;
+}
+
+#PreviewHistory .verwd {
+	display: block;
+	height: 27px;
+	width: 50px;
+    text-align: center;
+}
+
+#textbtns button {
+	height: 50%;
+}
+
+#designweight {
+	font-weight: 400;
+	font-style: normal;
+	font-size: 1.5em;
+}
