@@ -89,6 +89,7 @@ function initialize(structure) {
             structure.nodeList = nodes;
             structure.beams = structureData.beams;
             structure.nodes = structureData.nodes;
+            structure.historyLength = structureData.historyLength;
 	    return structure;
         }
   	// activate tooltips

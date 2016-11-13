@@ -116,11 +116,11 @@ class Versions
     updatePreviewHistory: (structure) ->
         if not structure?
             structure = new tacit.Structure(@project.easel.pad.sketch.structure)
-        previewVersionObj = d3.select("#PreviewHistory").append("div").attr("id", "ver"+window.partnernum+"-"+@history.length).classed("ver", true)
-        previewEasel = new dummyEasel(this, @history.length, @project)
-        previewVersionObj.append("div").attr("id", "versvg"+window.partnernum+"-"+@history.length).classed("versvg", true)
+        previewVersionObj = d3.select("#PreviewHistory").append("div").attr("id", "ver"+window.partnernum+"-"+structure.historyLength).classed("ver", true)
+        previewEasel = new dummyEasel(this, structure.historyLength, @project)
+        previewVersionObj.append("div").attr("id", "versvg"+window.partnernum+"-"+structure.historyLength).classed("versvg", true)
         previewEasel.weightDisplay = previewVersionObj.append("div").classed("verwd", true)[0][0]
-        previewPad = new tacit.Pad(previewEasel, "#versvg"+window.partnernum+"-"+@history.length, 50, 50, structure)
+        previewPad = new tacit.Pad(previewEasel, "#versvg"+window.partnernum+"-"+structure.historyLength, 50, 50, structure)
         previewPad.load(structure, genhelper=false)
         previewPad.sketch.nodeSize = 0
         previewPad.sketch.showforce = false
