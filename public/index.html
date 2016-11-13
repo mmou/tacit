@@ -88,7 +88,7 @@
     window.sessionid = location.hash.substring(location.hash.search("_")+1, location.hash.length-2)
 
     # user number - either 0 or 1
-    window.usernum = location.hash.substring(location.hash.length-1, location.hash.length)
+    window.usernum = parseInt(location.hash.substring(location.hash.length-1, location.hash.length))
     window.partnernum = (window.usernum + 1) % 2
 
     if location.hash.search("_") > 4
@@ -116,8 +116,10 @@
     # add database reference to both users
     window.db = firebase.database()
 
-    window.db.ref0 = window.db.ref(window.sessionid+"/0/"+window.problem_order+"/structures")
-    window.db.ref1 = window.db.ref(window.sessionid+"/1/"+window.problem_order+"/structures")
+    window.db.structures_ref0 = window.db.ref(window.sessionid+"/0/"+window.problem_order+"/structures")
+    window.db.structures_ref1 = window.db.ref(window.sessionid+"/1/"+window.problem_order+"/structures")
+    window.db.events_ref0 = window.db.ref(window.sessionid+"/0/"+window.problem_order+"/events")
+    window.db.events_ref1 = window.db.ref(window.sessionid+"/1/"+window.problem_order+"/events")
 
     if location.hash[1] is "m"
         window.tool = {name: "manual", sized_beams: true, autocolor: false, showgrad: false}

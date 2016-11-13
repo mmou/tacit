@@ -26,7 +26,7 @@
       scale = this.sketch.scale;
       this.sketch = new tacit.Sketch(this, this.htmlLoc, structure, this.height, this.width);
       if (genhelper && (window.genhelper != null)) {
-        return window.genhelper();
+        return window.genhelper;
       }
     };
 

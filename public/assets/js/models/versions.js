@@ -88,55 +88,97 @@
 
   Versions = (function() {
 
-    function Versions(project) {
+    function Versions(project, newVersion) {
       this.project = project;
       this.htmlLoc = "#HistorySketchesView";
       this.previewHtmlLoc = "#PreviewHistory";
       this.history = [];
-      this.newVersion();
+      this.newVersion(newVersion);
     }
 
-    Versions.prototype.newVersion = function(structure) {
-      var easel, genhelper, pad, previewPad, previewVersionObj, saved, versionObj, _ref1;
+    Versions.prototype.newVersion = function(structure, newVersion) {
+      var beam, beamObjs, beams, data, easel, end, genhelper, node, nodeObjs, nodes, pad, saved, size, start, versionObj, _i, _j, _len, _len1, _ref1;
+      if (newVersion) {
+        if (!(structure != null)) {
+          structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
+        }
+        if ((_ref1 = window.log) == null) {
+          window.log = "";
+        }
+        window.log += "# saved at " + (new Date().toLocaleString()) + " \n";
+        beams = structure.strucstr.split(/\r?\n/);
+        beamObjs = [];
+        for (_i = 0, _len = beams.length; _i < _len; _i++) {
+          beam = beams[_i];
+          data = beam.split(/\|/);
+          size = data[1];
+          data = data[0].split(/\>\>/);
+          start = data[0].split(/\,/);
+          end = data[1].split(/\,/);
+          beamObjs.push({
+            size: size.replace(/^\s+|\s+$/g, ""),
+            start_x: start[0].replace(/^\s+|\s+$/g, ""),
+            start_y: start[1].replace(/^\s+|\s+$/g, ""),
+            end_x: end[0].replace(/^\s+|\s+$/g, ""),
+            end_y: end[1].replace(/^\s+|\s+$/g, "")
+          });
+        }
+        nodeObjs = [];
+        nodes = structure.nodestr.split(/\r?\n/);
+        for (_j = 0, _len1 = nodes.length; _j < _len1; _j++) {
+          node = nodes[_j];
+          data = node.split(" ");
+          nodeObjs.push({
+            x: data[0],
+            y: data[1]
+          });
+        }
+        firebase.database().ref(window.sessionid + "/" + window.usernum + "/" + window.problem_order + '/events/').push().set({
+          type: "save",
+          timestamp: new Date().toLocaleString(),
+          nodes: nodeObjs.length,
+          beams: beamObjs.length,
+          nodeList: nodeObjs,
+          beamList: beamObjs,
+          historyLength: this.history.length
+        });
+        this.project.easel.pad.sketch.fea();
+        versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + window.usernum + "-" + this.history.length).classed("ver", true);
+        easel = new dummyEasel(this, this.history.length, this.project);
+        versionObj.append("div").attr("id", "versvg" + window.usernum + "-" + this.history.length).classed("versvg", true);
+        easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0];
+        pad = new tacit.Pad(easel, "#versvg" + window.usernum + "-" + this.history.length, 50, 50, structure);
+        pad.load(structure, genhelper = false);
+        pad.sketch.nodeSize = 0;
+        pad.sketch.showforce = false;
+        pad.sketch.updateDrawing();
+        this.history.push(pad);
+        pad.sketch.fea();
+        saved = Math.round(pad.sketch.structure.lp.obj / 100);
+        if (saved <= $("#bestweight").text().substr(1)) {
+          $("#bestweight").text("$" + saved);
+          $("#bestcontainer").css("display", "");
+          if (window.triggers.beat != null) {
+            return window.triggers.beat();
+          }
+        }
+      }
+    };
+
+    Versions.prototype.updatePreviewHistory = function(structure) {
+      var genhelper, previewEasel, previewPad, previewVersionObj;
       if (!(structure != null)) {
         structure = new tacit.Structure(this.project.easel.pad.sketch.structure);
       }
-      if ((_ref1 = window.log) == null) {
-        window.log = "";
-      }
-      window.log += "# saved at " + (new Date().toLocaleString()) + " \n";
-      firebase.database().ref(window.sessionid + "/" + window.usernum + "/" + window.problem_order + '/events/').push().set({
-        type: "save",
-        timestamp: new Date().toLocaleString()
-      });
-      this.project.easel.pad.sketch.fea();
-      versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + window.usernum + "-" + this.history.length).classed("ver", true);
-      easel = new dummyEasel(this, this.history.length, this.project);
-      versionObj.append("div").attr("id", "versvg" + window.usernum + "-" + this.history.length).classed("versvg", true);
-      easel.weightDisplay = versionObj.append("div").classed("verwd", true)[0][0];
-      pad = new tacit.Pad(easel, "#versvg" + window.usernum + "-" + this.history.length, 50, 50, structure);
-      pad.load(structure, genhelper = false);
-      pad.sketch.nodeSize = 0;
-      pad.sketch.showforce = false;
-      pad.sketch.updateDrawing();
-      previewVersionObj = d3.select(this.previewHtmlLoc).append("div").attr("id", "ver" + window.partnernum + "-" + this.history.length).classed("ver", true);
+      previewVersionObj = d3.select("#PreviewHistory").append("div").attr("id", "ver" + window.partnernum + "-" + this.history.length).classed("ver", true);
+      previewEasel = new dummyEasel(this, this.history.length, this.project);
       previewVersionObj.append("div").attr("id", "versvg" + window.partnernum + "-" + this.history.length).classed("versvg", true);
-      easel.weightDisplay = previewVersionObj.append("div").classed("verwd", true)[0][0];
-      previewPad = new tacit.Pad(easel, "#versvg" + window.partnernum + "-" + this.history.length, 50, 50, structure);
+      previewEasel.weightDisplay = previewVersionObj.append("div").classed("verwd", true)[0][0];
+      previewPad = new tacit.Pad(previewEasel, "#versvg" + window.partnernum + "-" + this.history.length, 50, 50, structure);
       previewPad.load(structure, genhelper = false);
       previewPad.sketch.nodeSize = 0;
       previewPad.sketch.showforce = false;
-      previewPad.sketch.updateDrawing();
-      this.history.push(pad);
-      pad.sketch.fea();
-      saved = Math.round(pad.sketch.structure.lp.obj / 100);
-      if (saved <= $("#bestweight").text().substr(1)) {
-        $("#bestweight").text("$" + saved);
-        $("#bestcontainer").css("display", "");
-        if (window.triggers.beat != null) {
-          return window.triggers.beat();
-        }
-      }
+      return previewPad.sketch.updateDrawing();
     };
 
     Versions.prototype.save = function(structure) {
@@ -144,7 +186,7 @@
         window.triggers.save();
       }
       if (this.project.actionQueue.length > 1 || (structure != null)) {
-        return this.newVersion(structure);
+        return this.newVersion(structure, true);
       }
     };
 
