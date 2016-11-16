@@ -107,6 +107,7 @@ class Versions
             pad.sketch.showforce = false
             pad.sketch.updateDrawing()
             @history.push(pad)
+            structure.solve()
             pad.sketch.fea()
             saved = Math.round(pad.sketch.structure.lp.obj/100)
             if saved <= $("#bestweight").text().substr(1)
