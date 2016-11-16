@@ -106,6 +106,7 @@
           window.log = "";
         }
         window.log += "# saved at " + (new Date().toLocaleString()) + " \n";
+        this.project.easel.pad.sketch.fea();
         beams = structure.strucstr.split(/\r?\n/);
         beamObjs = [];
         for (_i = 0, _len = beams.length; _i < _len; _i++) {
@@ -133,6 +134,7 @@
             y: data[1]
           });
         }
+        structure.solve();
         firebase.database().ref(window.sessionid + "/" + window.usernum + "/" + window.problem_order + '/events/').push().set({
           type: "save",
           timestamp: new Date().toLocaleString(),
@@ -140,9 +142,9 @@
           beams: beamObjs.length,
           nodeList: nodeObjs,
           beamList: beamObjs,
-          historyLength: this.history.length
+          historyLength: this.history.length,
+          weight: structure.lp.obj
         });
-        this.project.easel.pad.sketch.fea();
         versionObj = d3.select(this.htmlLoc).append("div").attr("id", "ver" + window.usernum + "-" + this.history.length).classed("ver", true);
         easel = new dummyEasel(this, this.history.length, this.project);
         versionObj.append("div").attr("id", "versvg" + window.usernum + "-" + this.history.length).classed("versvg", true);
@@ -174,6 +176,7 @@
       previewEasel = new dummyEasel(this, structure.historyLength, this.project);
       previewVersionObj.append("div").attr("id", "versvg" + window.partnernum + "-" + structure.historyLength).classed("versvg", true);
       previewEasel.weightDisplay = previewVersionObj.append("div").classed("verwd", true)[0][0];
+      previewEasel.weightDisplay.innerText = "\$" + Math.round(structure.lp.obj / 100);
       previewPad = new tacit.Pad(previewEasel, "#versvg" + window.partnernum + "-" + structure.historyLength, 50, 50, structure);
       previewPad.load(structure, genhelper = false);
       previewPad.sketch.nodeSize = 0;

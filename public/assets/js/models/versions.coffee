@@ -65,6 +65,7 @@ class Versions
                 structure = new tacit.Structure(@project.easel.pad.sketch.structure)
             window.log ?= ""
             window.log += "# saved at #{new Date().toLocaleString()} \n"
+            @project.easel.pad.sketch.fea()
             beams = structure.strucstr.split(/\r?\n/)
             beamObjs = []
             for beam in beams
@@ -86,6 +87,7 @@ class Versions
                 nodeObjs.push
                     x: data[0]
                     y: data[1]
+            structure.solve()
             firebase.database().ref(window.sessionid+"/"+window.usernum+"/"+window.problem_order+'/events/').push().set
                 type: "save"
                 timestamp: new Date().toLocaleString()
@@ -94,7 +96,7 @@ class Versions
                 nodeList: nodeObjs
                 beamList: beamObjs
                 historyLength: @history.length
-            @project.easel.pad.sketch.fea()
+                weight: structure.lp.obj
             versionObj = d3.select(@htmlLoc).append("div").attr("id", "ver"+window.usernum+"-"+@history.length).classed("ver", true)
             easel = new dummyEasel(this, @history.length, @project)
             versionObj.append("div").attr("id", "versvg"+window.usernum+"-"+@history.length).classed("versvg", true)
@@ -120,6 +122,7 @@ class Versions
         previewEasel = new dummyEasel(this, structure.historyLength, @project)
         previewVersionObj.append("div").attr("id", "versvg"+window.partnernum+"-"+structure.historyLength).classed("versvg", true)
         previewEasel.weightDisplay = previewVersionObj.append("div").classed("verwd", true)[0][0]
+        previewEasel.weightDisplay.innerText = "\$"+Math.round(structure.lp.obj/100)
         previewPad = new tacit.Pad(previewEasel, "#versvg"+window.partnernum+"-"+structure.historyLength, 50, 50, structure)
         previewPad.load(structure, genhelper=false)
         previewPad.sketch.nodeSize = 0

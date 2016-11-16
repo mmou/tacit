@@ -52,16 +52,16 @@ function initialize(structure) {
                 versions.updatePreviewHistory(structure);
             }
 	});
-        var updatePreview = function(snapshot, prevChildKey) {
+    var updatePreview = function(snapshot, prevChildKey) {
             structure = getStructureFromSnapshot(snapshot.val());
             window.preview.easel.pad.load(structure);
             window.preview.easel.pad.sketch.updateDrawing();
             return;
-        }
-        var getStructureFromSnapshot = function(structureData) {
+    }
+    var getStructureFromSnapshot = function(structureData) {
             var beams = [];
             for(var i = 0; i < structureData.beams; i++) {
-                var beamData = structureData.beamList[i];
+			    var beamData = structureData.beamList[i];
                 var beam = new tacit.Beam(
                     { x: beamData.start_x, y: beamData.start_y },
                     { x: beamData.end_x, y: beamData.end_y },
@@ -78,20 +78,21 @@ function initialize(structure) {
                 nodes.push(node);
             }
             // todo: don't hardcode starting nodes
-	    if (nodes.length == 0){
-	        nodes.push(new tacit.Node({x: 42, y: 72}));
-	        nodes.push(new tacit.Node({x: 42, y: 97}));
-	        nodes.push(new tacit.Node({x: 20, y: 1.65}));
-	        nodes.push(new tacit.Node({x: 60, y: 1.65}));
-	    }
+            if (nodes.length == 0) {
+                nodes.push(new tacit.Node({x: 42, y: 72}));
+                nodes.push(new tacit.Node({x: 42, y: 97}));
+                nodes.push(new tacit.Node({x: 20, y: 1.65}));
+                nodes.push(new tacit.Node({x: 60, y: 1.65}));
+            }
             structure = new tacit.Structure(null);
             structure.beamList = beams;
             structure.nodeList = nodes;
             structure.beams = structureData.beams;
             structure.nodes = structureData.nodes;
             structure.historyLength = structureData.historyLength;
-	    return structure;
-        }
+            structure.lp = {obj: structureData.weight};
+            return structure;
+    }
   	// activate tooltips
 	$('[data-toggle="tooltip"]').tooltip()
 
