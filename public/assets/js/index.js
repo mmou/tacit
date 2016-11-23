@@ -38,17 +38,16 @@ function initialize(structure) {
                 updatePreview(snapshot, prevChildKey);
             }
 	});
+	var previewVersions = new tacit.Versions(window.project, false);
 	window.db.events_ref0.on('child_added', function(snapshot, prevChildKey) {
             if(window.usernum == 1 && snapshot.val().type == "save") {
                 structure = getStructureFromSnapshot(snapshot.val());
-                previewVersions = new tacit.Versions(window.project, false);
                 previewVersions.updatePreviewHistory(structure);
             }
 	});
 	window.db.events_ref1.on('child_added', function(snapshot, prevChildKey) {
             if(window.usernum == 0 && snapshot.val().type == "save") {
                 structure = getStructureFromSnapshot(snapshot.val());
-                previewVersions = new tacit.Versions(window.project, false);
                 previewVersions.updatePreviewHistory(structure);
             }
 	});
