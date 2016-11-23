@@ -182,7 +182,8 @@
       previewPad.load(structure, genhelper = false);
       previewPad.sketch.nodeSize = 0;
       previewPad.sketch.showforce = false;
-      return previewPad.sketch.updateDrawing();
+      previewPad.sketch.updateDrawing();
+      return this.history.push(previewPad);
     };
 
     Versions.prototype.save = function(structure) {

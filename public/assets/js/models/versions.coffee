@@ -129,6 +129,7 @@ class Versions
         previewPad.sketch.nodeSize = 0
         previewPad.sketch.showforce = false
         previewPad.sketch.updateDrawing()
+        @history.push(previewPad)
 
     save: (structure) ->
         if window.triggers.save?
