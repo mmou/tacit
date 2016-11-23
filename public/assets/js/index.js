@@ -63,8 +63,8 @@ function initialize(structure) {
             for(var i = 0; i < structureData.beams; i++) {
 			    var beamData = structureData.beamList[i];
                 var beam = new tacit.Beam(
-                    { x: beamData.start_x, y: beamData.start_y },
-                    { x: beamData.end_x, y: beamData.end_y },
+                    { x: parseInt(beamData.start_x), y: parseInt(beamData.start_y) },
+                    { x: parseInt(beamData.end_x), y: parseInt(beamData.end_y) },
                     beamData.size
                 );
                 beams.push(beam);
@@ -73,7 +73,7 @@ function initialize(structure) {
             for(var i = 0; i < structureData.nodes; i++) {
                 var nodeData = structureData.nodeList[i];
                 var node = new tacit.Node(
-                    { x: nodeData.x, y: nodeData.y }
+                    { x: parseInt(nodeData.x), y: parseInt(nodeData.y) }
                 );
                 nodes.push(node);
             }
